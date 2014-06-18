@@ -1,0 +1,122 @@
+import java.security.KeyStore.Builder;
+
+import org.gradle.plugins.ide.eclipse.model.SourceFolder
+
+apply plugin: 'android'
+//apply plugin: 'eclipse'
+
+version = '1.5'
+android.defaultConfig.versionCode = 82
+
+group = "cz.mammahelp.handy"
+
+sourceCompatibility = 1.6
+//configurations { provided }
+//
+//eclipse {
+//
+//	project {
+//		natures 'com.android.ide.eclipse.adt.AndroidNature',
+//				'org.springsource.ide.eclipse.gradle.core.nature',
+//				'org.eclipse.jdt.core.javanature'
+//
+//		name 'jidelak'
+//	}
+//	classpath {
+//
+//
+//		//you can tweak the classpath of the Eclipse project by adding extra configurations:
+//		plusConfigurations += configurations.provided
+//
+//		//if you don't want some classpath entries 'exported' in Eclipse
+//		noExportConfigurations += configurations.provided
+//
+//		//customizing the classes output directory:
+//		defaultOutputDir = file('bin')
+//
+//		//default settings for downloading sources and Javadoc:
+//		downloadSources = true
+//		downloadJavadoc = false
+//	}
+//}
+
+buildscript {
+	repositories { mavenCentral() }
+	dependencies { classpath 'com.android.tools.build:gradle:0.6.1+' }
+}
+
+
+sourceSets {
+	main {
+		java { srcDir 'src/main/java' }
+		java { srcDir 'gen' }
+		resources { srcDir 'src/main/resources' }
+	}
+}
+
+repositories { mavenCentral() }
+
+android {
+
+	compileSdkVersion 19
+	buildToolsVersion "19.0.0"
+
+	defaultConfig {
+		minSdkVersion 8
+		targetSdkVersion 19
+		versionName = project.version
+	}
+
+	sourceSets {
+		main {
+			manifest.srcFile 'AndroidManifest.xml'
+			java.srcDirs = ['src/main/java']
+			resources.srcDirs = ['src/main/resources']
+			res.srcDirs = ['res']
+			assets.srcDirs = ['assets']
+		}
+
+		test.setRoot('tests')
+		test {
+			java.srcDirs = ['tests/src']
+			res.srcDirs = ['tests/res']
+			assets.srcDirs = ['tests/assets']
+			resources.srcDirs = ['tests/src']
+		}
+
+		instrumentTest.setRoot('tests')
+		instrumentTest {
+			java.srcDirs = ['tests/src']
+			res.srcDirs = ['tests/res']
+			assets.srcDirs = ['tests/assets']
+			resources.srcDirs = ['tests/src']
+		}
+	}
+
+	signingConfigs {
+		release {
+			storeFile file("release.keystore")
+			storePassword "lopata"
+			keyAlias "jidelak"
+			keyPassword "lopata"
+		}
+	}
+
+	buildTypes {
+		release { signingConfig signingConfigs.release }
+	}
+}
+
+dependencies {
+	compile 'com.android.support:support-v4:19.0.0'
+	compile 'com.android.support:appcompat-v7:19.0.0'
+    compile 'com.google.android.gms:play-services:3.2.+'
+	compile 'net.sf.jtidy:jtidy:r938'
+	compile 'org.slf4j:slf4j-android:1.6.1-RC1'
+	compile 'org.apache.commons:commons-lang3:3.2.1'
+
+	testCompile 'org.slf4j:slf4j-log4j12:1.6.1'
+	testCompile 'log4j:log4j:1.2.17'
+
+}
+
