@@ -97,7 +97,7 @@ android {
 		release {
 			storeFile file("release.keystore")
 			storePassword "lopata"
-			keyAlias "mammahelp"
+			keyAlias "jidelak"
 			keyPassword "lopata"
 		}
 	}
