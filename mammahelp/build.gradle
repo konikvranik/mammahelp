@@ -5,8 +5,8 @@ import org.gradle.plugins.ide.eclipse.model.SourceFolder
 apply plugin: 'android'
 //apply plugin: 'eclipse'
 
-version = '1.5'
-android.defaultConfig.versionCode = 82
+version = '0.1'
+android.defaultConfig.versionCode = 1
 
 group = "cz.mammahelp.handy"
 
@@ -42,7 +42,7 @@ sourceCompatibility = 1.6
 
 
 buildscript {
-    repositories { mavenCentral() }
+	repositories { mavenCentral() }
 	dependencies { classpath 'com.android.tools.build:gradle:0.11.+' }
 }
 
@@ -61,19 +61,17 @@ repositories {
 	def sdkDir
 	def suppportRepoUrl
 	if (localProperties.exists()) {
-	    Properties properties = new Properties()
-	    localProperties.withInputStream { instr ->
-	        properties.load(instr)
-	    }
-	    sdkDir = properties.getProperty('sdk.dir')
-	     suppportRepoUrl = "file:///" + sdkDir + "/extras/android/support"
+		Properties properties = new Properties()
+		localProperties.withInputStream { instr -> properties.load(instr) }
+		sdkDir = properties.getProperty('sdk.dir')
+		suppportRepoUrl = "file:///" + sdkDir + "/extras/android/support"
 	}
 	print suppportRepoUrl + "\n"
 	
 	mavenCentral()
 	maven {
-        url suppportRepoUrl
-    }
+		url suppportRepoUrl
+	}
 }
 
 android {
@@ -82,7 +80,7 @@ android {
 	buildToolsVersion "19.1.0"
 
 	defaultConfig {
-		minSdkVersion 8
+		minSdkVersion 14
 		targetSdkVersion 19
 		versionName = project.version
 	}
@@ -135,9 +133,10 @@ android {
 }
 
 dependencies {
+
 	compile 'com.android.support:support-v4:r7'
 	compile 'com.android.support:appcompat-v7:19.0.0'
-    compile 'com.google.android.gms:play-services:3.2.+'
+	compile 'com.google.android.gms:play-services:3.2.+'
 	compile 'net.sf.jtidy:jtidy:r938'
 	compile 'org.slf4j:slf4j-android:1.6.1-RC1'
 	compile 'org.apache.commons:commons-lang3:3.2.1'
