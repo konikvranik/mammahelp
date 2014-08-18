@@ -15,18 +15,15 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 	private static Logger log = LoggerFactory.getLogger(MammaHelpDbHelper.class);
 
 	public static final int DATABASE_VERSION = 7;
-	public static final String DATABASE_NAME = "Jidelak.db";
+	public static final String DATABASE_NAME = "MammaHelp.db";
 
-	private static final String SQL_CREATE_RESTAURANT = RestaurantDao
+	private static final String SQL_CREATE_ARTICLES = ArticlesDao
 			.getTable().createClausule();
 
-	private static final String SQL_CREATE_AVAILABILITY = AvailabilityDao
+	private static final String SQL_CREATE_NEWS = NewsDao
 			.getTable().createClausule();
-	private static final String SQL_CREATE_MEAL = MealDao.getTable()
-			.createClausule();
-	private static final String SQL_CREATE_SOURCE = SourceDao.getTable()
-			.createClausule();
-
+	
+	
 	private final static DataSetObservable mDataSetObservable = new DataSetObservable();
 
 	private static MammaHelpDbHelper singletonInstance;
@@ -50,15 +47,11 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		log.debug(SQL_CREATE_RESTAURANT);
-		log.debug(SQL_CREATE_AVAILABILITY);
-		log.debug(SQL_CREATE_MEAL);
-		log.debug(SQL_CREATE_SOURCE);
+		log.debug(SQL_CREATE_ARTICLES);
+		db.execSQL(SQL_CREATE_ARTICLES);
 
-		db.execSQL(SQL_CREATE_RESTAURANT);
-		db.execSQL(SQL_CREATE_AVAILABILITY);
-		db.execSQL(SQL_CREATE_MEAL);
-		db.execSQL(SQL_CREATE_SOURCE);
+		log.debug(SQL_CREATE_NEWS);
+		db.execSQL(SQL_CREATE_NEWS);
 	}
 
 	/*

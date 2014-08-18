@@ -1,68 +1,27 @@
 package cz.mammahelp.handy.model;
-import java.util.Date;
-
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
+ * <!-- begin-user-doc --> <!-- end-user-doc -->
+ * 
  * @generated
  */
 
-public class Articles implements ISyncedInformation
-{
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public long ID;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Date syncTime;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public String body;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public String title;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public String url;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
-	public Articles(){
-		super();
+public class Articles extends ASyncedInformation implements
+		Identificable<Articles> {
+
+	private static final long serialVersionUID = 6449649853185438415L;
+
+	public Articles(Long id) {
+		setId(id);
+	}
+
+	public Articles() {
+	}
+
+	@Override
+	public int compareTo(Articles another) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
-

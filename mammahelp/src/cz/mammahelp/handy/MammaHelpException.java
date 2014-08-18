@@ -12,7 +12,7 @@ import net.suteren.android.jidelak.model.Restaurant;
 import net.suteren.android.jidelak.model.Source;
 import android.content.Context;
 
-public class JidelakException extends Exception {
+public class MammaHelpException extends Exception {
 
 	private int resource;
 	private String[] args;
@@ -20,22 +20,22 @@ public class JidelakException extends Exception {
 	private ErrorType errorType;
 	private boolean handled = false;
 
-	public JidelakException(int messageToUser, Throwable e) {
+	public MammaHelpException(int messageToUser, Throwable e) {
 		super(e);
 		setResource(messageToUser);
 	}
 
-	public JidelakException(int messageToUser) {
+	public MammaHelpException(int messageToUser) {
 		super();
 		setResource(messageToUser);
 	}
 
-	public JidelakException(int messageToUser, String... strings) {
+	public MammaHelpException(int messageToUser, String... strings) {
 		this(messageToUser);
 		args = strings;
 	}
 
-	public JidelakException(int malformedUrl, Exception e, String... strings) {
+	public MammaHelpException(int malformedUrl, Exception e, String... strings) {
 		this(malformedUrl, e);
 		args = strings;
 	}
@@ -48,7 +48,7 @@ public class JidelakException extends Exception {
 		return resource;
 	}
 
-	public JidelakException setArgs(String[] args) {
+	public MammaHelpException setArgs(String[] args) {
 		this.args = args;
 		return this;
 	}
@@ -97,7 +97,7 @@ public class JidelakException extends Exception {
 		return meal;
 	}
 
-	public JidelakException setMeal(Meal meal) {
+	public MammaHelpException setMeal(Meal meal) {
 		this.meal = meal;
 		return this;
 	}
@@ -106,7 +106,7 @@ public class JidelakException extends Exception {
 		return restaurant;
 	}
 
-	public JidelakException setRestaurant(Restaurant restaurant) {
+	public MammaHelpException setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
 		return this;
 	}
@@ -115,7 +115,7 @@ public class JidelakException extends Exception {
 		return source;
 	}
 
-	public JidelakException setSource(Source source) {
+	public MammaHelpException setSource(Source source) {
 		this.source = source;
 		return this;
 	}
@@ -124,7 +124,7 @@ public class JidelakException extends Exception {
 		return availability;
 	}
 
-	public JidelakException setAvailability(Availability availability) {
+	public MammaHelpException setAvailability(Availability availability) {
 		this.availability = availability;
 		return this;
 	}
@@ -133,7 +133,7 @@ public class JidelakException extends Exception {
 		return handled;
 	}
 
-	public JidelakException setHandled(boolean handled) {
+	public MammaHelpException setHandled(boolean handled) {
 		this.handled = handled;
 		return this;
 	}
@@ -142,7 +142,7 @@ public class JidelakException extends Exception {
 		return errorType;
 	}
 
-	public JidelakException setErrorType(ErrorType errorType) {
+	public MammaHelpException setErrorType(ErrorType errorType) {
 		this.errorType = errorType;
 		return this;
 	}

@@ -323,7 +323,7 @@ public class MainActivity extends AbstractMammaHelpActivity implements
 	public boolean onCreateOptionsMenu(Menu menu) {
 		mainMenu = menu;
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.jidelak, menu);
+		getMenuInflater().inflate(R.menu.mammahelp, menu);
 		return true;
 	}
 

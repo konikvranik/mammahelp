@@ -87,7 +87,7 @@ public class FeederService extends Service {
 	private static Logger log = LoggerFactory.getLogger(FeederService.class);
 
 	private final FeederServiceBinder mBinder = new FeederServiceBinder(this);
-	static final String LOGGING_TAG = "JidelakFeederService";
+	static final String LOGGING_TAG = "MammaHelpFeederService";
 
 	private MammaHelpDbHelper dbHelper;
 	private Handler mHandler = new Handler();
@@ -98,7 +98,7 @@ public class FeederService extends Service {
 
 	@Override
 	public IBinder onBind(Intent intent) {
-		log.debug("JidelakFeederService.onBind()");
+		log.debug("MammaHelpFeederService.onBind()");
 		return mBinder;
 	}
 
@@ -118,7 +118,7 @@ public class FeederService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		if (isRunning() || intent.getBooleanExtra("register", false))
 			return START_NOT_STICKY;
-		log.trace("JidelakFeederService.onStartCommand()");
+		log.trace("MammaHelpFeederService.onStartCommand()");
 		// this.force = intent.getExtras().getBoolean("force", false);
 
 		if (!updating)
@@ -130,7 +130,7 @@ public class FeederService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		log.trace("JidelakFeederService.onCreate()");
+		log.trace("MammaHelpFeederService.onCreate()");
 
 		registerReceiver(timerReceiver = new FeederReceiver(),
 				new IntentFilter(Intent.ACTION_TIME_TICK));
@@ -142,7 +142,7 @@ public class FeederService extends Service {
 		unregisterReceiver(timerReceiver);
 	}
 
-	void updateData() throws JidelakException {
+	void updateData() throws MammaHelpException {
 
 		SourceDao sdao = new SourceDao(getDbHelper());
 		MealDao mdao = new MealDao(getDbHelper());
@@ -192,29 +192,29 @@ public class FeederService extends Service {
 					rdao.update(restaurant, false);
 
 				} catch (IOException e) {
-					throw new JidelakException(R.string.feeder_io_exception, e)
+					throw new MammaHelpException(R.string.feeder_io_exception, e)
 							.setSource(source)
 							.setRestaurant(rdao.findById(restaurant))
 							.setHandled(true).setErrorType(ErrorType.NETWORK);
 				} catch (TransformerException e) {
-					throw new JidelakTransformerException(
+					throw new MammaHelpTransformerException(
 							R.string.transformer_exception, rdao.findById(
 									restaurant).getTemplateName(), source
 									.getUrl().toString(), e).setSource(source)
 							.setRestaurant(rdao.findById(restaurant))
 							.setHandled(true).setErrorType(ErrorType.PARSING);
 				} catch (ParserConfigurationException e) {
-					throw new JidelakException(
+					throw new MammaHelpException(
 							R.string.parser_configuration_exception, e)
 							.setSource(source)
 							.setRestaurant(rdao.findById(restaurant))
 							.setHandled(true).setErrorType(ErrorType.PARSING);
-				} catch (JidelakException e) {
+				} catch (MammaHelpException e) {
 					throw e.setSource(source).setRestaurant(
 							rdao.findById(restaurant));
 				}
 
-			} catch (JidelakException e) {
+			} catch (MammaHelpException e) {
 				log.error(e.getMessage(), e);
 				mHandler.post(new ToastRunnable(getResources().getString(
 						R.string.import_failed)
@@ -238,21 +238,21 @@ public class FeederService extends Service {
 		getDbHelper().notifyDataSetChanged();
 	}
 
-	private JidelakDbHelper getDbHelper() {
+	private MammaHelpDbHelper getDbHelper() {
 		if (dbHelper == null)
-			dbHelper = JidelakDbHelper.getInstance(getApplicationContext());
+			dbHelper = MammaHelpDbHelper.getInstance(getApplicationContext());
 		return dbHelper;
 	}
 
 	Node retrieve(Source source, InputStream inXsl) throws IOException,
 			TransformerException, ParserConfigurationException,
-			JidelakException {
+			MammaHelpException {
 
 		HttpURLConnection con = (HttpURLConnection) source.getUrl()
 				.openConnection();
 		con.connect();
 		if (con.getResponseCode() != HttpURLConnection.HTTP_OK) {
-			throw new JidelakException(R.string.http_error_response,
+			throw new MammaHelpException(R.string.http_error_response,
 					new String[] {
 							Integer.valueOf(con.getResponseCode()).toString(),
 							con.getResponseMessage() }).setSource(source)
@@ -354,7 +354,7 @@ public class FeederService extends Service {
 			try {
 
 				updateData();
-			} catch (JidelakException e) {
+			} catch (MammaHelpException e) {
 				log.error(e.getMessage(), e);
 				mHandler.post(new ToastRunnable(getResources().getString(
 						R.string.import_failed)

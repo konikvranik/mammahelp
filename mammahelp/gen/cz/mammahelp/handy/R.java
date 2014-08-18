@@ -16,6 +16,15 @@ public final class R {
         public static final int abc_slide_out_bottom=0x7f040004;
         public static final int abc_slide_out_top=0x7f040005;
     }
+    public static final class array {
+        public static final int days=0x7f0c0004;
+        public static final int delete_delays=0x7f0c0002;
+        public static final int hours=0x7f0c0005;
+        public static final int minutes=0x7f0c0006;
+        public static final int plurals=0x7f0c0000;
+        public static final int update_times=0x7f0c0001;
+        public static final int weeks=0x7f0c0003;
+    }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
@@ -858,10 +867,29 @@ containing a value of this type.
         public static final int abc_split_action_bar_is_narrow=0x7f060002;
     }
     public static final class color {
-        public static final int abc_search_url_text_holo=0x7f070003;
+        public static final int JidelakOrange=0x7f070005;
+        public static final int RestaurantBackground=0x7f070006;
+        public static final int RestaurantHeaderBackground=0x7f070004;
+        public static final int abc_search_url_text_holo=0x7f070016;
         public static final int abc_search_url_text_normal=0x7f070000;
         public static final int abc_search_url_text_pressed=0x7f070002;
         public static final int abc_search_url_text_selected=0x7f070001;
+        public static final int beer_meal=0x7f070014;
+        public static final int coctail_meal=0x7f070013;
+        public static final int cold_meal=0x7f07000a;
+        public static final int fish_meal=0x7f07000e;
+        public static final int fried_meal=0x7f07000d;
+        public static final int half_meal=0x7f07000c;
+        public static final int juice_meal=0x7f070012;
+        public static final int live_meal=0x7f07000b;
+        public static final int pasta_meal=0x7f070008;
+        public static final int red_wine_meal=0x7f07000f;
+        public static final int rose_wine_meal=0x7f070011;
+        public static final int shadow=0x7f070003;
+        public static final int steak_meal=0x7f070009;
+        public static final int vegeterian_meal=0x7f070007;
+        public static final int warm_drink_meal=0x7f070015;
+        public static final int white_wine_meal=0x7f070010;
     }
     public static final class dimen {
         /**  Default height of an action bar. 
@@ -947,6 +975,10 @@ containing a value of this type.
  Minimum width of the search view text entry area. 
          */
         public static final int abc_search_view_text_min_width=0x7f08000c;
+        /**  Default screen margins, per the Android Design guidelines. 
+         */
+        public static final int activity_horizontal_margin=0x7f080015;
+        public static final int activity_vertical_margin=0x7f080016;
         /**  The platform's desired fixed height for a dialog along the major axis
          (the screen is in portrait). This may be either a fraction or a dimension.
  The platform's desired fixed height for a dialog along the major axis
@@ -1090,6 +1122,7 @@ containing a value of this type.
         public static final int default_activity_button=0x7f050028;
         public static final int dialog=0x7f05000e;
         public static final int disableHome=0x7f050008;
+        public static final int drawer_layout=0x7f050041;
         public static final int dropdown=0x7f05000f;
         public static final int edit_query=0x7f050030;
         public static final int end=0x7f050013;
@@ -1100,9 +1133,10 @@ containing a value of this type.
         public static final int icon=0x7f05002a;
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f050027;
-        public static final int item_detail=0x7f05003e;
-        public static final int item_detail_container=0x7f05003c;
-        public static final int item_list=0x7f05003d;
+        public static final int item_detail=0x7f050042;
+        public static final int item_detail_container=0x7f05003f;
+        public static final int item_list=0x7f050040;
+        public static final int last_updated=0x7f05003d;
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f050029;
         public static final int middle=0x7f050012;
@@ -1132,7 +1166,9 @@ containing a value of this type.
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
         public static final int up=0x7f050021;
+        public static final int usage=0x7f05003e;
         public static final int useLogo=0x7f050003;
+        public static final int version=0x7f05003c;
         public static final int withText=0x7f05000c;
     }
     public static final class integer {
@@ -1159,6 +1195,7 @@ containing a value of this type.
          showAsAction="ifRoom" items can fit. "always" items can override this. 
          */
         public static final int abc_max_action_buttons=0x7f090000;
+        public static final int google_play_services_version=0x7f090001;
     }
     public static final class layout {
         public static final int abc_action_bar_decor=0x7f030000;
@@ -1185,7 +1222,8 @@ containing a value of this type.
         public static final int abc_search_dropdown_item_icons_2line=0x7f030015;
         public static final int abc_search_view=0x7f030016;
         public static final int abc_simple_decor=0x7f030017;
-        public static final int activity_item_detail=0x7f030018;
+        public static final int about=0x7f030018;
+        public static final int activity_item_detail=0x7f030019;
         /** 
     Layout alias to replace the single-pane version of the layout with a
     two-pane version on Large screens.
@@ -1201,10 +1239,11 @@ containing a value of this type.
     http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
     
          */
-        public static final int activity_item_list=0x7f030019;
-        public static final int activity_item_twopane=0x7f03001a;
-        public static final int fragment_item_detail=0x7f03001b;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001c;
+        public static final int activity_item_list=0x7f03001a;
+        public static final int activity_item_twopane=0x7f03001b;
+        public static final int activity_main=0x7f03001c;
+        public static final int fragment_item_detail=0x7f03001d;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001e;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1248,7 +1287,11 @@ containing a value of this type.
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
         public static final int app_name=0x7f0a000d;
+        public static final int date_time=0x7f0a0012;
+        public static final int last_updated=0x7f0a0011;
         public static final int title_item_detail=0x7f0a000e;
+        public static final int versionName=0x7f0a000f;
+        public static final int versionString=0x7f0a0010;
     }
     public static final class style {
         /** 
@@ -1277,6 +1320,17 @@ containing a value of this type.
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0b008c;
+        public static final int DialogTheme=0x7f0b008d;
+        public static final int JidelakOrangeText=0x7f0b0091;
+        public static final int JidelakOrangeTextLarge=0x7f0b0093;
+        public static final int JidelakOrangeTextSmall=0x7f0b0092;
+        public static final int RestaurantHeaderTheme=0x7f0b0096;
+        public static final int RestaurantMenuTheme=0x7f0b0095;
+        public static final int RestaurantOrangeTheme=0x7f0b0097;
+        public static final int RestaurantText=0x7f0b008e;
+        public static final int RestaurantTextLarge=0x7f0b008f;
+        public static final int RestaurantTextSmall=0x7f0b0090;
+        public static final int RestaurantTheme=0x7f0b0094;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0b0063;
