@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="versionName">Verze:</string>
+    <string name="versionString">%1$s (kód: %2$d)</string>
+    <string name="last_updated">Naposledy staženo</string>
+    <string name="date_time">%1$s v %2$s</string>
+
+    <string-array name="weeks">
+        <item>týdnů</item>
+        <item>týden</item>
+        <item>týdny</item>
+        <item>týdnů</item>
+    </string-array>
+    <string-array name="days">
+        <item>dnů</item>
+        <item>den</item>
+        <item>dny</item>
+        <item>dnů</item>
+    </string-array>
+    <string-array name="hours">
+        <item>hodin</item>
+        <item>hodina</item>
+        <item>hodiny</item>
+        <item>hodin</item>
+    </string-array>
+    <string-array name="minutes">
+        <item>minut</item>
+        <item>minuta</item>
+        <item>minuty</item>
+        <item>minut</item>
+    </string-array>
+
+</resources>

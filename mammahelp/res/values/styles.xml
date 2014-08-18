@@ -1,10 +1,10 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+    <style name="AppBaseTheme" parent="@style/Theme.AppCompat">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -15,6 +15,64 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <style name="DialogTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="RestaurantText">
+        <item name="android:textColor">@android:color/primary_text_light</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="RestaurantTextLarge" parent="RestaurantText">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="RestaurantTextSmall" parent="RestaurantText">
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <style name="JidelakOrangeText" parent="RestaurantText">
+        <item name="android:textColor">@color/JidelakOrange</item>
+    </style>
+
+    <style name="JidelakOrangeTextSmall" parent="RestaurantTextSmall">
+        <item name="android:textColor">@color/JidelakOrange</item>
+    </style>
+
+    <style name="JidelakOrangeTextLarge" parent="RestaurantTextLarge">
+        <item name="android:textColor">@color/JidelakOrange</item>
+    </style>
+
+    <style name="RestaurantTheme" parent="AppTheme">
+        <item name="android:background">@color/RestaurantBackground</item>
+        <item name="android:childDivider">@android:color/transparent</item>
+        <item name="android:groupIndicator">@null</item>
+        <item name="android:textAppearance">@style/RestaurantText</item>
+        <item name="android:dividerHeight">5dp</item>
+    </style>
+
+    <style name="RestaurantMenuTheme" parent="RestaurantTheme">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+
+    <style name="RestaurantHeaderTheme" parent="RestaurantTheme">
+        <item name="android:padding">5dp</item>
+        <item name="android:background">@color/RestaurantHeaderBackground</item>
+    </style>
+
+    <style name="RestaurantOrangeTheme" parent="RestaurantHeaderTheme">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/JidelakOrange</item>
     </style>
 
 </resources>

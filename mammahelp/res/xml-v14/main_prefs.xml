@@ -1,0 +1,55 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:suteren="http://suteren.net/"
+    android:title="@string/app_name" >
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="category_background"
+        android:summary="@string/category_background_description"
+        android:title="@string/category_background_title" />
+
+    <net.suteren.android.jidelak.ui.IntervalPreference
+        android:defaultValue="604800000"
+        android:dialogLayout="@layout/slider_preference"
+        android:key="delete_delay"
+        android:summary="@string/delete_delay_description"
+        android:title="@string/delete_delay_title"
+        suteren:values="@array/delete_delays" />
+
+    <PreferenceCategory
+        android:icon="@drawable/ic_action_time"
+        android:title="@string/update_title" >
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="automatic_updates"
+            android:summary="@string/update_automatically_description"
+            android:title="@string/update_automatically_title" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:dependency="automatic_updates"
+            android:key="only_wifi"
+            android:summary="@string/only_wifi_description"
+            android:title="@string/only_wifi_title" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="particular_time"
+            android:summary="@string/update_on_particular_time_description"
+            android:title="@string/update_on_particular_time_title" />
+
+        <net.suteren.android.jidelak.ui.TimePreference
+            android:defaultValue="10:30"
+            android:dialogLayout="@layout/slider_preference"
+            android:key="update_time"
+            android:summary="@string/update_time_description"
+            android:title="@string/update_time_title" />
+
+        <net.suteren.android.jidelak.ui.IntervalPreference
+            android:defaultValue="14400000"
+            android:dialogLayout="@layout/slider_preference"
+            android:key="update_interval"
+            android:summary="@string/refresh_period_description"
+            android:title="@string/refresh_period_title"
+            suteren:values="@array/update_times" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

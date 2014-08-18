@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="google_play_services_version">2</integer>
+
+    <integer-array name="plurals">
+        <item>1</item>
+        <item>2</item>
+    </integer-array>
+
+    <string-array name="update_times">
+
+        <!-- 10 min -->
+        <item>600000</item>
+
+        <!-- 30 min -->
+        <item>1800000</item>
+
+        <!-- 1 hr -->
+        <item>3600000</item>
+
+        <!-- 4 hr -->
+        <item>14400000</item>
+
+        <!-- 12 hr -->
+        <item>43200000</item>
+
+        <!-- 1 day -->
+        <item>86400000</item>
+
+        <!-- 1 wk -->
+        <item>604800000</item>
+
+        <!-- 2 wk -->
+        <item>1209600000</item>
+    </string-array>
+    <string-array name="delete_delays">
+
+        <!-- 4 hr -->
+        <item>14400000</item>
+
+        <!-- 12 hr -->
+        <item>43200000</item>
+
+        <!-- 1 day -->
+        <item>86400000</item>
+
+        <!-- 1 wk -->
+        <item>604800000</item>
+
+        <!-- 2 wk -->
+        <item>1209600000</item>
+
+        <!-- 30 days -->
+        <item>2592000000</item>
+
+        <!-- never -->
+        <item>-1</item>
+    </string-array>
+
+</resources>

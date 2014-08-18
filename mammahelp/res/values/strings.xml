@@ -1,7 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">mammahelp</string>
+    <string name="app_name">Mamma HELP</string>
     <string name="title_item_detail">Item Detail</string>
+    <string name="versionName">Version:</string>
+    <string name="versionString">%1$s (code: %2$d)</string>
+    <string name="last_updated">Last updated</string>
+    <string name="date_time">%1$s in %2$s</string>
+
+    <string-array name="weeks">
+        <item>weeks</item>
+        <item>week</item>
+        <item>weeks</item>
+    </string-array>
+    <string-array name="days">
+        <item>days</item>
+        <item>day</item>
+        <item>days</item>
+    </string-array>
+    <string-array name="hours">
+        <item>hours</item>
+        <item>hour</item>
+        <item>hours</item>
+    </string-array>
+    <string-array name="minutes">
+        <item>minutes</item>
+        <item>minute</item>
+        <item>minutes</item>
+    </string-array>
 
 </resources>
