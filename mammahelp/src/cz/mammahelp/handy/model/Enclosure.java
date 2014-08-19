@@ -12,11 +12,18 @@ public class Enclosure implements Identificable<Enclosure> {
 
 	public String url;
 
-	public long length;
+	public Long length;
 
 	public String type;
 
 	private Long id;
+
+	public Enclosure(Long id) {
+		setId(id);
+	}
+
+	public Enclosure() {
+	}
 
 	@Override
 	public int compareTo(Enclosure paramT) {
@@ -43,11 +50,11 @@ public class Enclosure implements Identificable<Enclosure> {
 		this.url = url;
 	}
 
-	public long getLength() {
+	public Long getLength() {
 		return length;
 	}
 
-	public void setLength(long length) {
+	public void setLength(Long length) {
 		this.length = length;
 	}
 

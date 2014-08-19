@@ -9,6 +9,10 @@ import android.database.DataSetObservable;
 import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import cz.mammahelp.handy.dao.ArticlesDao;
+import cz.mammahelp.handy.dao.BaseDao.Column;
+import cz.mammahelp.handy.dao.BaseDao.Table;
+import cz.mammahelp.handy.dao.NewsDao;
 
 public class MammaHelpDbHelper extends SQLiteOpenHelper {
 

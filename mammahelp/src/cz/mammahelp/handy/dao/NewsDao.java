@@ -24,7 +24,7 @@ public class NewsDao extends BaseDao<News> {
 	public static final Column CATEGORY = new Column("category",
 			SQLiteDataTypes.TEXT);
 	public static final Column ENCLOSURE = new Column("enclosure",
-			SQLiteDataTypes.INTEGER);
+			EnclosureDao.ID.getType(), new ForeignKey(EnclosureDao.class));
 
 	static {
 
@@ -71,7 +71,7 @@ public class NewsDao extends BaseDao<News> {
 
 	@Override
 	protected ContentValues getValues(News obj, boolean updateNull) {
-		MammaHelpContentValues values = new MammaHelpContentValues(updateNull);
+		TypedContentValues values = new TypedContentValues(updateNull);
 		values.put(ID, obj.getId());
 		values.put(TITLE, obj.getTitle());
 		values.put(UPDATED, new SimpleDateFormat(DATE_FORMAT, LOCALE)

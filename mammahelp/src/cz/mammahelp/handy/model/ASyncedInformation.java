@@ -1,7 +1,6 @@
 package cz.mammahelp.handy.model;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * <!-- begin-user-doc --> <!-- end-user-doc -->

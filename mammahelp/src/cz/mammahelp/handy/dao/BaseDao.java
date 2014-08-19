@@ -1,5 +1,6 @@
 package cz.mammahelp.handy.dao;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
@@ -28,6 +29,7 @@ import android.database.sqlite.SQLiteDatabase;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
 import cz.mammahelp.handy.Utils;
+import cz.mammahelp.handy.model.Address;
 import cz.mammahelp.handy.model.Identificable;
 
 public abstract class BaseDao<T extends Identificable<T>> {
@@ -174,6 +176,26 @@ public abstract class BaseDao<T extends Identificable<T>> {
 		public ForeignKey(Table table, Column column) {
 			this.table = table;
 			this.target = column;
+		}
+
+		public ForeignKey(Class<?> class1) {
+			try {
+				this.table = BaseDao.getTable((String) class1.getMethod(
+						"getName").invoke(null));
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.target = BaseDao.ID;
 		}
 
 		public void setColumn(Column column) {
@@ -421,6 +443,9 @@ public abstract class BaseDao<T extends Identificable<T>> {
 			}
 		else if (c == Locale.class) {
 			value = (V) Utils.stringToLocale(cursor.getString(idx));
+		} else if (c == Address.class) {
+			AddressDao ad = new AddressDao(dbHelper);
+			value = (V) ad.findById(cursor.getLong(idx));
 		} else if (c == DateFormat.class) {
 			value = (V) new SimpleDateFormat(cursor.getString(idx), getLocale());
 		} else if (c == URL.class) {
@@ -428,6 +453,16 @@ public abstract class BaseDao<T extends Identificable<T>> {
 				value = (V) new URL(cursor.getString(idx));
 			} catch (MalformedURLException e) {
 				return null;
+			}
+		} else if (c.isInstance(Identificable.class)) {
+			value = null;
+			try {
+				value = c.newInstance();
+				((Identificable<V>) value).setId(cursor.getLong(idx));
+			} catch (InstantiationException e) {
+				log.error(e.getMessage(), e);
+			} catch (IllegalAccessException e) {
+				log.error(e.getMessage(), e);
 			}
 		} else {
 			throw new ClassCastException();
