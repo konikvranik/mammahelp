@@ -1,13 +1,14 @@
 /**
  * 
  */
-package cz.mammahelp.handy;
+package cz.mammahelp.handy.ui;
 
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cz.mammahelp.handy.R;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.SharedPreferences;

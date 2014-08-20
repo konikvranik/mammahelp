@@ -1,5 +1,9 @@
-package cz.mammahelp.handy;
+package cz.mammahelp.handy.ui;
 
+import cz.mammahelp.handy.R;
+import cz.mammahelp.handy.R.id;
+import cz.mammahelp.handy.R.layout;
+import cz.mammahelp.handy.ui.ItemListFragment.Callbacks;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

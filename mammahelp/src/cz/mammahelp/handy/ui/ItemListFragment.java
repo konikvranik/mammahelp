@@ -1,4 +1,4 @@
-package cz.mammahelp.handy;
+package cz.mammahelp.handy.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import cz.mammahelp.handy.dummy.DummyContent;
 
 /**

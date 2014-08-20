@@ -8,7 +8,7 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context="cz.mammahelp.handy.ItemListActivity" >
+    tools:context="cz.mammahelp.handy.ui.ItemListActivity" >
 
     <!--
     This layout is a two-pane layout for the Items

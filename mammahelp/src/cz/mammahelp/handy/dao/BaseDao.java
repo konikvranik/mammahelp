@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
 import cz.mammahelp.handy.Utils;
@@ -385,7 +386,7 @@ public abstract class BaseDao<T extends Identificable<T>> {
 		}
 	}
 
-	private SortedSet<T> parseResults(Cursor cursor) {
+	protected SortedSet<T> parseResults(Cursor cursor) {
 		SortedSet<T> results = new TreeSet<T>();
 		try {
 
@@ -443,6 +444,9 @@ public abstract class BaseDao<T extends Identificable<T>> {
 			}
 		else if (c == Locale.class) {
 			value = (V) Utils.stringToLocale(cursor.getString(idx));
+		} else if (c == Bundle.class) {
+			BundleDao ad = new BundleDao(dbHelper);
+			value = (V) ad.findById(cursor.getLong(idx)).getBundle();
 		} else if (c == Address.class) {
 			AddressDao ad = new AddressDao(dbHelper);
 			value = (V) ad.findById(cursor.getLong(idx));

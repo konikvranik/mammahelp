@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cz.mammahelp.handy;
+package cz.mammahelp.handy.ui;
 
 import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
 
@@ -12,6 +12,11 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cz.mammahelp.handy.R;
+import cz.mammahelp.handy.Utils;
+import cz.mammahelp.handy.R.id;
+import cz.mammahelp.handy.R.layout;
+import cz.mammahelp.handy.R.string;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;

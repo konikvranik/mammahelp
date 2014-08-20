@@ -1,4 +1,4 @@
-package cz.mammahelp.handy;
+package cz.mammahelp.handy.ui;
 
 import java.lang.reflect.Field;
 
@@ -11,6 +11,8 @@ import android.view.ViewConfiguration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import cz.mammahelp.handy.MammaHelpDbHelper;
 
 public class AbstractMammaHelpActivity extends ActionBarActivity {
 	protected ActionBar actionBar;

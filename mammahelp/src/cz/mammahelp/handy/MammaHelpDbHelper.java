@@ -9,25 +9,41 @@ import android.database.DataSetObservable;
 import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import cz.mammahelp.handy.dao.AddressDao;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.dao.BaseDao.Column;
 import cz.mammahelp.handy.dao.BaseDao.Table;
+import cz.mammahelp.handy.dao.BundleDao;
+import cz.mammahelp.handy.dao.EnclosureDao;
+import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.dao.NewsDao;
 
 public class MammaHelpDbHelper extends SQLiteOpenHelper {
 
-	private static Logger log = LoggerFactory.getLogger(MammaHelpDbHelper.class);
+	private static Logger log = LoggerFactory
+			.getLogger(MammaHelpDbHelper.class);
 
-	public static final int DATABASE_VERSION = 7;
+	public static final int DATABASE_VERSION = 1;
 	public static final String DATABASE_NAME = "MammaHelp.db";
 
-	private static final String SQL_CREATE_ARTICLES = ArticlesDao
+	private static final String SQL_CREATE_ARTICLES = ArticlesDao.getTable()
+			.createClausule();
+
+	private static final String SQL_CREATE_NEWS = NewsDao.getTable()
+			.createClausule();
+
+	private static final String SQL_CREATE_ADDRESS = AddressDao.getTable()
+			.createClausule();
+
+	private static final String SQL_CREATE_BUNDLE = BundleDao.getTable()
+			.createClausule();
+
+	private static final String SQL_CREATE_ENCLOSURE = EnclosureDao.getTable()
+			.createClausule();
+
+	private static final String SQL_CREATE_LOCATION_POINT = LocationPointDao
 			.getTable().createClausule();
 
-	private static final String SQL_CREATE_NEWS = NewsDao
-			.getTable().createClausule();
-	
-	
 	private final static DataSetObservable mDataSetObservable = new DataSetObservable();
 
 	private static MammaHelpDbHelper singletonInstance;
@@ -56,6 +72,22 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 
 		log.debug(SQL_CREATE_NEWS);
 		db.execSQL(SQL_CREATE_NEWS);
+
+		log.debug(SQL_CREATE_NEWS);
+		db.execSQL(SQL_CREATE_NEWS);
+
+		log.debug(SQL_CREATE_ADDRESS);
+		db.execSQL(SQL_CREATE_ADDRESS);
+
+		log.debug(SQL_CREATE_ENCLOSURE);
+		db.execSQL(SQL_CREATE_ENCLOSURE);
+
+		log.debug(SQL_CREATE_BUNDLE);
+		db.execSQL(SQL_CREATE_BUNDLE);
+
+		log.debug(SQL_CREATE_LOCATION_POINT);
+		db.execSQL(SQL_CREATE_LOCATION_POINT);
+
 	}
 
 	/*
@@ -71,58 +103,9 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 		switch (oldVersion) {
 		case 1:
 
-			createIndex(db, AvailabilityDao.getTable(), "date",
-					AvailabilityDao.YEAR, AvailabilityDao.MONTH,
-					AvailabilityDao.DAY);
-			createIndex(db, AvailabilityDao.getTable(), AvailabilityDao.DOW);
+			// New stuf here
 
 			if (newVersion <= 2)
-				break;
-
-		case 2:
-			createIndex(db, AvailabilityDao.getTable(), AvailabilityDao.YEAR);
-			createIndex(db, AvailabilityDao.getTable(), AvailabilityDao.MONTH);
-			createIndex(db, AvailabilityDao.getTable(), AvailabilityDao.DAY);
-			createIndex(db, AvailabilityDao.getTable(),
-					AvailabilityDao.RESTAURANT);
-
-			createIndex(db, MealDao.getTable(), MealDao.RESTAURANT);
-			createIndex(db, MealDao.getTable(), MealDao.AVAILABILITY);
-
-			createIndex(db, SourceDao.getTable(), SourceDao.RESTAURANT);
-
-			if (newVersion <= 3)
-				break;
-
-		case 3:
-
-			createIndex(db, AvailabilityDao.getTable(), "whole",
-					AvailabilityDao.YEAR, AvailabilityDao.MONTH,
-					AvailabilityDao.DAY, AvailabilityDao.DOW);
-
-			if (newVersion <= 4)
-				break;
-
-		case 4:
-
-			addColumn(db, RestaurantDao.getTable(), RestaurantDao.POSITION);
-
-			if (newVersion <= 5)
-				break;
-
-		case 5:
-
-			cleanup(db);
-
-			if (newVersion <= 6)
-				break;
-
-		case 6:
-
-			addColumn(db, AvailabilityDao.getTable(),
-					AvailabilityDao.DESCRIPTION);
-
-			if (newVersion <= 7)
 				break;
 
 		default:

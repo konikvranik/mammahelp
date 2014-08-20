@@ -85,6 +85,7 @@ public class AddressDao extends BaseDao<Address> {
 		e.setAdminArea(unpackColumnValue(cursor, ADMIN_AREA, String.class));
 		e.setCountryCode(unpackColumnValue(cursor, COUNTRY_CODE, String.class));
 		e.setCountryName(unpackColumnValue(cursor, COUNTRY_NAME, String.class));
+		e.setBundleId(unpackColumnValue(cursor, EXTRAS, Long.class));
 		e.setExtras(unpackColumnValue(cursor, EXTRAS, Bundle.class));
 		e.setFeatureName(unpackColumnValue(cursor, FEATURE_NAME, String.class));
 		e.setLatitude(unpackColumnValue(cursor, LATITUDE, Double.class));
@@ -124,8 +125,21 @@ public class AddressDao extends BaseDao<Address> {
 		TypedContentValues values = new TypedContentValues(updateNull);
 		values.put(ID, obj.getId());
 		values.put(URL, obj.getUrl());
-		values.put(LENGTH, obj.getLength());
-		values.put(TYPE, obj.getType());
+		values.put(ADMIN_AREA, obj.getAdminArea());
+		values.put(COUNTRY_CODE, obj.getCountryCode());
+		values.put(COUNTRY_NAME, obj.getCountryName());
+		values.put(EXTRAS, obj.getBundleId());
+		values.put(FEATURE_NAME, obj.getFeatureName());
+		values.put(LATITUDE, obj.getLatitude());
+		values.put(LONGITUDE, obj.getLongitude());
+		values.put(LOCALITY, obj.getLocality());
+		values.put(PHONE, obj.getPhone());
+		values.put(POSTAL_CODE, obj.getPostalCode());
+		values.put(PREMISES, obj.getPremises());
+		values.put(SUB_ADMIN_AREA, obj.getSubAdminArea());
+		values.put(SUB_LOCALITY, obj.getSubLocality());
+		values.put(SUB_THOROUGHFARE, obj.getSubThoroughfare());
+		values.put(THOROUGHFARE, obj.getThoroughfare());
 
 		return values.getValues();
 	}

@@ -1,10 +1,13 @@
-package cz.mammahelp.handy;
+package cz.mammahelp.handy.ui;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import cz.mammahelp.handy.R;
+import cz.mammahelp.handy.R.id;
+import cz.mammahelp.handy.R.layout;
 import cz.mammahelp.handy.dummy.DummyContent;
 
 /**

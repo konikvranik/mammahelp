@@ -63,7 +63,7 @@ public class FeederService extends Service {
 			this.ctx = ctx;
 		}
 
-		FeederService getService() {
+		public FeederService getService() {
 			return ctx;
 		}
 
