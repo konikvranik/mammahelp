@@ -1,21 +1,19 @@
 package cz.mammahelp.handy;
 
+import static cz.mammahelp.handy.Constants.DEFAULT_DELETE_DELAY;
+import static cz.mammahelp.handy.Constants.DEFAULT_PREFERENCES;
+import static cz.mammahelp.handy.Constants.DELETE_DELAY_KEY;
+import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
-import java.net.HttpURLConnection;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Properties;
-import java.util.Set;
-import java.util.SortedSet;
 
-import javax.lang.model.type.ErrorType;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -29,7 +27,6 @@ import javax.xml.transform.stream.StreamSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.w3c.tidy.Configuration;
 import org.w3c.tidy.Tidy;
 
@@ -144,84 +141,24 @@ public class FeederService extends Service {
 
 	void updateData() throws MammaHelpException {
 
-		SourceDao sdao = new SourceDao(getDbHelper());
-		MealDao mdao = new MealDao(getDbHelper());
-		RestaurantDao rdao = new RestaurantDao(getDbHelper());
-		AvailabilityDao adao = new AvailabilityDao(getDbHelper());
+		// SourceDao sdao = new SourceDao(getDbHelper());
 
-		RestaurantMarshaller rm = new RestaurantMarshaller();
-		Restaurant restaurant = new Restaurant();
-		for (Source source : sdao.findAll()) {
-			try {
+		try {
 
-				try {
-					restaurant = source.getRestaurant();
+			// TODO
 
-					InputStream template = openFileInput(restaurant
-							.getTemplateName());
+			if (false)
+				throw new MammaHelpException(
+						R.string.abc_action_bar_home_description);
 
-					Node result = retrieve(source, template);
-
-					rm.unmarshall("#document.jidelak.config", result,
-							restaurant);
-
-					Set<Availability> avs = new HashSet<Availability>();
-					for (Meal meal : restaurant.getMenu()) {
-						avs.add(meal.getAvailability());
-					}
-
-					for (Availability av : avs) {
-						SortedSet<Meal> atd = mdao.findByDayAndRestaurant(
-								av.getCalendar(), restaurant);
-						mdao.delete(atd);
-					}
-
-					for (Meal meal : restaurant.getMenu()) {
-						adao.insert(meal.getAvailability());
-						mdao.insert(meal);
-					}
-
-					if (!(restaurant.getOpeningHours() == null || restaurant
-							.getOpeningHours().isEmpty())) {
-						Restaurant savedRestaurant = rdao.findById(restaurant);
-						if (savedRestaurant != null
-								&& savedRestaurant.getOpeningHours() != null)
-							adao.delete(savedRestaurant.getOpeningHours());
-						adao.insert(restaurant.getOpeningHours());
-					}
-					rdao.update(restaurant, false);
-
-				} catch (IOException e) {
-					throw new MammaHelpException(R.string.feeder_io_exception, e)
-							.setSource(source)
-							.setRestaurant(rdao.findById(restaurant))
-							.setHandled(true).setErrorType(ErrorType.NETWORK);
-				} catch (TransformerException e) {
-					throw new MammaHelpTransformerException(
-							R.string.transformer_exception, rdao.findById(
-									restaurant).getTemplateName(), source
-									.getUrl().toString(), e).setSource(source)
-							.setRestaurant(rdao.findById(restaurant))
-							.setHandled(true).setErrorType(ErrorType.PARSING);
-				} catch (ParserConfigurationException e) {
-					throw new MammaHelpException(
-							R.string.parser_configuration_exception, e)
-							.setSource(source)
-							.setRestaurant(rdao.findById(restaurant))
-							.setHandled(true).setErrorType(ErrorType.PARSING);
-				} catch (MammaHelpException e) {
-					throw e.setSource(source).setRestaurant(
-							rdao.findById(restaurant));
-				}
-
-			} catch (MammaHelpException e) {
-				log.error(e.getMessage(), e);
-				mHandler.post(new ToastRunnable(getResources().getString(
-						R.string.import_failed)
-						+ e.getMessage()));
-				NotificationUtils.makeNotification(getApplicationContext(), e);
-			}
+		} catch (MammaHelpException e) {
+			log.error(e.getMessage(), e);
+			mHandler.post(new ToastRunnable(getResources().getString(
+					R.string.import_failed)
+					+ e.getMessage()));
+			NotificationUtils.makeNotification(getApplicationContext(), e);
 		}
+
 		SharedPreferences prefs = getApplicationContext().getSharedPreferences(
 				DEFAULT_PREFERENCES, Context.MODE_PRIVATE);
 		Editor editor = prefs.edit();
@@ -232,9 +169,8 @@ public class FeederService extends Service {
 		if (delay >= 0) {
 			Calendar cal = Calendar.getInstance(Locale.getDefault());
 			cal.setTimeInMillis(System.currentTimeMillis() - delay);
-			mdao.deleteOlder(cal);
+			// mdao.deleteOlder(cal);
 		}
-
 		getDbHelper().notifyDataSetChanged();
 	}
 
@@ -242,44 +178,6 @@ public class FeederService extends Service {
 		if (dbHelper == null)
 			dbHelper = MammaHelpDbHelper.getInstance(getApplicationContext());
 		return dbHelper;
-	}
-
-	Node retrieve(Source source, InputStream inXsl) throws IOException,
-			TransformerException, ParserConfigurationException,
-			MammaHelpException {
-
-		HttpURLConnection con = (HttpURLConnection) source.getUrl()
-				.openConnection();
-		con.connect();
-		if (con.getResponseCode() != HttpURLConnection.HTTP_OK) {
-			throw new MammaHelpException(R.string.http_error_response,
-					new String[] {
-							Integer.valueOf(con.getResponseCode()).toString(),
-							con.getResponseMessage() }).setSource(source)
-					.setRestaurant(source.getRestaurant()).setHandled(true)
-					.setErrorType(ErrorType.NETWORK);
-		}
-
-		InputStream is = con.getInputStream();
-		String enc = source.getEncoding();
-		if (enc == null)
-			enc = con.getContentEncoding();
-		Document d = getTidy(enc).parseDOM(is, null);
-
-		is.close();
-		con.disconnect();
-
-		DOMResult res = transform(d, inXsl);
-
-		if (log.isDebugEnabled()) {
-			StringWriter sw = new StringWriter();
-			Transformer tr = TransformerFactory.newInstance().newTransformer();
-			tr.setOutputProperty(OutputKeys.INDENT, "yes");
-			tr.transform(new DOMSource(res.getNode()), new StreamResult(sw));
-			log.debug(sw.toString());
-		}
-
-		return res.getNode();
 	}
 
 	private Tidy getTidy(String enc) {

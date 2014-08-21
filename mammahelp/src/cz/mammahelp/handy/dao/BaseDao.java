@@ -42,6 +42,7 @@ public abstract class BaseDao<T extends Identificable<T>> {
 		private String name;
 		private List<Column> columns = new ArrayList<Column>();
 		private List<ForeignKey> foreignKeys = new ArrayList<ForeignKey>();
+		private String appendix;
 
 		public Table(String name) {
 			this.name = name;
@@ -74,8 +75,18 @@ public abstract class BaseDao<T extends Identificable<T>> {
 				sb.append(fk.createClausule());
 
 			}
+			
+			sb.append(getAppendix());
 			sb.append(")");
 			return sb.toString();
+		}
+
+		public String getAppendix() {
+			return appendix;
+		}
+		
+		public void setAppendix(String appendix) {
+			this.appendix = appendix;
 		}
 
 		public String getName() {

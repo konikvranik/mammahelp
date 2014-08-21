@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="cz.mammahelp.handy.ui.ItemListActivity"
+            android:name=".ui.ItemListActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,12 +26,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:namcz.mammahelp.handy.ui.ItemDetailActivityity"
-            android:label="@string/title_item_detail"
-            android:parentActivityName="cz.mammahelp.handy.ui.ItemListActivity" >
+            android:name="cz.mammahelp.handy.ui.MainActivity"
+            android:label="@string/title_activity_main"
+            android:parentActivityName=".ui.AbstractMammaHelpActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="cz.mammahelp.handy.ItemListActivity" />
+                android:value="cz.mammahelp.handy.ui.AbstractMammaHelpActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

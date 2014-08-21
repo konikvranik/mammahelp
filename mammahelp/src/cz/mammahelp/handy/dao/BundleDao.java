@@ -16,12 +16,15 @@ public class BundleDao extends BaseDao<Bundle> {
 
 	public static final String TABLE_NAME = "bundle";
 
+	public static final Column ID = new Column("id", SQLiteDataTypes.INTEGER);
 	public static final Column KEY = new Column("key", SQLiteDataTypes.TEXT);
 	public static final Column VALUE = new Column("value", SQLiteDataTypes.BLOB);
-
 	static {
 
 		registerTable(TABLE_NAME);
+		
+		getTable().setAppendix(
+				", PRIMARY KEY ( " + ID.getName() + ", " + KEY.getName() + ")");
 
 		getTable().addColumn(ID);
 		getTable().addColumn(KEY);

@@ -6,10 +6,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import net.suteren.android.jidelak.model.Availability;
-import net.suteren.android.jidelak.model.Meal;
-import net.suteren.android.jidelak.model.Restaurant;
-import net.suteren.android.jidelak.model.Source;
 import android.content.Context;
 
 public class MammaHelpException extends Exception {
@@ -57,14 +53,10 @@ public class MammaHelpException extends Exception {
 
 		ArrayList<String> args = new ArrayList<String>();
 
-		args.add(getRestaurant() == null ? ""
-				: getRestaurant().getName() == null ? String.format(
-						"restaurant id: %d", getRestaurant().getId())
-						: getRestaurant().getName());
-		args.add(getSource() == null || getSource().getUrl() == null ? ""
-				: getSource().getUrl().toString());
-		args.add(getMeal() == null ? "" : getMeal().getTitle());
-		args.add(getAvailability() == null ? "" : getAvailability().toString());
+//		args.add(getRestaurant() == null ? ""
+//				: getRestaurant().getName() == null ? String.format(
+//						"restaurant id: %d", getRestaurant().getId())
+//						: getRestaurant().getName());
 
 		if (this.args != null)
 			args.addAll(Arrays.asList(this.args));
@@ -93,41 +85,7 @@ public class MammaHelpException extends Exception {
 				.getString(getResource(), (Object[]) getArgs());
 	}
 
-	public Meal getMeal() {
-		return meal;
-	}
-
-	public MammaHelpException setMeal(Meal meal) {
-		this.meal = meal;
-		return this;
-	}
-
-	public Restaurant getRestaurant() {
-		return restaurant;
-	}
-
-	public MammaHelpException setRestaurant(Restaurant restaurant) {
-		this.restaurant = restaurant;
-		return this;
-	}
-
-	public Source getSource() {
-		return source;
-	}
-
-	public MammaHelpException setSource(Source source) {
-		this.source = source;
-		return this;
-	}
-
-	public Availability getAvailability() {
-		return availability;
-	}
-
-	public MammaHelpException setAvailability(Availability availability) {
-		this.availability = availability;
-		return this;
-	}
+	
 
 	public boolean isHandled() {
 		return handled;

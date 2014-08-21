@@ -3,12 +3,17 @@
  */
 package cz.mammahelp.handy.ui;
 
+import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
+import static cz.mammahelp.handy.Constants.DEFAULT_PREFERENCES;
+import static cz.mammahelp.handy.Constants.PARTICULAR_TIME_KEY;
+import static cz.mammahelp.handy.Constants.UPDATE_INTERVAL_KEY;
+import static cz.mammahelp.handy.Constants.UPDATE_TIME_KEY;
+
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.mammahelp.handy.R;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.SharedPreferences;
@@ -18,7 +23,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.view.MenuItem;
-
+import cz.mammahelp.handy.R;
 /**
  * @author jd39426
  * 

@@ -29,4 +29,33 @@
         <item>minutes</item>
     </string-array>
 
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+    <string name="unsupported_protocol">Unsupported protocol</string>
+    <string name="malformed_url">URL "%s" is invalid</string>
+    <string name="http_error_response">Server returned code %1$s: %2$s</string>
+    <string name="unexpected_exception">Unexpected exception ocured - see error log</string>
+    <string name="send_to">Share</string>
+    <string name="send_error">Send Error</string>
+    <string name="import_failed">Data import failed: </string>
+    <string name="delete_delay_title">Delete after</string>
+    <string name="delete_delay_description">Records older than this period will be deleted.</string>
+    <string name="only_wifi_title">Download on WiFi only</string>
+    <string name="only_wifi_description">Don\'t download background data over 3G networks. Use WiFi only. If you update data manually, it will be downloaded even over mobile network.</string>
+    <string name="never">never</string>
+    <string name="update_on_particular_time_title">Update on particular time</string>
+    <string name="update_on_particular_time_description">If enabled, updates will be performed on selected time. Otherwise data will be updated on selected interval.</string>
+    <string name="update_automatically_title">Automatic updates on backgroud</string>
+    <string name="update_automatically_description">If active, data will be updated automatically on the background based on your update plan.</string>
+    <string name="refresh_period_description">Time after which data will be updated.</string>
+    <string name="refresh_period_title">Update period</string>
+    <string name="update_time_title">Update time</string>
+    <string name="update_time_description">Time at which data will be updated.</string>
+
 </resources>

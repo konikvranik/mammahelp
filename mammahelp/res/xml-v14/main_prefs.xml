@@ -2,12 +2,6 @@
     xmlns:suteren="http://suteren.net/"
     android:title="@string/app_name" >
 
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="category_background"
-        android:summary="@string/category_background_description"
-        android:title="@string/category_background_title" />
-
     <net.suteren.android.jidelak.ui.IntervalPreference
         android:defaultValue="604800000"
         android:dialogLayout="@layout/slider_preference"

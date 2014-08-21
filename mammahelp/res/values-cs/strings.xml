@@ -31,4 +31,26 @@
         <item>minut</item>
     </string-array>
 
+    <string name="unsupported_protocol">Nepodporovaný protokol</string>
+    <string name="malformed_url">Neplatná URL "%s"</string>
+    <string name="http_error_response">Server vrátil kód %1$s: %1$s</string>
+    <string name="unexpected_exception">Vyskytla se neočekávaná chyba - koukněte do error logu</string>
+    <string name="send_to">Sdílet</string>
+    <string name="send_error">Odeslat chybu</string>
+    <string name="import_failed">Nepodařilo se naimportovat data: </string>
+    <string name="only_wifi_title">Pouze přes WiFi</string>
+    <string name="only_wifi_description">Nestahovat data na pozadí přes mobilní sítě, ale pouze přes WiFi. Pokud budete data aktualizovat ručně, dojde ke stažení i přes mobilní síť.</string>
+    <string name="delete_delay_title">Smazat záznamy starší než</string>
+    <string name="delete_delay_description">Záznamy starší než toto období budou smazány.</string>
+    <string name="never">nikdy</string>
+    <string name="update_on_particular_time_title">Aktualizovat v konkrétní čas</string>
+    <string name="update_on_particular_time_description">Pokud je aktivováno, data budou stahována ve vybraný čas. Jinak budou aktualizace probíhat po uplynutí zvolené doby.</string>
+    <string name="update_automatically_title">Automatické aktualizace na pozadí</string>
+    <string name="update_automatically_description">Pokud je aktivní, data se budou stahovat automaticky na pozadí podle níže zvoleného plánu.</string>
+    <string name="update_title">Aktualizace dat.</string>
+    <string name="refresh_period_description">Čas po kterém budou data obnovena.</string>
+    <string name="refresh_period_title">Interval aktualizace</string>
+    <string name="update_time_description">Hodina, kdy budou data obnovena.</string>
+    <string name="update_time_title">Čas aktualizace</string>
+
 </resources>
