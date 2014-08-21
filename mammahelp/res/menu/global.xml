@@ -1,0 +1,34 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".JidelakActivity" >
+
+<!--     <item -->
+<!--         android:id="@+id/action_update" -->
+<!--         android:actionLayout="@layout/refresh_action_view" -->
+<!--         android:icon="@drawable/ic_action_refresh" -->
+<!--         android:orderInCategory="10" -->
+<!--         android:title="@string/action_update" -->
+<!--         android:showAsAction="ifRoom"/> -->
+    
+    
+    <!-- item
+        android:id="@+id/action_find_on_map"
+        android:icon="@drawable/ic_action_map"
+        android:orderInCategory="100"
+        android:title="@string/locate"
+        android:showAsAction="ifRoom"/ -->
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        android:showAsAction="never"/>
+    <item
+        android:id="@+id/action_about"
+        android:icon="@drawable/ic_action_about"
+        android:orderInCategory="100"
+        android:title="@string/action_about"
+        android:showAsAction="never"/>
+
+</menu>

@@ -1,28 +1,18 @@
 package cz.mammahelp.handy.ui;
 
-import cz.mammahelp.handy.NavigationDrawerFragment;
-import cz.mammahelp.handy.R;
-import cz.mammahelp.handy.NavigationDrawerFragment.NavigationDrawerCallbacks;
-import cz.mammahelp.handy.R.id;
-import cz.mammahelp.handy.R.layout;
-import cz.mammahelp.handy.R.menu;
-import cz.mammahelp.handy.R.string;
-import android.app.Activity;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import cz.mammahelp.handy.R;
 
 public class MainActivity extends Activity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -64,17 +54,8 @@ public class MainActivity extends Activity implements
 	}
 
 	public void onSectionAttached(int number) {
-		switch (number) {
-		case 1:
-			mTitle = getString(R.string.title_section1);
-			break;
-		case 2:
-			mTitle = getString(R.string.title_section2);
-			break;
-		case 3:
-			mTitle = getString(R.string.title_section3);
-			break;
-		}
+		String[] titles = getResources().getStringArray(R.array.nav_items);
+		mTitle = titles[number - 1];
 	}
 
 	public void restoreActionBar() {
@@ -99,14 +80,50 @@ public class MainActivity extends Activity implements
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		switch (item.getItemId()) {
+
+		// case R.id.action_update:
+		//
+		// if (mBound && mService.isRunning()) {
+		// Toast.makeText(getApplicationContext(),
+		// R.string.update_already_running, Toast.LENGTH_SHORT)
+		// .show();
+		// return true;
+		// }
+		// Intent intent = new Intent(this, FeederService.class);
+		// startService(intent);
+		//
+		// return true;
+		//
+		// // case R.id.action_reorder_restaurants:
+		// // startActivity(new Intent(this, RestaurantManagerActivity.class));
+		// // return true;
+
+		case R.id.action_settings:
+			startActivity(new Intent(this, PreferencesActivity.class));
 			return true;
+
+			// case R.id.action_find_on_map:
+			// startActivity(new Intent(this, MapActivity.class));
+			// return true;
+
+		case R.id.action_about:
+			startActivity(new Intent(this, AboutActivity.class));
+			return true;
+
+			// case android.R.id.home:
+			// if (isDrawerIconEnabled()) {
+			// if (drawerToggle.onOptionsItemSelected(item)) {
+			// return true;
+			// }
+			// return super.onOptionsItemSelected(item);
+			// }
+			// goToToday();
+			// return true;
+
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	/**

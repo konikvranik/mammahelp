@@ -28,11 +28,16 @@
         <item>minute</item>
         <item>minutes</item>
     </string-array>
+    <string-array name="nav_items">
+        <item>Informations</item>
+        <item>News</item>
+        <item>Advice and help</item>
+        <item>Mamma HELP</item>
+        <item>Centers</item>
+        <item>Prevention</item>
+    </string-array>
 
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
@@ -57,5 +62,6 @@
     <string name="refresh_period_title">Update period</string>
     <string name="update_time_title">Update time</string>
     <string name="update_time_description">Time at which data will be updated.</string>
+    <string name="action_about">About</string>
 
 </resources>
