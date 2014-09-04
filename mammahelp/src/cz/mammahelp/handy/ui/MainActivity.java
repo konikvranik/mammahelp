@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cz.mammahelp.handy.R;
 
-public class MainActivity extends Activity implements
+public class MainActivity extends AbstractMammaHelpActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
 	/**

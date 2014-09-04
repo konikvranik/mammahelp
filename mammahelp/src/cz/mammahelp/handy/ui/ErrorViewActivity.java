@@ -7,6 +7,7 @@ import static cz.mammahelp.handy.Constants.EXCEPTION;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -106,7 +107,7 @@ public class ErrorViewActivity extends AbstractMammaHelpActivity {
 	}
 
 	public void setText(Throwable cause) {
-		 if (cause instanceof MammaHelpException) {
+		if (cause instanceof MammaHelpException) {
 
 			setText(((MammaHelpException) cause)
 					.toString(getApplicationContext()));
@@ -125,16 +126,24 @@ public class ErrorViewActivity extends AbstractMammaHelpActivity {
 	}
 
 	public void sendTo(View v) {
-		startActivity(new Intent(android.content.Intent.ACTION_SENDTO,
-				Uri.parse("exception://"
-						+ getException().getClass().getCanonicalName()
-						+ "/?message="
-						+ URLEncoder.encode(getException().getMessage())))
-				.putExtra(Intent.EXTRA_TEXT, getText()).setType("text/plain"));
+		try {
+			startActivity(new Intent(android.content.Intent.ACTION_SENDTO,
+					Uri.parse("exception://"
+							+ getException().getClass().getCanonicalName()
+							+ "/?message="
+							+ URLEncoder.encode(getException().getMessage(),
+									"UTF-8"))).putExtra(Intent.EXTRA_TEXT,
+					getText()).setType("text/plain"));
+		} catch (UnsupportedEncodingException e) {
+			Bundle b = new Bundle();
+			b.putSerializable(EXCEPTION, e);
+			startActivity(new Intent(this, ErrorViewActivity.class), b);
+		}
 
 	}
 
 	public void sendError(View v) throws MammaHelpException {
 		throw getException();
 	}
+
 }

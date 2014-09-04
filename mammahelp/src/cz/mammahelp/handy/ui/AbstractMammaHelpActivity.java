@@ -2,19 +2,18 @@ package cz.mammahelp.handy.ui;
 
 import java.lang.reflect.Field;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.ViewConfiguration;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import cz.mammahelp.handy.MammaHelpDbHelper;
 
-public class AbstractMammaHelpActivity extends ActionBarActivity {
+public abstract class AbstractMammaHelpActivity extends ActionBarActivity {
 	protected ActionBar actionBar;
 	protected static Logger log = LoggerFactory
 			.getLogger(AbstractMammaHelpActivity.class);

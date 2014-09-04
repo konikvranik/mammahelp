@@ -2,9 +2,11 @@ package cz.mammahelp.handy.dao;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.SortedSet;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
 import cz.mammahelp.handy.model.Articles;
@@ -18,6 +20,8 @@ public class ArticlesDao extends BaseDao<Articles> {
 			SQLiteDataTypes.TEXT);
 	public static final Column URL = new Column("url", SQLiteDataTypes.TEXT);
 	public static final Column BODY = new Column("body", SQLiteDataTypes.TEXT);
+	public static final Column CATEGORY = new Column("category",
+			SQLiteDataTypes.TEXT);
 
 	static {
 
@@ -65,12 +69,22 @@ public class ArticlesDao extends BaseDao<Articles> {
 				.format(obj.getSyncTime().getTime()));
 		values.put(URL, obj.getUrl());
 		values.put(BODY, obj.getBody());
-		
+
 		return values.getValues();
 	}
 
 	public static Table getTable() {
 		return getTable(TABLE_NAME);
+	}
+
+	public SortedSet<Articles> findByCategory(String categoryCode) {
+		SortedSet<Articles> result = query(CATEGORY + " = ?",
+				new String[] { categoryCode }, null, null, null);
+		if (result.size() > 1)
+			throw new SQLiteConstraintException();
+		else if (result.isEmpty())
+			return null;
+		return result;
 	}
 
 }
