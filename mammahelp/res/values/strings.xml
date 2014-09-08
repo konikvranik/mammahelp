@@ -67,7 +67,7 @@
     <string name="update_time_title">Update time</string>
     <string name="update_time_description">Time at which data will be updated.</string>
     <string name="action_about">About</string>
-    <string name="title_activity_category_list">CAtegoryListActivity</string>
+    <string name="title_activity_category_list">CategoryListFragment</string>
     <string name="hello_world">Hello world!</string>
 
 </resources>

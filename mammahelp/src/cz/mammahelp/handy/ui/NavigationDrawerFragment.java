@@ -3,6 +3,9 @@ package cz.mammahelp.handy.ui;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -41,11 +44,6 @@ public class NavigationDrawerFragment extends Fragment {
 	 * user manually expands it. This shared preference tracks this.
 	 */
 	private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
-
-	/**
-	 * A pointer to the current callbacks instance (the Activity).
-	 */
-	private NavigationDrawerCallbacks mCallbacks;
 
 	/**
 	 * Helper component that ties the action bar to the navigation drawer.
@@ -216,26 +214,65 @@ public class NavigationDrawerFragment extends Fragment {
 		if (mDrawerLayout != null) {
 			mDrawerLayout.closeDrawer(mFragmentContainerView);
 		}
-		if (mCallbacks != null) {
-			mCallbacks.onNavigationDrawerItemSelected(position);
+
+		Bundle b = new Bundle();
+		FragmentManager fm = getFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
+
+		String tag = null;
+		switch (position) {
+		case 0:
+			tag = "informations";
+		case 2:
+			if (tag == null)
+				tag = "help";
+
+			b.putString(CategoryListFragment.CATEGORY_KEY, tag);
+
+			Fragment f = fm.findFragmentByTag(tag);
+
+			if (f == null) {
+				f = new CategoryListFragment();
+				f.setArguments(b);
+				ft.add(f, tag);
+				// fm.putFragment(b, tag, f);
+			}
+
+			ft.attach(f);
+
+			ft.commit();
+
+			// startActivity(
+			// new Intent(getActivity(), CategoryListActivity.class), b);
+			break;
+
+		case 1:
+			break;
+
+		case 3:
+			startActivity(new Intent(getActivity(), AboutActivity.class));
+			break;
+
+		case 4:
+			break;
+
+		case 5:
+			break;
+
+		default:
+			break;
 		}
+
 	}
 
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		try {
-			mCallbacks = (NavigationDrawerCallbacks) activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(
-					"Activity must implement NavigationDrawerCallbacks.");
-		}
 	}
 
 	@Override
 	public void onDetach() {
 		super.onDetach();
-		mCallbacks = null;
 	}
 
 	@Override
@@ -295,14 +332,4 @@ public class NavigationDrawerFragment extends Fragment {
 		return getActivity().getActionBar();
 	}
 
-	/**
-	 * Callbacks interface that all activities using this fragment must
-	 * implement.
-	 */
-	public static interface NavigationDrawerCallbacks {
-		/**
-		 * Called when an item in the navigation drawer is selected.
-		 */
-		void onNavigationDrawerItemSelected(int position);
-	}
 }

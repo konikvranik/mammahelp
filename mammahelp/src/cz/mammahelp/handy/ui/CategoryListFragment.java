@@ -2,9 +2,8 @@ package cz.mammahelp.handy.ui;
 
 import java.util.SortedSet;
 
+import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.model.Articles;
 
-public class CategoryListActivity extends ANamedFragment {
+public class CategoryListFragment extends ANamedFragment {
 
 	public class CategoryAdapter extends BaseAdapter implements ListAdapter {
 
@@ -24,8 +23,9 @@ public class CategoryListActivity extends ANamedFragment {
 		private Articles[] articles;
 
 		public CategoryAdapter(SortedSet<Articles> articles) {
-			context = CategoryListActivity.this.getActivity();
-			this.articles = articles.toArray(new Articles[0]);
+			context = CategoryListFragment.this.getActivity();
+			this.articles = (articles == null ? new Articles[0] : articles
+					.toArray(new Articles[0]));
 		}
 
 		@Override
@@ -60,20 +60,18 @@ public class CategoryListActivity extends ANamedFragment {
 
 	}
 
-	private static final String CATEGORY_KEY = "category";
+	public static final String CATEGORY_KEY = "category";
 	private String categoryId;
 	private CategoryAdapter adapter;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
 
-		super.onCreate(savedInstanceState);
+		View rootView = View.inflate(activity, R.layout.category_listing, null);
 
-		View rootView = inflater.inflate(R.layout.category_listing, container,
-				false);
-
-		categoryId = savedInstanceState.getString(CATEGORY_KEY);
+		categoryId = getArguments().getString(CATEGORY_KEY);
 
 		ArticlesDao adao = new ArticlesDao(getDbHelper());
 
@@ -83,7 +81,6 @@ public class CategoryListActivity extends ANamedFragment {
 		ListView lv = (ListView) rootView.findViewById(R.id.listing);
 		lv.setAdapter(adapter);
 
-		return rootView;
 	}
 
 	@Override

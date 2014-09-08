@@ -63,15 +63,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
-        <activity
-            android:name="cz.mammahelp.handy.ui.CategoryListActivity"
-            android:label="@string/title_activity_category_list"
-            android:parentActivityName=".ui.AbstractMammaHelpActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="cz.mammahelp.handy.ui.AbstractMammaHelpActivity" />
-        </activity>
     </application>
 
 </manifest>

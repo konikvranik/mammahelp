@@ -75,16 +75,16 @@ public abstract class BaseDao<T extends Identificable<T>> {
 				sb.append(fk.createClausule());
 
 			}
-			
+
 			sb.append(getAppendix());
 			sb.append(")");
 			return sb.toString();
 		}
 
 		public String getAppendix() {
-			return appendix;
+			return appendix == null ? "" : appendix;
 		}
-		
+
 		public void setAppendix(String appendix) {
 			this.appendix = appendix;
 		}
@@ -192,8 +192,7 @@ public abstract class BaseDao<T extends Identificable<T>> {
 
 		public ForeignKey(Class<?> class1) {
 			try {
-				this.table = BaseDao.getTable((String) class1.getMethod(
-						"getName").invoke(null));
+				this.table = (Table) class1.getMethod("getTable").invoke(null);
 			} catch (IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

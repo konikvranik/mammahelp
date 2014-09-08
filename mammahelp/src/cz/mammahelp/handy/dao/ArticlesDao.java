@@ -32,6 +32,7 @@ public class ArticlesDao extends BaseDao<Articles> {
 		getTable().addColumn(UPDATED);
 		getTable().addColumn(URL);
 		getTable().addColumn(BODY);
+		getTable().addColumn(CATEGORY);
 
 	}
 
@@ -78,7 +79,7 @@ public class ArticlesDao extends BaseDao<Articles> {
 	}
 
 	public SortedSet<Articles> findByCategory(String categoryCode) {
-		SortedSet<Articles> result = query(CATEGORY + " = ?",
+		SortedSet<Articles> result = query(CATEGORY.getName() + " = ?",
 				new String[] { categoryCode }, null, null, null);
 		if (result.size() > 1)
 			throw new SQLiteConstraintException();

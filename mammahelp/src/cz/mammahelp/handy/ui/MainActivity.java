@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import cz.mammahelp.handy.R;
 
-public class MainActivity extends AbstractMammaHelpActivity implements
-		NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends AbstractMammaHelpActivity 
+		 {
 
 	/**
 	 * Fragment managing the behaviors, interactions and presentation of the
@@ -41,16 +41,6 @@ public class MainActivity extends AbstractMammaHelpActivity implements
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
-	}
-
-	@Override
-	public void onNavigationDrawerItemSelected(int position) {
-		// update the main content by replacing fragments
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager
-				.beginTransaction()
-				.replace(R.id.container,
-						PlaceholderFragment.newInstance(position + 1)).commit();
 	}
 
 	public void onSectionAttached(int number) {

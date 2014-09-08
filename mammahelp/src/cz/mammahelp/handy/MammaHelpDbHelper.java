@@ -73,9 +73,6 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 		log.debug(SQL_CREATE_NEWS);
 		db.execSQL(SQL_CREATE_NEWS);
 
-		log.debug(SQL_CREATE_NEWS);
-		db.execSQL(SQL_CREATE_NEWS);
-
 		log.debug(SQL_CREATE_ADDRESS);
 		db.execSQL(SQL_CREATE_ADDRESS);
 
