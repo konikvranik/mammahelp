@@ -237,8 +237,14 @@ public abstract class BaseDao<T extends Identificable<T>> {
 	private MammaHelpDbHelper dbHelper;
 	public Locale locale;
 
+	private SQLiteDatabase db;
+
 	public BaseDao(MammaHelpDbHelper dbHelper) {
 		this.dbHelper = dbHelper;
+	}
+
+	public BaseDao(SQLiteDatabase db) {
+		this.db = db;
 	}
 
 	protected MammaHelpDbHelper getDbHelper() {
@@ -248,7 +254,7 @@ public abstract class BaseDao<T extends Identificable<T>> {
 	public void insert(Collection<T> objs) {
 		if (objs == null)
 			return;
-		SQLiteDatabase db = getDbHelper().getWritableDatabase();
+		SQLiteDatabase db = getDatabase(true);
 		try {
 			for (T obj : objs) {
 				insert(db, obj);
@@ -271,7 +277,7 @@ public abstract class BaseDao<T extends Identificable<T>> {
 	}
 
 	public void insert(T obj) {
-		SQLiteDatabase db = getDbHelper().getWritableDatabase();
+		SQLiteDatabase db = getDatabase(true);
 		try {
 			insert(db, obj);
 		} finally {
@@ -282,7 +288,7 @@ public abstract class BaseDao<T extends Identificable<T>> {
 	protected abstract ContentValues getValues(T obj, boolean updateNull);
 
 	public void update(T obj, boolean updateNull) {
-		SQLiteDatabase db = getDbHelper().getWritableDatabase();
+		SQLiteDatabase db = getDatabase(true);
 		try {
 			update(db, obj, updateNull);
 		} finally {
@@ -307,7 +313,7 @@ public abstract class BaseDao<T extends Identificable<T>> {
 	}
 
 	public void update(Collection<T> objs, boolean updateNull) {
-		SQLiteDatabase db = getDbHelper().getWritableDatabase();
+		SQLiteDatabase db = getDatabase(true);
 		try {
 			for (T obj : objs) {
 				update(db, obj, updateNull);
@@ -319,7 +325,7 @@ public abstract class BaseDao<T extends Identificable<T>> {
 
 	public void delete(Collection<T> obj) {
 
-		SQLiteDatabase db = getDbHelper().getWritableDatabase();
+		SQLiteDatabase db = getDatabase(true);
 		try {
 			for (T t : obj) {
 				delete(db, t);
@@ -330,12 +336,27 @@ public abstract class BaseDao<T extends Identificable<T>> {
 	}
 
 	public void delete(T obj) {
-		SQLiteDatabase db = getDbHelper().getWritableDatabase();
+		SQLiteDatabase db = getDatabase(true);
 		try {
 			delete(db, obj);
 		} finally {
 			// db.close();
 		}
+	}
+
+	private SQLiteDatabase getDatabase(boolean writable) {
+
+		if (getDbHelper() != null)
+
+			if (writable)
+				return getDbHelper().getWritableDatabase();
+			else
+				return getDbHelper().getReadableDatabase();
+		else if (writable && db.isReadOnly())
+			throw new RuntimeException(
+					"Requested RW database but RO is available!");
+		else
+			return db;
 	}
 
 	protected void delete(SQLiteDatabase db, T obj) {
@@ -365,7 +386,7 @@ public abstract class BaseDao<T extends Identificable<T>> {
 	protected SortedSet<T> query(String selection, String[] selectionArgs,
 			String groupBy, String having, String orderBy) {
 		long millis1 = System.currentTimeMillis();
-		SQLiteDatabase db = getDbHelper().getReadableDatabase();
+		SQLiteDatabase db = getDatabase(false);
 		long millis2 = System.currentTimeMillis();
 		try {
 			Cursor cursor = db.query(getTableName(), getColumnNames(),
@@ -382,7 +403,7 @@ public abstract class BaseDao<T extends Identificable<T>> {
 
 	protected SortedSet<T> rawQuery(String selection, String[] selectionArgs) {
 		long millis1 = System.currentTimeMillis();
-		SQLiteDatabase db = getDbHelper().getReadableDatabase();
+		SQLiteDatabase db = getDatabase(false);
 		long millis2 = System.currentTimeMillis();
 		try {
 			Cursor cursor = db.rawQuery(selection, selectionArgs);

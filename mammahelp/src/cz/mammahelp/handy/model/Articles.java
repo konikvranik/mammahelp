@@ -11,11 +11,21 @@ public class Articles extends ASyncedInformation implements
 
 	private static final long serialVersionUID = 6449649853185438415L;
 
+	private String category;
+
 	public Articles(Long id) {
 		setId(id);
 	}
 
 	public Articles() {
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	@Override

@@ -46,6 +46,7 @@ public class ArticlesDao extends BaseDao<Articles> {
 		a.setTitle(unpackColumnValue(cursor, TITLE, String.class));
 		a.setSyncTime(unpackColumnValue(cursor, UPDATED, Calendar.class));
 		a.setUrl(unpackColumnValue(cursor, URL, String.class));
+		a.setCategory(unpackColumnValue(cursor, CATEGORY, String.class));
 		a.setBody(unpackColumnValue(cursor, BODY, String.class));
 
 		return a;
@@ -69,6 +70,7 @@ public class ArticlesDao extends BaseDao<Articles> {
 		values.put(UPDATED, new SimpleDateFormat(DATE_FORMAT, LOCALE)
 				.format(obj.getSyncTime().getTime()));
 		values.put(URL, obj.getUrl());
+		values.put(CATEGORY, obj.getCategory());
 		values.put(BODY, obj.getBody());
 
 		return values.getValues();

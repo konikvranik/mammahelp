@@ -1,5 +1,7 @@
 package cz.mammahelp.handy;
 
+import java.util.Calendar;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,13 +19,14 @@ import cz.mammahelp.handy.dao.BundleDao;
 import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.dao.NewsDao;
+import cz.mammahelp.handy.model.Articles;
 
 public class MammaHelpDbHelper extends SQLiteOpenHelper {
 
 	private static Logger log = LoggerFactory
 			.getLogger(MammaHelpDbHelper.class);
 
-	public static final int DATABASE_VERSION = 1;
+	public static final int DATABASE_VERSION = 2;
 	public static final String DATABASE_NAME = "MammaHelp.db";
 
 	private static final String SQL_CREATE_ARTICLES = ArticlesDao.getTable()
@@ -56,6 +59,8 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 
 	private MammaHelpDbHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		log.debug("Constructed DbHelper");
+
 	}
 
 	/*
@@ -85,6 +90,8 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 		log.debug(SQL_CREATE_LOCATION_POINT);
 		db.execSQL(SQL_CREATE_LOCATION_POINT);
 
+		log.debug("Finished onCreate");
+
 	}
 
 	/*
@@ -97,8 +104,14 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+		log.debug("Old version: " + oldVersion + ", new version: " + newVersion);
+
 		switch (oldVersion) {
 		case 1:
+
+			createFakeArticle("èlánek", "informations");
+
+			createFakeArticle("èlánek", "help");
 
 			// New stuf here
 
@@ -108,6 +121,27 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 		default:
 			break;
 		}
+
+	}
+
+	private void createFakeArticle(SQLiteDatabase db,String code, String category) {
+		ArticlesDao aDao = new ArticlesDao();
+
+		Articles a = new Articles();
+		a.setBody("Pokusný " + code + " v sekci " + category + "- tìlo");
+		a.setSyncTime(Calendar.getInstance());
+		a.setTitle("Pokusný " + code + " v sekci " + category + " - titulek");
+		a.setUrl("http://www.vysetrise.cz/");
+		a.setCategory(category);
+
+		aDao.insert(a);
+
+		a.setTitle(a.getTitle() + " " + a.getId());
+		a.setBody(a.getBody() + " " + a.getId());
+
+		aDao.update(a);
+
+		log.debug("found " + aDao.findAll().size() + " articles");
 
 	}
 
