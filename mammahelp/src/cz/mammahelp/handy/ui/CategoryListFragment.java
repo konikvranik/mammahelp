@@ -88,9 +88,6 @@ public class CategoryListFragment extends ANamedFragment {
 		if (view != null)
 			view.setAdapter(adapter);
 
-		TextView tv = (TextView) mainView.findViewById(R.id.textView1);
-		tv.setText(categoryId);
-
 		return mainView;
 	}
 
