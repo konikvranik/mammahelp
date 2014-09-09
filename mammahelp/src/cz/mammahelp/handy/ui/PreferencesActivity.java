@@ -52,8 +52,9 @@ public class PreferencesActivity extends PreferenceActivity {
 		loadHeadersFromResource(R.xml.preference_headers, target);
 	}
 
-	public class Prefs1FragmentInner extends PreferenceFragment implements
-			OnPreferenceChangeListener {
+	public static class Prefs1FragmentInner extends PreferenceFragment
+			implements OnPreferenceChangeListener {
+
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);

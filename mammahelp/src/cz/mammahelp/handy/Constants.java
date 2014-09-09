@@ -28,5 +28,7 @@ public class Constants {
 
 	public static String WIFI_ONLY_KEY = "only_wifi";
 	public static boolean DEFAULT_WIFI_ONLY = true;
+	
+	
 
 }
