@@ -6,7 +6,7 @@ import cz.mammahelp.handy.model.Identificable;
 
 public class TypedContentValues {
 
-	ContentValues values;
+	ContentValues values = new ContentValues();
 	private boolean updateNull;
 
 	public TypedContentValues(boolean updateNull) {
@@ -24,7 +24,9 @@ public class TypedContentValues {
 	public void put(Column column, Object obj) {
 		if (obj != null || updateNull) {
 			String value;
-			if (obj.getClass().isEnum()) {
+			if (obj == null) {
+				value = null;
+			} else if (obj.getClass().isEnum()) {
 				value = String.valueOf(((Enum<?>) obj).ordinal());
 			} else if (obj instanceof Identificable<?>) {
 				value = String.valueOf(((Identificable<?>) obj).getId());

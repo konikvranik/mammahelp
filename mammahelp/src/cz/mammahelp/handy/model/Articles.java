@@ -6,8 +6,7 @@ package cz.mammahelp.handy.model;
  * @generated
  */
 
-public class Articles extends ASyncedInformation implements
-		Identificable<Articles> {
+public class Articles extends ASyncedInformation<Articles> {
 
 	private static final long serialVersionUID = 6449649853185438415L;
 
@@ -30,8 +29,13 @@ public class Articles extends ASyncedInformation implements
 
 	@Override
 	public int compareTo(Articles another) {
-		// TODO Auto-generated method stub
-		return 0;
+		int c = super.compareTo(another);
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getCategory(), another.getCategory());
+
+		return c;
 	}
 
 }

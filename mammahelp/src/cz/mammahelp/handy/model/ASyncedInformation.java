@@ -7,8 +7,10 @@ import java.util.Calendar;
  * 
  * @generated
  */
-public abstract class ASyncedInformation {
+public abstract class ASyncedInformation<T extends ASyncedInformation<T>>
+		implements Identificable<T> {
 
+	private static final long serialVersionUID = 2046709112271966050L;
 	public Calendar syncTime;
 	public String body;
 	public String title;
@@ -56,4 +58,40 @@ public abstract class ASyncedInformation {
 		this.url = url;
 	}
 
+	@Override
+	public int compareTo(T another) {
+
+		int c = nullableCompare(getId(), another.getId());
+		if (c != 0)
+			return c;
+
+		nullableCompare(getSyncTime(), another.getSyncTime());
+		if (c != 0)
+			return c;
+
+		nullableCompare(getTitle(), another.getTitle());
+		if (c != 0)
+			return c;
+
+		nullableCompare(getUrl(), another.getUrl());
+		if (c != 0)
+			return c;
+
+		nullableCompare(getBody(), another.getBody());
+		if (c != 0)
+			return c;
+
+		return c;
+
+	}
+
+	protected <E extends Comparable<E>> int nullableCompare(E one, E another) {
+
+		if (one == null && another == null)
+			return 0;
+		else if (one == null)
+			return -1;
+		else
+			return one.compareTo(another);
+	}
 }

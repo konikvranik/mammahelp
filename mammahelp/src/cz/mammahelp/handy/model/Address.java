@@ -19,9 +19,86 @@ public class Address extends android.location.Address implements
 	}
 
 	@Override
-	public int compareTo(Address paramT) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Address another) {
+
+		int c = nullableCompare(getAdminArea(), another.getAdminArea());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getCountryCode(), another.getCountryCode());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getCountryName(), another.getCountryName());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getFeatureName(), another.getFeatureName());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getLatitude(), another.getLatitude());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getLongitude(), another.getLongitude());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getLocality(), another.getLocality());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getPhone(), another.getPhone());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getPostalCode(), another.getPostalCode());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getPremises(), another.getPremises());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getSubAdminArea(), another.getSubAdminArea());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getSubLocality(), another.getSubLocality());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getSubThoroughfare(),
+				another.getSubThoroughfare());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getUrl(), another.getUrl());
+		if (c != 0)
+			return c;
+		
+		// TODO
+		/*c = nullableCompare(one.getAddressLine(index),
+				another.getAddressLine(index));
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(one.getExtras(), another.getExtras());
+		if (c != 0)
+			return c;*/
+
+		return c;
+	}
+
+	protected <E extends Comparable<E>> int nullableCompare(E one, E another) {
+
+		if (one == null && another == null)
+			return 0;
+		else if (one == null)
+			return -1;
+		else
+			return one.compareTo(another);
 	}
 
 	@Override

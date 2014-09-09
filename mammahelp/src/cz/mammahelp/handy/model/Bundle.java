@@ -12,9 +12,23 @@ public class Bundle implements Identificable<Bundle> {
 	}
 
 	@Override
-	public int compareTo(Bundle paramT) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Bundle another) {
+
+		int c = nullableCompare(getId(), another.getId());
+		if (c != 0)
+			return c;
+
+		return c;
+	}
+
+	protected <E extends Comparable<E>> int nullableCompare(E one, E another) {
+
+		if (one == null && another == null)
+			return 0;
+		else if (one == null)
+			return -1;
+		else
+			return one.compareTo(another);
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import java.util.SortedSet;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteConstraintException;
+import android.database.sqlite.SQLiteDatabase;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
 import cz.mammahelp.handy.model.Articles;
@@ -38,6 +38,10 @@ public class ArticlesDao extends BaseDao<Articles> {
 
 	public ArticlesDao(MammaHelpDbHelper dbHelper) {
 		super(dbHelper);
+	}
+
+	public ArticlesDao(SQLiteDatabase db) {
+		super(db);
 	}
 
 	@Override
@@ -83,11 +87,12 @@ public class ArticlesDao extends BaseDao<Articles> {
 	public SortedSet<Articles> findByCategory(String categoryCode) {
 		SortedSet<Articles> result = query(CATEGORY.getName() + " = ?",
 				new String[] { categoryCode }, null, null, null);
-		if (result.size() > 1)
-			throw new SQLiteConstraintException();
-		else if (result.isEmpty())
+		log.trace("Category " + categoryCode + " has " + result.size()
+				+ " articles.");
+		if (result.isEmpty())
 			return null;
-		return result;
+		else
+			return result;
 	}
 
 }

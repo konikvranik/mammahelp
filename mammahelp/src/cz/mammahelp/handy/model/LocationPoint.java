@@ -2,8 +2,6 @@ package cz.mammahelp.handy.model;
 
 import java.util.Collection;
 
-import android.location.Address;
-
 public class LocationPoint implements Identificable<LocationPoint> {
 
 	private static final long serialVersionUID = -7455279647237387292L;
@@ -23,7 +21,7 @@ public class LocationPoint implements Identificable<LocationPoint> {
 	public LocationPoint(Long id) {
 		setId(id);
 	}
-	
+
 	public LocationPoint() {
 	}
 
@@ -68,9 +66,39 @@ public class LocationPoint implements Identificable<LocationPoint> {
 	}
 
 	@Override
-	public int compareTo(LocationPoint paramT) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(LocationPoint another) {
+		int c = nullableCompare(getId(), another.getId());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getName(), another.getName());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getDescription(), another.getDescription());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getUrl(), another.getUrl());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getLocation(), another.getLocation());
+		if (c != 0)
+			return c;
+
+		return c;
+	}
+
+
+	protected <E extends Comparable<E>> int nullableCompare(E one, E another) {
+
+		if (one == null && another == null)
+			return 0;
+		else if (one == null)
+			return -1;
+		else
+			return one.compareTo(another);
 	}
 
 	@Override

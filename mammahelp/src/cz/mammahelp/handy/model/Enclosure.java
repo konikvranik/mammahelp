@@ -26,9 +26,35 @@ public class Enclosure implements Identificable<Enclosure> {
 	}
 
 	@Override
-	public int compareTo(Enclosure paramT) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Enclosure another) {
+
+		int c = nullableCompare(getId(), another.getId());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getType(), another.getType());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getLength(), another.getLength());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getUrl(), another.getUrl());
+		if (c != 0)
+			return c;
+
+		return c;
+	}
+
+	protected <E extends Comparable<E>> int nullableCompare(E one, E another) {
+
+		if (one == null && another == null)
+			return 0;
+		else if (one == null)
+			return -1;
+		else
+			return one.compareTo(another);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import java.util.Collection;
  * @generated
  */
 
-public class News extends ASyncedInformation implements Identificable<News> {
+public class News extends ASyncedInformation<News> {
 
 	private static final long serialVersionUID = -4281313673352148469L;
 	public String annotation;
@@ -57,8 +57,20 @@ public class News extends ASyncedInformation implements Identificable<News> {
 
 	@Override
 	public int compareTo(News another) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		int c = super.compareTo(another);
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getCategory(), another.getCategory());
+		if (c != 0)
+			return c;
+
+		c = nullableCompare(getEnclosure(), another.getEnclosure());
+		if (c != 0)
+			return c;
+
+		return c;
 	}
 
 }

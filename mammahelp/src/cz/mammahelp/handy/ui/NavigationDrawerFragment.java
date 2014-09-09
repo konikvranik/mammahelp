@@ -1,5 +1,8 @@
 package cz.mammahelp.handy.ui;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -57,6 +60,11 @@ public class NavigationDrawerFragment extends Fragment {
 	private int mCurrentSelectedPosition = 0;
 	private boolean mFromSavedInstanceState;
 	private boolean mUserLearnedDrawer;
+
+	private static Logger log = LoggerFactory
+			.getLogger(NavigationDrawerFragment.class);
+
+	private FragmentManager fragmentManager;
 
 	public NavigationDrawerFragment() {
 	}
@@ -207,6 +215,7 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	private void selectItem(int position) {
+
 		mCurrentSelectedPosition = position;
 		if (mDrawerListView != null) {
 			mDrawerListView.setItemChecked(position, true);
@@ -215,32 +224,36 @@ public class NavigationDrawerFragment extends Fragment {
 			mDrawerLayout.closeDrawer(mFragmentContainerView);
 		}
 
+		ActionBar actionBar = getActionBar();
+		actionBar
+				.setTitle(getResources().getStringArray(R.array.nav_items)[position]);
+
 		Bundle b = new Bundle();
-		FragmentManager fm = getFragmentManager();
-		FragmentTransaction ft = fm.beginTransaction();
+
+		FragmentTransaction ft = fragmentManager.beginTransaction();
 
 		String tag = null;
 		switch (position) {
 		case 0:
-			tag = "informations";
+			tag = CategoryListFragment.CATEGORY_INFORMATIONS;
 		case 2:
 			if (tag == null)
-				tag = "help";
+				tag = CategoryListFragment.CATEGORY_HELP;
 
 			b.putString(CategoryListFragment.CATEGORY_KEY, tag);
 
-			Fragment f = fm.findFragmentByTag(tag);
+			Fragment f = fragmentManager.findFragmentByTag(tag);
 
 			if (f == null) {
 				f = new CategoryListFragment();
 				f.setArguments(b);
-				ft.add(f, tag);
+				// ft.add(f, tag);
 				// fm.putFragment(b, tag, f);
+
+				ft.replace(R.id.container, f, tag);
+
+				ft.commit();
 			}
-
-			ft.attach(f);
-
-			ft.commit();
 
 			// startActivity(
 			// new Intent(getActivity(), CategoryListActivity.class), b);
@@ -268,6 +281,7 @@ public class NavigationDrawerFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
+		fragmentManager = activity.getFragmentManager();
 	}
 
 	@Override

@@ -54,7 +54,15 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 	public static MammaHelpDbHelper getInstance(Context context) {
 		if (singletonInstance == null)
 			singletonInstance = new MammaHelpDbHelper(context);
+
+		singletonInstance.createFakeArticle("èlánek", "informations");
+		singletonInstance.createFakeArticle("èlánek", "help");
+
 		return singletonInstance;
+	}
+
+	private void createFakeArticle(String string, String string2) {
+		createFakeArticle(getWritableDatabase(), string, string2);
 	}
 
 	private MammaHelpDbHelper(Context context) {
@@ -109,10 +117,6 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 		switch (oldVersion) {
 		case 1:
 
-			createFakeArticle("èlánek", "informations");
-
-			createFakeArticle("èlánek", "help");
-
 			// New stuf here
 
 			if (newVersion <= 2)
@@ -124,8 +128,9 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 
 	}
 
-	private void createFakeArticle(SQLiteDatabase db,String code, String category) {
-		ArticlesDao aDao = new ArticlesDao();
+	private void createFakeArticle(SQLiteDatabase db, String code,
+			String category) {
+		ArticlesDao aDao = new ArticlesDao(db);
 
 		Articles a = new Articles();
 		a.setBody("Pokusný " + code + " v sekci " + category + "- tìlo");

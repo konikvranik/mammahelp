@@ -4,6 +4,8 @@ import java.util.SortedSet;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,23 +65,39 @@ public class CategoryListFragment extends ANamedFragment {
 	public static final String CATEGORY_KEY = "category";
 	private String categoryId;
 	private CategoryAdapter adapter;
+	private ListView view;
+	static final String CATEGORY_INFORMATIONS = "informations";
+	static final String CATEGORY_HELP = "help";
 
 	@Override
-	public void onAttach(Activity activity) {
-		// TODO Auto-generated method stub
-		super.onAttach(activity);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View mainView = inflater.inflate(R.layout.category_listing, null);
+		view = (ListView) mainView.findViewById(R.id.listing);
 
-		View rootView = View.inflate(activity, R.layout.category_listing, null);
-
-		categoryId = getArguments().getString(CATEGORY_KEY);
+		if (getArguments() == null)
+			categoryId = CATEGORY_INFORMATIONS;
+		else
+			categoryId = getArguments().getString(CATEGORY_KEY);
 
 		ArticlesDao adao = new ArticlesDao(getDbHelper());
 
 		SortedSet<Articles> articles = adao.findByCategory(categoryId);
 
 		adapter = new CategoryAdapter(articles);
-		ListView lv = (ListView) rootView.findViewById(R.id.listing);
-		lv.setAdapter(adapter);
+		if (view != null)
+			view.setAdapter(adapter);
+
+		TextView tv = (TextView) mainView.findViewById(R.id.textView1);
+		tv.setText(categoryId);
+
+		return mainView;
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+
+		super.onAttach(activity);
 
 	}
 

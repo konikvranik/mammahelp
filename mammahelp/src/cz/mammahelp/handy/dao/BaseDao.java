@@ -388,15 +388,18 @@ public abstract class BaseDao<T extends Identificable<T>> {
 		long millis1 = System.currentTimeMillis();
 		SQLiteDatabase db = getDatabase(false);
 		long millis2 = System.currentTimeMillis();
+		long count = -1;
 		try {
 			Cursor cursor = db.query(getTableName(), getColumnNames(),
 					selection, selectionArgs, groupBy, having, orderBy);
+			count = cursor.getCount();
 			return parseResults(cursor);
 		} finally {
 			long now = System.currentTimeMillis();
-			log.trace("SQL query: " + getTableName() + ": " + selection
-					+ Arrays.toString(selectionArgs) + " / times: "
-					+ (now - millis1) + ", " + (now - millis2));
+			log.debug("SQL query: \"" + getTableName() + ": " + selection
+					+ "\" " + Arrays.toString(selectionArgs) + " / count: "
+					+ count + " / times: " + (now - millis1) + ", "
+					+ (now - millis2));
 			// db.close();
 		}
 	}
