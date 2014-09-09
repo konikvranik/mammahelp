@@ -283,8 +283,9 @@ int drawable ic_action_warning 0x7f020065
 int drawable ic_drawer 0x7f020066
 int drawable ic_launcher 0x7f020067
 int drawable ic_launcher_new 0x7f020068
-int drawable meal_background 0x7f020069
-int drawable upper_shadow 0x7f02006a
+int drawable logo 0x7f020069
+int drawable meal_background 0x7f02006a
+int drawable upper_shadow 0x7f02006b
 int id action_about 0x7f06004c
 int id action_bar 0x7f06001c
 int id action_bar_activity_content 0x7f060015

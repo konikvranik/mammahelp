@@ -113,9 +113,9 @@ android {
 
 	signingConfigs {
 		release {
-			storeFile file("release.keystore")
+			storeFile file("mammahelp.keystore")
 			storePassword "lopata"
-			keyAlias "jidelak"
+			keyAlias "mammahelp"
 			keyPassword "lopata"
 		}
 	}
@@ -128,6 +128,10 @@ android {
 		packagingOptions {
 			exclude 'META-INF/LICENSE.txt'
 		}
+		
+		lintOptions {
+        	abortOnError false
+    	}
 	}
 
 }

@@ -1128,8 +1128,9 @@ containing a value of this type.
         public static final int ic_drawer=0x7f020066;
         public static final int ic_launcher=0x7f020067;
         public static final int ic_launcher_new=0x7f020068;
-        public static final int meal_background=0x7f020069;
-        public static final int upper_shadow=0x7f02006a;
+        public static final int logo=0x7f020069;
+        public static final int meal_background=0x7f02006a;
+        public static final int upper_shadow=0x7f02006b;
     }
     public static final class id {
         public static final int action_about=0x7f06004c;
