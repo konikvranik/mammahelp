@@ -156,16 +156,24 @@ public class LocalDbContentProvider extends ContentProvider {
 		Articles article = adao.findById(new Articles(id));
 
 		StringBuilder articleHtml = new StringBuilder("<html>");
-//		articleHtml
-//				.append("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"><meta charset=\"UTF-8\">");
-		articleHtml.append("<head><title>");
-		articleHtml.append(article.getTitle());
+		// articleHtml
+		// .append("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"><meta charset=\"UTF-8\">");
+		articleHtml.append("<head>");
 		articleHtml
-				.append("</title></head><body><div class=\"article\"><h1 class=\"title\">");
+				.append("<link rel='stylesheet' href='restaurant.css' type='text/css' />");
+		articleHtml.append("<title>");
 		articleHtml.append(article.getTitle());
-		articleHtml.append("</h1><p class=\"body\">");
+		articleHtml.append("</title>");
+		articleHtml.append("</head><body>");
+		articleHtml.append("<div class=\"article\">");
+		articleHtml.append("<h1 class=\"title\">");
+		articleHtml.append(article.getTitle());
+		articleHtml.append("</h1>");
+		articleHtml.append("<p class=\"body\">");
 		articleHtml.append(article.getBody());
-		articleHtml.append("</p></div></body></html>");
+		articleHtml.append("</p>");
+		articleHtml.append("</div>");
+		articleHtml.append("</body></html>");
 
 		log.debug("Article: \n" + articleHtml);
 
