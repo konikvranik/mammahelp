@@ -14,6 +14,7 @@ public class EnclosureDao extends BaseDao<Enclosure> {
 	public static final Column LENGTH = new Column("length",
 			SQLiteDataTypes.INTEGER);
 	public static final Column TYPE = new Column("type", SQLiteDataTypes.TEXT);
+	public static final Column DATA = new Column("data", SQLiteDataTypes.BLOB);
 
 	static {
 
@@ -23,6 +24,7 @@ public class EnclosureDao extends BaseDao<Enclosure> {
 		getTable().addColumn(URL);
 		getTable().addColumn(LENGTH);
 		getTable().addColumn(TYPE);
+		getTable().addColumn(DATA);
 
 	}
 
@@ -36,6 +38,7 @@ public class EnclosureDao extends BaseDao<Enclosure> {
 		e.setUrl(unpackColumnValue(cursor, URL, String.class));
 		e.setLength(unpackColumnValue(cursor, LENGTH, Long.class));
 		e.setType(unpackColumnValue(cursor, TYPE, String.class));
+		e.setData(unpackColumnValue(cursor, DATA, byte[].class));
 
 		return e;
 	}
@@ -57,6 +60,7 @@ public class EnclosureDao extends BaseDao<Enclosure> {
 		values.put(URL, obj.getUrl());
 		values.put(LENGTH, obj.getLength());
 		values.put(TYPE, obj.getType());
+		values.put(DATA, obj.getData());
 
 		return values.getValues();
 	}

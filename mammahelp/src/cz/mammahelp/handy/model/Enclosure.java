@@ -17,6 +17,8 @@ public class Enclosure implements Identificable<Enclosure> {
 	public String type;
 
 	private Long id;
+	
+	private byte[] data;
 
 	public Enclosure(Long id) {
 		setId(id);
@@ -92,4 +94,12 @@ public class Enclosure implements Identificable<Enclosure> {
 		this.type = type;
 	}
 
+	
+	public byte[] getData() {
+		return data;
+	}
+	
+	public void setData(byte[] data) {
+		this.data = data;
+	}
 }

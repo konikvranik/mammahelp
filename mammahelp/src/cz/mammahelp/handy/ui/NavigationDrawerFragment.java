@@ -7,7 +7,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -230,8 +229,6 @@ public class NavigationDrawerFragment extends Fragment {
 
 		Bundle b = new Bundle();
 
-		FragmentTransaction ft = fragmentManager.beginTransaction();
-
 		String tag = null;
 		switch (position) {
 		case 0:
@@ -250,9 +247,9 @@ public class NavigationDrawerFragment extends Fragment {
 				// ft.add(f, tag);
 				// fm.putFragment(b, tag, f);
 
-				ft.replace(R.id.container, f, tag);
-
-				ft.commit();
+				fragmentManager.beginTransaction()
+						.replace(R.id.container, f, tag).addToBackStack(tag)
+						.commit();
 			}
 
 			// startActivity(

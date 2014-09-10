@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -75,6 +76,23 @@ public class CategoryListFragment extends ANamedFragment {
 		View mainView = inflater.inflate(R.layout.category_listing, null);
 		view = (ListView) mainView.findViewById(R.id.listing);
 
+		view.setOnItemClickListener(new ListView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> paramAdapterView,
+					View paramView, int paramInt, long paramLong) {
+
+				ArticleDetailViewFragment af = new ArticleDetailViewFragment();
+				Bundle args = new Bundle();
+				args.putLong(ArticleDetailViewFragment.ARTICLE_KEY,
+						paramAdapterView.getAdapter().getItemId(paramInt));
+				af.setArguments(args);
+				getFragmentManager().beginTransaction()
+						.replace(R.id.container, af).addToBackStack(getTag())
+						.commit();
+
+			}
+		});
 		if (getArguments() == null)
 			categoryId = CATEGORY_INFORMATIONS;
 		else
