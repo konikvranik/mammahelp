@@ -4,8 +4,8 @@ import org.gradle.plugins.ide.eclipse.model.SourceFolder
 apply plugin: 'android'
 apply plugin: 'eclipse'
 
-version = '0.5'
-android.defaultConfig.versionCode = 5
+version = '0.6'
+android.defaultConfig.versionCode = 6
 
 group = "cz.mammahelp.handy"
 
@@ -17,9 +17,9 @@ repositories {
 
 dependencies {
 
-//	compile 'com.android.support:support-v4:19.0.0'
-//	compile 'com.android.support:appcompat-v7:19.0.0'
-//	compile 'com.google.android.gms:play-services:3.2.+'
+	compile 'com.android.support:support-v4:19.0.0'
+	compile 'com.android.support:appcompat-v7:19.0.0'
+	compile 'com.google.android.gms:play-services:3.2.+'
 	compile 'net.sf.jtidy:jtidy:r938'
 	compile 'org.slf4j:slf4j-android:1.6.1-RC1'
 	compile 'org.apache.commons:commons-lang3:3.2.1'
@@ -28,6 +28,8 @@ dependencies {
 }
 
 configurations { provided }
+
+def libDir = new File(project.projectDir, 'libs')
 
 eclipse {
 
@@ -40,8 +42,10 @@ eclipse {
 	    		c -> c.kind == 'src'
 	    	}
 		}
-	
-		withXml {
+		
+		libDir.mkdirs()
+		
+   		withXml {
 		    def node = it.asNode()
 		
 		    node.appendNode('classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"')
@@ -54,6 +58,16 @@ eclipse {
 		                path.contains('/com.android.support/support-v4')
 		                )
 		    }
+	
+			node.children().each() {
+				if (it.attribute("kind") == "lib") {
+					def path = it.attribute("path")
+					copy {
+						from path
+						into libDir
+					}
+				}
+			}
 		}
 	}
 	
@@ -147,49 +161,3 @@ android {
 
 }
 
-task copyDependencies(type: Copy) {
-    description = 'Copy depencies to libs. Useful for Eclipse'
-    libDir = new File(project.projectDir, '/libs')
-    println libDir
-    println 'Adding dependencies from compile configuration'
-    for(file in configurations.compile) 
-    {
-        println 'Added ' + file
-        copy 
-        {
-            from file
-            into libDir
-        }
-    }
-    println 'Adding dependencies from releaseCompile configuration'
-    for(file in configurations.releaseCompile)
-    {
-        println 'Added ' + file
-        copy
-        {
-            from file
-            into libDir
-        }
-    }
-    println 'Adding dependencies from debugCompile configuration'
-    for(file in configurations.debugCompile)
-    {
-        println 'Added ' + file
-        copy
-        {
-            from file
-            into libDir
-        }
-    }
-
-    println 'Adding dependencies from instrumentTestCompile configuration'
-    for(file in configurations.instrumentTestCompile)
-    {
-        println 'Added ' + file
-        copy
-        {
-            from file
-            into libDir
-        }
-    }
-}
