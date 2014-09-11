@@ -55,8 +55,8 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 		if (singletonInstance == null)
 			singletonInstance = new MammaHelpDbHelper(context);
 
-		singletonInstance.createFakeArticle("Ël·nek", "informations");
-		singletonInstance.createFakeArticle("Ël·nek", "help");
+		singletonInstance.createFakeArticle("ƒçl√°nek", "informations");
+		singletonInstance.createFakeArticle("ƒçl√°nek", "help");
 
 		return singletonInstance;
 	}
@@ -133,9 +133,9 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 		ArticlesDao aDao = new ArticlesDao(db);
 
 		Articles a = new Articles();
-		a.setBody("Pokusn˝ " + code + " v sekci " + category + "- tÏlo");
+		a.setBody("Pokusn√Ω " + code + " v sekci " + category + "- tƒõlo");
 		a.setSyncTime(Calendar.getInstance());
-		a.setTitle("Pokusn˝ " + code + " v sekci " + category + " - titulek");
+		a.setTitle("Pokusn√Ω " + code + " v sekci " + category + " - titulek");
 		a.setUrl("http://www.vysetrise.cz/");
 		a.setCategory(category);
 

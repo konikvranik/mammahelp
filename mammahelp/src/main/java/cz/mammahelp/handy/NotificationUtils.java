@@ -50,7 +50,7 @@ public class NotificationUtils {
 
 	private static int getNotificationId(MammaHelpException e) {
 		int id = e.getErrorType() == null ? 0 : e.getErrorType().ordinal();
-		// TODO doplnit generování ID zprávy.
+		// TODO doplnit generovani ID zpravy.
 		return id;
 	}
 
