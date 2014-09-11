@@ -131,6 +131,7 @@ int bool abc_config_actionMenuItemAllCaps 0x7f070005
 int bool abc_config_allowActionMenuItemTextWithIcon 0x7f070004
 int bool abc_config_showMenuShortcutsWhenKeyboardPresent 0x7f070003
 int bool abc_split_action_bar_is_narrow 0x7f070002
+int bool provider_enabled 0x7f070006
 int color JidelakOrange 0x7f080005
 int color RestaurantBackground 0x7f080006
 int color RestaurantHeaderBackground 0x7f080004
@@ -286,7 +287,7 @@ int drawable ic_launcher_new 0x7f020068
 int drawable logo 0x7f020069
 int drawable meal_background 0x7f02006a
 int drawable upper_shadow 0x7f02006b
-int id action_about 0x7f06004d
+int id action_about 0x7f06004c
 int id action_bar 0x7f06001c
 int id action_bar_activity_content 0x7f060015
 int id action_bar_container 0x7f06001b
@@ -298,10 +299,10 @@ int id action_context_bar 0x7f06001d
 int id action_menu_divider 0x7f060016
 int id action_menu_presenter 0x7f060017
 int id action_mode_close_button 0x7f060024
-int id action_settings 0x7f06004c
+int id action_settings 0x7f06004b
 int id activity_chooser_view_content 0x7f060025
 int id always 0x7f06000b
-int id article_detail 0x7f060047
+int id article_detail 0x7f060042
 int id beginning 0x7f060011
 int id checkbox 0x7f06002d
 int id collapseActionView 0x7f06000d
@@ -309,7 +310,7 @@ int id container 0x7f060040
 int id default_activity_button 0x7f060028
 int id dialog 0x7f06000e
 int id disableHome 0x7f060008
-int id display 0x7f060049
+int id display 0x7f060048
 int id drawer_layout 0x7f06003f
 int id dropdown 0x7f06000f
 int id edit_query 0x7f060030
@@ -344,7 +345,7 @@ int id search_mag_icon 0x7f060035
 int id search_plate 0x7f060036
 int id search_src_text 0x7f060037
 int id search_voice_btn 0x7f06003b
-int id section_label 0x7f060048
+int id section_label 0x7f060047
 int id send_error 0x7f060045
 int id send_to 0x7f060046
 int id shortcut 0x7f06002e
@@ -356,13 +357,12 @@ int id submit_area 0x7f060039
 int id tabMode 0x7f060002
 int id title 0x7f06002b
 int id top_action_bar 0x7f060020
-int id unit 0x7f06004a
+int id unit 0x7f060049
 int id up 0x7f060021
 int id usage 0x7f06003e
 int id useLogo 0x7f060003
-int id value 0x7f06004b
+int id value 0x7f06004a
 int id version 0x7f06003c
-int id webView1 0x7f060042
 int id withText 0x7f06000c
 int integer abc_max_action_buttons 0x7f0a0000
 int integer google_play_services_version 0x7f0a0001

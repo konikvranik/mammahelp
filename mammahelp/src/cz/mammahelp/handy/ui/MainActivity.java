@@ -1,11 +1,15 @@
 package cz.mammahelp.handy.ui;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import cz.mammahelp.handy.R;
 
 public class MainActivity extends AbstractMammaHelpActivity {
@@ -103,6 +107,35 @@ public class MainActivity extends AbstractMammaHelpActivity {
 
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+
+		WebView articleDetail = null;
+		try {
+			articleDetail = (WebView) findViewById(R.id.article_detail);
+		} catch (ClassCastException e) {
+			log.error(e.getMessage(), e);
+		}
+
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+
+		getFragmentManager().dump(null, null, pw, null);
+
+		log.debug("Fragments: " + getFragmentManager().getBackStackEntryCount());
+
+		if (articleDetail != null && articleDetail.canGoBack()) {
+			log.debug("Go back in article history");
+			articleDetail.goBack();
+		} else if (getFragmentManager().getBackStackEntryCount() > 0) {
+			log.debug("Go back in fragment backstack");
+			getFragmentManager().popBackStack();
+		} else {
+			log.debug("Original go back");
+			super.onBackPressed();
 		}
 	}
 

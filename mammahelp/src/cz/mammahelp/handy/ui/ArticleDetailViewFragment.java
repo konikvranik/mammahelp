@@ -67,9 +67,7 @@ public class ArticleDetailViewFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (getArguments() != null) {
-			article = new Articles(getArguments().getLong(ARTICLE_KEY));
-		}
+
 	}
 
 	@Override
@@ -89,7 +87,7 @@ public class ArticleDetailViewFragment extends Fragment {
 		wv.setWebChromeClient(new WebChromeClient());
 
 		Uri uri = Uri.parse(LocalDbContentProvider.CONTENT_ARTICLE_URI + "/"
-				+ getArticle().getId());
+				+ getArticle().getId() + "?id=" + getArticle().getId());
 
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Content-Type", "text/html; charset=UTF-8");
@@ -119,6 +117,11 @@ public class ArticleDetailViewFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
+
+		if (getArguments() != null && getArguments().containsKey(ARTICLE_KEY)) {
+			article = new Articles(getArguments().getLong(ARTICLE_KEY));
+		}
+
 		try {
 			// mListener = (OnFragmentInteractionListener) activity;
 		} catch (ClassCastException e) {
@@ -145,6 +148,13 @@ public class ArticleDetailViewFragment extends Fragment {
 	public interface OnFragmentInteractionListener {
 		// TODO: Update argument type and name
 		public void onFragmentInteraction(Uri uri);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+		outState.putLong(ARTICLE_KEY, getArticle().getId());
 	}
 
 }

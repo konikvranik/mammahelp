@@ -1,6 +1,11 @@
 package cz.mammahelp.handy.ui;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.SortedSet;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,6 +24,9 @@ import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.model.Articles;
 
 public class CategoryListFragment extends ANamedFragment {
+
+	private static Logger log = LoggerFactory
+			.getLogger(CategoryListFragment.class);
 
 	public class CategoryAdapter extends BaseAdapter implements ListAdapter {
 
@@ -87,9 +95,16 @@ public class CategoryListFragment extends ANamedFragment {
 				args.putLong(ArticleDetailViewFragment.ARTICLE_KEY,
 						paramAdapterView.getAdapter().getItemId(paramInt));
 				af.setArguments(args);
-				getFragmentManager().beginTransaction()
-						.replace(R.id.container, af).addToBackStack(getTag())
-						.commit();
+				getFragmentManager().beginTransaction().add(R.id.container, af)
+						.addToBackStack(null).commit();
+
+				StringWriter sw = new StringWriter();
+				PrintWriter pw = new PrintWriter(sw);
+
+				getFragmentManager().dump(null, null, pw, null);
+
+				log.debug("Fragments: "
+						+ getFragmentManager().getBackStackEntryCount());
 
 			}
 		});

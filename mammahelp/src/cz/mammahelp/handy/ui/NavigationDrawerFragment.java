@@ -1,5 +1,8 @@
 package cz.mammahelp.handy.ui;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -244,13 +247,19 @@ public class NavigationDrawerFragment extends Fragment {
 			if (f == null) {
 				f = new CategoryListFragment();
 				f.setArguments(b);
-				// ft.add(f, tag);
-				// fm.putFragment(b, tag, f);
-
-				fragmentManager.beginTransaction()
-						.replace(R.id.container, f, tag).addToBackStack(tag)
-						.commit();
 			}
+			fragmentManager.popBackStack("category",
+					FragmentManager.POP_BACK_STACK_INCLUSIVE);
+			fragmentManager.beginTransaction().add(R.id.container, f, tag)
+					.addToBackStack("category").commit();
+
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+
+			getFragmentManager().dump(null, null, pw, null);
+
+			log.debug("Fragments: "
+					+ getFragmentManager().getBackStackEntryCount());
 
 			// startActivity(
 			// new Intent(getActivity(), CategoryListActivity.class), b);
