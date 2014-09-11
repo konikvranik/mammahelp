@@ -42,7 +42,7 @@ eclipse {
 	    		c -> c.kind == 'src'
 	    	}
 		}
-		
+		delete libDir
 		libDir.mkdirs()
 		
    		withXml {
@@ -56,12 +56,12 @@ eclipse {
 		        def path = c.attribute('path')
 		        path != null && (
 		                path.contains('/com.android.support/support-v4')
-		                )
+		        )
 		    }
 	
 			node.children().each() {
-				if (it.attribute("kind") == "lib") {
-					def path = it.attribute("path")
+				def path = it.attribute("path")
+				if (it.attribute("kind") == "lib" && !(path.contains("appcompat-v7")||path.contains("support-v4"))) {
 					copy {
 						from path
 						into libDir
