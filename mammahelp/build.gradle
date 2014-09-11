@@ -17,9 +17,9 @@ repositories {
 
 dependencies {
 
-	compile 'com.android.support:support-v4:19.0.0'
-	compile 'com.android.support:appcompat-v7:19.0.0'
-	compile 'com.google.android.gms:play-services:3.2.+'
+//	compile 'com.android.support:support-v4:19.0.0'
+//	compile 'com.android.support:appcompat-v7:19.0.0'
+//	compile 'com.google.android.gms:play-services:3.2.+'
 	compile 'net.sf.jtidy:jtidy:r938'
 	compile 'org.slf4j:slf4j-android:1.6.1-RC1'
 	compile 'org.apache.commons:commons-lang3:3.2.1'
@@ -33,6 +33,7 @@ eclipse {
 
 	classpath.plusConfigurations += configurations.compile
 	classpath.noExportConfigurations += configurations.compile
+	
 	eclipse.classpath.file {
 	    beforeMerged {
 	    	classpath -> classpath.entries.removeAll() {
@@ -146,4 +147,49 @@ android {
 
 }
 
+task copyDependencies(type: Copy) {
+    description = 'Copy depencies to libs. Useful for Eclipse'
+    libDir = new File(project.projectDir, '/libs')
+    println libDir
+    println 'Adding dependencies from compile configuration'
+    for(file in configurations.compile) 
+    {
+        println 'Added ' + file
+        copy 
+        {
+            from file
+            into libDir
+        }
+    }
+    println 'Adding dependencies from releaseCompile configuration'
+    for(file in configurations.releaseCompile)
+    {
+        println 'Added ' + file
+        copy
+        {
+            from file
+            into libDir
+        }
+    }
+    println 'Adding dependencies from debugCompile configuration'
+    for(file in configurations.debugCompile)
+    {
+        println 'Added ' + file
+        copy
+        {
+            from file
+            into libDir
+        }
+    }
 
+    println 'Adding dependencies from instrumentTestCompile configuration'
+    for(file in configurations.instrumentTestCompile)
+    {
+        println 'Added ' + file
+        copy
+        {
+            from file
+            into libDir
+        }
+    }
+}
