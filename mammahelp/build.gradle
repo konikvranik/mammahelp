@@ -12,34 +12,49 @@ group = "cz.mammahelp.handy"
 
 sourceCompatibility = 1.6
 
+repositories {
+	mavenCentral()
+}
 
+dependencies {
+
+	compile 'com.android.support:support-v4:r7'
+	compile 'com.android.support:appcompat-v7:19.0.0'
+	compile 'com.google.android.gms:play-services:3.2.+'
+	compile 'net.sf.jtidy:jtidy:r938'
+	compile 'org.slf4j:slf4j-android:1.6.1-RC1'
+	compile 'org.apache.commons:commons-lang3:3.2.1'
+	compile 'rome:rome:1.0'
+
+}
 
 configurations { provided }
 //
 eclipse {
 
 	classpath.plusConfigurations += configurations.compile
+	classpath.noExportConfigurations += configurations.compile
 	eclipse.classpath.file {
-	    beforeMerged { classpath ->
-	    classpath.entries.removeAll() { c -> 
-	        c.kind == 'src'
-	    }
-	}
+	    beforeMerged {
+	    	classpath -> classpath.entries.removeAll() {
+	    		c -> c.kind == 'src'
+	    	}
+		}
 	
-	withXml {
-	    def node = it.asNode()
-	
-	    node.appendNode('classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"')
-	    node.appendNode('classpathentry kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES" exported="true"')
-	    node.appendNode('classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES" exported="true"')
-	
-	    node.children().removeAll() { c ->
-	        def path = c.attribute('path')
-	        path != null && (
-	                path.contains('/com.android.support/support-v4')
-	                )
-	    }
-	  }
+		withXml {
+		    def node = it.asNode()
+		
+		    node.appendNode('classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"')
+		    node.appendNode('classpathentry kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES" exported="true"')
+		    node.appendNode('classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES" exported="true"')
+		
+		    node.children().removeAll() { c ->
+		        def path = c.attribute('path')
+		        path != null && (
+		                path.contains('/com.android.support/support-v4')
+		                )
+		    }
+		}
 	}
 	
 	project {
@@ -55,25 +70,8 @@ eclipse {
 
 		name 'mammahelp'
 	}
-/*	classpath {
 
-
-		//you can tweak the classpath of the Eclipse project by adding extra configurations:
-		plusConfigurations += configurations.provided
-
-		//if you don't want some classpath entries 'exported' in Eclipse
-		noExportConfigurations += configurations.provided
-
-		//customizing the classes output directory:
-		defaultOutputDir = file('bin')
-
-		//default settings for downloading sources and Javadoc:
-		downloadSources = true
-		downloadJavadoc = false
-	}
-*/
 }
-
 
 buildscript {
 	repositories { mavenCentral() }
@@ -83,28 +81,7 @@ buildscript {
 
 sourceSets {
 	main {
-		java { srcDir 'src' }
 		java { srcDir 'gen' }
-		resources { srcDir 'res' }
-	}
-}
-repositories {
-
-	def rootDir = project.rootDir
-	def localProperties = new File(rootDir, "local.properties")
-	def sdkDir
-	def suppportRepoUrl
-	if (localProperties.exists()) {
-		Properties properties = new Properties()
-		localProperties.withInputStream { instr -> properties.load(instr) }
-		sdkDir = properties.getProperty('sdk.dir')
-		suppportRepoUrl = "file:///" + sdkDir + "/extras/android/support"
-	}
-	print suppportRepoUrl + "\n"
-	
-	mavenCentral()
-	maven {
-		url suppportRepoUrl
 	}
 }
 
@@ -170,105 +147,4 @@ android {
 
 }
 
-dependencies {
 
-	compile 'com.android.support:support-v4:r7'
-	compile 'com.android.support:appcompat-v7:19.0.0'
-	compile 'com.google.android.gms:play-services:3.2.+'
-	compile 'net.sf.jtidy:jtidy:r938'
-	compile 'org.slf4j:slf4j-android:1.6.1-RC1'
-	compile 'org.apache.commons:commons-lang3:3.2.1'
-	compile 'rome:rome:1.0'
-
-	testCompile 'org.slf4j:slf4j-log4j12:1.6.1'
-	testCompile 'log4j:log4j:1.2.17'
-
-}
-
-
-/*
-
-task copyDependencies(type: Copy) {
-    description = 'Copy depencies to libs. Useful for Eclipse'
-    libDir = new File(project.projectDir, '/libs')
-    println libDir
-    println 'Adding dependencies from compile configuration'
-    for(file in configurations.compile)  {
-        println 'Added ' + file
-        copy {
-            from file
-            into libDir
-        }
-        eclipse.classpath.file {
-		    withXml { xml ->
-		        def node = xml.asNode()
-		        def e = node.find { it.@path == file }
-		        if(e) {
-		        	node.remove( e )
-		        }
-		        node.appendNode( 'classpathentry', [ kind: 'lib', path: file, exported: 'false'])
-		    }
-		}
-    }
-    
-    println 'Adding dependencies from releaseCompile configuration'
-    for(file in configurations.releaseCompile) {
-        println 'Added ' + file
-        copy {
-            from file
-            into libDir
-        }
-        eclipse.classpath.file {
-		    withXml { xml ->
-		        def node = xml.asNode()
-		        def e = node.find { it.@path == file }
-		        if(e) {
-		        	node.remove( e )
-		        }
-		        node.appendNode( 'classpathentry', [ kind: 'lib', path: file, exported: 'false'])
-		    }
-		}
-        
-    }
-    println 'Adding dependencies from debugCompile configuration'
-    for(file in configurations.debugCompile) {
-        println 'Added ' + file
-        copy {
-            from file
-            into libDir
-        }
-        eclipse.classpath.file {
-		    withXml { xml ->
-		        def node = xml.asNode()
-		        def e = node.find { it.@path == file }
-		        if(e) {
-		        	node.remove( e )
-		        }
-		        node.appendNode( 'classpathentry', [ kind: 'lib', path: file, exported: 'false'])
-		    }
-		}
-    }
-
-    println 'Adding dependencies from instrumentTestCompile configuration'
-    for(file in configurations.instrumentTestCompile) {
-        println 'Added ' + file
-        copy {
-            from file
-            into libDir
-        }
-        eclipse.classpath.file {
-		    withXml { xml ->
-		        def node = xml.asNode()
-		        def e = node.find { it.@path == file }
-		        if(e) {
-		        	node.remove( e )
-		        }
-		        node.appendNode( 'classpathentry', [ kind: 'lib', path: file, exported: 'false'])
-		    }
-		}
-    }
-    
-
-} 
-
-*/
