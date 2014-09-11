@@ -1,5 +1,4 @@
 import java.security.KeyStore.Builder;
-
 import org.gradle.plugins.ide.eclipse.model.SourceFolder
 
 apply plugin: 'android'
@@ -18,7 +17,7 @@ repositories {
 
 dependencies {
 
-	compile 'com.android.support:support-v4:r7'
+	compile 'com.android.support:support-v4:19.0.0'
 	compile 'com.android.support:appcompat-v7:19.0.0'
 	compile 'com.google.android.gms:play-services:3.2.+'
 	compile 'net.sf.jtidy:jtidy:r938'
@@ -29,7 +28,7 @@ dependencies {
 }
 
 configurations { provided }
-//
+
 eclipse {
 
 	classpath.plusConfigurations += configurations.compile
