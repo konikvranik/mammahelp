@@ -138,8 +138,11 @@ public class NavigationDrawerFragment extends Fragment {
 	 */
 	public void setUp(int fragmentId, DrawerLayout drawerLayout) {
 
-		if (drawerLayout == null)
+		ActionBar actionBar = getActionBar();
+
+		if (drawerLayout == null) {
 			return;
+		}
 
 		mFragmentContainerView = getActivity().findViewById(fragmentId);
 		mDrawerLayout = drawerLayout;
@@ -150,7 +153,6 @@ public class NavigationDrawerFragment extends Fragment {
 				GravityCompat.START);
 		// set up the drawer's list view with items and click listener
 
-		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
 
@@ -327,6 +329,10 @@ public class NavigationDrawerFragment extends Fragment {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		if (mDrawerToggle == null && item.getItemId() == android.R.id.home) {
+			getActivity().onBackPressed();
+			return true;
+		}
 		if (mDrawerToggle != null && mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}

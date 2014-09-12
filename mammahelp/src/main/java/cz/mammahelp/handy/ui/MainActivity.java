@@ -41,7 +41,7 @@ public class MainActivity extends AbstractMammaHelpActivity {
 
 		// Set up the drawer.
 		View dr = findViewById(R.id.drawer_layout);
-		if (dr != null)
+		if (mNavigationDrawerFragment != null)
 			mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 					(DrawerLayout) dr);
 	}
