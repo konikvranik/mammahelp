@@ -4,8 +4,8 @@ import org.gradle.plugins.ide.eclipse.model.SourceFolder
 apply plugin: 'android'
 apply plugin: 'eclipse'
 
-version = '0.6'
-android.defaultConfig.versionCode = 6
+version = '0.7'
+android.defaultConfig.versionCode = 7
 
 group = "cz.mammahelp.handy"
 
@@ -24,6 +24,7 @@ dependencies {
 	compile 'org.slf4j:slf4j-android:1.6.1-RC1'
 	compile 'org.apache.commons:commons-lang3:3.2.1'
 	compile 'rome:rome:1.0'
+	compile 'com.squareup.retrofit:converter-simplexml:1.6.1'
 
 }
 
@@ -61,7 +62,12 @@ eclipse {
 	
 			node.children().each() {
 				def path = it.attribute("path")
-				if (it.attribute("kind") == "lib" && !(path.contains("appcompat-v7")||path.contains("support-v4"))) {
+				if (it.attribute("kind") == "lib" && !(
+					path.contains("appcompat-v7")
+					||path.contains("support-v4")
+					||path.contains("stax")
+					||path.contains("xpp3")
+				)) {
 					copy {
 						from path
 						into libDir

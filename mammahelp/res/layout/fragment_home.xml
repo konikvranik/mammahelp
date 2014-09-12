@@ -1,14 +1,63 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="cz.mammahelp.handy.ui.HomeFragment" >
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:background="@drawable/mammanet_dimmed"
+        android:padding="4dp" >
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce libero diam, ultricies nec quam quis, ultricies scelerisque massa. Cras lectus mauris, auctor a vehicula vel, dapibus vitae tellus. Praesent sagittis semper ante. Mauris tempus luctus urna. Curabitur ac felis et leo pellentesque tempor sit amet eu libero."
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
 
-</FrameLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:background="@drawable/bohemiangranfondo_dimmed"
+        android:padding="4dp" >
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus et sollicitudin nunc, ac consectetur lorem. Sed vitae dui a nunc ullamcorper efficitur vitae ut mauris. Donec sit amet aliquet odio. Proin eu venenatis nisi. Integer eros libero, condimentum id porta in, lobortis et ante. Integer egestas eros magna, non mattis."
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:background="@drawable/mammashop2_dimmed"
+        android:padding="4dp" >
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut nulla nulla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu imperdiet metus. Ut sit amet dolor vel nulla."
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
+
+</LinearLayout>

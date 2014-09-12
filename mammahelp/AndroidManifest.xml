@@ -67,12 +67,6 @@
         </receiver>
 
         <provider
-            android:name="cz.mammahelp.handy.provider.MyContentProvider"
-            android:authorities="abc"
-            android:enabled="true"
-            android:exported="false" >
-        </provider>
-        <provider
             android:name=".provider.LocalDbContentProvider"
             android:authorities="cz.mammahelp.handy.local.provider"
             android:enabled="true"

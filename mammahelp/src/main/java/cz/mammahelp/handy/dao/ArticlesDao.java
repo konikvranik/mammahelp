@@ -71,8 +71,11 @@ public class ArticlesDao extends BaseDao<Articles> {
 		TypedContentValues values = new TypedContentValues(updateNull);
 		values.put(ID, obj.getId());
 		values.put(TITLE, obj.getTitle());
-		values.put(UPDATED, new SimpleDateFormat(DATE_FORMAT, LOCALE)
-				.format(obj.getSyncTime().getTime()));
+		values.put(
+				UPDATED,
+				obj.getSyncTime() == null ? null : new SimpleDateFormat(
+						DATE_FORMAT, LOCALE)
+						.format(obj.getSyncTime().getTime()));
 		values.put(URL, obj.getUrl());
 		values.put(CATEGORY, obj.getCategory());
 		values.put(BODY, obj.getBody());

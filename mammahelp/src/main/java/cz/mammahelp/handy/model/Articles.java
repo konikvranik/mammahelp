@@ -38,4 +38,12 @@ public class Articles extends ASyncedInformation<Articles> {
 		return c;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("id = ");
+		sb.append(getId());
+		sb.append("; title = ");
+		sb.append(getTitle());
+		return sb.toString();
+	}
 }

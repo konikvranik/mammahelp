@@ -1,7 +1,7 @@
 package cz.mammahelp.handy;
 
-import java.util.Calendar;
-
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +20,7 @@ import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.model.Articles;
+import cz.mammahelp.handy.model.ArticlesXmlWrapper;
 
 public class MammaHelpDbHelper extends SQLiteOpenHelper {
 
@@ -55,18 +56,21 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 		if (singletonInstance == null)
 			singletonInstance = new MammaHelpDbHelper(context);
 
-		singletonInstance.createFakeArticle("článek", "informations");
-		singletonInstance.createFakeArticle("článek", "help");
+		// singletonInstance.createFakeArticle("článek", "informations");
+		// singletonInstance.createFakeArticle("článek", "help");
 
 		return singletonInstance;
 	}
 
-	private void createFakeArticle(String string, String string2) {
-		createFakeArticle(getWritableDatabase(), string, string2);
-	}
+	private Context context;
+
+	// private void createFakeArticle(String string, String string2) {
+	// createFakeArticle(getWritableDatabase(), string, string2);
+	// }
 
 	private MammaHelpDbHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		this.context = context;
 		log.debug("Constructed DbHelper");
 
 	}
@@ -98,6 +102,25 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 		log.debug(SQL_CREATE_LOCATION_POINT);
 		db.execSQL(SQL_CREATE_LOCATION_POINT);
 
+		Serializer serializer = new Persister();
+
+		try {
+			ArticlesXmlWrapper aw = serializer.read(ArticlesXmlWrapper.class,
+					context.getResources().openRawResource(R.raw.articles));
+			ArticlesDao aDao = new ArticlesDao(db);
+
+			log.debug("Read " + aw.articles.size() + " articles.");
+
+			for (Articles a : aw.articles) {
+				log.debug("Saving article " + a);
+				a.setCategory(a.getCategory().trim());
+				a.setTitle(a.getTitle().trim());
+				aDao.insert(a);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+
 		log.debug("Finished onCreate");
 
 	}
@@ -128,27 +151,28 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 
 	}
 
-	private void createFakeArticle(SQLiteDatabase db, String code,
-			String category) {
-		ArticlesDao aDao = new ArticlesDao(db);
-
-		Articles a = new Articles();
-		a.setBody("Pokusný " + code + " v sekci " + category + "- tělo");
-		a.setSyncTime(Calendar.getInstance());
-		a.setTitle("Pokusný " + code + " v sekci " + category + " - titulek");
-		a.setUrl("http://www.vysetrise.cz/");
-		a.setCategory(category);
-
-		aDao.insert(a);
-
-		a.setTitle(a.getTitle() + " " + a.getId());
-		a.setBody(a.getBody() + " " + a.getId());
-
-		aDao.update(a);
-
-		log.debug("found " + aDao.findAll().size() + " articles");
-
-	}
+	//
+	// private void createFakeArticle(SQLiteDatabase db, String code,
+	// String category) {
+	// ArticlesDao aDao = new ArticlesDao(db);
+	//
+	// Articles a = new Articles();
+	// a.setBody("Pokusný " + code + " v sekci " + category + "- tělo");
+	// a.setSyncTime(Calendar.getInstance());
+	// a.setTitle("Pokusný " + code + " v sekci " + category + " - titulek");
+	// a.setUrl("http://www.vysetrise.cz/");
+	// a.setCategory(category);
+	//
+	// aDao.insert(a);
+	//
+	// a.setTitle(a.getTitle() + " " + a.getId());
+	// a.setBody(a.getBody() + " " + a.getId());
+	//
+	// aDao.update(a);
+	//
+	// log.debug("found " + aDao.findAll().size() + " articles");
+	//
+	// }
 
 	protected void addColumn(SQLiteDatabase db, Table table, Column column) {
 		db.execSQL("alter table " + table.getName() + " add column "

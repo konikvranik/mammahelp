@@ -75,7 +75,7 @@ public class AboutActivity extends AbstractMammaHelpActivity {
 					android.R.color.black));
 
 		usage.getSettings().setStandardFontFamily("sans-serif");
-		usage.loadUrl("file:///android_res/raw/no_restaurants_disclaimer.html");
+		usage.loadUrl("file:///android_res/raw/about.html");
 
 	}
 
