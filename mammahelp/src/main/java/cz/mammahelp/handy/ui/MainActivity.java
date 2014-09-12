@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import cz.mammahelp.handy.R;
 
@@ -39,8 +40,10 @@ public class MainActivity extends AbstractMammaHelpActivity {
 				.findFragmentById(R.id.navigation_drawer);
 
 		// Set up the drawer.
-		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
-				(DrawerLayout) findViewById(R.id.drawer_layout));
+		View dr = findViewById(R.id.drawer_layout);
+		if (dr != null)
+			mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
+					(DrawerLayout) dr);
 	}
 
 	public void restoreActionBar() {
@@ -51,7 +54,8 @@ public class MainActivity extends AbstractMammaHelpActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if (!mNavigationDrawerFragment.isDrawerOpen()) {
+		if (mNavigationDrawerFragment == null
+				|| !mNavigationDrawerFragment.isDrawerOpen()) {
 			// Only show items in the action bar relevant to this screen
 			// if the drawer is not showing. Otherwise, let the drawer
 			// decide what to show in the action bar.

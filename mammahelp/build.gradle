@@ -24,7 +24,11 @@ dependencies {
 	compile 'org.slf4j:slf4j-android:1.6.1-RC1'
 	compile 'org.apache.commons:commons-lang3:3.2.1'
 	compile 'rome:rome:1.0'
-	compile 'com.squareup.retrofit:converter-simplexml:1.6.1'
+	compile('com.squareup.retrofit:converter-simplexml:1.6.1'){
+	    exclude module: 'stax'
+	    exclude module: 'stax-api'
+	    exclude module: 'xpp3'
+	}
 
 }
 
@@ -43,8 +47,6 @@ eclipse {
 	    		c -> c.kind == 'src'
 	    	}
 		}
-		delete libDir
-		libDir.mkdirs()
 		
    		withXml {
 		    def node = it.asNode()
@@ -60,13 +62,18 @@ eclipse {
 		        )
 		    }
 	
+			println node.children()
+			
+			delete libDir
+			libDir.mkdirs()
+		
 			node.children().each() {
 				def path = it.attribute("path")
 				if (it.attribute("kind") == "lib" && !(
 					path.contains("appcompat-v7")
 					||path.contains("support-v4")
-					||path.contains("stax")
-					||path.contains("xpp3")
+//					||path.contains("stax")
+//					||path.contains("xpp3")
 				)) {
 					copy {
 						from path
