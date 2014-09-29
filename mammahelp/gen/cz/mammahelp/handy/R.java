@@ -1348,6 +1348,12 @@ containing a value of this type.
         public static final int action_example=0x7f0c0017;
         public static final int action_settings=0x7f0c0018;
         public static final int app_name=0x7f0c000d;
+        public static final int banner1=0x7f0c0031;
+        public static final int banner1_text=0x7f0c0034;
+        public static final int banner2=0x7f0c0032;
+        public static final int banner2_text=0x7f0c0035;
+        public static final int banner3=0x7f0c0033;
+        public static final int banner3_text=0x7f0c0036;
         public static final int date_time=0x7f0c0012;
         public static final int delete_delay_description=0x7f0c0021;
         public static final int delete_delay_title=0x7f0c0020;
@@ -1378,7 +1384,7 @@ containing a value of this type.
         public static final int update_on_particular_time_title=0x7f0c0025;
         public static final int update_time_description=0x7f0c002c;
         public static final int update_time_title=0x7f0c002b;
-        public static final int update_title=0x7f0c0031;
+        public static final int update_title=0x7f0c0037;
         public static final int versionName=0x7f0c000f;
         public static final int versionString=0x7f0c0010;
     }

@@ -67,5 +67,11 @@
     <string name="title_activity_category_list">CategoryListFragment</string>
     <string name="hello_world">Hello world!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="banner1">Discussion forum</string>
+    <string name="banner2">Bohemian Gran Fondo</string>
+    <string name="banner3">Mamma SHOP</string>
+    <string name="banner1_text">Milé mammahelpky a příznivci Mamma HELPu, připravili jsme pro vás diskuzní fórum, kde můžete společně diskutovat o všech problémech týkajících se problematiky rakoviny prsu.</string>
+    <string name="banner2_text">Spojení mimořádného sportovního výkonu s projevem lidské sounáležitosti dokumentované poskytnutím finačních prostředků na podporu celospolečensky významného projektu bylo základní myšlenkou organizátorů při vzniku Bohemian Gran Fondo. Jejich inspirací se staly kultovní La Marmotte  ve Francouzských Alpách, jeden z nejtěžších cyklistických amatérských závodů na světě, a Pan Massachusetts Challenge (www.pmc.org) v USA, který každoročně získává od účastníků vytrvalostní cyklistické jízdy mnohamilónové částky v USD na výzkum rakoviny. Tedy sportovní náročnost La Marmotte propojená s lidskou solidaritou Pan Massachusetts Challenge.</string>
+    <string name="banner3_text">Náš život se zcela neočekávaně změnil. Přesto se nevzdáváme, neztrácíme naději a bojujeme s nemocí, která nás i naše rodiny hluboce zasáhla a poznamenala. A chceme také pomoci najít odvahu dalším, které se dostanou do stejné situace. Je nás víc jak sedmdesát tisíc, které se denně potýkáme se zkušeností jménem rakovina prsu. Pomozte nám vyhrát!</string>
 
 </resources>
