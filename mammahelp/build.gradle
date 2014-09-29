@@ -4,8 +4,8 @@ import org.gradle.plugins.ide.eclipse.model.SourceFolder
 apply plugin: 'android'
 apply plugin: 'eclipse'
 
-version = '0.10'
-android.defaultConfig.versionCode = 10
+version = '0.11'
+android.defaultConfig.versionCode = 11
 
 group = "cz.mammahelp.handy"
 
@@ -159,7 +159,11 @@ android {
 	}
 
 	buildTypes {
-		release { signingConfig signingConfigs.release }
+		release {
+			// runProguard true
+			// proguardFile getDefaultProguardFile('proguard-project.txt')
+			signingConfig signingConfigs.release
+		}
 	}
 	
 	android {
