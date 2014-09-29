@@ -1,7 +1,10 @@
 package cz.mammahelp.handy.ui;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,9 +13,14 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -28,6 +36,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import cz.mammahelp.handy.R;
 
 /**
@@ -239,6 +255,7 @@ public class NavigationDrawerFragment extends Fragment {
 		Bundle b = new Bundle();
 
 		String tag = null;
+		Fragment f;
 		switch (position) {
 		case 0:
 			tag = CategoryListFragment.CATEGORY_INFORMATIONS;
@@ -248,7 +265,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 			b.putString(CategoryListFragment.CATEGORY_KEY, tag);
 
-			Fragment f = fragmentManager.findFragmentByTag(tag);
+			f = fragmentManager.findFragmentByTag(tag);
 
 			if (f == null) {
 				f = new CategoryListFragment();
@@ -279,6 +296,63 @@ public class NavigationDrawerFragment extends Fragment {
 			break;
 
 		case 4:
+
+			MapFragment m = new MapFragment();
+
+			GoogleMap map = m.getMap();
+
+			if (map != null) {
+
+				LocationManager ls = (LocationManager) getActivity()
+						.getSystemService(Context.LOCATION_SERVICE);
+
+				Location pos = ls
+						.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+				if (pos != null) {
+					CameraUpdate cu = CameraUpdateFactory.newLatLng(new LatLng(
+							pos.getLatitude(), pos.getLongitude()));
+					map.moveCamera(cu);
+				}
+
+				map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+				Geocoder myLocation = new Geocoder(getActivity(),
+						Locale.getDefault());
+				List<Address> loc;
+				try {
+
+					loc = myLocation.getFromLocationName("Praha", 1);
+
+					Address addr = loc.get(0);
+
+					map.addMarker(new MarkerOptions()
+							.position(
+									new LatLng(addr.getLatitude(), addr
+											.getLongitude()))
+							.title("Mamma HELP v Praze")
+							.snippet("Tady to žije"));
+
+					loc = myLocation.getFromLocationName("Ostrava", 1);
+
+					addr = loc.get(0);
+
+					map.addMarker(new MarkerOptions()
+							.position(
+									new LatLng(addr.getLatitude(), addr
+											.getLongitude()))
+							.title("Mamma HELP v Ostravě")
+							.snippet("Tady to žije"));
+
+				} catch (IOException e) {
+					log.error(e.getMessage(), e);
+				}
+			}
+			
+			fragmentManager.beginTransaction().add(R.id.container, m, tag)
+					.commit();
+
+			// startActivity(
+			// new Intent(getActivity(), CategoryListActivity.class), b);
 			break;
 
 		case 5:

@@ -2,6 +2,8 @@ package cz.mammahelp.handy.model;
 
 import java.util.Collection;
 
+import org.simpleframework.xml.Element;
+
 /**
  * <!-- begin-user-doc --> <!-- end-user-doc -->
  * 
@@ -11,6 +13,7 @@ import java.util.Collection;
 public class News extends ASyncedInformation<News> {
 
 	private static final long serialVersionUID = -4281313673352148469L;
+	@Element(data = true)
 	public String annotation;
 	public String category;
 	public Enclosure enclosure;

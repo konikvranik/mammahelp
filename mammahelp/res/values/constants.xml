@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <integer name="google_play_services_version">2</integer>
+    <integer name="google_play_services_version">5077000</integer>
 
     <integer-array name="plurals">
         <item>1</item>
@@ -93,6 +93,5 @@
         <item>30</item>
         <item>31</item>
     </integer-array>
-    
- 
+
 </resources>

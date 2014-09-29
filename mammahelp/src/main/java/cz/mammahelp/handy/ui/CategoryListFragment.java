@@ -77,7 +77,6 @@ public class CategoryListFragment extends ANamedFragment {
 	private ListView view;
 	static final String CATEGORY_INFORMATIONS = "informations";
 	static final String CATEGORY_HELP = "help";
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

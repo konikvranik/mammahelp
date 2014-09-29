@@ -2,6 +2,8 @@ package cz.mammahelp.handy.model;
 
 import java.util.Calendar;
 
+import org.simpleframework.xml.Element;
+
 /**
  * <!-- begin-user-doc --> <!-- end-user-doc -->
  * 
@@ -12,6 +14,7 @@ public abstract class ASyncedInformation<T extends ASyncedInformation<T>>
 
 	private static final long serialVersionUID = 2046709112271966050L;
 	public Calendar syncTime;
+	@Element(data = true)
 	public String body;
 	public String title;
 	public String url;
