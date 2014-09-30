@@ -1542,6 +1542,7 @@ containing a value of this type.
         public static final int action_settings=0x7f0a0061;
         public static final int activity_chooser_view_content=0x7f0a0037;
         public static final int always=0x7f0a001e;
+        public static final int annotation=0x7f0a005d;
         public static final int article_detail=0x7f0a0054;
         public static final int beginning=0x7f0a0023;
         public static final int book_now=0x7f0a0010;
@@ -1576,7 +1577,6 @@ containing a value of this type.
         public static final int listMode=0x7f0a0014;
         public static final int list_item=0x7f0a003b;
         public static final int listing=0x7f0a0055;
-        public static final int map=0x7f0a005d;
         public static final int match_parent=0x7f0a000c;
         public static final int middle=0x7f0a0024;
         public static final int monochrome=0x7f0a0013;
@@ -1688,11 +1688,12 @@ containing a value of this type.
         public static final int fragment_home=0x7f03001f;
         public static final int fragment_main=0x7f030020;
         public static final int fragment_navigation_drawer=0x7f030021;
-        public static final int map=0x7f030022;
-        public static final int slider_preference=0x7f030023;
-        public static final int spinner_list=0x7f030024;
-        public static final int spinner_view=0x7f030025;
-        public static final int support_simple_spinner_dropdown_item=0x7f030026;
+        public static final int news_list_item=0x7f030022;
+        public static final int news_listing=0x7f030023;
+        public static final int slider_preference=0x7f030024;
+        public static final int spinner_list=0x7f030025;
+        public static final int spinner_view=0x7f030026;
+        public static final int support_simple_spinner_dropdown_item=0x7f030027;
     }
     public static final class menu {
         public static final int category_list=0x7f0f0000;
