@@ -2,6 +2,9 @@ package cz.mammahelp.handy.dao;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.SortedSet;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -87,6 +90,26 @@ public class NewsDao extends BaseDao<News> {
 
 	public static Table getTable() {
 		return getTable(TABLE_NAME);
+	}
+
+	public Collection<News> findOlder(Date syncTime) {
+		SortedSet<News> result = query(UPDATED + " < ?",
+				new String[] { new SimpleDateFormat(DATE_FORMAT, LOCALE)
+						.format(syncTime) }, null, null, null);
+		if (result.isEmpty())
+			return null;
+		return result;
+
+	}
+
+	public Collection<News> findNewerOrSame(Date syncTime) {
+		SortedSet<News> result = query(UPDATED + " >= ?",
+				new String[] { new SimpleDateFormat(DATE_FORMAT, LOCALE)
+						.format(syncTime) }, null, null, null);
+		if (result.isEmpty())
+			return null;
+		return result;
+
 	}
 
 }

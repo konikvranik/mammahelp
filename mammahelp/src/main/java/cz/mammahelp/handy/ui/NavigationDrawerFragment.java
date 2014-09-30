@@ -286,7 +286,7 @@ public class NavigationDrawerFragment extends Fragment {
 			}
 
 			fragmentManager.beginTransaction().add(R.id.container, f, tag)
-					.commit();
+					.addToBackStack("news").commit();
 
 			// startActivity(
 			// new Intent(getActivity(), CategoryListActivity.class), b);
@@ -301,7 +301,7 @@ public class NavigationDrawerFragment extends Fragment {
 			MapFragment m = new MapFragment();
 
 			fragmentManager.beginTransaction().add(R.id.container, m, tag)
-					.commit();
+					.addToBackStack("map").commit();
 
 			// startActivity(
 			// new Intent(getActivity(), CategoryListActivity.class), b);

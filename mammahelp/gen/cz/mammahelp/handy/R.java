@@ -1853,6 +1853,7 @@ containing a value of this type.
         public static final int date_time=0x7f080032;
         public static final int delete_delay_description=0x7f080041;
         public static final int delete_delay_title=0x7f080040;
+        public static final int failed_to_connect=0x7f080057;
         public static final int hello_blank_fragment=0x7f080050;
         public static final int hello_world=0x7f08004f;
         public static final int http_error_response=0x7f08003b;
@@ -1880,7 +1881,7 @@ containing a value of this type.
         public static final int update_on_particular_time_title=0x7f080045;
         public static final int update_time_description=0x7f08004c;
         public static final int update_time_title=0x7f08004b;
-        public static final int update_title=0x7f080057;
+        public static final int update_title=0x7f080058;
         public static final int versionName=0x7f08002f;
         public static final int versionString=0x7f080030;
         /**  Text on a placeholder buy button when Google Play services is not
