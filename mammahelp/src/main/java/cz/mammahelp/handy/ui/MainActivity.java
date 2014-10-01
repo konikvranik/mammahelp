@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import cz.mammahelp.handy.MammaHelpService;
 import cz.mammahelp.handy.R;
 
 public class MainActivity extends AbstractMammaHelpActivity {
@@ -46,6 +47,9 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		if (mNavigationDrawerFragment != null)
 			mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 					(DrawerLayout) dr);
+
+		startService(new Intent(this, MammaHelpService.class).putExtra(
+				"register", true));
 	}
 
 	public void restoreActionBar() {

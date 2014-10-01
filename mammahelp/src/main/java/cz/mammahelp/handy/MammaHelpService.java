@@ -43,7 +43,9 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.widget.Toast;
+import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.feeder.ArticleFeeder;
+import cz.mammahelp.handy.feeder.GenericFeeder;
 import cz.mammahelp.handy.feeder.NewsFeeder;
 
 public class MammaHelpService extends Service {
@@ -91,7 +93,7 @@ public class MammaHelpService extends Service {
 	private MammaHelpReceiver timerReceiver;
 
 	private boolean updating;
-	private ArticleFeeder articleFeeder;
+	private GenericFeeder<ArticlesDao> articleFeeder;
 	private NewsFeeder newsFeeder;
 
 	@Override
@@ -182,7 +184,7 @@ public class MammaHelpService extends Service {
 		getDbHelper().notifyDataSetChanged();
 	}
 
-	private ArticleFeeder getArticleFeeder() {
+	private GenericFeeder<ArticlesDao> getArticleFeeder() {
 
 		if (articleFeeder == null) {
 			articleFeeder = new ArticleFeeder(getApplicationContext());
