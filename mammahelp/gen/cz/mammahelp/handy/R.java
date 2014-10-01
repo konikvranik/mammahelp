@@ -1539,6 +1539,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f0a0028;
         public static final int action_menu_presenter=0x7f0a0029;
         public static final int action_mode_close_button=0x7f0a0036;
+        public static final int action_refresh=0x7f0a0064;
         public static final int action_settings=0x7f0a0062;
         public static final int activity_chooser_view_content=0x7f0a0037;
         public static final int always=0x7f0a001e;
@@ -1748,6 +1749,7 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with_application=0x7f08002b;
         public static final int action_about=0x7f08004d;
         public static final int action_example=0x7f080037;
+        public static final int action_refresh=0x7f080059;
         public static final int action_settings=0x7f080038;
         public static final int app_name=0x7f08002d;
         public static final int auth_client_needs_enabling_title=0x7f080001;
@@ -1883,7 +1885,7 @@ containing a value of this type.
         public static final int update_on_particular_time_title=0x7f080045;
         public static final int update_time_description=0x7f08004c;
         public static final int update_time_title=0x7f08004b;
-        public static final int update_title=0x7f080059;
+        public static final int update_title=0x7f08005a;
         public static final int versionName=0x7f08002f;
         public static final int versionString=0x7f080030;
         /**  Text on a placeholder buy button when Google Play services is not

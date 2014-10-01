@@ -75,5 +75,6 @@
     <string name="banner3_text">Náš život se zcela neočekávaně změnil. Přesto se nevzdáváme, neztrácíme naději a bojujeme s nemocí, která nás i naše rodiny hluboce zasáhla a poznamenala. A chceme také pomoci najít odvahu dalším, které se dostanou do stejné situace. Je nás víc jak sedmdesát tisíc, které se denně potýkáme se zkušeností jménem rakovina prsu. Pomozte nám vyhrát!</string>
     <string name="failed_to_connect">Failed to connect!</string>
     <string name="update_failed">Failed to update data</string>
+    <string name="action_refresh">Refresh</string>
 
 </resources>
