@@ -35,7 +35,7 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao> {
 
 			if (article.getUrl() == null)
 				continue;
-			
+
 			InputStream is = getInputStreamFromUrl(new URL(article.getUrl()),
 					syncTime);
 			if (is == null)
@@ -47,24 +47,26 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao> {
 
 			String title = (String) applyXpath(d,
 					"//div[@id='title']//h1/text()", XPathConstants.STRING);
-			article.setTitle(title);
+			if (title != null)
+				article.setTitle(title);
 
 			Node bodyNode = (Node) applyXpath(d,
-					"//div[@id='container']/article", XPathConstants.NODE);
+					"//div[@id='content']/article", XPathConstants.NODE);
 
-			extractEnclosures(bodyNode);
+			if (bodyNode != null && bodyNode.hasChildNodes()) {
+				extractEnclosures(bodyNode);
 
-			StringWriter sw = new StringWriter();
-			StreamResult result = new StreamResult(sw);
-			getHtmlTransformer().transform(new DOMSource(bodyNode), result);
+				StringWriter sw = new StringWriter();
+				StreamResult result = new StreamResult(sw);
+				getHtmlTransformer().transform(new DOMSource(bodyNode), result);
 
-			String body = sw.toString();
+				String body = sw.toString();
 
-			article.setBody(body);
-
+				article.setBody(body);
+			}
 			if (getUrl() != null)
 				article.setUrl(getUrl().toExternalForm());
-			
+
 			getDao().update(article);
 
 		}

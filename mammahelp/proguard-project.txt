@@ -20,7 +20,7 @@
 #}
 
 
-keep class * extends java.util.ListResourceBundle {
+-keep class * extends java.util.ListResourceBundle {
     protected Object[][] getContents();
 }
 
@@ -36,3 +36,14 @@ keep class * extends java.util.ListResourceBundle {
 -keepnames class * implements android.os.Parcelable {
     public static final ** CREATOR;
 }
+
+-dontwarn java.beans.**
+-dontwarn java.rmi.**
+-dontwarn org.jaxen.**
+-dontwarn javax.xml.stream.**
+#-dontwarn java.awt.**
+-dontwarn com.squareup.**
+-dontwarn com.google.appengine.api.**
+-dontwarn rx.**
+-dontwarn org.apache.tools.ant.**
+-dontwarn  org.w3c.tidy.** 
