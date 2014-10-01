@@ -128,8 +128,8 @@ public abstract class GenericFeeder<T extends BaseDao<?>> {
 			if ("gzip".equals(openConnection.getContentEncoding())) {
 				is = new GZIPInputStream(is);
 			}
-
-			updatedTime.setTime(openConnection.getLastModified());
+			if (updatedTime != null)
+				updatedTime.setTime(openConnection.getLastModified());
 
 			setUrl(openConnection.getURL());
 

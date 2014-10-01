@@ -16,6 +16,7 @@ import org.w3c.dom.Node;
 import android.content.Context;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.model.Articles;
+import cz.mammahelp.handy.ui.ArticleDetailViewFragment;
 
 public class ArticleFeeder extends GenericFeeder<ArticlesDao> {
 
@@ -29,7 +30,12 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao> {
 		SortedSet<Articles> articles = getDao().findAll();
 
 		for (Articles article : articles) {
-			Date syncTime = article.getSyncTime().getTime();
+			Date syncTime = article.getSyncTime() == null ? null : article
+					.getSyncTime().getTime();
+
+			if (article.getUrl() == null)
+				continue;
+			
 			InputStream is = getInputStreamFromUrl(new URL(article.getUrl()),
 					syncTime);
 			if (is == null)
@@ -58,6 +64,8 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao> {
 
 			if (getUrl() != null)
 				article.setUrl(getUrl().toExternalForm());
+			
+			getDao().update(article);
 
 		}
 		// TODO Auto-generated method stub

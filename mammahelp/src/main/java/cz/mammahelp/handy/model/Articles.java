@@ -45,6 +45,10 @@ public class Articles extends ASyncedInformation<Articles> {
 	}
 
 	public void setSyncTime(Date syncTime) {
+		if (syncTime == null) {
+			setSyncTime((Calendar) null);
+			return;
+		}
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(syncTime);
 		setSyncTime(cal);

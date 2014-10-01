@@ -97,6 +97,10 @@ public class MainActivity extends AbstractMammaHelpActivity {
 			startActivity(new Intent(this, PreferencesActivity.class));
 			return true;
 
+		case R.id.action_refresh:
+			startService(new Intent(this, MammaHelpService.class));
+			return true;
+
 			// case R.id.action_find_on_map:
 			// startActivity(new Intent(this, MapActivity.class));
 			// return true;
