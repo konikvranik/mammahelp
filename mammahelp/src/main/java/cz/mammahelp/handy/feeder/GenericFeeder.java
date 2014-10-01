@@ -19,6 +19,7 @@ public abstract class GenericFeeder<T extends BaseDao<?>> {
 	private Context context;
 	private MammaHelpDbHelper dbHelper;
 	private T dao;
+	private URL realUrl;
 
 	public GenericFeeder(Context context) {
 		setContext(context);
@@ -48,18 +49,21 @@ public abstract class GenericFeeder<T extends BaseDao<?>> {
 
 	protected abstract T createDao();
 
-	protected InputStream getInputStreamFromUrl(String url) throws Exception {
+	protected InputStream getInputStreamFromUrl(URL url) throws Exception {
 		return getInputStreamFromUrl(url, null);
 	}
 
-	protected InputStream getInputStreamFromUrl(String url, Date updatedTime)
+	protected InputStream getInputStreamFromUrl(URL url, Date updatedTime)
 			throws IOException, MalformedURLException, MammaHelpException {
 
+		setUrl(url);
+		
 		Long updatedTimeMilis = updatedTime == null ? null : updatedTime
 				.getTime();
 
-		HttpURLConnection openConnection = (HttpURLConnection) new URL(url)
+		HttpURLConnection openConnection = (HttpURLConnection) url
 				.openConnection();
+		openConnection.setInstanceFollowRedirects(true);
 
 		int statusCode = openConnection.getResponseCode();
 		if (statusCode < 300) {
@@ -67,12 +71,14 @@ public abstract class GenericFeeder<T extends BaseDao<?>> {
 					&& updatedTimeMilis > openConnection.getLastModified())
 				return null;
 
-			InputStream is = new URL(url).openConnection().getInputStream();
+			InputStream is = url.openConnection().getInputStream();
 			if ("gzip".equals(openConnection.getContentEncoding())) {
 				is = new GZIPInputStream(is);
 			}
 
 			updatedTime.setTime(openConnection.getLastModified());
+
+			setUrl(openConnection.getURL());
 
 			return is;
 		} else if (statusCode < 400) {
@@ -81,5 +87,14 @@ public abstract class GenericFeeder<T extends BaseDao<?>> {
 			throw new MammaHelpException(R.string.failed_to_connect,
 					new String[] { String.valueOf(statusCode) });
 		}
+	}
+
+	public void setUrl(URL url) {
+		realUrl = url;
+
+	}
+
+	public URL getUrl() {
+		return realUrl;
 	}
 }

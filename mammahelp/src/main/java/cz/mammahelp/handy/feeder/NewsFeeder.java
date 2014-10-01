@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.List;
 
@@ -76,12 +77,15 @@ public class NewsFeeder extends GenericFeeder<NewsDao> {
 
 		try {
 
-			is = getInputStreamFromUrl(url);
+			is = getInputStreamFromUrl(new URL(url));
 			if (is == null)
 				return null;
 			InputSource source = new InputSource(is);
 			SyndFeedInput input = new SyndFeedInput();
 			feed = input.build(source);
+
+			// if(getUrl()!=null)
+			// TODO update redirected URL here!
 
 		} catch (Exception e) {
 			log.error(

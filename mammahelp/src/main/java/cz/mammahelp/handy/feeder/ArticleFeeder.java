@@ -4,6 +4,7 @@ import static cz.mammahelp.handy.Constants.log;
 
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.net.URL;
 import java.util.Date;
 import java.util.Properties;
 import java.util.SortedSet;
@@ -42,12 +43,13 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao> {
 
 		for (Articles article : articles) {
 			Date syncTime = article.getSyncTime().getTime();
-			InputStream is = getInputStreamFromUrl(article.getUrl(), syncTime);
+			InputStream is = getInputStreamFromUrl(new URL(article.getUrl()),
+					syncTime);
 			if (is == null)
 				continue;
 
 			article.setSyncTime(syncTime);
-			
+
 			Document d = getTidy(null).parseDOM(is, null);
 
 			XPathFactory xPathfactory = XPathFactory.newInstance();
@@ -69,6 +71,8 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao> {
 
 			article.setBody(body);
 
+			if (getUrl() != null)
+				article.setUrl(getUrl().toExternalForm());
 
 		}
 		// TODO Auto-generated method stub
