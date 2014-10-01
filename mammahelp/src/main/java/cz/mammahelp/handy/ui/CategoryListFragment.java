@@ -1,11 +1,10 @@
 package cz.mammahelp.handy.ui;
 
+import static cz.mammahelp.handy.Constants.log;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.SortedSet;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import android.app.Activity;
 import android.content.Context;
@@ -25,8 +24,6 @@ import cz.mammahelp.handy.model.Articles;
 
 public class CategoryListFragment extends ANamedFragment {
 
-	private static Logger log = LoggerFactory
-			.getLogger(CategoryListFragment.class);
 
 	public class CategoryAdapter extends BaseAdapter implements ListAdapter {
 

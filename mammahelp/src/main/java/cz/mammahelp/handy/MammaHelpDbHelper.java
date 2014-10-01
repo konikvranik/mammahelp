@@ -1,9 +1,9 @@
 package cz.mammahelp.handy;
 
+import static cz.mammahelp.handy.Constants.log;
+
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -24,8 +24,6 @@ import cz.mammahelp.handy.model.ArticlesXmlWrapper;
 
 public class MammaHelpDbHelper extends SQLiteOpenHelper {
 
-	private static Logger log = LoggerFactory
-			.getLogger(MammaHelpDbHelper.class);
 
 	public static final int DATABASE_VERSION = 2;
 	public static final String DATABASE_NAME = "MammaHelp.db";

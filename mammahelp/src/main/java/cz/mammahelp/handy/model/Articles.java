@@ -1,10 +1,7 @@
 package cz.mammahelp.handy.model;
 
-/**
- * <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
- * @generated
- */
+import java.util.Calendar;
+import java.util.Date;
 
 public class Articles extends ASyncedInformation<Articles> {
 
@@ -45,5 +42,11 @@ public class Articles extends ASyncedInformation<Articles> {
 		sb.append("; title = ");
 		sb.append(getTitle());
 		return sb.toString();
+	}
+
+	public void setSyncTime(Date syncTime) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(syncTime);
+		setSyncTime(cal);
 	}
 }

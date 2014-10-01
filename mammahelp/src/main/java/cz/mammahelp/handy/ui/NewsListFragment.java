@@ -1,11 +1,10 @@
 package cz.mammahelp.handy.ui;
 
+import static cz.mammahelp.handy.Constants.log;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.SortedSet;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import cz.mammahelp.handy.model.News;
 
 public class NewsListFragment extends ANamedFragment {
 
-	Logger log = LoggerFactory.getLogger(NewsListFragment.class); 
 	
 	public class NewsAdapter extends BaseAdapter implements ListAdapter {
 

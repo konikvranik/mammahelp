@@ -4,6 +4,7 @@
 package cz.mammahelp.handy.ui;
 
 import static cz.mammahelp.handy.Constants.EXCEPTION;
+import static cz.mammahelp.handy.Constants.log;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -11,8 +12,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -33,8 +32,6 @@ public class ErrorViewActivity extends AbstractMammaHelpActivity {
 	private String text;
 	private MammaHelpException exception;
 
-	private static Logger log = LoggerFactory
-			.getLogger(ErrorViewActivity.class);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

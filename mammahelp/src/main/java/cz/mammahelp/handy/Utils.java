@@ -3,9 +3,6 @@ package cz.mammahelp.handy;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
@@ -15,7 +12,6 @@ import android.webkit.WebView;
 public class Utils {
 
 	@SuppressWarnings("unused")
-	private static Logger log = LoggerFactory.getLogger(Utils.class);
 
 	public Utils() {
 	}

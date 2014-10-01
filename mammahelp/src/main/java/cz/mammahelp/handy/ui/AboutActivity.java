@@ -4,13 +4,11 @@
 package cz.mammahelp.handy.ui;
 
 import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
+import static cz.mammahelp.handy.Constants.log;
 
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -28,7 +26,6 @@ import cz.mammahelp.handy.Utils;
  */
 public class AboutActivity extends AbstractMammaHelpActivity {
 
-	private static Logger log = LoggerFactory.getLogger(AboutActivity.class);
 
 	/*
 	 * (non-Javadoc)

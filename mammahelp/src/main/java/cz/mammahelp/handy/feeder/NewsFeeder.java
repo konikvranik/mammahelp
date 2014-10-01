@@ -1,5 +1,7 @@
 package cz.mammahelp.handy.feeder;
 
+import static cz.mammahelp.handy.Constants.log;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,8 +9,6 @@ import java.net.MalformedURLException;
 import java.util.Calendar;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 
 import android.content.Context;
@@ -25,7 +25,6 @@ import cz.mammahelp.handy.model.News;
 
 public class NewsFeeder extends GenericFeeder<NewsDao> {
 
-	private static Logger log = LoggerFactory.getLogger(NewsFeeder.class);
 	private static final String NEWS_FEED_URL = "http://www.mammahelp.cz/feed/";
 	private SyndFeed feed;
 

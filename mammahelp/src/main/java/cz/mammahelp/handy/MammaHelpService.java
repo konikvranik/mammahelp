@@ -4,6 +4,7 @@ import static cz.mammahelp.handy.Constants.DEFAULT_DELETE_DELAY;
 import static cz.mammahelp.handy.Constants.DEFAULT_PREFERENCES;
 import static cz.mammahelp.handy.Constants.DELETE_DELAY_KEY;
 import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
+import static cz.mammahelp.handy.Constants.log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,8 +25,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.tidy.Configuration;
 import org.w3c.tidy.Tidy;
@@ -44,8 +43,10 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.widget.Toast;
+import cz.mammahelp.handy.feeder.ArticleFeeder;
+import cz.mammahelp.handy.feeder.NewsFeeder;
 
-public class FeederService extends Service {
+public class MammaHelpService extends Service {
 
 	private DataSetObservable changeObservers = new DataSetObservable();
 
@@ -54,13 +55,13 @@ public class FeederService extends Service {
 	 * runs in the same process as its clients, we don't need to deal with IPC.
 	 */
 	public static class FeederServiceBinder extends Binder {
-		private FeederService ctx;
+		private MammaHelpService ctx;
 
-		public FeederServiceBinder(FeederService ctx) {
+		public FeederServiceBinder(MammaHelpService ctx) {
 			this.ctx = ctx;
 		}
 
-		public FeederService getService() {
+		public MammaHelpService getService() {
 			return ctx;
 		}
 
@@ -81,17 +82,17 @@ public class FeederService extends Service {
 		changeObservers.unregisterObserver(refreshObserver);
 	}
 
-	private static Logger log = LoggerFactory.getLogger(FeederService.class);
-
 	private final FeederServiceBinder mBinder = new FeederServiceBinder(this);
 	static final String LOGGING_TAG = "MammaHelpFeederService";
 
 	private MammaHelpDbHelper dbHelper;
 	private Handler mHandler = new Handler();
 
-	private FeederReceiver timerReceiver;
+	private MammaHelpReceiver timerReceiver;
 
 	private boolean updating;
+	private ArticleFeeder articleFeeder;
+	private NewsFeeder newsFeeder;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -129,7 +130,7 @@ public class FeederService extends Service {
 		super.onCreate();
 		log.trace("MammaHelpFeederService.onCreate()");
 
-		registerReceiver(timerReceiver = new FeederReceiver(),
+		registerReceiver(timerReceiver = new MammaHelpReceiver(),
 				new IntentFilter(Intent.ACTION_TIME_TICK));
 	}
 
@@ -146,6 +147,13 @@ public class FeederService extends Service {
 		try {
 
 			// TODO
+
+			try {
+				getArticleFeeder().feedData();
+				getNewsFeeder().feedData();
+			} catch (Exception e) {
+				throw new MammaHelpException(R.string.update_failed, e);
+			}
 
 			if (false)
 				throw new MammaHelpException(
@@ -172,6 +180,22 @@ public class FeederService extends Service {
 			// mdao.deleteOlder(cal);
 		}
 		getDbHelper().notifyDataSetChanged();
+	}
+
+	private ArticleFeeder getArticleFeeder() {
+
+		if (articleFeeder == null) {
+			articleFeeder = new ArticleFeeder(getApplicationContext());
+		}
+		return articleFeeder;
+	}
+
+	private NewsFeeder getNewsFeeder() {
+
+		if (newsFeeder == null) {
+			newsFeeder = new NewsFeeder(getApplicationContext());
+		}
+		return newsFeeder;
 	}
 
 	private MammaHelpDbHelper getDbHelper() {

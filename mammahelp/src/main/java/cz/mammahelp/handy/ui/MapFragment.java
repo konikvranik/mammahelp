@@ -1,11 +1,10 @@
 package cz.mammahelp.handy.ui;
 
+import static cz.mammahelp.handy.Constants.log;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import android.content.Context;
 import android.location.Address;
@@ -25,7 +24,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment extends com.google.android.gms.maps.MapFragment {
 
-	Logger log = LoggerFactory.getLogger(MapFragment.class);
 
 	@Override
 	public void onStart() {

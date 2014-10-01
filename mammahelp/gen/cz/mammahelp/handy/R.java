@@ -1527,7 +1527,7 @@ containing a value of this type.
         public static final int upper_shadow=0x7f02008f;
     }
     public static final class id {
-        public static final int action_about=0x7f0a0062;
+        public static final int action_about=0x7f0a0063;
         public static final int action_bar=0x7f0a002e;
         public static final int action_bar_activity_content=0x7f0a0027;
         public static final int action_bar_container=0x7f0a002d;
@@ -1539,11 +1539,11 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f0a0028;
         public static final int action_menu_presenter=0x7f0a0029;
         public static final int action_mode_close_button=0x7f0a0036;
-        public static final int action_settings=0x7f0a0061;
+        public static final int action_settings=0x7f0a0062;
         public static final int activity_chooser_view_content=0x7f0a0037;
         public static final int always=0x7f0a001e;
-        public static final int annotation=0x7f0a005d;
-        public static final int article_detail=0x7f0a0054;
+        public static final int annotation=0x7f0a005e;
+        public static final int article_detail=0x7f0a0055;
         public static final int beginning=0x7f0a0023;
         public static final int book_now=0x7f0a0010;
         public static final int buyButton=0x7f0a000a;
@@ -1556,12 +1556,12 @@ containing a value of this type.
         public static final int default_activity_button=0x7f0a003a;
         public static final int dialog=0x7f0a0021;
         public static final int disableHome=0x7f0a001b;
-        public static final int display=0x7f0a005e;
+        public static final int display=0x7f0a005f;
         public static final int drawer_layout=0x7f0a0051;
         public static final int dropdown=0x7f0a0022;
         public static final int edit_query=0x7f0a0042;
         public static final int end=0x7f0a0025;
-        public static final int error=0x7f0a0056;
+        public static final int error=0x7f0a0057;
         public static final int expand_activities_button=0x7f0a0038;
         public static final int expanded_menu=0x7f0a003e;
         public static final int grayscale=0x7f0a0012;
@@ -1569,6 +1569,7 @@ containing a value of this type.
         public static final int holo_light=0x7f0a0006;
         public static final int home=0x7f0a0026;
         public static final int homeAsUp=0x7f0a0018;
+        public static final int home_fragment=0x7f0a0053;
         public static final int hybrid=0x7f0a0004;
         public static final int icon=0x7f0a003c;
         public static final int ifRoom=0x7f0a001d;
@@ -1576,11 +1577,11 @@ containing a value of this type.
         public static final int last_updated=0x7f0a004f;
         public static final int listMode=0x7f0a0014;
         public static final int list_item=0x7f0a003b;
-        public static final int listing=0x7f0a0055;
+        public static final int listing=0x7f0a0056;
         public static final int match_parent=0x7f0a000c;
         public static final int middle=0x7f0a0024;
         public static final int monochrome=0x7f0a0013;
-        public static final int navigation_drawer=0x7f0a0053;
+        public static final int navigation_drawer=0x7f0a0054;
         public static final int never=0x7f0a001c;
         public static final int none=0x7f0a0000;
         public static final int normal=0x7f0a0001;
@@ -1600,10 +1601,10 @@ containing a value of this type.
         public static final int search_plate=0x7f0a0048;
         public static final int search_src_text=0x7f0a0049;
         public static final int search_voice_btn=0x7f0a004d;
-        public static final int section_label=0x7f0a005c;
+        public static final int section_label=0x7f0a005d;
         public static final int selectionDetails=0x7f0a000b;
-        public static final int send_error=0x7f0a0057;
-        public static final int send_to=0x7f0a0058;
+        public static final int send_error=0x7f0a0058;
+        public static final int send_to=0x7f0a0059;
         public static final int shortcut=0x7f0a0040;
         public static final int showCustom=0x7f0a001a;
         public static final int showHome=0x7f0a0017;
@@ -1613,16 +1614,16 @@ containing a value of this type.
         public static final int submit_area=0x7f0a004b;
         public static final int tabMode=0x7f0a0015;
         public static final int terrain=0x7f0a0003;
-        public static final int textView4=0x7f0a0059;
-        public static final int textView5=0x7f0a005b;
-        public static final int textView6=0x7f0a005a;
+        public static final int textView4=0x7f0a005a;
+        public static final int textView5=0x7f0a005c;
+        public static final int textView6=0x7f0a005b;
         public static final int title=0x7f0a003d;
         public static final int top_action_bar=0x7f0a0032;
-        public static final int unit=0x7f0a005f;
+        public static final int unit=0x7f0a0060;
         public static final int up=0x7f0a0033;
         public static final int usage=0x7f0a0050;
         public static final int useLogo=0x7f0a0016;
-        public static final int value=0x7f0a0060;
+        public static final int value=0x7f0a0061;
         public static final int version=0x7f0a004e;
         public static final int withText=0x7f0a001f;
         public static final int wrap_content=0x7f0a000d;
@@ -1877,11 +1878,12 @@ containing a value of this type.
         public static final int unsupported_protocol=0x7f080039;
         public static final int update_automatically_description=0x7f080048;
         public static final int update_automatically_title=0x7f080047;
+        public static final int update_failed=0x7f080058;
         public static final int update_on_particular_time_description=0x7f080046;
         public static final int update_on_particular_time_title=0x7f080045;
         public static final int update_time_description=0x7f08004c;
         public static final int update_time_title=0x7f08004b;
-        public static final int update_title=0x7f080058;
+        public static final int update_title=0x7f080059;
         public static final int versionName=0x7f08002f;
         public static final int versionString=0x7f080030;
         /**  Text on a placeholder buy button when Google Play services is not

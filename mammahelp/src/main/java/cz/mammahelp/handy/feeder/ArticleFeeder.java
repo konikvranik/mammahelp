@@ -1,7 +1,10 @@
 package cz.mammahelp.handy.feeder;
 
+import static cz.mammahelp.handy.Constants.log;
+
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.Date;
 import java.util.Properties;
 import java.util.SortedSet;
 
@@ -14,8 +17,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.tidy.Configuration;
@@ -27,7 +28,6 @@ import cz.mammahelp.handy.model.Articles;
 
 public class ArticleFeeder extends GenericFeeder<ArticlesDao> {
 
-	private static Logger log = LoggerFactory.getLogger(ArticleFeeder.class);
 	private Tidy tidy;
 	private Transformer htmlTransformer;
 
@@ -41,12 +41,13 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao> {
 		SortedSet<Articles> articles = getDao().findAll();
 
 		for (Articles article : articles) {
-
-			InputStream is = getInputStreamFromUrl(article.getUrl(), article
-					.getSyncTime().getTime());
+			Date syncTime = article.getSyncTime().getTime();
+			InputStream is = getInputStreamFromUrl(article.getUrl(), syncTime);
 			if (is == null)
 				continue;
 
+			article.setSyncTime(syncTime);
+			
 			Document d = getTidy(null).parseDOM(is, null);
 
 			XPathFactory xPathfactory = XPathFactory.newInstance();
@@ -54,6 +55,7 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao> {
 			String title = (String) xpath.compile(
 					"//div[@id='title']//h1/text()").evaluate(d,
 					XPathConstants.STRING);
+			article.setTitle(title);
 
 			Node bodyNode = (Node) xpath.compile(
 					"//div[@id='container']/article").evaluate(d,
@@ -62,8 +64,11 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao> {
 			StringWriter sw = new StringWriter();
 			StreamResult result = new StreamResult(sw);
 			getHtmlTransformer().transform(new DOMSource(bodyNode), result);
-			
+
 			String body = sw.toString();
+
+			article.setBody(body);
+
 
 		}
 		// TODO Auto-generated method stub

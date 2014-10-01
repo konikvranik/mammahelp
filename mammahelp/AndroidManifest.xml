@@ -63,7 +63,7 @@
         </activity>
 
         <service
-            android:name=".FeederService"
+            android:name=".MammaHelpService"
             android:exported="false" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -71,7 +71,7 @@
         </service>
 
         <receiver
-            android:name=".FeederReceiver"
+            android:name=".MammaHelpReceiver"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

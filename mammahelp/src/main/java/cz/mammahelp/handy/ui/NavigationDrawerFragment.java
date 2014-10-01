@@ -1,16 +1,15 @@
 package cz.mammahelp.handy.ui;
 
+import static cz.mammahelp.handy.Constants.log;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.SortedSet;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -32,6 +31,8 @@ import android.widget.Toast;
 import com.google.android.gms.maps.MapFragment;
 
 import cz.mammahelp.handy.R;
+import cz.mammahelp.handy.dao.ArticlesDao;
+import cz.mammahelp.handy.model.Articles;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation
@@ -65,9 +66,6 @@ public class NavigationDrawerFragment extends Fragment {
 	private int mCurrentSelectedPosition = 0;
 	private boolean mFromSavedInstanceState;
 	private boolean mUserLearnedDrawer;
-
-	private static Logger log = LoggerFactory
-			.getLogger(NavigationDrawerFragment.class);
 
 	private FragmentManager fragmentManager;
 
@@ -285,6 +283,9 @@ public class NavigationDrawerFragment extends Fragment {
 				f.setArguments(b);
 			}
 
+			fragmentManager.popBackStack("news",
+					FragmentManager.POP_BACK_STACK_INCLUSIVE);
+			
 			fragmentManager.beginTransaction().add(R.id.container, f, tag)
 					.addToBackStack("news").commit();
 
@@ -292,14 +293,13 @@ public class NavigationDrawerFragment extends Fragment {
 			// new Intent(getActivity(), CategoryListActivity.class), b);
 			break;
 
-		case 3:
-			startActivity(new Intent(getActivity(), AboutActivity.class));
-			break;
-
 		case 4:
 
 			MapFragment m = new MapFragment();
 
+			fragmentManager.popBackStack("map",
+					FragmentManager.POP_BACK_STACK_INCLUSIVE);
+			
 			fragmentManager.beginTransaction().add(R.id.container, m, tag)
 					.addToBackStack("map").commit();
 
@@ -307,7 +307,29 @@ public class NavigationDrawerFragment extends Fragment {
 			// new Intent(getActivity(), CategoryListActivity.class), b);
 			break;
 
+		case 3:
+			tag = "mammahelp";
+
 		case 5:
+			if (tag == null)
+				tag = "prevention";
+			
+			ArticlesDao ad = new ArticlesDao(
+					((MainActivity) getActivity()).getDbHelper());
+			SortedSet<Articles> prevArticles = ad.findByCategory(tag);
+
+			ArticleDetailViewFragment af = new ArticleDetailViewFragment();
+			Bundle args = new Bundle();
+			args.putLong(ArticleDetailViewFragment.ARTICLE_KEY, prevArticles
+					.first().getId());
+			af.setArguments(args);
+
+			fragmentManager.popBackStack(tag,
+					FragmentManager.POP_BACK_STACK_INCLUSIVE);
+			
+			fragmentManager.beginTransaction().add(R.id.container, af, tag)
+					.addToBackStack(tag).commit();
+
 			break;
 
 		default:

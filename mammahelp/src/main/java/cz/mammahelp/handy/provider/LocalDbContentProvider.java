@@ -1,14 +1,13 @@
 package cz.mammahelp.handy.provider;
 
+import static cz.mammahelp.handy.Constants.log;
+
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -30,8 +29,6 @@ public class LocalDbContentProvider extends ContentProvider {
 	private static final String ARTICLE_PATH = "article";
 	private static final String NEWS_PATH = "news";
 
-	private static Logger log = LoggerFactory
-			.getLogger(LocalDbContentProvider.class);
 
 	private static UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 

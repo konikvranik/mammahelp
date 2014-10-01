@@ -2,9 +2,6 @@ package cz.mammahelp.handy.ui;
 
 import java.lang.reflect.Field;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,8 +12,6 @@ import cz.mammahelp.handy.MammaHelpDbHelper;
 
 public abstract class AbstractMammaHelpActivity extends ActionBarActivity {
 	protected ActionBar actionBar;
-	protected static Logger log = LoggerFactory
-			.getLogger(AbstractMammaHelpActivity.class);
 
 	private MammaHelpDbHelper dbHelper;
 

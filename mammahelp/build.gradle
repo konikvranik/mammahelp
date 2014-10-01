@@ -4,8 +4,8 @@ import org.gradle.plugins.ide.eclipse.model.SourceFolder
 apply plugin: 'android'
 apply plugin: 'eclipse'
 
-version = '0.11'
-android.defaultConfig.versionCode = 11
+version = '0.13'
+android.defaultConfig.versionCode = 13
 
 group = "cz.mammahelp.handy"
 

@@ -1,5 +1,7 @@
 package cz.mammahelp.handy.dao;
 
+import static cz.mammahelp.handy.Constants.log;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.SortedSet;

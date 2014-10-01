@@ -1,14 +1,12 @@
 package cz.mammahelp.handy.ui;
 
-import static cz.mammahelp.handy.Constants.*;
+import static cz.mammahelp.handy.Constants.DAY_IN_MILLIS;
+import static cz.mammahelp.handy.Constants.HOUR_IN_MILLIS;
+import static cz.mammahelp.handy.Constants.MINUTE_IN_MILLIS;
+import static cz.mammahelp.handy.Constants.WEEK_IN_MILLIS;
 
 import java.util.Locale;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import cz.mammahelp.handy.R;
-import cz.mammahelp.handy.Utils;
 import android.content.Context;
 import android.content.SharedPreferences.Editor;
 import android.content.res.TypedArray;
@@ -17,6 +15,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import cz.mammahelp.handy.R;
+import cz.mammahelp.handy.Utils;
 
 public class IntervalPreference extends DialogPreference {
 
@@ -25,8 +25,6 @@ public class IntervalPreference extends DialogPreference {
 	private int titleRes;
 	private Long defVal = (long) -1;
 	@SuppressWarnings("unused")
-	private static Logger log = LoggerFactory
-			.getLogger(IntervalPreference.class);
 
 	public IntervalPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);

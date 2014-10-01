@@ -5,9 +5,6 @@ import static cz.mammahelp.handy.Constants.EXCEPTION;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -21,8 +18,6 @@ import cz.mammahelp.handy.ui.ErrorViewActivity;
 public class NotificationUtils {
 
 	@SuppressWarnings("unused")
-	private static Logger log = LoggerFactory
-			.getLogger(NotificationUtils.class);
 
 	public NotificationUtils() {
 	}
