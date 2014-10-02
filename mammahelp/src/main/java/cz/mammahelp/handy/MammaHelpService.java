@@ -148,10 +148,8 @@ public class MammaHelpService extends Service {
 
 		try {
 
-			// TODO
-
 			try {
-				//getArticleFeeder().feedData();
+				getArticleFeeder().feedData();
 				getNewsFeeder().feedData();
 			} catch (Exception e) {
 				throw new MammaHelpException(R.string.update_failed, e);
