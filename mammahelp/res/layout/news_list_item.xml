@@ -11,21 +11,10 @@
         android:paddingRight="4dp"
         android:paddingTop="4dp" >
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="Title"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/mammahelp_blue_dark" />
-
         <WebView
             android:id="@+id/annotation"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:layout_above="@+id/updated"
             android:layout_below="@+id/title"
             android:background="#f000" />
 
@@ -33,11 +22,21 @@
             android:id="@+id/updated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:gravity="right"
             android:text="updated"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/updated"
+            android:text="Title"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/mammahelp_blue_dark" />
     </RelativeLayout>
 
 </FrameLayout>
