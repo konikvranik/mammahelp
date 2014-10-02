@@ -37,13 +37,11 @@
     public static final ** CREATOR;
 }
 
--dontwarn java.beans.**
--dontwarn java.rmi.**
+-dontwarn com.google.code.rome.android.repackaged.**
 -dontwarn org.jaxen.**
 -dontwarn javax.xml.stream.**
-#-dontwarn java.awt.**
 -dontwarn com.squareup.**
 -dontwarn com.google.appengine.api.**
 -dontwarn rx.**
 -dontwarn org.apache.tools.ant.**
--dontwarn  org.w3c.tidy.** 
+-dontwarn org.w3c.tidy.** 

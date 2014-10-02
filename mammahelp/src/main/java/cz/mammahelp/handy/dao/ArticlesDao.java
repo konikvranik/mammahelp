@@ -100,4 +100,15 @@ public class ArticlesDao extends BaseDao<Articles> {
 			return result;
 	}
 
+	public SortedSet<Articles> findByUrl(String url) {
+
+		SortedSet<Articles> result = query(URL.getName() + " like ?",
+				new String[] { url + "%" }, null, null, null);
+		log.trace("URL " + url + " has " + result.size() + " articles.");
+		if (result.isEmpty())
+			return null;
+		else
+			return result;
+	}
+
 }

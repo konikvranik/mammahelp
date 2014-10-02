@@ -1529,7 +1529,7 @@ containing a value of this type.
         public static final int upper_shadow=0x7f02008f;
     }
     public static final class id {
-        public static final int action_about=0x7f0a0063;
+        public static final int action_about=0x7f0a0064;
         public static final int action_bar=0x7f0a002e;
         public static final int action_bar_activity_content=0x7f0a0027;
         public static final int action_bar_container=0x7f0a002d;
@@ -1541,8 +1541,8 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f0a0028;
         public static final int action_menu_presenter=0x7f0a0029;
         public static final int action_mode_close_button=0x7f0a0036;
-        public static final int action_refresh=0x7f0a0064;
-        public static final int action_settings=0x7f0a0062;
+        public static final int action_refresh=0x7f0a0065;
+        public static final int action_settings=0x7f0a0063;
         public static final int activity_chooser_view_content=0x7f0a0037;
         public static final int always=0x7f0a001e;
         public static final int annotation=0x7f0a005e;
@@ -1559,7 +1559,7 @@ containing a value of this type.
         public static final int default_activity_button=0x7f0a003a;
         public static final int dialog=0x7f0a0021;
         public static final int disableHome=0x7f0a001b;
-        public static final int display=0x7f0a005f;
+        public static final int display=0x7f0a0060;
         public static final int drawer_layout=0x7f0a0051;
         public static final int dropdown=0x7f0a0022;
         public static final int edit_query=0x7f0a0042;
@@ -1622,11 +1622,12 @@ containing a value of this type.
         public static final int textView6=0x7f0a005b;
         public static final int title=0x7f0a003d;
         public static final int top_action_bar=0x7f0a0032;
-        public static final int unit=0x7f0a0060;
+        public static final int unit=0x7f0a0061;
         public static final int up=0x7f0a0033;
+        public static final int updated=0x7f0a005f;
         public static final int usage=0x7f0a0050;
         public static final int useLogo=0x7f0a0016;
-        public static final int value=0x7f0a0061;
+        public static final int value=0x7f0a0062;
         public static final int version=0x7f0a004e;
         public static final int withText=0x7f0a001f;
         public static final int wrap_content=0x7f0a000d;
