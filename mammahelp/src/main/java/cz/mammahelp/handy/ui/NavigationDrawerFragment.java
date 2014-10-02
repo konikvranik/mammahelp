@@ -28,8 +28,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.MapFragment;
-
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.model.Articles;
@@ -285,7 +283,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 			fragmentManager.popBackStack("news",
 					FragmentManager.POP_BACK_STACK_INCLUSIVE);
-			
+
 			fragmentManager.beginTransaction().add(R.id.container, f, tag)
 					.addToBackStack("news").commit();
 
@@ -299,7 +297,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 			fragmentManager.popBackStack("map",
 					FragmentManager.POP_BACK_STACK_INCLUSIVE);
-			
+
 			fragmentManager.beginTransaction().add(R.id.container, m, tag)
 					.addToBackStack("map").commit();
 
@@ -313,7 +311,7 @@ public class NavigationDrawerFragment extends Fragment {
 		case 5:
 			if (tag == null)
 				tag = "prevention";
-			
+
 			ArticlesDao ad = new ArticlesDao(
 					((MainActivity) getActivity()).getDbHelper());
 			SortedSet<Articles> prevArticles = ad.findByCategory(tag);
@@ -326,7 +324,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 			fragmentManager.popBackStack(tag,
 					FragmentManager.POP_BACK_STACK_INCLUSIVE);
-			
+
 			fragmentManager.beginTransaction().add(R.id.container, af, tag)
 					.addToBackStack(tag).commit();
 

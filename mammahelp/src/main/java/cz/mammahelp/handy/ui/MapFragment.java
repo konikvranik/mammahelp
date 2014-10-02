@@ -12,10 +12,9 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,34 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment extends com.google.android.gms.maps.MapFragment {
 
-
-	@Override
-	public void onStart() {
-
-		super.onStart();
-
-		setupMap();
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-
-		View ocv = super.onCreateView(inflater, container, savedInstanceState);
-
-		setupMap();
-
-		return ocv;
-	}
-
-	@Override
-	public void onResume() {
-
-		super.onResume();
-
-		setupMap();
-
-	}
+	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
 
 	private void setupMap() {
 		GoogleMap map = getMap();
@@ -102,7 +74,29 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
 			} catch (IOException e) {
 				log.error(e.getMessage(), e);
 			}
+		} else {
+			int checkGooglePlayServices = GooglePlayServicesUtil
+					.isGooglePlayServicesAvailable(getActivity());
+			if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
+				// google play services is missing!!!!
+				/*
+				 * Returns status code indicating whether there was an error.
+				 * Can be one of following in ConnectionResult: SUCCESS,
+				 * SERVICE_MISSING, SERVICE_VERSION_UPDATE_REQUIRED,
+				 * SERVICE_DISABLED, SERVICE_INVALID.
+				 */
+				GooglePlayServicesUtil.getErrorDialog(checkGooglePlayServices,
+						getActivity(), REQUEST_CODE_RECOVER_PLAY_SERVICES)
+						.show();
+			}
 		}
 	}
 
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+
+		setupMap();
+	}
 }
