@@ -93,11 +93,14 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
 
 				if (addr == null) {
 					loc = myLocation.getFromLocationName(lp.getName(), 1);
-
+					if (loc.isEmpty())
+						continue;
 					addr = loc.get(0);
 				} else if (!(addr.hasLatitude() && addr.hasLongitude())) {
 					loc = myLocation.getFromLocationName(
 							getQueryFromAddress(addr), 1);
+					if (loc.isEmpty())
+						continue;
 					Address a = loc.get(0);
 					addr.setLatitude(a.getLatitude());
 					addr.setLongitude(a.getLongitude());

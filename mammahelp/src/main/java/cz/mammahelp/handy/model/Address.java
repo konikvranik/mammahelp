@@ -9,6 +9,10 @@ public class Address extends android.location.Address implements
 	private Long id;
 	private Long bundleId;
 
+	public Address() {
+		super(Locale.getDefault());
+	}
+
 	public Address(Locale locale) {
 		super(locale);
 	}
@@ -69,24 +73,22 @@ public class Address extends android.location.Address implements
 		if (c != 0)
 			return c;
 
-		c = nullableCompare(getSubThoroughfare(),
-				another.getSubThoroughfare());
+		c = nullableCompare(getSubThoroughfare(), another.getSubThoroughfare());
 		if (c != 0)
 			return c;
 
 		c = nullableCompare(getUrl(), another.getUrl());
 		if (c != 0)
 			return c;
-		
-		// TODO
-		/*c = nullableCompare(one.getAddressLine(index),
-				another.getAddressLine(index));
-		if (c != 0)
-			return c;
 
-		c = nullableCompare(one.getExtras(), another.getExtras());
-		if (c != 0)
-			return c;*/
+		// TODO
+		/*
+		 * c = nullableCompare(one.getAddressLine(index),
+		 * another.getAddressLine(index)); if (c != 0) return c;
+		 * 
+		 * c = nullableCompare(one.getExtras(), another.getExtras()); if (c !=
+		 * 0) return c;
+		 */
 
 		return c;
 	}
