@@ -46,6 +46,10 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
 						+ pos.getLongitude());
 				CameraUpdate cu = CameraUpdateFactory.newLatLng(new LatLng(pos
 						.getLatitude(), pos.getLongitude()));
+
+				map.moveCamera(cu);
+
+				cu = CameraUpdateFactory.zoomTo(5);
 				map.moveCamera(cu);
 
 				log.debug("Camera moved.");
