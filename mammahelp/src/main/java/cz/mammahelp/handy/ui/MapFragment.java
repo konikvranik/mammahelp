@@ -39,9 +39,14 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
 			Location pos = ls
 					.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 			if (pos != null) {
+
+				log.debug("Moving camera to " + pos.getLatitude() + ", "
+						+ pos.getLongitude());
 				CameraUpdate cu = CameraUpdateFactory.newLatLng(new LatLng(pos
 						.getLatitude(), pos.getLongitude()));
 				map.moveCamera(cu);
+
+				log.debug("Camera moved.");
 			}
 
 			map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -61,6 +66,8 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
 										.getLongitude()))
 						.title("Mamma HELP v Praze").snippet("Tady to žije"));
 
+				log.debug("Added Praha.");
+
 				loc = myLocation.getFromLocationName("Ostrava", 1);
 
 				addr = loc.get(0);
@@ -70,6 +77,8 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
 								new LatLng(addr.getLatitude(), addr
 										.getLongitude()))
 						.title("Mamma HELP v Ostravě").snippet("Tady to žije"));
+
+				log.debug("Added Ostrava.");
 
 			} catch (IOException e) {
 				log.error(e.getMessage(), e);

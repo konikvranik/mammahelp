@@ -8,18 +8,19 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import org.xml.sax.InputSource;
 
 import android.content.Context;
 
-import com.sun.syndication.feed.synd.SyndContent;
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.feed.synd.SyndImage;
-import com.sun.syndication.io.FeedException;
-import com.sun.syndication.io.SyndFeedInput;
+import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndContent;
+import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
+import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
+import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndImage;
+import com.google.code.rome.android.repackaged.com.sun.syndication.io.FeedException;
+import com.google.code.rome.android.repackaged.com.sun.syndication.io.SyndFeedInput;
 
 import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.model.News;
@@ -41,6 +42,8 @@ public class NewsFeeder extends GenericFeeder<NewsDao> {
 		if (feed == null)
 			return;
 
+		log.debug("updating feed");
+
 		List<SyndEntry> entries = feed.getEntries();
 
 		SyndImage mainImage = feed.getImage();
@@ -48,23 +51,23 @@ public class NewsFeeder extends GenericFeeder<NewsDao> {
 		Calendar syncTime = Calendar.getInstance();
 		syncTime.setTime(feed.getPublishedDate());
 
-		if (!(getDao().findOlder(syncTime.getTime()).isEmpty())) {
-			for (SyndEntry syndEntry : entries) {
+		for (SyndEntry syndEntry : entries) {
 
-				SyndContent desc = syndEntry.getDescription();
-				String descType = desc.getType();
+			SyndContent desc = syndEntry.getDescription();
+			String descType = desc.getType();
 
-				News news = new News();
-				news.setTitle(syndEntry.getTitle());
-				news.setAnnotation(desc.getValue());
-				news.setSyncTime(syncTime);
+			News news = new News();
+			news.setTitle(syndEntry.getTitle());
+			news.setAnnotation(desc.getValue());
+			news.setSyncTime(syncTime);
 
-				getDao().insert(news);
+			getDao().insert(news);
 
-			}
 		}
 
-		getDao().delete(getDao().findOlder(syncTime.getTime()));
+		Collection<News> older = getDao().findOlder(syncTime.getTime());
+		if (older != null)
+			getDao().delete(older);
 
 	}
 

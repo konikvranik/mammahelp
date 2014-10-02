@@ -5,7 +5,6 @@ import static cz.mammahelp.handy.Constants.log;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,7 +28,6 @@ import org.w3c.dom.NodeList;
 import org.w3c.tidy.Configuration;
 import org.w3c.tidy.Tidy;
 
-import sun.misc.IOUtils;
 import android.content.Context;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.MammaHelpException;
@@ -125,7 +123,7 @@ public abstract class GenericFeeder<T extends BaseDao<?>> {
 					&& updatedTimeMilis > openConnection.getLastModified())
 				return null;
 
-			InputStream is = url.openConnection().getInputStream();
+			InputStream is = openConnection.getInputStream();
 			if ("gzip".equals(openConnection.getContentEncoding())) {
 				is = new GZIPInputStream(is);
 			}

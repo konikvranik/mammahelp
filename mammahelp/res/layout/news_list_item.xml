@@ -17,9 +17,13 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/mammahelp_blue_dark" />
 
-    <RelativeLayout android:layout_height="4dp" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="4dp" >
+
         <WebView
             android:id="@+id/annotation"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </RelativeLayout>
 

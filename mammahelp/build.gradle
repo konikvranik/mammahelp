@@ -13,6 +13,9 @@ sourceCompatibility = 1.6
 
 repositories {
 	mavenCentral()
+	maven {
+            url "https://android-rome-feed-reader.googlecode.com/svn/maven2/releases"
+    }
 }
 
 dependencies {
@@ -23,7 +26,8 @@ dependencies {
 	compile 'net.sf.jtidy:jtidy:r938'
 	compile 'org.slf4j:slf4j-android:1.6.1-RC1'
 	compile 'org.apache.commons:commons-lang3:3.2.1'
-	compile 'rome:rome:1.0'
+	//compile 'rome:rome:1.0'
+	compile 'com.google.code.android-rome-feed-reader:android-rome-feed-reader:1.0.0-r2'
 	compile('com.squareup.retrofit:converter-simplexml:1.6.1'){
 	    exclude module: 'stax'
 	    exclude module: 'stax-api'
@@ -118,7 +122,7 @@ android {
 	buildToolsVersion "19.1.0"
 
 	defaultConfig {
-		minSdkVersion 16
+		minSdkVersion 15
 		targetSdkVersion 21
 		versionName = project.version
 	}
@@ -160,9 +164,9 @@ android {
 
 	buildTypes {
 		release {
-			runProguard true
-			proguardFile getDefaultProguardFile('proguard-android.txt')
-			proguardFile 'proguard-project.txt'
+			// runProguard true
+			// proguardFile getDefaultProguardFile('proguard-android.txt')
+			// proguardFile 'proguard-project.txt'
 			signingConfig signingConfigs.release
 		}
 	}
