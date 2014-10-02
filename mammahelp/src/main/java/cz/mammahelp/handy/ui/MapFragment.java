@@ -21,18 +21,20 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import cz.mammahelp.handy.MammaHelpDbHelper;
+import cz.mammahelp.handy.dao.LocationPointDao;
+import cz.mammahelp.handy.model.LocationPoint;
+
 public class MapFragment extends com.google.android.gms.maps.MapFragment {
 
 	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
+	private MammaHelpDbHelper dbHelper;
 
 	private void setupMap() {
 		GoogleMap map = getMap();
 
-		log.debug("Here we are......................");
-
 		if (map != null) {
 
-			log.debug("Inicializing map...");
 			LocationManager ls = (LocationManager) getActivity()
 					.getSystemService(Context.LOCATION_SERVICE);
 
@@ -51,38 +53,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
 
 			map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-			Geocoder myLocation = new Geocoder(getActivity(),
-					Locale.getDefault());
-			List<Address> loc;
-			try {
-
-				loc = myLocation.getFromLocationName("Praha", 1);
-
-				Address addr = loc.get(0);
-
-				map.addMarker(new MarkerOptions()
-						.position(
-								new LatLng(addr.getLatitude(), addr
-										.getLongitude()))
-						.title("Mamma HELP v Praze").snippet("Tady to žije"));
-
-				log.debug("Added Praha.");
-
-				loc = myLocation.getFromLocationName("Ostrava", 1);
-
-				addr = loc.get(0);
-
-				map.addMarker(new MarkerOptions()
-						.position(
-								new LatLng(addr.getLatitude(), addr
-										.getLongitude()))
-						.title("Mamma HELP v Ostravě").snippet("Tady to žije"));
-
-				log.debug("Added Ostrava.");
-
-			} catch (IOException e) {
-				log.error(e.getMessage(), e);
-			}
+			loadData();
 		} else {
 			int checkGooglePlayServices = GooglePlayServicesUtil
 					.isGooglePlayServicesAvailable(getActivity());
@@ -99,6 +70,58 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
 						.show();
 			}
 		}
+	}
+
+	public MammaHelpDbHelper getDbHelper() {
+		if (dbHelper == null)
+			dbHelper = MammaHelpDbHelper.getInstance(getActivity());
+		return dbHelper;
+	}
+
+	private void loadData() {
+
+		Geocoder myLocation = new Geocoder(getActivity(), Locale.getDefault());
+		List<Address> loc;
+
+		LocationPointDao lpd = new LocationPointDao(getDbHelper());
+
+		for (LocationPoint lp : lpd.findAll()) {
+
+			try {
+
+				Address addr = lp.getLocation();
+
+				if (addr == null) {
+					loc = myLocation.getFromLocationName(lp.getName(), 1);
+
+					addr = loc.get(0);
+				} else if (!(addr.hasLatitude() && addr.hasLongitude())) {
+					loc = myLocation.getFromLocationName(
+							getQueryFromAddress(addr), 1);
+					Address a = loc.get(0);
+					addr.setLatitude(a.getLatitude());
+					addr.setLongitude(a.getLongitude());
+				}
+
+				getMap().addMarker(
+						new MarkerOptions()
+								.position(
+										new LatLng(addr.getLatitude(), addr
+												.getLongitude()))
+								.title(lp.getName())
+								.snippet(lp.getDescription()));
+
+				log.debug("Added " + lp.getName());
+
+			} catch (IOException e) {
+				log.error(e.getMessage(), e);
+			}
+		}
+	}
+
+	private String getQueryFromAddress(Address addr) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

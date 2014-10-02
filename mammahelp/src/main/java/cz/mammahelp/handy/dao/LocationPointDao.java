@@ -2,6 +2,7 @@ package cz.mammahelp.handy.dao;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
 import cz.mammahelp.handy.model.Address;
@@ -32,6 +33,10 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 
 	public LocationPointDao(MammaHelpDbHelper dbHelper) {
 		super(dbHelper);
+	}
+
+	public LocationPointDao(SQLiteDatabase db) {
+		super(db);
 	}
 
 	@Override

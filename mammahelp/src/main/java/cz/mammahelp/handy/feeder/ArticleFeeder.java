@@ -1,19 +1,25 @@
 package cz.mammahelp.handy.feeder;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.SortedSet;
 
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import android.content.Context;
+import cz.mammahelp.handy.MammaHelpException;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.model.Articles;
 import cz.mammahelp.handy.ui.ArticleDetailViewFragment;
@@ -29,6 +35,14 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao> {
 
 		SortedSet<Articles> articles = getDao().findAll();
 
+		feedArticles(articles);
+
+	}
+
+	public void feedArticles(SortedSet<Articles> articles) throws IOException,
+			MalformedURLException, MammaHelpException,
+			XPathExpressionException, TransformerException,
+			TransformerConfigurationException {
 		for (Articles article : articles) {
 			Date syncTime = article.getSyncTime() == null ? null : article
 					.getSyncTime().getTime();
@@ -70,8 +84,6 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao> {
 			getDao().update(article);
 
 		}
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

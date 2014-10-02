@@ -5,12 +5,20 @@ import static cz.mammahelp.handy.Constants.log;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPathConstants;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
 import android.content.Context;
@@ -35,8 +43,7 @@ public class NewsFeeder extends GenericFeeder<NewsDao> {
 	}
 
 	@Override
-	public void feedData() throws IOException, IllegalArgumentException,
-			FeedException {
+	public void feedData() throws Exception {
 
 		feed = getSyndFeedForUrl(NEWS_FEED_URL);
 		if (feed == null)
@@ -61,6 +68,8 @@ public class NewsFeeder extends GenericFeeder<NewsDao> {
 			news.setAnnotation(desc.getValue());
 			news.setSyncTime(syncTime);
 
+			setBody(news);
+
 			getDao().insert(news);
 
 		}
@@ -68,6 +77,37 @@ public class NewsFeeder extends GenericFeeder<NewsDao> {
 		Collection<News> older = getDao().findOlder(syncTime.getTime());
 		if (older != null)
 			getDao().delete(older);
+
+	}
+
+	private void setBody(News news) throws MalformedURLException, Exception {
+
+		Date syncedDate = new Date();
+		InputStream is = getInputStreamFromUrl(new URL(news.getUrl()),
+				syncedDate);
+		if (is == null)
+			return;
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(syncedDate);
+		news.setSyncTime(cal);
+
+		Document d = getTidy(null).parseDOM(is, null);
+
+		Node bodyNode = (Node) applyXpath(d, "//div[@id='content']",
+				XPathConstants.NODE);
+
+		if (bodyNode != null && bodyNode.hasChildNodes()) {
+			extractEnclosures(bodyNode);
+
+			StringWriter sw = new StringWriter();
+			StreamResult result = new StreamResult(sw);
+			getHtmlTransformer().transform(new DOMSource(bodyNode), result);
+
+			String body = sw.toString();
+
+			news.setBody(body);
+		}
 
 	}
 

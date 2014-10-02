@@ -7,6 +7,7 @@ import org.simpleframework.xml.Root;
 
 @Root(name = "articles")
 public class ArticlesXmlWrapper {
+
 	@ElementList(data = false, inline = true, entry = "article", type = Articles.class)
 	public Collection<Articles> articles;
 

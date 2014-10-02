@@ -2,6 +2,12 @@ package cz.mammahelp.handy;
 
 import static cz.mammahelp.handy.Constants.log;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Locale;
+
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
@@ -11,6 +17,7 @@ import android.database.DataSetObservable;
 import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Bundle;
 import cz.mammahelp.handy.dao.AddressDao;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.dao.BaseDao.Column;
@@ -19,11 +26,13 @@ import cz.mammahelp.handy.dao.BundleDao;
 import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.dao.NewsDao;
+import cz.mammahelp.handy.model.Address;
 import cz.mammahelp.handy.model.Articles;
 import cz.mammahelp.handy.model.ArticlesXmlWrapper;
+import cz.mammahelp.handy.model.LocationPoint;
+import cz.mammahelp.handy.model.LocationsXmlWrapper;
 
 public class MammaHelpDbHelper extends SQLiteOpenHelper {
-
 
 	public static final int DATABASE_VERSION = 2;
 	public static final String DATABASE_NAME = "MammaHelp.db";
@@ -100,8 +109,39 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 		log.debug(SQL_CREATE_LOCATION_POINT);
 		db.execSQL(SQL_CREATE_LOCATION_POINT);
 
+		loadData(db);
+
+		log.debug("Finished onCreate");
+
+	}
+
+	private void loadData(SQLiteDatabase db) {
 		Serializer serializer = new Persister();
 
+		loadArticles(db, serializer);
+		loadLocations(db, serializer);
+	}
+
+	private void loadLocations(SQLiteDatabase db, Serializer serializer) {
+
+		try {
+			LocationsXmlWrapper aw = serializer.read(LocationsXmlWrapper.class,
+					context.getResources().openRawResource(R.raw.locations));
+			LocationPointDao aDao = new LocationPointDao(db);
+
+			log.debug("Read " + aw.locations.size() + " locations.");
+
+			for (LocationPoint a : aw.locations) {
+				log.debug("Saving location " + a);
+				aDao.insert(a);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+
+	}
+
+	private void loadArticles(SQLiteDatabase db, Serializer serializer) {
 		try {
 			ArticlesXmlWrapper aw = serializer.read(ArticlesXmlWrapper.class,
 					context.getResources().openRawResource(R.raw.articles));
@@ -118,9 +158,6 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
-
-		log.debug("Finished onCreate");
-
 	}
 
 	/*
