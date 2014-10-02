@@ -26,6 +26,9 @@ public class TypedContentValues {
 			String value;
 			if (obj == null) {
 				value = null;
+			} else if (obj instanceof byte[]) {
+				values.put(column.getName(), (byte[]) obj);
+				return;
 			} else if (obj.getClass().isEnum()) {
 				value = String.valueOf(((Enum<?>) obj).ordinal());
 			} else if (obj instanceof Identificable<?>) {

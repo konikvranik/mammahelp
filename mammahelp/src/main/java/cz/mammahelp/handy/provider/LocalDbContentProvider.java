@@ -29,7 +29,6 @@ public class LocalDbContentProvider extends ContentProvider {
 	private static final String ARTICLE_PATH = "article";
 	private static final String NEWS_PATH = "news";
 
-
 	private static UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
 	static class TransferThread extends Thread {
@@ -84,7 +83,7 @@ public class LocalDbContentProvider extends ContentProvider {
 	public ParcelFileDescriptor openFile(Uri uri, String mode)
 			throws FileNotFoundException {
 
-		log.debug("openFile");
+		log.debug("openFile: " + uri + " ... mode: " + mode);
 
 		ParcelFileDescriptor[] pipe = null;
 
@@ -105,17 +104,15 @@ public class LocalDbContentProvider extends ContentProvider {
 	private InputStream getInputStreamFromDbFile(Uri uri) {
 
 		Long id = null;
+
+		String idString = uri.getQueryParameter(ID_PARAM);
+		if (idString == null)
+			idString = uri.getLastPathSegment();
+
 		try {
-			id = Long.parseLong(uri.getQueryParameter(ID_PARAM));
+			id = Long.parseLong(idString);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
-		}
-		if (id == null) {
-			try {
-				id = Long.parseLong(uri.getLastPathSegment());
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-			}
 		}
 
 		switch (uriMatcher.match(uri)) {
@@ -141,8 +138,13 @@ public class LocalDbContentProvider extends ContentProvider {
 
 	private InputStream getInputStreamOfEnclosure(Long id) {
 
+		log.debug("Querying enclosure id " + id);
+
 		EnclosureDao edao = new EnclosureDao(getDbHelper());
 		Enclosure enclosure = edao.findById(new Enclosure(id));
+
+		log.debug("Enclosure found: " + enclosure);
+		
 		return new ByteArrayInputStream(enclosure.getData());
 	}
 

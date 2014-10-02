@@ -1,5 +1,7 @@
 package cz.mammahelp.handy.model;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * <!-- begin-user-doc --> <!-- end-user-doc -->
  * 
@@ -17,7 +19,7 @@ public class Enclosure implements Identificable<Enclosure> {
 	public String type;
 
 	private Long id;
-	
+
 	private byte[] data;
 
 	public Enclosure(Long id) {
@@ -94,12 +96,39 @@ public class Enclosure implements Identificable<Enclosure> {
 		this.type = type;
 	}
 
-	
 	public byte[] getData() {
 		return data;
 	}
-	
+
 	public void setData(byte[] data) {
 		this.data = data;
+	}
+
+	private StringBuffer toStringAppendLine(String key, Object value) {
+		StringBuffer sb = new StringBuffer("\t");
+		sb.append(key);
+		sb.append(": ");
+		sb.append(value);
+		sb.append("\n");
+		return sb;
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("Enclosure {");
+		sb.append("\n");
+		sb.append(toStringAppendLine("Id", getId()));
+		sb.append(toStringAppendLine("Url", getUrl()));
+		sb.append(toStringAppendLine("Length", getLength()));
+		sb.append(toStringAppendLine("Type", getType()));
+		try {
+			sb.append(toStringAppendLine("Data", new String(getData(), "UTF-8")));
+		} catch (UnsupportedEncodingException e) {
+			sb.append(toStringAppendLine("Data", new String(getData())));
+		}
+		sb.append("}");
+		return sb.toString();
 	}
 }

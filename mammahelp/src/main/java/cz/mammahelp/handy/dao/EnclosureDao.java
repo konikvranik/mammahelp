@@ -5,7 +5,7 @@ import android.database.Cursor;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
 import cz.mammahelp.handy.model.Enclosure;
-
+import static cz.mammahelp.handy.Constants.log;;
 public class EnclosureDao extends BaseDao<Enclosure> {
 
 	public static final String TABLE_NAME = "enclosures";
@@ -60,6 +60,8 @@ public class EnclosureDao extends BaseDao<Enclosure> {
 		values.put(URL, obj.getUrl());
 		values.put(LENGTH, obj.getLength());
 		values.put(TYPE, obj.getType());
+		
+		log.debug("Saving data into DB: " + new String(obj.getData()));
 		values.put(DATA, obj.getData());
 
 		return values.getValues();

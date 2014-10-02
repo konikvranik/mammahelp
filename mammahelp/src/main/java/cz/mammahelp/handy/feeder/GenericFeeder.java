@@ -2,10 +2,10 @@ package cz.mammahelp.handy.feeder;
 
 import static cz.mammahelp.handy.Constants.log;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,6 +29,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.tidy.Configuration;
 import org.w3c.tidy.Tidy;
 
+import sun.misc.IOUtils;
 import android.content.Context;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.MammaHelpException;
@@ -192,19 +193,26 @@ public abstract class GenericFeeder<T extends BaseDao<?>> {
 					HttpURLConnection conn = (HttpURLConnection) url
 							.openConnection();
 
-					ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
 					InputStream is = conn.getInputStream();
 
-					byte[] buffer = new byte[255];
-					while (is.read(buffer) > -1) {
-						baos.write(buffer);
+					ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+					int nRead;
+					byte[] b = new byte[16384];
+
+					while ((nRead = is.read(b, 0, b.length)) != -1) {
+						buffer.write(b, 0, nRead);
 					}
+
+					buffer.flush();
+
+					is.close();
 
 					Enclosure enclosure = new Enclosure();
 					enclosure.setUrl(url.toExternalForm());
 					enclosure.setType(conn.getContentType());
-					byte[] data = baos.toByteArray();
+					byte[] data = buffer.toByteArray();
+
 					enclosure.setData(data);
 					enclosure.setLength((long) data.length);
 
