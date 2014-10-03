@@ -155,10 +155,6 @@ public class MammaHelpService extends Service {
 				throw new MammaHelpException(R.string.update_failed, e);
 			}
 
-			if (false)
-				throw new MammaHelpException(
-						R.string.abc_action_bar_home_description);
-
 		} catch (MammaHelpException e) {
 			log.error(e.getMessage(), e);
 			mHandler.post(new ToastRunnable(getResources().getString(

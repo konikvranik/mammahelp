@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/jd39426/AppData/Local/Android/android-sdk/extras/android/m2repository/com/android/support/support-v4/19.0.0/support-v4-19.0.0.jar" sourcepath="C:/Users/jd39426/AppData/Local/Android/android-sdk/extras/android/m2repository/com/android/support/support-v4/19.0.0/support-v4-19.0.0-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jd39426/AppData/Local/Android/android-sdk/extras/android/m2repository/com/android/support/appcompat-v7/19.0.0/appcompat-v7-19.0.0.aar"/>
 	<classpathentry kind="lib" path="C:/Users/jd39426/AppData/Local/Android/android-sdk/extras/google/m2repository/com/google/android/gms/play-services/4.1.32/play-services-4.1.32.aar"/>

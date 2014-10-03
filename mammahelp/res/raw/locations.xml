@@ -31,7 +31,10 @@
                   <object class="java.lang.Boolean">true</object>
                </entry>
             </mMap>
-         </mExtras>
+            <mHasFds>false</mHasFds>
+            <mFdsKnown>true</mFdsKnown>
+            <mAllowFds>true</mAllowFds>
+            </mExtras>
          <mFeatureName>featureName</mFeatureName>
          <mUrl>Url</mUrl>
          <mThoroughfare>thoroughfare</mThoroughfare>
@@ -45,6 +48,9 @@
          <mPremises>premises</mPremises>
          <mLatitude>50.05</mLatitude>
          <mLongitude>14.14</mLongitude>
+         <mHasLongitude>true</mHasLongitude>
+         <mHasLatitude>true</mHasLatitude> 
+         <mMaxAddressLineIndex>1</mMaxAddressLineIndex>
       </location>
       <name>Some name</name>
       <url>Some url</url>
@@ -82,8 +88,13 @@
          <mPremises>premises</mPremises>
          <mLatitude>50.05</mLatitude>
          <mLongitude>14.14</mLongitude>
+         <mHasLongitude>true</mHasLongitude>
+         <mHasLatitude>true</mHasLatitude> 
+         <mMaxAddressLineIndex>1</mMaxAddressLineIndex>
          <mExtras>
-            <mMap>
+            <mClassLoader class="java.lang.BootClassLoader">
+            </mClassLoader>
+             <mMap>
                <entry>
                   <string>double</string>
                   <object class="java.lang.Double">545.546</object>
@@ -97,6 +108,10 @@
                   <object class="java.lang.Boolean">true</object>
                </entry>
             </mMap>
+            <mHasFds>false</mHasFds>
+            <mFdsKnown>true</mFdsKnown>
+            <mAllowFds>true</mAllowFds>
+            
          </mExtras>
          </location>
      </location>

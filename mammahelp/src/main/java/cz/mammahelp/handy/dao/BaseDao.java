@@ -539,4 +539,12 @@ public abstract class BaseDao<T extends Identificable<T>> {
 		return sb.toString();
 
 	}
+	
+	protected SQLiteDatabase getDb() {
+		return db;
+	}
+	
+	protected void setDb(SQLiteDatabase db) {
+		this.db = db;
+	}
 }

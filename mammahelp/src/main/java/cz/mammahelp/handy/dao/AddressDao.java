@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
@@ -76,6 +77,10 @@ public class AddressDao extends BaseDao<Address> {
 		super(dbHelper);
 	}
 
+	public AddressDao(SQLiteDatabase db) {
+		super(db);
+	}
+
 	@Override
 	protected Address parseRow(Cursor cursor) {
 		Address e = new Address(unpackColumnValue(cursor, ID, Long.class),
@@ -130,8 +135,10 @@ public class AddressDao extends BaseDao<Address> {
 		values.put(COUNTRY_NAME, obj.getCountryName());
 		values.put(EXTRAS, obj.getBundleId());
 		values.put(FEATURE_NAME, obj.getFeatureName());
-		values.put(LATITUDE, obj.getLatitude());
-		values.put(LONGITUDE, obj.getLongitude());
+		if (obj.hasLatitude())
+			values.put(LATITUDE, obj.getLatitude());
+		if (obj.hasLongitude())
+			values.put(LONGITUDE, obj.getLongitude());
 		values.put(LOCALITY, obj.getLocality());
 		values.put(PHONE, obj.getPhone());
 		values.put(POSTAL_CODE, obj.getPostalCode());

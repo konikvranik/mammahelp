@@ -56,6 +56,7 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 			.getTable().createClausule();
 
 	private final static DataSetObservable mDataSetObservable = new DataSetObservable();
+	private static final boolean DEV_FILL_LOCATIONS = false;
 
 	private static MammaHelpDbHelper singletonInstance;
 
@@ -123,6 +124,8 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 	}
 
 	private void loadLocations(SQLiteDatabase db, Serializer serializer) {
+		
+		if(fillOneLocationDebug(serializer)) return;
 
 		try {
 			LocationsXmlWrapper aw = serializer.read(LocationsXmlWrapper.class,
@@ -296,4 +299,59 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 		cleanup(getWritableDatabase());
 	}
 
+	private boolean fillOneLocationDebug(Serializer serializer) {
+		
+		if (!DEV_FILL_LOCATIONS) return false;
+		
+		Collection<LocationPoint> a = new ArrayList<LocationPoint>();
+
+		LocationPoint lp = new LocationPoint((long) 3);
+
+		lp.setDescription("Some descriotion");
+		lp.setName("Some name");
+		lp.setUrl("Some url");
+
+		Address location = new Address(Locale.getDefault());
+
+		location.setAddressLine(0, "addrline 0");
+		location.setAddressLine(1, "addrline 1");
+		location.setAdminArea("Admin Area");
+		location.setCountryCode("countryCode");
+		location.setCountryName("countryName");
+		location.setFeatureName("featureName");
+		location.setLatitude(156.56);
+		location.setLongitude(156465.5465);
+		location.setLocality("locality");
+		location.setPostalCode("postalCode");
+		location.setPhone("phone");
+		location.setPremises("premises");
+		location.setSubAdminArea("subAdminArea");
+		location.setSubLocality("sublocality");
+		location.setSubThoroughfare("subthoroughfare");
+		location.setThoroughfare("thoroughfare");
+		location.setUrl("Url");
+
+		Bundle extras = new Bundle();
+
+		extras.putBoolean("boolean", true);
+		extras.putString("string", "value");
+		extras.putDouble("double", 545.546);
+		location.setExtras(extras);
+
+		lp.setLocation(location);
+
+		a.add(lp);
+
+		LocationsXmlWrapper lxw = new LocationsXmlWrapper(a);
+
+		try {
+			serializer.write(lxw,
+					new FileOutputStream(new File(context.getFilesDir(),
+							"locaions.xml")));
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		
+		return true;
+	}
 }

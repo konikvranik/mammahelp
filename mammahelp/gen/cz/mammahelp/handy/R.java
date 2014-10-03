@@ -1708,7 +1708,8 @@ containing a value of this type.
     public static final class raw {
         public static final int about=0x7f060000;
         public static final int articles=0x7f060001;
-        public static final int locations=0x7f060002;
+        public static final int locaions_demo=0x7f060002;
+        public static final int locations=0x7f060003;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

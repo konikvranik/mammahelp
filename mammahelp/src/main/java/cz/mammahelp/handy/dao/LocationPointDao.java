@@ -1,5 +1,7 @@
 package cz.mammahelp.handy.dao;
 
+import java.util.Collection;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -66,11 +68,48 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 		TypedContentValues values = new TypedContentValues(updateNull);
 		values.put(ID, obj.getId());
 		values.put(URL, obj.getUrl());
-		values.put(ADDRESS, obj.getLocation());
+		values.put(ADDRESS, obj.getLocation().getId());
 		values.put(NAME, obj.getName());
 		values.put(DESCRIPTION, obj.getDescription());
 
 		return values.getValues();
+	}
+
+	@Override
+	protected void insert(SQLiteDatabase db, LocationPoint obj,
+			boolean updateNull) {
+
+		handleAddress(obj);
+		super.insert(db, obj, updateNull);
+	}
+
+	private void handleAddress(LocationPoint obj) {
+		AddressDao addressDao = getDbHelper() == null ? new AddressDao(getDb())
+				: new AddressDao(getDbHelper());
+		if (obj.getLocation() != null) {
+			if (obj.getLocation().getId() == null) {
+				addressDao.insert(obj.getLocation());
+			} else {
+				addressDao.update(obj.getLocation());
+			}
+		}
+	}
+
+	@Override
+	protected void update(SQLiteDatabase db, LocationPoint obj,
+			boolean updateNull) {
+		handleAddress(obj);
+		super.update(db, obj, updateNull);
+	}
+
+	@Override
+	protected void delete(SQLiteDatabase db, LocationPoint obj) {
+
+		AddressDao addressDao = new AddressDao(getDbHelper());
+		if (obj.getLocation() != null && obj.getLocation().getId() != null)
+			addressDao.delete(obj.getLocation());
+
+		super.delete(db, obj);
 	}
 
 	public static Table getTable() {
