@@ -49,7 +49,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
 
 				map.moveCamera(cu);
 
-				cu = CameraUpdateFactory.zoomTo(5);
+				cu = CameraUpdateFactory.zoomTo(10);
 				map.moveCamera(cu);
 
 				log.debug("Camera moved.");

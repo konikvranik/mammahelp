@@ -108,9 +108,12 @@ public class AddressDao extends BaseDao<Address> {
 		e.setUrl(unpackColumnValue(cursor, URL, String.class));
 
 		String a = unpackColumnValue(cursor, ADDRESS_LINES, String.class);
-		String[] lines = a.split("\\r?\\n");
-		for (int i = 0; i < lines.length; i++)
-			e.setAddressLine(i, lines[i]);
+
+		if (a != null) {
+			String[] lines = a.split("\\r?\\n");
+			for (int i = 0; i < lines.length; i++)
+				e.setAddressLine(i, lines[i]);
+		}
 
 		return e;
 	}
@@ -147,6 +150,16 @@ public class AddressDao extends BaseDao<Address> {
 		values.put(SUB_LOCALITY, obj.getSubLocality());
 		values.put(SUB_THOROUGHFARE, obj.getSubThoroughfare());
 		values.put(THOROUGHFARE, obj.getThoroughfare());
+
+		StringBuffer sb = new StringBuffer();
+
+		for (int i = 0; i <= obj.getMaxAddressLineIndex(); i++) {
+			sb.append(obj.getAddressLine(i));
+			if (obj.getMaxAddressLineIndex() > i)
+				sb.append("\n");
+		}
+
+		values.put(ADDRESS_LINES, sb.toString());
 
 		return values.getValues();
 	}

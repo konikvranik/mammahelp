@@ -1,7 +1,5 @@
 package cz.mammahelp.handy.dao;
 
-import java.util.Collection;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
