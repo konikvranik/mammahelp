@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import android.app.ActionBar;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -47,6 +48,10 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		if (mNavigationDrawerFragment != null)
 			mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 					(DrawerLayout) dr);
+
+		getFragmentManager().popBackStack();
+		getFragmentManager().beginTransaction().add(R.id.container, new NewsListFragment(), "news")
+				.addToBackStack("news").commit();
 
 		startService(new Intent(this, MammaHelpService.class).putExtra(
 				"register", true));
@@ -144,7 +149,7 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		if (articleDetail != null && articleDetail.canGoBack()) {
 			log.debug("Go back in article history");
 			articleDetail.goBack();
-		} else if (getFragmentManager().getBackStackEntryCount() > 0) {
+		} else if (getFragmentManager().getBackStackEntryCount() > 1) {
 			log.debug("Go back in fragment backstack");
 			getFragmentManager().popBackStack();
 		} else {

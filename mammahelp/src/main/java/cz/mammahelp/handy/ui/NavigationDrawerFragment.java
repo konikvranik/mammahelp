@@ -254,8 +254,7 @@ public class NavigationDrawerFragment extends Fragment {
 				f = new CategoryListFragment();
 				f.setArguments(b);
 			}
-			fragmentManager.popBackStack("category",
-					FragmentManager.POP_BACK_STACK_INCLUSIVE);
+			fragmentManager.popBackStack("news", 0);
 			fragmentManager.beginTransaction().add(R.id.container, f, tag)
 					.addToBackStack("category").commit();
 
@@ -279,14 +278,11 @@ public class NavigationDrawerFragment extends Fragment {
 			if (f == null) {
 				f = new NewsListFragment();
 				f.setArguments(b);
+				fragmentManager.beginTransaction().add(R.id.container, f, tag)
+						.addToBackStack(tag).commit();
+			} else {
+				fragmentManager.popBackStack(tag, 0);
 			}
-
-			fragmentManager.popBackStack("news",
-					FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-			fragmentManager.beginTransaction().add(R.id.container, f, tag)
-					.addToBackStack("news").commit();
-
 			// startActivity(
 			// new Intent(getActivity(), CategoryListActivity.class), b);
 			break;
@@ -295,8 +291,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 			MapFragment m = new MapFragment();
 
-			fragmentManager.popBackStack("map",
-					FragmentManager.POP_BACK_STACK_INCLUSIVE);
+			fragmentManager.popBackStack("news", 0);
 
 			fragmentManager.beginTransaction().add(R.id.container, m, tag)
 					.addToBackStack("map").commit();
@@ -322,8 +317,7 @@ public class NavigationDrawerFragment extends Fragment {
 					.first().getId());
 			af.setArguments(args);
 
-			fragmentManager.popBackStack(tag,
-					FragmentManager.POP_BACK_STACK_INCLUSIVE);
+			fragmentManager.popBackStack("news", 0);
 
 			fragmentManager.beginTransaction().add(R.id.container, af, tag)
 					.addToBackStack(tag).commit();
