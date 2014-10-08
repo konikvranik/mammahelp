@@ -27,7 +27,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.model.Articles;
@@ -40,6 +39,8 @@ import cz.mammahelp.handy.model.Articles;
  * implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
+
+	private static final String NEWS_FRAGMENT_TAG = "news";
 
 	/**
 	 * Remember the position of the selected item.
@@ -235,99 +236,76 @@ public class NavigationDrawerFragment extends Fragment {
 		actionBar
 				.setTitle(getResources().getStringArray(R.array.nav_items)[position]);
 
-		Bundle b = new Bundle();
+		String tag = getTagByPosition(position);
 
-		String tag = null;
-		Fragment f;
+		Fragment f = fragmentManager.findFragmentByTag(tag);
+
+		if (f == null) {
+			fragmentManager.popBackStack(NEWS_FRAGMENT_TAG, 0);
+			f = getFragmentByPosition(position, tag);
+			fragmentManager.beginTransaction().add(R.id.container, f, tag)
+					.addToBackStack(tag).commit();
+		} else
+			fragmentManager.popBackStack(tag, 0);
+
+	}
+
+	private String getTagByPosition(int position) {
 		switch (position) {
 		case 0:
-			tag = CategoryListFragment.CATEGORY_INFORMATIONS;
+			return CategoryListFragment.CATEGORY_INFORMATIONS;
+		case 1:
+			return NEWS_FRAGMENT_TAG;
 		case 2:
-			if (tag == null)
-				tag = CategoryListFragment.CATEGORY_HELP;
+			return CategoryListFragment.CATEGORY_HELP;
+		case 3:
+			return "mammahelp";
+		case 4:
+			return "map";
+		case 5:
+			return "prevention";
+		}
+		return null;
+	}
+
+	private Fragment getFragmentByPosition(int pos, String tag) {
+		Fragment f;
+		Bundle b = new Bundle();
+		switch (pos) {
+		case 0:
+		case 2:
+			f = new CategoryListFragment();
 
 			b.putString(CategoryListFragment.CATEGORY_KEY, tag);
-
-			f = fragmentManager.findFragmentByTag(tag);
-
-			if (f == null) {
-				f = new CategoryListFragment();
-				f.setArguments(b);
-			}
-			fragmentManager.popBackStack("news", 0);
-			fragmentManager.beginTransaction().add(R.id.container, f, tag)
-					.addToBackStack("category").commit();
-
-			StringWriter sw = new StringWriter();
-			PrintWriter pw = new PrintWriter(sw);
-
-			getFragmentManager().dump(null, null, pw, null);
-
-			log.debug("Fragments: "
-					+ getFragmentManager().getBackStackEntryCount());
-
-			// startActivity(
-			// new Intent(getActivity(), CategoryListActivity.class), b);
 			break;
 
 		case 1:
-			tag = "news";
-
-			f = fragmentManager.findFragmentByTag(tag);
-
-			if (f == null) {
-				f = new NewsListFragment();
-				f.setArguments(b);
-				fragmentManager.beginTransaction().add(R.id.container, f, tag)
-						.addToBackStack(tag).commit();
-			} else {
-				fragmentManager.popBackStack(tag, 0);
-			}
-			// startActivity(
-			// new Intent(getActivity(), CategoryListActivity.class), b);
+			f = new NewsListFragment();
 			break;
 
 		case 4:
-
-			MapFragment m = new MapFragment();
-
-			fragmentManager.popBackStack("news", 0);
-
-			fragmentManager.beginTransaction().add(R.id.container, m, tag)
-					.addToBackStack("map").commit();
-
-			// startActivity(
-			// new Intent(getActivity(), CategoryListActivity.class), b);
+			f = new MapFragment();
 			break;
 
 		case 3:
-			tag = "mammahelp";
-
 		case 5:
-			if (tag == null)
-				tag = "prevention";
+			f = new ArticleDetailViewFragment();
 
 			ArticlesDao ad = new ArticlesDao(
 					((MainActivity) getActivity()).getDbHelper());
 			SortedSet<Articles> prevArticles = ad.findByCategory(tag);
 
-			ArticleDetailViewFragment af = new ArticleDetailViewFragment();
-			Bundle args = new Bundle();
-			args.putLong(ArticleDetailViewFragment.ARTICLE_KEY, prevArticles
+			b.putLong(ArticleDetailViewFragment.ARTICLE_KEY, prevArticles
 					.first().getId());
-			af.setArguments(args);
-
-			fragmentManager.popBackStack("news", 0);
-
-			fragmentManager.beginTransaction().add(R.id.container, af, tag)
-					.addToBackStack(tag).commit();
-
 			break;
 
 		default:
+			f = null;
 			break;
 		}
-
+		if (f != null)
+			f.setArguments(b);
+		return f;
 	}
 
 	@Override
