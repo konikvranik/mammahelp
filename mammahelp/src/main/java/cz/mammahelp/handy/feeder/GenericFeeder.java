@@ -120,8 +120,10 @@ public abstract class GenericFeeder<T extends BaseDao<?>> {
 		int statusCode = openConnection.getResponseCode();
 		if (statusCode < 300) {
 			if (updatedTimeMilis != null
-					&& updatedTimeMilis > openConnection.getLastModified())
+					&& openConnection.getLastModified() > 0
+					&& updatedTimeMilis > openConnection.getLastModified()) {
 				return null;
+			}
 
 			InputStream is = openConnection.getInputStream();
 			if ("gzip".equals(openConnection.getContentEncoding())) {

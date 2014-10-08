@@ -19,8 +19,10 @@ import android.os.ParcelFileDescriptor.AutoCloseOutputStream;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.dao.EnclosureDao;
+import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.model.Articles;
 import cz.mammahelp.handy.model.Enclosure;
+import cz.mammahelp.handy.model.News;
 
 public class LocalDbContentProvider extends ContentProvider {
 
@@ -131,11 +133,6 @@ public class LocalDbContentProvider extends ContentProvider {
 
 	}
 
-	private InputStream getInputStreamOfNews(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	private InputStream getInputStreamOfEnclosure(Long id) {
 
 		log.debug("Querying enclosure id " + id);
@@ -144,7 +141,7 @@ public class LocalDbContentProvider extends ContentProvider {
 		Enclosure enclosure = edao.findById(new Enclosure(id));
 
 		log.debug("Enclosure found: " + enclosure);
-		
+
 		return new ByteArrayInputStream(enclosure.getData());
 	}
 
@@ -153,6 +150,39 @@ public class LocalDbContentProvider extends ContentProvider {
 		ArticlesDao adao = new ArticlesDao(getDbHelper());
 
 		Articles article = adao.findById(new Articles(id));
+
+		StringBuilder articleHtml = new StringBuilder("<html>");
+		// articleHtml
+		// .append("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"><meta charset=\"UTF-8\">");
+		articleHtml.append("<head>");
+		articleHtml
+				.append("<link rel='stylesheet' href='file:///android_asset/article.css' type='text/css' />");
+		articleHtml.append("<title>");
+		articleHtml.append(article.getTitle());
+		articleHtml.append("</title>");
+		articleHtml.append("</head><body>");
+		articleHtml.append("<div class=\"article\">");
+		articleHtml.append("<h1 class=\"title\">");
+		articleHtml.append(article.getTitle());
+		articleHtml.append("</h1>");
+		articleHtml.append("<p class=\"body\">");
+		articleHtml.append(article.getBody());
+		articleHtml.append("</p>");
+		articleHtml.append("</div>");
+		articleHtml.append("</body></html>");
+
+		log.debug("Article: \n" + articleHtml);
+
+		return new ByteArrayInputStream(articleHtml.toString().getBytes(
+				Charset.forName("UTF-8")));
+
+	}
+
+	private InputStream getInputStreamOfNews(Long id) {
+
+		NewsDao adao = new NewsDao(getDbHelper());
+
+		News article = adao.findById(new News(id));
 
 		StringBuilder articleHtml = new StringBuilder("<html>");
 		// articleHtml

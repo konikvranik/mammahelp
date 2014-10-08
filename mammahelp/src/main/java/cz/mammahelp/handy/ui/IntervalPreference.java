@@ -24,7 +24,6 @@ public class IntervalPreference extends DialogPreference {
 	private String[] values;
 	private int titleRes;
 	private Long defVal = (long) -1;
-	@SuppressWarnings("unused")
 
 	public IntervalPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);

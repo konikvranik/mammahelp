@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -60,6 +61,8 @@ public class NewsFeeder extends GenericFeeder<NewsDao> {
 
 		for (SyndEntry syndEntry : entries) {
 
+			log.debug("Saving entry: " + syndEntry);
+
 			SyndContent desc = syndEntry.getDescription();
 			String descType = desc.getType();
 
@@ -67,8 +70,13 @@ public class NewsFeeder extends GenericFeeder<NewsDao> {
 			news.setTitle(syndEntry.getTitle());
 			news.setAnnotation(desc.getValue());
 			news.setSyncTime(syncTime);
+			news.setUrl(syndEntry.getUri());
+			news.setCategory(Arrays.toString(syndEntry.getCategories()
+					.toArray()));
 
 			setBody(news);
+
+			log.debug("News: " + news);
 
 			getDao().insert(news);
 
@@ -82,15 +90,25 @@ public class NewsFeeder extends GenericFeeder<NewsDao> {
 
 	private void setBody(News news) throws MalformedURLException, Exception {
 
-		Date syncedDate = new Date();
+		if (news.getUrl() == null)
+			return;
+
+		Date syncedDate = news.getSyncTime() == null ? new Date(0) : news
+				.getSyncTime().getTime();
+
+		log.debug("Loading body from " + news.getUrl());
 		InputStream is = getInputStreamFromUrl(new URL(news.getUrl()),
-				syncedDate);
+				null);
 		if (is == null)
 			return;
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(syncedDate);
-		news.setSyncTime(cal);
+
+		if (syncedDate == null) {
+			news.setSyncTime(null);
+		} else {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(syncedDate);
+			news.setSyncTime(cal);
+		}
 
 		Document d = getTidy(null).parseDOM(is, null);
 

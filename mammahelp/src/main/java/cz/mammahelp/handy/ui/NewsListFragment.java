@@ -2,8 +2,6 @@ package cz.mammahelp.handy.ui;
 
 import static cz.mammahelp.handy.Constants.log;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.SortedSet;
 
@@ -107,31 +105,6 @@ public class NewsListFragment extends ANamedFragment {
 		View mainView = inflater.inflate(R.layout.news_listing, null);
 		view = (ListView) mainView.findViewById(R.id.listing);
 
-		view.setOnItemClickListener(new ListView.OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> paramAdapterView,
-					View paramView, int paramInt, long paramLong) {
-
-				ArticleDetailViewFragment af = new ArticleDetailViewFragment();
-				Bundle args = new Bundle();
-				args.putLong(ArticleDetailViewFragment.ARTICLE_KEY,
-						paramAdapterView.getAdapter().getItemId(paramInt));
-				af.setArguments(args);
-				getFragmentManager().beginTransaction().add(R.id.container, af)
-						.addToBackStack(null).commit();
-
-				StringWriter sw = new StringWriter();
-				PrintWriter pw = new PrintWriter(sw);
-
-				getFragmentManager().dump(null, null, pw, null);
-
-				log.debug("Fragments: "
-						+ getFragmentManager().getBackStackEntryCount());
-
-			}
-		});
-
 		NewsDao adao = new NewsDao(getDbHelper());
 
 		SortedSet<News> news = adao.findAll();
@@ -139,6 +112,30 @@ public class NewsListFragment extends ANamedFragment {
 		adapter = new NewsAdapter(news);
 		if (view != null)
 			view.setAdapter(adapter);
+
+		view.setOnItemClickListener(new ListView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> paramAdapterView,
+					View paramView, int paramInt, long paramLong) {
+
+				log.debug("News " + paramInt + " " + paramLong + " clicked.");
+
+				News item = (News) paramAdapterView.getAdapter().getItem(
+						paramInt);
+
+				if (item.getBody() == null)
+					return;
+
+				ArticleDetailViewFragment af = new ArticleDetailViewFragment();
+				Bundle args = new Bundle();
+				args.putLong(ArticleDetailViewFragment.NEWS_KEY, item.getId());
+				af.setArguments(args);
+				getFragmentManager().beginTransaction().add(R.id.container, af)
+						.addToBackStack(null).commit();
+
+			}
+		});
 
 		return mainView;
 	}

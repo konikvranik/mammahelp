@@ -12,6 +12,13 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageButton;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -22,6 +29,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import cz.mammahelp.handy.MammaHelpDbHelper;
+import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.model.LocationPoint;
 
@@ -29,6 +37,27 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
 
 	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
 	private MammaHelpDbHelper dbHelper;
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		View mv = super.onCreateView(inflater, container, savedInstanceState);
+
+		ImageButton child = new ImageButton(getActivity());
+		LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+		child.setLayoutParams(params);
+
+		DisplayMetrics metrics = getResources().getDisplayMetrics();
+		int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+				4, metrics);
+		child.setLeft(px);
+		child.setRight(px);
+		child.setImageResource(R.drawable.abc_ic_clear_holo_light);
+		container.addView(child);
+		return mv;
+	}
 
 	private void setupMap() {
 		GoogleMap map = getMap();

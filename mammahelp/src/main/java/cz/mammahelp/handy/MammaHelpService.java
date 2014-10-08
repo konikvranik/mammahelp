@@ -149,7 +149,7 @@ public class MammaHelpService extends Service {
 		try {
 
 			try {
-				getArticleFeeder().feedData();
+				// getArticleFeeder().feedData();
 				getNewsFeeder().feedData();
 			} catch (Exception e) {
 				throw new MammaHelpException(R.string.update_failed, e);
@@ -178,7 +178,7 @@ public class MammaHelpService extends Service {
 		getDbHelper().notifyDataSetChanged();
 	}
 
-	private GenericFeeder<ArticlesDao> getArticleFeeder() {
+	protected GenericFeeder<ArticlesDao> getArticleFeeder() {
 
 		if (articleFeeder == null) {
 			articleFeeder = new ArticleFeeder(getApplicationContext());
@@ -186,7 +186,7 @@ public class MammaHelpService extends Service {
 		return articleFeeder;
 	}
 
-	private NewsFeeder getNewsFeeder() {
+	protected NewsFeeder getNewsFeeder() {
 
 		if (newsFeeder == null) {
 			newsFeeder = new NewsFeeder(getApplicationContext());
@@ -194,13 +194,13 @@ public class MammaHelpService extends Service {
 		return newsFeeder;
 	}
 
-	private MammaHelpDbHelper getDbHelper() {
+	protected MammaHelpDbHelper getDbHelper() {
 		if (dbHelper == null)
 			dbHelper = MammaHelpDbHelper.getInstance(getApplicationContext());
 		return dbHelper;
 	}
 
-	private Tidy getTidy(String enc) {
+	protected Tidy getTidy(String enc) {
 
 		log.debug("Enc: " + enc);
 
@@ -234,7 +234,7 @@ public class MammaHelpService extends Service {
 	}
 
 	@SuppressLint("WorldReadableFiles")
-	private DOMResult transform(Document d, InputStream inXsl)
+	protected DOMResult transform(Document d, InputStream inXsl)
 			throws IOException, TransformerConfigurationException,
 			TransformerFactoryConfigurationError, ParserConfigurationException,
 			TransformerException {
@@ -263,7 +263,7 @@ public class MammaHelpService extends Service {
 		return res;
 	}
 
-	private class Worker extends AsyncTask<Void, Void, Void> {
+	protected class Worker extends AsyncTask<Void, Void, Void> {
 
 		@Override
 		protected Void doInBackground(Void... params) {

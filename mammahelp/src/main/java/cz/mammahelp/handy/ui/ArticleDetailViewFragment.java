@@ -17,7 +17,10 @@ import android.webkit.WebViewClient;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
+import cz.mammahelp.handy.dao.NewsDao;
+import cz.mammahelp.handy.model.ASyncedInformation;
 import cz.mammahelp.handy.model.Articles;
+import cz.mammahelp.handy.model.News;
 import cz.mammahelp.handy.provider.LocalDbContentProvider;
 
 /**
@@ -32,12 +35,11 @@ import cz.mammahelp.handy.provider.LocalDbContentProvider;
 public class ArticleDetailViewFragment extends Fragment {
 	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-	private static final String ARG_PARAM1 = "param1";
-	private static final String ARG_PARAM2 = "param2";
 	public static final String ARTICLE_KEY = "article";
+	public static final String NEWS_KEY = "news";
 
 	private OnFragmentInteractionListener mListener;
-	private Articles article;
+	private ASyncedInformation<?> article;
 
 	/**
 	 * Use this factory method to create a new instance of this fragment using
@@ -50,12 +52,9 @@ public class ArticleDetailViewFragment extends Fragment {
 	 * @return A new instance of fragment ArticleDetailViewFragment.
 	 */
 	// TODO: Rename and change types and number of parameters
-	public static ArticleDetailViewFragment newInstance(String param1,
-			String param2) {
+	public static ArticleDetailViewFragment newInstance() {
 		ArticleDetailViewFragment fragment = new ArticleDetailViewFragment();
 		Bundle args = new Bundle();
-		args.putString(ARG_PARAM1, param1);
-		args.putString(ARG_PARAM2, param2);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -86,8 +85,14 @@ public class ArticleDetailViewFragment extends Fragment {
 		wv.setWebViewClient(new WebViewClient());
 		wv.setWebChromeClient(new WebChromeClient());
 
-		Uri uri = Uri.parse(LocalDbContentProvider.CONTENT_ARTICLE_URI + "/"
-				+ getArticle().getId() + "?id=" + getArticle().getId());
+		Uri uri = null;
+		if (getArticle() instanceof Articles) {
+			uri = Uri.parse(LocalDbContentProvider.CONTENT_ARTICLE_URI + "/"
+					+ getArticle().getId() + "?id=" + getArticle().getId());
+		} else if (getArticle() instanceof News) {
+			uri = Uri.parse(LocalDbContentProvider.CONTENT_NEWS_URI + "/"
+					+ getArticle().getId() + "?id=" + getArticle().getId());
+		}
 
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Content-Type", "text/html; charset=UTF-8");
@@ -96,12 +101,18 @@ public class ArticleDetailViewFragment extends Fragment {
 		return view;
 	}
 
-	private Articles getArticle() {
+	private ASyncedInformation<?> getArticle() {
 		if (article == null) {
-			long id = getArguments().getLong(ARTICLE_KEY);
-			article = new Articles(id);
-			ArticlesDao adao = new ArticlesDao(getDbHelper());
-			article = adao.findById(article);
+			Long id = getArguments().getLong(ARTICLE_KEY);
+
+			if (id == null) {
+				id = getArguments().getLong(NEWS_KEY);
+				NewsDao ndao = new NewsDao(getDbHelper());
+				article = ndao.findById(id);
+			} else {
+				ArticlesDao adao = new ArticlesDao(getDbHelper());
+				article = adao.findById(id);
+			}
 		}
 		return article;
 	}
@@ -118,9 +129,12 @@ public class ArticleDetailViewFragment extends Fragment {
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 
-		if (getArguments() != null && getArguments().containsKey(ARTICLE_KEY)) {
-			article = new Articles(getArguments().getLong(ARTICLE_KEY));
-		}
+		if (getArguments() != null)
+			if (getArguments().containsKey(ARTICLE_KEY)) {
+				article = new Articles(getArguments().getLong(ARTICLE_KEY));
+			} else if (getArguments().containsKey(NEWS_KEY)) {
+				article = new News(getArguments().getLong(NEWS_KEY));
+			}
 
 		try {
 			// mListener = (OnFragmentInteractionListener) activity;
@@ -154,7 +168,11 @@ public class ArticleDetailViewFragment extends Fragment {
 	public void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
-		outState.putLong(ARTICLE_KEY, getArticle().getId());
+		if (getArticle() instanceof Articles) {
+			outState.putLong(ARTICLE_KEY, getArticle().getId());
+		} else if (getArticle() instanceof News) {
+			outState.putLong(NEWS_KEY, getArticle().getId());
+		}
 	}
 
 }
