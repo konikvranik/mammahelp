@@ -5,14 +5,12 @@ import static cz.mammahelp.handy.Constants.log;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.database.DataSetObserver;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.widget.DrawerLayout;
@@ -195,22 +193,14 @@ public class MainActivity extends AbstractMammaHelpActivity {
 			public void run() {
 
 				if (mBound && mService != null && mService.isRunning()) {
-
-					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-						startRefreshHc();
-					else
-						startRefreshFr();
+					startRefreshHc();
 				} else {
-					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-						stopRefreshHc();
-					else
-						stopRefreshFr();
+					stopRefreshHc();
 				}
 			}
 		});
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	void startRefreshHc() {
 		log.debug("Start refresh");
 		Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate);
@@ -229,7 +219,6 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		iv.startAnimation(rotation);
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	void stopRefreshHc() {
 		log.debug("Stop refresh");
 		MenuItem refreshItem = mainMenu.findItem(R.id.action_refresh);
@@ -239,16 +228,6 @@ public class MainActivity extends AbstractMammaHelpActivity {
 			iv.setAnimation(null);
 		}
 		refreshItem.setActionView(null);
-	}
-
-	void startRefreshFr() {
-		log.debug("Start refresh old");
-
-	}
-
-	void stopRefreshFr() {
-		log.debug("Stop refresh old");
-
 	}
 
 	/** Defines callbacks for service binding, passed to bindService() */
