@@ -6,18 +6,17 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -25,6 +24,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -33,33 +33,39 @@ import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.model.LocationPoint;
 
-public class MapFragment extends com.google.android.gms.maps.MapFragment {
+public class CentersMapFragment extends Fragment {
 
 	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
 	private MammaHelpDbHelper dbHelper;
+	private MapView mapView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		View mv = super.onCreateView(inflater, container, savedInstanceState);
 
-		ImageButton child = new ImageButton(getActivity());
-		LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT);
-		child.setLayoutParams(params);
+		View view = inflater.inflate(R.layout.fragment_centers_map, container,
+				false);
 
-		DisplayMetrics metrics = getResources().getDisplayMetrics();
-		int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-				4, metrics);
-		child.setLeft(px);
-		child.setRight(px);
-		child.setImageResource(R.drawable.abc_ic_clear_holo_light);
-		container.addView(child);
-		return mv;
+		mapView = (MapView) view.findViewById(R.id.map);
+
+		ImageButton button = (ImageButton) view.findViewById(R.id.centers_list);
+
+		button.setOnClickListener(new ImageButton.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String tag = "centers";
+				getFragmentManager().popBackStack();
+				Fragment f = new CentersListFragment();
+				getFragmentManager().beginTransaction()
+						.add(R.id.container, f, tag).addToBackStack(tag)
+						.commit();
+			}
+		});
+
+		return view;
 	}
 
-	private void setupMap() {
+	protected void setupMap() {
 		GoogleMap map = getMap();
 
 		if (map != null) {
@@ -105,13 +111,19 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
 		}
 	}
 
+	protected GoogleMap getMap() {
+		if (mapView == null)
+			return null;
+		return mapView.getMap();
+	}
+
 	public MammaHelpDbHelper getDbHelper() {
 		if (dbHelper == null)
 			dbHelper = MammaHelpDbHelper.getInstance(getActivity());
 		return dbHelper;
 	}
 
-	private void loadData() {
+	protected void loadData() {
 
 		Geocoder myLocation = new Geocoder(getActivity(), Locale.getDefault());
 		List<Address> loc;
@@ -162,9 +174,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-
 		setupMap();
 	}
 }

@@ -284,7 +284,7 @@ public class NavigationDrawerFragment extends Fragment {
 			break;
 
 		case 4:
-			f = new MapFragment();
+			f = new CentersMapFragment();
 			break;
 
 		case 3:
