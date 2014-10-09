@@ -31,7 +31,7 @@ import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.Syn
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.FeedException;
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.SyndFeedInput;
 
-import cz.mammahelp.handy.Constants;
+import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.model.News;
 
@@ -46,7 +46,8 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 	@Override
 	public void feedData() throws Exception {
 
-		feed = getSyndFeedForUrl(Constants.NEWS_FEED_URL);
+		feed = getSyndFeedForUrl(getContext().getResources().getString(
+				R.string.news_feed_url));
 		if (feed == null)
 			return;
 

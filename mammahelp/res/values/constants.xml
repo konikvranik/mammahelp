@@ -3,6 +3,8 @@
 
     <!-- integer name="google_play_services_version">5077000</integer -->
 
+    <string name="news_feed_url">http://www.mammahelp.cz/feed/</string>
+
     <integer-array name="plurals">
         <item>1</item>
         <item>2</item>

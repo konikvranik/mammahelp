@@ -54,8 +54,6 @@ public class Constants {
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 	public static final String CENTER_KEY = "center";
 
-	public static final String NEWS_FEED_URL = "http://www.mammahelp.cz/feed/";
-
 	public static final String REGISTER_FLAG = "register";
 
 }

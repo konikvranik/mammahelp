@@ -25,8 +25,6 @@ public final class R {
         public static final int hours=0x7f0e0007;
         public static final int minutes=0x7f0e0008;
         public static final int nav_items=0x7f0e0009;
-        /**  integer name="google_play_services_version">5077000</integer 
-         */
         public static final int plurals=0x7f0e0000;
         public static final int update_times=0x7f0e0001;
         public static final int weeks=0x7f0e0005;
@@ -1761,24 +1759,24 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f08002b;
-        public static final int action_about=0x7f08004d;
-        public static final int action_example=0x7f080037;
-        public static final int action_refresh=0x7f080059;
-        public static final int action_settings=0x7f080038;
-        public static final int app_name=0x7f08002d;
+        public static final int action_about=0x7f08004e;
+        public static final int action_example=0x7f080038;
+        public static final int action_refresh=0x7f08005a;
+        public static final int action_settings=0x7f080039;
+        public static final int app_name=0x7f08002e;
         public static final int auth_client_needs_enabling_title=0x7f080001;
         public static final int auth_client_needs_installation_title=0x7f080002;
         public static final int auth_client_needs_update_title=0x7f080003;
         public static final int auth_client_play_services_err_notification_msg=0x7f080004;
         public static final int auth_client_requested_by_msg=0x7f080005;
         public static final int auth_client_using_bad_version_title=0x7f080000;
-        public static final int banner1=0x7f080051;
-        public static final int banner1_text=0x7f080054;
-        public static final int banner2=0x7f080052;
-        public static final int banner2_text=0x7f080055;
-        public static final int banner3=0x7f080053;
-        public static final int banner3_text=0x7f080056;
-        public static final int centers_list=0x7f08005a;
+        public static final int banner1=0x7f080052;
+        public static final int banner1_text=0x7f080055;
+        public static final int banner2=0x7f080053;
+        public static final int banner2_text=0x7f080056;
+        public static final int banner3=0x7f080054;
+        public static final int banner3_text=0x7f080057;
+        public static final int centers_list=0x7f08005b;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -1868,42 +1866,45 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f08001e;
-        public static final int date_time=0x7f080032;
-        public static final int delete_delay_description=0x7f080041;
-        public static final int delete_delay_title=0x7f080040;
-        public static final int failed_to_connect=0x7f080057;
-        public static final int hello_blank_fragment=0x7f080050;
-        public static final int hello_world=0x7f08004f;
-        public static final int http_error_response=0x7f08003b;
-        public static final int import_failed=0x7f08003f;
-        public static final int last_updated=0x7f080031;
-        public static final int malformed_url=0x7f08003a;
-        public static final int mismatched_category=0x7f080033;
-        public static final int navigation_drawer_close=0x7f080036;
-        public static final int navigation_drawer_open=0x7f080035;
-        public static final int never=0x7f080044;
-        public static final int only_wifi_description=0x7f080043;
-        public static final int only_wifi_title=0x7f080042;
-        public static final int refresh_period_description=0x7f080049;
-        public static final int refresh_period_title=0x7f08004a;
-        public static final int send_error=0x7f08003e;
-        public static final int send_to=0x7f08003d;
-        public static final int title_activity_category_list=0x7f08004e;
-        public static final int title_activity_main=0x7f080034;
-        public static final int title_item_detail=0x7f08002e;
-        public static final int unexpected_exception=0x7f08003c;
-        public static final int unsupported_protocol=0x7f080039;
-        public static final int update_already_running=0x7f08005b;
-        public static final int update_automatically_description=0x7f080048;
-        public static final int update_automatically_title=0x7f080047;
-        public static final int update_failed=0x7f080058;
-        public static final int update_on_particular_time_description=0x7f080046;
-        public static final int update_on_particular_time_title=0x7f080045;
-        public static final int update_time_description=0x7f08004c;
-        public static final int update_time_title=0x7f08004b;
-        public static final int update_title=0x7f08005c;
-        public static final int versionName=0x7f08002f;
-        public static final int versionString=0x7f080030;
+        public static final int date_time=0x7f080033;
+        public static final int delete_delay_description=0x7f080042;
+        public static final int delete_delay_title=0x7f080041;
+        public static final int failed_to_connect=0x7f080058;
+        public static final int hello_blank_fragment=0x7f080051;
+        public static final int hello_world=0x7f080050;
+        public static final int http_error_response=0x7f08003c;
+        public static final int import_failed=0x7f080040;
+        public static final int last_updated=0x7f080032;
+        public static final int malformed_url=0x7f08003b;
+        public static final int mismatched_category=0x7f080034;
+        public static final int navigation_drawer_close=0x7f080037;
+        public static final int navigation_drawer_open=0x7f080036;
+        public static final int never=0x7f080045;
+        /**  integer name="google_play_services_version">5077000</integer 
+         */
+        public static final int news_feed_url=0x7f08002d;
+        public static final int only_wifi_description=0x7f080044;
+        public static final int only_wifi_title=0x7f080043;
+        public static final int refresh_period_description=0x7f08004a;
+        public static final int refresh_period_title=0x7f08004b;
+        public static final int send_error=0x7f08003f;
+        public static final int send_to=0x7f08003e;
+        public static final int title_activity_category_list=0x7f08004f;
+        public static final int title_activity_main=0x7f080035;
+        public static final int title_item_detail=0x7f08002f;
+        public static final int unexpected_exception=0x7f08003d;
+        public static final int unsupported_protocol=0x7f08003a;
+        public static final int update_already_running=0x7f08005c;
+        public static final int update_automatically_description=0x7f080049;
+        public static final int update_automatically_title=0x7f080048;
+        public static final int update_failed=0x7f080059;
+        public static final int update_on_particular_time_description=0x7f080047;
+        public static final int update_on_particular_time_title=0x7f080046;
+        public static final int update_time_description=0x7f08004d;
+        public static final int update_time_title=0x7f08004c;
+        public static final int update_title=0x7f08005d;
+        public static final int versionName=0x7f080030;
+        public static final int versionString=0x7f080031;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */
