@@ -28,16 +28,14 @@ import android.content.SharedPreferences;
  */
 public class MammaHelpReceiver extends BroadcastReceiver {
 
-
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		if (intent.getAction().compareTo(Intent.ACTION_BOOT_COMPLETED) == 0) {
+		if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
 			log.debug("DemoReceiver.onReceive(ACTION_BOOT_COMPLETED)");
 			context.startService(new Intent(context, MammaHelpService.class)
-					.putExtra("register", true));
-		} else if (intent.getAction().compareTo(Intent.ACTION_TIME_TICK) == 0) {
+					.putExtra(Constants.REGISTER_FLAG, true));
+		} else if (Intent.ACTION_TIME_TICK.equals(intent.getAction())) {
 			log.debug("DemoReceiver.onReceive(ACTION_TIME_TICK)");
-
 			if (decideIfStart(context)) {
 				log.debug("Receiver is starting service...");
 				context.startService(new Intent(context, MammaHelpService.class));

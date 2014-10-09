@@ -5,16 +5,29 @@ import static cz.mammahelp.handy.Constants.log;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.app.FragmentManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.database.DataSetObserver;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.Toast;
+import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.MammaHelpService;
+import cz.mammahelp.handy.MammaHelpService.FeederServiceBinder;
 import cz.mammahelp.handy.R;
 
 public class MainActivity extends AbstractMammaHelpActivity {
@@ -24,6 +37,12 @@ public class MainActivity extends AbstractMammaHelpActivity {
 	 * navigation drawer.
 	 */
 	private NavigationDrawerFragment mNavigationDrawerFragment;
+
+	private boolean mBound = false;
+
+	private MammaHelpService mService;
+
+	private Menu mainMenu;
 
 	/**
 	 * Used to store the last screen title. For use in
@@ -50,11 +69,12 @@ public class MainActivity extends AbstractMammaHelpActivity {
 					(DrawerLayout) dr);
 
 		getFragmentManager().popBackStack();
-		getFragmentManager().beginTransaction().add(R.id.container, new NewsListFragment(), "news")
+		getFragmentManager().beginTransaction()
+				.add(R.id.container, new NewsListFragment(), "news")
 				.addToBackStack("news").commit();
 
 		startService(new Intent(this, MammaHelpService.class).putExtra(
-				"register", true));
+				Constants.REGISTER_FLAG, true));
 	}
 
 	public void restoreActionBar() {
@@ -65,6 +85,7 @@ public class MainActivity extends AbstractMammaHelpActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		mainMenu = menu;
 		if (mNavigationDrawerFragment == null
 				|| !mNavigationDrawerFragment.isDrawerOpen()) {
 			// Only show items in the action bar relevant to this screen
@@ -103,6 +124,16 @@ public class MainActivity extends AbstractMammaHelpActivity {
 			return true;
 
 		case R.id.action_refresh:
+
+			if (mBound && mService.isRunning()) {
+				Toast.makeText(getApplicationContext(),
+						R.string.update_already_running, Toast.LENGTH_SHORT)
+						.show();
+				return true;
+			}
+			Intent intent = new Intent(this, MammaHelpService.class);
+			startService(intent);
+
 			startService(new Intent(this, MammaHelpService.class));
 			return true;
 
@@ -158,4 +189,118 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		}
 	}
 
+	private void updateRefreshButton() {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+
+				if (mBound && mService != null && mService.isRunning()) {
+
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+						startRefreshHc();
+					else
+						startRefreshFr();
+				} else {
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+						stopRefreshHc();
+					else
+						stopRefreshFr();
+				}
+			}
+		});
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	void startRefreshHc() {
+		log.debug("Start refresh");
+		Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate);
+		rotation.setRepeatCount(Animation.INFINITE);
+
+		MenuItem refreshItem = mainMenu.findItem(R.id.action_refresh);
+
+		ImageView iv = (ImageView) refreshItem.getActionView();
+		if (iv == null) {
+			LayoutInflater inflater = (LayoutInflater) this
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			iv = (ImageView) inflater.inflate(R.layout.refresh_action_view,
+					null);
+			refreshItem.setActionView(iv);
+		}
+		iv.startAnimation(rotation);
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	void stopRefreshHc() {
+		log.debug("Stop refresh");
+		MenuItem refreshItem = mainMenu.findItem(R.id.action_refresh);
+
+		ImageView iv = (ImageView) refreshItem.getActionView();
+		if (iv != null) {
+			iv.setAnimation(null);
+		}
+		refreshItem.setActionView(null);
+	}
+
+	void startRefreshFr() {
+		log.debug("Start refresh old");
+
+	}
+
+	void stopRefreshFr() {
+		log.debug("Stop refresh old");
+
+	}
+
+	/** Defines callbacks for service binding, passed to bindService() */
+	private ServiceConnection mConnection = new ServiceConnection() {
+
+		@Override
+		public void onServiceConnected(ComponentName className, IBinder service) {
+			// We've bound to LocalService, cast the IBinder and get
+			// LocalService instance
+			log.debug("service connected");
+			FeederServiceBinder binder = (FeederServiceBinder) service;
+			mService = binder.getService();
+			mBound = true;
+
+			mService.registerStartObserver(new DataSetObserver() {
+
+				@Override
+				public void onChanged() {
+					updateRefreshButton();
+
+				}
+
+			});
+			updateRefreshButton();
+
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName arg0) {
+			log.debug("service disconnected");
+			mBound = false;
+			updateRefreshButton();
+		}
+
+	};
+
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);
+
+		if (hasFocus) {
+			// updateData();
+		}
+
+		if (mBound && !hasFocus) {
+			unbindService(mConnection);
+			mBound = false;
+		} else if (!mBound && hasFocus) {
+			boolean res = bindService(new Intent(this, MammaHelpService.class),
+					mConnection, Context.BIND_NOT_FOREGROUND);
+			log.debug("Bind result: " + res);
+		}
+
+	}
 }

@@ -14,6 +14,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.LocationPointDao;
@@ -30,10 +31,6 @@ import cz.mammahelp.handy.provider.LocalDbContentProvider;
  * 
  */
 public class CenterDetailViewFragment extends Fragment {
-	// TODO: Rename parameter arguments, choose names that match
-	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-	public static final String CENTER_KEY = "center";
-
 	private OnFragmentInteractionListener mListener;
 	private LocationPoint center;
 
@@ -45,7 +42,7 @@ public class CenterDetailViewFragment extends Fragment {
 	 *            Parameter 1.
 	 * @param param2
 	 *            Parameter 2.
-	 * @return A new instance of fragment ArticleDetailViewFragment.
+	 * @return A new instance of fragment CenterDetailViewFragment.
 	 */
 	// TODO: Rename and change types and number of parameters
 	public static CenterDetailViewFragment newInstance() {
@@ -69,10 +66,10 @@ public class CenterDetailViewFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View view = inflater.inflate(R.layout.fragment_article_detail_view,
+		View view = inflater.inflate(R.layout.fragment_center_detail_view,
 				container, false);
 
-		WebView wv = (WebView) view.findViewById(R.id.article_detail);
+		WebView wv = (WebView) view.findViewById(R.id.center_detail);
 
 		WebSettings s = wv.getSettings();
 		s.setJavaScriptEnabled(false);
@@ -94,7 +91,7 @@ public class CenterDetailViewFragment extends Fragment {
 
 	private LocationPoint getCenter() {
 		if (center == null) {
-			Long id = getArguments().getLong(CENTER_KEY);
+			Long id = getArguments().getLong(Constants.CENTER_KEY);
 
 			LocationPointDao adao = new LocationPointDao(getDbHelper());
 			center = adao.findById(id);
@@ -115,7 +112,7 @@ public class CenterDetailViewFragment extends Fragment {
 		super.onAttach(activity);
 
 		if (getArguments() != null)
-			center = new LocationPoint(getArguments().getLong(CENTER_KEY));
+			center = new LocationPoint(getArguments().getLong(Constants.CENTER_KEY));
 
 		try {
 			// mListener = (OnFragmentInteractionListener) activity;
@@ -149,7 +146,7 @@ public class CenterDetailViewFragment extends Fragment {
 	public void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
-		outState.putLong(CENTER_KEY, getCenter().getId());
+		outState.putLong(Constants.CENTER_KEY, getCenter().getId());
 	}
 
 }

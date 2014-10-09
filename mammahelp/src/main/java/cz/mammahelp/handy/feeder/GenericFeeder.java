@@ -35,9 +35,10 @@ import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.BaseDao;
 import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.handy.model.Enclosure;
+import cz.mammahelp.handy.model.Identificable;
 import cz.mammahelp.handy.provider.LocalDbContentProvider;
 
-public abstract class GenericFeeder<T extends BaseDao<?>> {
+public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificable<?>> {
 
 	Tidy tidy;
 	Transformer htmlTransformer;
@@ -78,6 +79,8 @@ public abstract class GenericFeeder<T extends BaseDao<?>> {
 	}
 
 	public abstract void feedData() throws Exception;
+	
+	public abstract void feedData(E id) throws Exception;
 
 	public Context getContext() {
 		return context;

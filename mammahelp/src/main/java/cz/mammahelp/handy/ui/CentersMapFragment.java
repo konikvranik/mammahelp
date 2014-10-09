@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Locale;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
@@ -25,9 +24,11 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.LocationPointDao;
@@ -35,7 +36,6 @@ import cz.mammahelp.handy.model.LocationPoint;
 
 public class CentersMapFragment extends Fragment {
 
-	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
 	private MammaHelpDbHelper dbHelper;
 	private MapView mapView;
 
@@ -47,6 +47,14 @@ public class CentersMapFragment extends Fragment {
 				false);
 
 		mapView = (MapView) view.findViewById(R.id.map);
+		mapView.onCreate(savedInstanceState);
+		GoogleMap map = getMap();
+		map.getUiSettings().setMyLocationButtonEnabled(true);
+		map.setMyLocationEnabled(true);
+		map.getUiSettings().setZoomControlsEnabled(true);
+		MapsInitializer.initialize(getActivity());
+
+		log.debug("Map created");
 
 		ImageButton button = (ImageButton) view.findViewById(R.id.centers_list);
 
@@ -63,6 +71,24 @@ public class CentersMapFragment extends Fragment {
 		});
 
 		return view;
+	}
+
+	private void checkGooglePlayServices() {
+		int checkGooglePlayServices = GooglePlayServicesUtil
+				.isGooglePlayServicesAvailable(getActivity());
+		if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
+			// google play services is missing!!!!
+			/*
+			 * Returns status code indicating whether there was an error. Can be
+			 * one of following in ConnectionResult: SUCCESS, SERVICE_MISSING,
+			 * SERVICE_VERSION_UPDATE_REQUIRED, SERVICE_DISABLED,
+			 * SERVICE_INVALID.
+			 */
+			GooglePlayServicesUtil
+					.getErrorDialog(checkGooglePlayServices, getActivity(),
+							Constants.REQUEST_CODE_RECOVER_PLAY_SERVICES)
+					.show();
+		}
 	}
 
 	protected void setupMap() {
@@ -94,20 +120,7 @@ public class CentersMapFragment extends Fragment {
 
 			loadData();
 		} else {
-			int checkGooglePlayServices = GooglePlayServicesUtil
-					.isGooglePlayServicesAvailable(getActivity());
-			if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
-				// google play services is missing!!!!
-				/*
-				 * Returns status code indicating whether there was an error.
-				 * Can be one of following in ConnectionResult: SUCCESS,
-				 * SERVICE_MISSING, SERVICE_VERSION_UPDATE_REQUIRED,
-				 * SERVICE_DISABLED, SERVICE_INVALID.
-				 */
-				GooglePlayServicesUtil.getErrorDialog(checkGooglePlayServices,
-						getActivity(), REQUEST_CODE_RECOVER_PLAY_SERVICES)
-						.show();
-			}
+			checkGooglePlayServices();
 		}
 	}
 

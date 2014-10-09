@@ -6,30 +6,11 @@ import static cz.mammahelp.handy.Constants.DELETE_DELAY_KEY;
 import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
 import static cz.mammahelp.handy.Constants.log;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Properties;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.transform.dom.DOMResult;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-
-import org.w3c.dom.Document;
-import org.w3c.tidy.Configuration;
-import org.w3c.tidy.Tidy;
-
-import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -43,10 +24,11 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.widget.Toast;
-import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.feeder.ArticleFeeder;
-import cz.mammahelp.handy.feeder.GenericFeeder;
 import cz.mammahelp.handy.feeder.NewsFeeder;
+import cz.mammahelp.handy.model.Articles;
+import cz.mammahelp.handy.model.Identificable;
+import cz.mammahelp.handy.model.News;
 
 public class MammaHelpService extends Service {
 
@@ -85,7 +67,6 @@ public class MammaHelpService extends Service {
 	}
 
 	private final FeederServiceBinder mBinder = new FeederServiceBinder(this);
-	static final String LOGGING_TAG = "MammaHelpFeederService";
 
 	private MammaHelpDbHelper dbHelper;
 	private Handler mHandler = new Handler();
@@ -93,8 +74,10 @@ public class MammaHelpService extends Service {
 	private MammaHelpReceiver timerReceiver;
 
 	private boolean updating;
-	private GenericFeeder<ArticlesDao> articleFeeder;
+	private ArticleFeeder articleFeeder;
 	private NewsFeeder newsFeeder;
+
+	private Queue<Identificable<? extends Identificable<?>>> feedqueue = new ConcurrentLinkedQueue<Identificable<? extends Identificable<?>>>();
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -103,28 +86,46 @@ public class MammaHelpService extends Service {
 	}
 
 	@Override
-	public boolean onUnbind(Intent intent) {
-		// TODO Auto-generated method stub
-		return super.onUnbind(intent);
-	}
-
-	@Override
-	public void onRebind(Intent intent) {
-		// TODO Auto-generated method stub
-		super.onRebind(intent);
-	}
-
-	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		if (isRunning() || intent.getBooleanExtra("register", false))
-			return START_NOT_STICKY;
+
 		log.trace("MammaHelpFeederService.onStartCommand()");
+
+		if (intent.getBooleanExtra(Constants.REGISTER_FLAG, false))
+			return START_NOT_STICKY;
+
+		boolean added = false;
+		String[] types = new String[] { Constants.ARTICLE_KEY,
+				Constants.NEWS_KEY };
+		for (String type : types) {
+			Long id = intent.getLongExtra(type, -1);
+			if (id > -1) {
+				feedqueue.add(cerateIdByType(type));
+				added = true;
+			}
+		}
+		if (!added) {
+			feedqueue.add(new News());
+			feedqueue.add(new Articles());
+		}
+
+		if (isRunning())
+			return START_NOT_STICKY;
+
 		// this.force = intent.getExtras().getBoolean("force", false);
 
-		if (!updating)
+		if (!updating) {
 			new Worker().execute(new Void[0]);
+		}
 
 		return START_REDELIVER_INTENT;
+	}
+
+	private Identificable<? extends Identificable<?>> cerateIdByType(String type) {
+		if (Constants.ARTICLE_KEY.equals(type))
+			return new Articles();
+		else if (Constants.NEWS_KEY.equals(type))
+			return new News();
+		return null;
 	}
 
 	@Override
@@ -144,13 +145,30 @@ public class MammaHelpService extends Service {
 
 	void updateData() throws MammaHelpException {
 
-		// SourceDao sdao = new SourceDao(getDbHelper());
-
 		try {
 
 			try {
+
 				// getArticleFeeder().feedData();
-				getNewsFeeder().feedData();
+				// getNewsFeeder().feedData();
+
+				for (Identificable<? extends Identificable<?>> item = feedqueue
+						.poll(); item != null; item = feedqueue.poll()) {
+
+					if (item instanceof Articles) {
+						if (item.getId() == null)
+							getArticleFeeder().feedData();
+						else
+							getArticleFeeder().feedData((Articles) item);
+					} else if (item instanceof News) {
+						if (item.getId() == null)
+							getNewsFeeder().feedData();
+						else
+							getNewsFeeder().feedData((News) item);
+					}
+
+				}
+
 			} catch (Exception e) {
 				throw new MammaHelpException(R.string.update_failed, e);
 			}
@@ -178,7 +196,7 @@ public class MammaHelpService extends Service {
 		getDbHelper().notifyDataSetChanged();
 	}
 
-	protected GenericFeeder<ArticlesDao> getArticleFeeder() {
+	protected ArticleFeeder getArticleFeeder() {
 
 		if (articleFeeder == null) {
 			articleFeeder = new ArticleFeeder(getApplicationContext());
@@ -198,69 +216,6 @@ public class MammaHelpService extends Service {
 		if (dbHelper == null)
 			dbHelper = MammaHelpDbHelper.getInstance(getApplicationContext());
 		return dbHelper;
-	}
-
-	protected Tidy getTidy(String enc) {
-
-		log.debug("Enc: " + enc);
-
-		Tidy t = new Tidy();
-
-		t.setInputEncoding(enc == null ? "UTF-8" : enc);
-		// t.setNumEntities(false);
-		// t.setQuoteMarks(false);
-		// t.setQuoteAmpersand(false);
-		// t.setRawOut(true);
-		// t.setHideEndTags(true);
-		// t.setXmlTags(false);
-		t.setXmlOut(true);
-		// t.setXHTML(true);
-		t.setOutputEncoding("utf8");
-		t.setShowWarnings(false);
-		// t.setTrimEmptyElements(true);
-		t.setQuiet(true);
-		// t.setSmartIndent(true);
-		// t.setQuoteNbsp(true);
-
-		Properties props = new Properties();
-
-		// suppport of several HTML5 tags due to lunchtime.
-		props.put("new-blocklevel-tags", "header,nav,section,article,aside");
-
-		Configuration conf = t.getConfiguration();
-		conf.addProps(props);
-
-		return t;
-	}
-
-	@SuppressLint("WorldReadableFiles")
-	protected DOMResult transform(Document d, InputStream inXsl)
-			throws IOException, TransformerConfigurationException,
-			TransformerFactoryConfigurationError, ParserConfigurationException,
-			TransformerException {
-
-		TransformerFactory trf = TransformerFactory.newInstance();
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		dbf.setNamespaceAware(false);
-
-		Transformer tr = trf.newTransformer();
-
-		tr.setOutputProperty(OutputKeys.INDENT, "yes");
-		tr.transform(
-				new DOMSource(d),
-				new StreamResult(openFileOutput("debug.source",
-						MODE_WORLD_READABLE)));
-
-		tr = trf.newTransformer(new StreamSource(inXsl));
-		DOMResult res = new DOMResult(dbf.newDocumentBuilder().newDocument());
-		tr.transform(new DOMSource(d), res);
-
-		tr = trf.newTransformer();
-		tr.setOutputProperty(OutputKeys.INDENT, "yes");
-		tr.transform(new DOMSource(res.getNode()), new StreamResult(
-				openFileOutput("debug.result", MODE_WORLD_READABLE)));
-
-		return res;
 	}
 
 	protected class Worker extends AsyncTask<Void, Void, Void> {

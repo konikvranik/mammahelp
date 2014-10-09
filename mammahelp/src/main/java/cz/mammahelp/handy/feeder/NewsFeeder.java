@@ -31,12 +31,12 @@ import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.Syn
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.FeedException;
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.SyndFeedInput;
 
+import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.model.News;
 
-public class NewsFeeder extends GenericFeeder<NewsDao> {
+public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 
-	private static final String NEWS_FEED_URL = "http://www.mammahelp.cz/feed/";
 	private SyndFeed feed;
 
 	public NewsFeeder(Context context) {
@@ -46,7 +46,7 @@ public class NewsFeeder extends GenericFeeder<NewsDao> {
 	@Override
 	public void feedData() throws Exception {
 
-		feed = getSyndFeedForUrl(NEWS_FEED_URL);
+		feed = getSyndFeedForUrl(Constants.NEWS_FEED_URL);
 		if (feed == null)
 			return;
 
@@ -74,7 +74,7 @@ public class NewsFeeder extends GenericFeeder<NewsDao> {
 			news.setCategory(Arrays.toString(syndEntry.getCategories()
 					.toArray()));
 
-			setBody(news);
+			feedData(news);
 
 			log.debug("News: " + news);
 
@@ -85,47 +85,6 @@ public class NewsFeeder extends GenericFeeder<NewsDao> {
 		Collection<News> older = getDao().findOlder(syncTime.getTime());
 		if (older != null)
 			getDao().delete(older);
-
-	}
-
-	private void setBody(News news) throws MalformedURLException, Exception {
-
-		if (news.getUrl() == null)
-			return;
-
-		Date syncedDate = news.getSyncTime() == null ? new Date(0) : news
-				.getSyncTime().getTime();
-
-		log.debug("Loading body from " + news.getUrl());
-		InputStream is = getInputStreamFromUrl(new URL(news.getUrl()),
-				null);
-		if (is == null)
-			return;
-
-		if (syncedDate == null) {
-			news.setSyncTime(null);
-		} else {
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(syncedDate);
-			news.setSyncTime(cal);
-		}
-
-		Document d = getTidy(null).parseDOM(is, null);
-
-		Node bodyNode = (Node) applyXpath(d, "//div[@id='content']",
-				XPathConstants.NODE);
-
-		if (bodyNode != null && bodyNode.hasChildNodes()) {
-			extractEnclosures(bodyNode);
-
-			StringWriter sw = new StringWriter();
-			StreamResult result = new StreamResult(sw);
-			getHtmlTransformer().transform(new DOMSource(bodyNode), result);
-
-			String body = sw.toString();
-
-			news.setBody(body);
-		}
 
 	}
 
@@ -181,6 +140,47 @@ public class NewsFeeder extends GenericFeeder<NewsDao> {
 	@Override
 	protected NewsDao createDao() {
 		return new NewsDao(getDbHelper());
+	}
+
+	@Override
+	public void feedData(News news) throws Exception {
+
+		if (news.getUrl() == null)
+			return;
+
+		Date syncedDate = news.getSyncTime() == null ? new Date(0) : news
+				.getSyncTime().getTime();
+
+		log.debug("Loading body from " + news.getUrl());
+		InputStream is = getInputStreamFromUrl(new URL(news.getUrl()), null);
+		if (is == null)
+			return;
+
+		if (syncedDate == null) {
+			news.setSyncTime(null);
+		} else {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(syncedDate);
+			news.setSyncTime(cal);
+		}
+
+		Document d = getTidy(null).parseDOM(is, null);
+
+		Node bodyNode = (Node) applyXpath(d, "//div[@id='content']",
+				XPathConstants.NODE);
+
+		if (bodyNode != null && bodyNode.hasChildNodes()) {
+			extractEnclosures(bodyNode);
+
+			StringWriter sw = new StringWriter();
+			StreamResult result = new StreamResult(sw);
+			getHtmlTransformer().transform(new DOMSource(bodyNode), result);
+
+			String body = sw.toString();
+
+			news.setBody(body);
+		}
+
 	}
 
 }

@@ -18,12 +18,12 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.model.Articles;
 
 public class CategoryListFragment extends ANamedFragment {
-
 
 	public class CategoryAdapter extends BaseAdapter implements ListAdapter {
 
@@ -68,12 +68,10 @@ public class CategoryListFragment extends ANamedFragment {
 
 	}
 
-	public static final String CATEGORY_KEY = "category";
 	private String categoryId;
 	private CategoryAdapter adapter;
 	private ListView view;
-	static final String CATEGORY_INFORMATIONS = "informations";
-	static final String CATEGORY_HELP = "help";
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -88,8 +86,8 @@ public class CategoryListFragment extends ANamedFragment {
 
 				ArticleDetailViewFragment af = new ArticleDetailViewFragment();
 				Bundle args = new Bundle();
-				args.putLong(ArticleDetailViewFragment.ARTICLE_KEY,
-						paramAdapterView.getAdapter().getItemId(paramInt));
+				args.putLong(Constants.ARTICLE_KEY, paramAdapterView
+						.getAdapter().getItemId(paramInt));
 				af.setArguments(args);
 				getFragmentManager().beginTransaction().add(R.id.container, af)
 						.addToBackStack(null).commit();
@@ -105,9 +103,9 @@ public class CategoryListFragment extends ANamedFragment {
 			}
 		});
 		if (getArguments() == null)
-			categoryId = CATEGORY_INFORMATIONS;
+			categoryId = Constants.CATEGORY_INFORMATIONS;
 		else
-			categoryId = getArguments().getString(CATEGORY_KEY);
+			categoryId = getArguments().getString(Constants.CATEGORY_KEY);
 
 		ArticlesDao adao = new ArticlesDao(getDbHelper());
 

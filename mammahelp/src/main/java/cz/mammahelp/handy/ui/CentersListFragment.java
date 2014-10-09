@@ -1,14 +1,11 @@
 package cz.mammahelp.handy.ui;
 
-import static cz.mammahelp.handy.Constants.log;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.util.Comparator;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,11 +18,22 @@ import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.model.LocationPoint;
 
 public class CentersListFragment extends ANamedFragment {
+
+	public class DistanceComparator implements Comparator<LocationPoint> {
+
+		@Override
+		public int compare(LocationPoint paramT1, LocationPoint paramT2) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+	}
 
 	public class CategoryAdapter extends BaseAdapter implements ListAdapter {
 
@@ -70,11 +78,8 @@ public class CentersListFragment extends ANamedFragment {
 
 	}
 
-	public static final String CATEGORY_KEY = "category";
 	private CategoryAdapter adapter;
 	private ListView view;
-	static final String CATEGORY_INFORMATIONS = "informations";
-	static final String CATEGORY_HELP = "help";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,7 +95,7 @@ public class CentersListFragment extends ANamedFragment {
 
 				CenterDetailViewFragment af = new CenterDetailViewFragment();
 				Bundle args = new Bundle();
-				args.putLong(CenterDetailViewFragment.CENTER_KEY,
+				args.putLong(Constants.CENTER_KEY,
 						paramAdapterView.getAdapter().getItemId(paramInt));
 				af.setArguments(args);
 				getFragmentManager().beginTransaction().add(R.id.container, af)
@@ -116,6 +121,8 @@ public class CentersListFragment extends ANamedFragment {
 		LocationPointDao adao = new LocationPointDao(getDbHelper());
 
 		SortedSet<LocationPoint> locations = adao.findAll();
+
+		new TreeSet<LocationPoint>(new DistanceComparator());
 
 		adapter = new CategoryAdapter(locations);
 		if (view != null)

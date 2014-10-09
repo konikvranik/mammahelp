@@ -14,6 +14,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
@@ -33,11 +34,6 @@ import cz.mammahelp.handy.provider.LocalDbContentProvider;
  * 
  */
 public class ArticleDetailViewFragment extends Fragment {
-	// TODO: Rename parameter arguments, choose names that match
-	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-	public static final String ARTICLE_KEY = "article";
-	public static final String NEWS_KEY = "news";
-
 	private OnFragmentInteractionListener mListener;
 	private ASyncedInformation<?> article;
 
@@ -103,10 +99,10 @@ public class ArticleDetailViewFragment extends Fragment {
 
 	private ASyncedInformation<?> getArticle() {
 		if (article == null) {
-			Long id = getArguments().getLong(ARTICLE_KEY);
+			Long id = getArguments().getLong(Constants.ARTICLE_KEY);
 
 			if (id == null) {
-				id = getArguments().getLong(NEWS_KEY);
+				id = getArguments().getLong(Constants.NEWS_KEY);
 				NewsDao ndao = new NewsDao(getDbHelper());
 				article = ndao.findById(id);
 			} else {
@@ -130,10 +126,10 @@ public class ArticleDetailViewFragment extends Fragment {
 		super.onAttach(activity);
 
 		if (getArguments() != null)
-			if (getArguments().containsKey(ARTICLE_KEY)) {
-				article = new Articles(getArguments().getLong(ARTICLE_KEY));
-			} else if (getArguments().containsKey(NEWS_KEY)) {
-				article = new News(getArguments().getLong(NEWS_KEY));
+			if (getArguments().containsKey(Constants.ARTICLE_KEY)) {
+				article = new Articles(getArguments().getLong(Constants.ARTICLE_KEY));
+			} else if (getArguments().containsKey(Constants.NEWS_KEY)) {
+				article = new News(getArguments().getLong(Constants.NEWS_KEY));
 			}
 
 		try {
@@ -169,9 +165,9 @@ public class ArticleDetailViewFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 		if (getArticle() instanceof Articles) {
-			outState.putLong(ARTICLE_KEY, getArticle().getId());
+			outState.putLong(Constants.ARTICLE_KEY, getArticle().getId());
 		} else if (getArticle() instanceof News) {
-			outState.putLong(NEWS_KEY, getArticle().getId());
+			outState.putLong(Constants.NEWS_KEY, getArticle().getId());
 		}
 	}
 

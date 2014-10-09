@@ -76,6 +76,7 @@
     <string name="failed_to_connect">Failed to connect!</string>
     <string name="update_failed">Failed to update data</string>
     <string name="action_refresh">Refresh</string>
-    <string name="centers_list" >List of centers</string>
+    <string name="centers_list">List of centers</string>
+    <string name="update_already_running">Upate already running</string>
 
 </resources>

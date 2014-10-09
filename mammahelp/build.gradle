@@ -4,8 +4,8 @@ import org.gradle.plugins.ide.eclipse.model.SourceFolder
 apply plugin: 'android'
 apply plugin: 'eclipse'
 
-version = '0.27'
-android.defaultConfig.versionCode = 27
+version = '0.29'
+android.defaultConfig.versionCode = 29
 
 group = "cz.mammahelp.handy"
 
@@ -22,11 +22,10 @@ dependencies {
 
 	compile 'com.android.support:support-v4:19.0.0'
 	compile 'com.android.support:appcompat-v7:19.0.0@aar'
-	compile 'com.google.android.gms:play-services:4.1.+@aar'
+	compile 'com.google.android.gms:play-services:5.+@aar'
 	compile 'net.sf.jtidy:jtidy:r938'
 	compile 'org.slf4j:slf4j-android:1.6.1-RC1'
 	compile 'org.apache.commons:commons-lang3:3.2.1'
-	//compile 'rome:rome:1.0'
 	compile 'com.google.code.android-rome-feed-reader:android-rome-feed-reader:1.0.0-r2'
 	compile('com.squareup.retrofit:converter-simplexml:1.6.1'){
 	    exclude module: 'stax'
@@ -36,7 +35,11 @@ dependencies {
 
 }
 
-configurations { provided }
+configurations {
+	provided
+	// all*.exclude group: 'com.android.support', module: 'support-v4'
+	// all*.exclude group: 'com.google.android.gms', module: 'play-services'
+}
 
 def libDir = new File(project.projectDir, 'libs')
 

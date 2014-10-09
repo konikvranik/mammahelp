@@ -1,30 +1,22 @@
 package cz.mammahelp.handy.feeder;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
-import java.util.SortedSet;
 
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import android.content.Context;
-import cz.mammahelp.handy.MammaHelpException;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.model.Articles;
-import cz.mammahelp.handy.ui.ArticleDetailViewFragment;
 
-public class ArticleFeeder extends GenericFeeder<ArticlesDao> {
+public class ArticleFeeder extends GenericFeeder<ArticlesDao, Articles> {
 
 	public ArticleFeeder(Context context) {
 		super(context);
@@ -33,62 +25,57 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao> {
 	@Override
 	public void feedData() throws Exception {
 
-		SortedSet<Articles> articles = getDao().findAll();
+		for (Articles article : getDao().findAll())
+			feedData(article);
 
-		feedArticles(articles);
-
-	}
-
-	public void feedArticles(SortedSet<Articles> articles) throws IOException,
-			MalformedURLException, MammaHelpException,
-			XPathExpressionException, TransformerException,
-			TransformerConfigurationException {
-		for (Articles article : articles) {
-			Date syncTime = article.getSyncTime() == null ? null : article
-					.getSyncTime().getTime();
-
-			if (article.getUrl() == null)
-				continue;
-
-			InputStream is = getInputStreamFromUrl(new URL(article.getUrl()),
-					syncTime);
-			if (is == null)
-				continue;
-
-			article.setSyncTime(syncTime);
-
-			Document d = getTidy(null).parseDOM(is, null);
-
-			String title = (String) applyXpath(d,
-					"//div[@id='title']//h1/text()", XPathConstants.STRING);
-			if (title != null)
-				article.setTitle(title);
-
-			Node bodyNode = (Node) applyXpath(d,
-					"//div[@id='content']/article", XPathConstants.NODE);
-
-			if (bodyNode != null && bodyNode.hasChildNodes()) {
-				extractEnclosures(bodyNode);
-
-				StringWriter sw = new StringWriter();
-				StreamResult result = new StreamResult(sw);
-				getHtmlTransformer().transform(new DOMSource(bodyNode), result);
-
-				String body = sw.toString();
-
-				article.setBody(body);
-			}
-			if (getUrl() != null)
-				article.setUrl(getUrl().toExternalForm());
-
-			getDao().update(article);
-
-		}
 	}
 
 	@Override
 	protected ArticlesDao createDao() {
 		return new ArticlesDao(getDbHelper());
+	}
+
+	@Override
+	public void feedData(Articles article) throws Exception {
+		Date syncTime = article.getSyncTime() == null ? null : article
+				.getSyncTime().getTime();
+
+		if (article.getUrl() == null)
+			return;
+
+		InputStream is = getInputStreamFromUrl(new URL(article.getUrl()),
+				syncTime);
+		if (is == null)
+			return;
+
+		article.setSyncTime(syncTime);
+
+		Document d = getTidy(null).parseDOM(is, null);
+
+		String title = (String) applyXpath(d, "//div[@id='title']//h1/text()",
+				XPathConstants.STRING);
+		if (title != null)
+			article.setTitle(title);
+
+		Node bodyNode = (Node) applyXpath(d, "//div[@id='content']/article",
+				XPathConstants.NODE);
+
+		if (bodyNode != null && bodyNode.hasChildNodes()) {
+			extractEnclosures(bodyNode);
+
+			StringWriter sw = new StringWriter();
+			StreamResult result = new StreamResult(sw);
+			getHtmlTransformer().transform(new DOMSource(bodyNode), result);
+
+			String body = sw.toString();
+
+			article.setBody(body);
+		}
+		if (getUrl() != null)
+			article.setUrl(getUrl().toExternalForm());
+
+		getDao().update(article);
+
 	}
 
 }

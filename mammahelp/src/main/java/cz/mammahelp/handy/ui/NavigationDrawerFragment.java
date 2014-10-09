@@ -27,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.model.Articles;
@@ -39,8 +40,6 @@ import cz.mammahelp.handy.model.Articles;
  * implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
-
-	private static final String NEWS_FRAGMENT_TAG = "news";
 
 	/**
 	 * Remember the position of the selected item.
@@ -241,7 +240,7 @@ public class NavigationDrawerFragment extends Fragment {
 		Fragment f = fragmentManager.findFragmentByTag(tag);
 
 		if (f == null) {
-			fragmentManager.popBackStack(NEWS_FRAGMENT_TAG, 0);
+			fragmentManager.popBackStack(Constants.NEWS_FRAGMENT_TAG, 0);
 			f = getFragmentByPosition(position, tag);
 			fragmentManager.beginTransaction().add(R.id.container, f, tag)
 					.addToBackStack(tag).commit();
@@ -253,11 +252,11 @@ public class NavigationDrawerFragment extends Fragment {
 	private String getTagByPosition(int position) {
 		switch (position) {
 		case 0:
-			return CategoryListFragment.CATEGORY_INFORMATIONS;
+			return Constants.CATEGORY_INFORMATIONS;
 		case 1:
-			return NEWS_FRAGMENT_TAG;
+			return Constants.NEWS_FRAGMENT_TAG;
 		case 2:
-			return CategoryListFragment.CATEGORY_HELP;
+			return Constants.CATEGORY_HELP;
 		case 3:
 			return "mammahelp";
 		case 4:
@@ -276,7 +275,7 @@ public class NavigationDrawerFragment extends Fragment {
 		case 2:
 			f = new CategoryListFragment();
 
-			b.putString(CategoryListFragment.CATEGORY_KEY, tag);
+			b.putString(Constants.CATEGORY_KEY, tag);
 			break;
 
 		case 1:
@@ -295,7 +294,7 @@ public class NavigationDrawerFragment extends Fragment {
 					((MainActivity) getActivity()).getDbHelper());
 			SortedSet<Articles> prevArticles = ad.findByCategory(tag);
 
-			b.putLong(ArticleDetailViewFragment.ARTICLE_KEY, prevArticles
+			b.putLong(Constants.ARTICLE_KEY, prevArticles
 					.first().getId());
 			break;
 

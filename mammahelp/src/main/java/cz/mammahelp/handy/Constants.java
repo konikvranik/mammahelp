@@ -31,9 +31,31 @@ public class Constants {
 
 	public static String WIFI_ONLY_KEY = "only_wifi";
 	public static boolean DEFAULT_WIFI_ONLY = true;
-	
+
 	public static Logger log = LoggerFactory.getLogger("MammaHELP");
-	
-	
+
+	public static final String NEWS_KEY = "news";
+
+	// TODO: Rename parameter arguments, choose names that match
+	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+	public static final String ARTICLE_KEY = "article";
+
+	public static final String NEWS_FRAGMENT_TAG = "news";
+
+	public static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
+
+	public static final String CATEGORY_KEY = "category";
+
+	public static final String CATEGORY_INFORMATIONS = "informations";
+
+	public static final String CATEGORY_HELP = "help";
+
+	// TODO: Rename parameter arguments, choose names that match
+	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+	public static final String CENTER_KEY = "center";
+
+	public static final String NEWS_FEED_URL = "http://www.mammahelp.cz/feed/";
+
+	public static final String REGISTER_FLAG = "register";
 
 }
