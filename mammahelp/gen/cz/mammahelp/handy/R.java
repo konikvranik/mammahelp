@@ -1516,15 +1516,16 @@ containing a value of this type.
         public static final int ic_plusone_small_off_client=0x7f020084;
         public static final int ic_plusone_standard_off_client=0x7f020085;
         public static final int ic_plusone_tall_off_client=0x7f020086;
-        public static final int logo=0x7f020087;
-        public static final int mammanet=0x7f020088;
-        public static final int mammanet_dimmed=0x7f020089;
-        public static final int mammashop2=0x7f02008a;
-        public static final int mammashop2_dimmed=0x7f02008b;
-        public static final int meal_background=0x7f02008c;
-        public static final int powered_by_google_dark=0x7f02008d;
-        public static final int powered_by_google_light=0x7f02008e;
-        public static final int upper_shadow=0x7f02008f;
+        public static final int img_btn_border=0x7f020087;
+        public static final int logo=0x7f020088;
+        public static final int mammanet=0x7f020089;
+        public static final int mammanet_dimmed=0x7f02008a;
+        public static final int mammashop2=0x7f02008b;
+        public static final int mammashop2_dimmed=0x7f02008c;
+        public static final int meal_background=0x7f02008d;
+        public static final int powered_by_google_dark=0x7f02008e;
+        public static final int powered_by_google_light=0x7f02008f;
+        public static final int upper_shadow=0x7f020090;
     }
     public static final class id {
         public static final int action_about=0x7f0a0068;

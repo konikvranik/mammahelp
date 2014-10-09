@@ -20,6 +20,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
+        android:padding="4dp"
+        android:background="@drawable/img_btn_border"
         android:contentDescription="@string/centers_list"
         android:src="@android:drawable/ic_menu_mapmode" />
 
