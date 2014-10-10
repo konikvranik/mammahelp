@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.location.Address;
@@ -48,12 +49,9 @@ public class CentersMapFragment extends Fragment {
 
 		mapView = (MapView) view.findViewById(R.id.map);
 		mapView.onCreate(savedInstanceState);
-		GoogleMap map = getMap();
-		map.getUiSettings().setMyLocationButtonEnabled(true);
-		map.setMyLocationEnabled(true);
-		map.getUiSettings().setZoomControlsEnabled(true);
-		MapsInitializer.initialize(getActivity());
 
+		setupMap();
+		
 		log.debug("Map created");
 
 		ImageButton button = (ImageButton) view.findViewById(R.id.centers_list);
@@ -93,30 +91,56 @@ public class CentersMapFragment extends Fragment {
 
 	protected void setupMap() {
 		GoogleMap map = getMap();
-
 		if (map != null) {
+			map.setMyLocationEnabled(true);
+			map.setBuildingsEnabled(true);
+			map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+			map.getUiSettings().setMyLocationButtonEnabled(true);
+			map.getUiSettings().setAllGesturesEnabled(true);
+			map.getUiSettings().setCompassEnabled(true);
+			map.getUiSettings().setRotateGesturesEnabled(true);
+			map.getUiSettings().setScrollGesturesEnabled(true);
+			map.getUiSettings().setTiltGesturesEnabled(true);
+			map.getUiSettings().setZoomControlsEnabled(true);
+			map.getUiSettings().setZoomGesturesEnabled(true);
 
 			LocationManager ls = (LocationManager) getActivity()
 					.getSystemService(Context.LOCATION_SERVICE);
 
 			Location pos = ls
 					.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+			if (pos == null)
+				pos = ls.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+			if (pos == null)
+				pos = ls.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+
+			MapsInitializer.initialize(getActivity());
+
 			if (pos != null) {
 
 				log.debug("Moving camera to " + pos.getLatitude() + ", "
 						+ pos.getLongitude());
-				CameraUpdate cu = CameraUpdateFactory.newLatLng(new LatLng(pos
-						.getLatitude(), pos.getLongitude()));
+				CameraUpdate cu;
 
-				map.moveCamera(cu);
+				try {
+					cu = CameraUpdateFactory.newLatLng(new LatLng(pos
+							.getLatitude(), pos.getLongitude()));
+					map.moveCamera(cu);
+				} catch (Exception e) {
+					log.warn(e.getMessage(), e);
+				}
 
-				cu = CameraUpdateFactory.zoomTo(10);
-				map.moveCamera(cu);
+				try {
+					cu = CameraUpdateFactory.zoomTo(10);
+					map.moveCamera(cu);
+				} catch (Exception e) {
+					log.warn(e.getMessage(), e);
+				}
 
 				log.debug("Camera moved.");
 			}
-
-			map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
 			loadData();
 		} else {
@@ -127,7 +151,13 @@ public class CentersMapFragment extends Fragment {
 	protected GoogleMap getMap() {
 		if (mapView == null)
 			return null;
-		return mapView.getMap();
+		GoogleMap map = mapView.getMap();
+		if (map == null) {
+			MapsInitializer.initialize(getActivity());
+			map = mapView.getMap();
+
+		}
+		return map;
 	}
 
 	public MammaHelpDbHelper getDbHelper() {
@@ -188,6 +218,32 @@ public class CentersMapFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		setupMap();
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (mapView != null)
+			mapView.onResume();
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (mapView != null)
+			mapView.onDestroy();
+		;
+	}
+
+	@Override
+	public void onLowMemory() {
+		super.onLowMemory();
+		if (mapView != null)
+			mapView.onLowMemory();
 	}
 }

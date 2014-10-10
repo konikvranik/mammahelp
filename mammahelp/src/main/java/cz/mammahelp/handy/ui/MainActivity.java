@@ -223,6 +223,9 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		log.debug("Stop refresh");
 		MenuItem refreshItem = mainMenu.findItem(R.id.action_refresh);
 
+		if (refreshItem == null)
+			return;
+
 		ImageView iv = (ImageView) refreshItem.getActionView();
 		if (iv != null) {
 			iv.setAnimation(null);

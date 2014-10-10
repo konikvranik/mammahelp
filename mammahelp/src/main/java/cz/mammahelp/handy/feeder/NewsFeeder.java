@@ -102,6 +102,7 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 			if (is == null)
 				return null;
 			InputSource source = new InputSource(is);
+			Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
 			SyndFeedInput input = new SyndFeedInput();
 			feed = input.build(source);
 
