@@ -1,6 +1,6 @@
 package cz.mammahelp.handy.dao;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.SortedSet;
 
 import android.content.ContentValues;
@@ -150,7 +150,7 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 		return result;
 	}
 
-	public SortedSet<LocationPoint> findByType(List<String> filter) {
+	public SortedSet<LocationPoint> findByType(Collection<String> filter) {
 		return findByType(filter.toArray(new String[0]));
 	}
 }

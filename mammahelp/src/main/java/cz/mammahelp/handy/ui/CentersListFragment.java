@@ -3,16 +3,19 @@ package cz.mammahelp.handy.ui;
 import static cz.mammahelp.handy.Constants.log;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -47,6 +50,8 @@ import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.model.LocationPoint;
 
 public class CentersListFragment extends ANamedFragment {
+
+	private static final String PREF_KEY_FILTER = "filter";
 
 	public class DistanceComparator implements Comparator<LocationPoint> {
 
@@ -104,8 +109,9 @@ public class CentersListFragment extends ANamedFragment {
 	private CategoryAdapter adapter;
 	private ListView listView;
 	private MapView mapView;
-	private List<String> filter = new ArrayList<String>();
+	private Set<String> filter = new HashSet<String>();
 	private LocationPointDao adao;
+	private MultiSpinner filterSpinner;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -163,9 +169,9 @@ public class CentersListFragment extends ANamedFragment {
 			}
 		});
 
-		MultiSpinner filterSpinner = (MultiSpinner) mainView
-				.findViewById(R.id.filters);
+		filterSpinner = (MultiSpinner) mainView.findViewById(R.id.filters);
 		final String[] strings = LocationPointDao.TYPES;
+
 		filterSpinner.setItems(
 				Arrays.asList(getResources().getStringArray(R.array.filter)),
 				getResources().getString(R.string.all),
@@ -174,11 +180,18 @@ public class CentersListFragment extends ANamedFragment {
 					@Override
 					public void onItemsSelected(boolean[] selected) {
 
-						filter = new ArrayList<String>();
+						SharedPreferences prefs = getActivity().getPreferences(
+								Activity.MODE_PRIVATE);
+						Editor editor = prefs.edit();
+
+						filter = new HashSet<String>();
 						for (int i = 0; i < selected.length; i++) {
 							if (selected[i])
 								filter.add(strings[i]);
 						}
+
+						editor.putStringSet(PREF_KEY_FILTER, filter);
+						editor.commit();
 
 						adapter = new CategoryAdapter(adao.findByType(filter));
 						if (listView != null)
@@ -188,11 +201,17 @@ public class CentersListFragment extends ANamedFragment {
 					}
 				});
 
-		SortedSet<LocationPoint> locations = adao.findAll();
+		for (int i = 0; i < strings.length; i++) {
+			if (filter.contains(strings[i]))
+				filterSpinner.setItem(i, true);
+			else
+				filterSpinner.setItem(i, false);
+		}
+		filterSpinner.updateState();
 
 		new TreeSet<LocationPoint>(new DistanceComparator());
 
-		adapter = new CategoryAdapter(locations);
+		adapter = new CategoryAdapter(adao.findByType(filter));
 		if (listView != null)
 			listView.setAdapter(adapter);
 
@@ -203,6 +222,9 @@ public class CentersListFragment extends ANamedFragment {
 	public void onAttach(Activity activity) {
 
 		super.onAttach(activity);
+
+		filter = activity.getPreferences(Activity.MODE_PRIVATE).getStringSet(
+				PREF_KEY_FILTER, new HashSet<String>());
 
 	}
 
