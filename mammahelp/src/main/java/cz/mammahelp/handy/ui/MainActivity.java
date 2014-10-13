@@ -288,4 +288,10 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		}
 
 	}
+
+	@Override
+	public void setTitle(CharSequence title) {
+		super.setTitle(title);
+		mTitle = title;
+	}
 }

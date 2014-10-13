@@ -232,8 +232,9 @@ public class NavigationDrawerFragment extends Fragment {
 		}
 
 		ActionBar actionBar = getActionBar();
-		actionBar
-				.setTitle(getResources().getStringArray(R.array.nav_items)[position]);
+		CharSequence title = getResources().getStringArray(R.array.nav_items)[position];
+		getActivity().setTitle(title);
+		actionBar.setTitle(title);
 
 		log.debug("Selected position: " + position + " ... last: "
 				+ lastPosition);
@@ -374,7 +375,7 @@ public class NavigationDrawerFragment extends Fragment {
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-		actionBar.setTitle(R.string.app_name);
+		// actionBar.setTitle(R.string.app_name);
 	}
 
 	private ActionBar getActionBar() {
