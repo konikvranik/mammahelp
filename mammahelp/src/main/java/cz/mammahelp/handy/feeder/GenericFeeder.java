@@ -16,6 +16,7 @@ import javax.xml.namespace.QName;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -156,10 +157,10 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 	}
 
 	protected Transformer getHtmlTransformer()
-			throws TransformerConfigurationException {
+			throws TransformerConfigurationException, IOException {
 		if (htmlTransformer == null) {
 			TransformerFactory tFactory = TransformerFactory.newInstance();
-			htmlTransformer = tFactory.newTransformer();
+			htmlTransformer = tFactory.newTransformer(new StreamSource(getContext().getAssets().open("htmlFilter.xsl")));
 		}
 		return htmlTransformer;
 	}

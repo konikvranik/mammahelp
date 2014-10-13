@@ -109,12 +109,12 @@ public class NavigationDrawerFragment extends Fragment {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
-						selectItem(position);
+
+						selectItem(position, parent.getSelectedItemPosition());
 					}
 				});
 		mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar()
-				.getThemedContext(),
-				android.R.layout.simple_list_item_activated_1,
+				.getThemedContext(), R.layout.simple_list_item_activated_1,
 				android.R.id.text1, getResources().getStringArray(
 						R.array.nav_items)));
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
@@ -221,7 +221,7 @@ public class NavigationDrawerFragment extends Fragment {
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 	}
 
-	private void selectItem(int position) {
+	private void selectItem(int position, int lastPosition) {
 
 		mCurrentSelectedPosition = position;
 		if (mDrawerListView != null) {
@@ -234,6 +234,9 @@ public class NavigationDrawerFragment extends Fragment {
 		ActionBar actionBar = getActionBar();
 		actionBar
 				.setTitle(getResources().getStringArray(R.array.nav_items)[position]);
+
+		log.debug("Selected position: " + position + " ... last: "
+				+ lastPosition);
 
 		String tag = getTagByPosition(position);
 
@@ -283,7 +286,7 @@ public class NavigationDrawerFragment extends Fragment {
 			break;
 
 		case 4:
-			f = new CentersMapFragment();
+			f = new CentersListFragment();
 			break;
 
 		case 3:
@@ -294,8 +297,7 @@ public class NavigationDrawerFragment extends Fragment {
 					((MainActivity) getActivity()).getDbHelper());
 			SortedSet<Articles> prevArticles = ad.findByCategory(tag);
 
-			b.putLong(Constants.ARTICLE_KEY, prevArticles
-					.first().getId());
+			b.putLong(Constants.ARTICLE_KEY, prevArticles.first().getId());
 			break;
 
 		default:

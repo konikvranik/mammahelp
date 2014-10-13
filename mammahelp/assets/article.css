@@ -1,11 +1,36 @@
+body {
+	color: #777;
+}
+
 .article h1 {
-	color: #E6007E;
+	color: 0077B3;
 	padding-top: .7em;
 	text-align: center;
 	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .article p {
-	font-family: serif;
+	font-family: sans-serif;
 	color: #004c79;
+}
+
+a {
+	text-decoration: none;
+	color: #005681;
+}
+
+h1 a,h2 a,h3 a,h4 a {
+	text-decoration: none;
+}
+
+h1 a[href],h2 a[href],h3 a[href],h4 a[href] {
+	text-decoration: none;
+}
+
+a[href] {
+	text-decoration: underline;
+}
+
+li ! img {
+	list-style: none;
 }

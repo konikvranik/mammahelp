@@ -46,6 +46,7 @@ public class MainActivity extends AbstractMammaHelpActivity {
 	 * Used to store the last screen title. For use in
 	 * {@link #restoreActionBar()}.
 	 */
+	private CharSequence mTitle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class MainActivity extends AbstractMammaHelpActivity {
 
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
+		mTitle = getTitle();
 
 		// Set up the drawer.
 		View dr = findViewById(R.id.drawer_layout);
@@ -79,6 +81,7 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		actionBar.setDisplayShowTitleEnabled(true);
+		actionBar.setTitle(mTitle);
 	}
 
 	@Override

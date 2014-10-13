@@ -1,24 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <color name="shadow">#A000</color>
-    <color name="RestaurantHeaderBackground">#EFA</color>
-    <color name="JidelakOrange">#ff9741</color>
-    <color name="RestaurantBackground">@android:color/background_light</color>
-    <color name="vegeterian_meal">#97ff00</color>
-    <color name="pasta_meal">#fcf78a</color>
-    <color name="steak_meal">#FAA</color>
-    <color name="cold_meal">#00ffe8</color>
-    <color name="live_meal">#FAE</color>
-    <color name="half_meal">#c8c9d9</color>
-    <color name="fried_meal">#bb8843</color>
-    <color name="fish_meal">#00cfa2</color>
-    <color name="red_wine_meal">#cf001c</color>
-    <color name="white_wine_meal">#f2ffbe</color>
-    <color name="rose_wine_meal">#ffa6d5</color>
-    <color name="juice_meal">#ffe800</color>
-    <color name="coctail_meal">#47f687</color>
-    <color name="beer_meal">#f5cb2b</color>
-    <color name="warm_drink_meal">#ff7140</color>
     <color name="home_dimm">#aaffffff</color>
     <color name="mammahelp_green_dark">#387F3B</color>
     <color name="mammahelp_green_bright">#89B82C</color>
@@ -26,6 +8,8 @@
     <color name="mammahelp_blue_bright">#0077B3</color>
     <color name="mammahelp_pink">#E6007E</color>
     <color name="mammahelp_purple">#6E56A0</color>
+    <color name="mammahelp_light_grey">#ddd</color>
+    <color name="mammahelp_dark_grey">#777</color>
     
 
 </resources>

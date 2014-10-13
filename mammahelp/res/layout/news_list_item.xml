@@ -6,18 +6,18 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:paddingBottom="4dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:paddingTop="4dp" >
 
-        <WebView
+        <TextView
             android:id="@+id/annotation"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@+id/title"
-            android:background="#f000" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/mammahelp_blue_dark"
+            android:layout_below="@+id/title" />
 
         <TextView
             android:id="@+id/updated"
@@ -26,6 +26,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:gravity="right"
+            android:textColor="@color/mammahelp_green_dark"
             android:text="updated"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -37,7 +38,7 @@
             android:layout_below="@+id/updated"
             android:text="Title"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/mammahelp_blue_dark" />
+            android:textColor="@color/mammahelp_blue_bright" />
     </RelativeLayout>
 
 </FrameLayout>
