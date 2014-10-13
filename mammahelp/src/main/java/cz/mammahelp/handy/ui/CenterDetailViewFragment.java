@@ -52,10 +52,6 @@ public class CenterDetailViewFragment extends Fragment {
 		return fragment;
 	}
 
-	public CenterDetailViewFragment() {
-		// Required empty public constructor
-	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -112,7 +108,8 @@ public class CenterDetailViewFragment extends Fragment {
 		super.onAttach(activity);
 
 		if (getArguments() != null)
-			center = new LocationPoint(getArguments().getLong(Constants.CENTER_KEY));
+			center = new LocationPoint(getArguments().getLong(
+					Constants.CENTER_KEY));
 
 		try {
 			// mListener = (OnFragmentInteractionListener) activity;
