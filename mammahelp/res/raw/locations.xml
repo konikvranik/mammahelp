@@ -47,7 +47,7 @@
          <mPostalCode>11000</mPostalCode>
          <mPremises>premises</mPremises>
          <mLatitude>50.05</mLatitude>
-         <mLongitude>14.14</mLongitude>
+         <mLongitude>14.05</mLongitude>
          <mHasLongitude>true</mHasLongitude>
          <mHasLatitude>true</mHasLatitude> 
          <mMaxAddressLineIndex>1</mMaxAddressLineIndex>
@@ -60,6 +60,7 @@
       <name>Mamma HELP Praha</name>
       <url>http://www.mammahelp.cz/</url>
 	  <description>Pražská pobočka vás vítá</description>
+	  <type>branch</type>
       <id>1</id>
       <location>
          <mAddressLines>
@@ -87,13 +88,70 @@
          <mPostalCode>11000</mPostalCode>
          <mPremises>premises</mPremises>
          <mLatitude>50.05</mLatitude>
-         <mLongitude>14.14</mLongitude>
+         <mLongitude>14.20</mLongitude>
          <mHasLongitude>true</mHasLongitude>
          <mHasLatitude>true</mHasLatitude> 
          <mMaxAddressLineIndex>1</mMaxAddressLineIndex>
          <mExtras>
-            <mClassLoader class="java.lang.BootClassLoader">
-            </mClassLoader>
+             <mMap>
+               <entry>
+                  <string>double</string>
+                  <object class="java.lang.Double">545.546</object>
+               </entry>
+               <entry>
+                  <string>string</string>
+                  <object class="java.lang.String">value</object>
+               </entry>
+               <entry>
+                  <string>boolean</string>
+                  <object class="java.lang.Boolean">true</object>
+               </entry>
+            </mMap>
+            <mHasFds>false</mHasFds>
+            <mFdsKnown>true</mFdsKnown>
+            <mAllowFds>true</mAllowFds>
+            
+         </mExtras>
+         </location>
+     </location>
+     
+    <location>
+      <name>Mamma HELP Brno</name>
+      <url>http://www.mammahelp.cz/</url>
+	  <description>Pražská pobočka vás vítá</description>
+	  <type>branch</type>
+      <id>4</id>
+      <location>
+         <mAddressLines>
+            <entry>
+               <integer>0</integer>
+               <string>Senovážné náměstí</string>
+            </entry>
+            <entry>
+               <integer>1</integer>
+               <string>Areál pobočky</string>
+            </entry>
+         </mAddressLines>
+         <mAdminArea>Hlavní město Praha</mAdminArea>
+         <mCountryCode>CZ</mCountryCode>
+         <mCountryName>Czech Republic</mCountryName>
+         <mFeatureName>Palladium</mFeatureName>
+         <mUrl>Url</mUrl>
+         <mThoroughfare>Příjezdovka od hlavního nádraží</mThoroughfare>
+         <mSubThoroughfare>pak do vchodu 116a</mSubThoroughfare>
+         <mLocale>cs_CZ</mLocale>
+         <mLocality>Praha</mLocality>
+         <mSubLocality>Praha 1</mSubLocality>
+         <mSubAdminArea>Hlavní město Praha</mSubAdminArea>
+         <mPhone>+420789236589</mPhone>
+         <mPostalCode>11000</mPostalCode>
+         <mPremises>premises</mPremises>
+         <mLatitude>49.05</mLatitude>
+         <mLongitude>15.05</mLongitude>
+         <mHasLongitude>true</mHasLongitude>
+         <mHasLatitude>true</mHasLatitude> 
+         <mMaxAddressLineIndex>1</mMaxAddressLineIndex>
+         <mExtras>
              <mMap>
                <entry>
                   <string>double</string>
@@ -116,4 +174,121 @@
          </location>
      </location>
    
+    <location>
+      <name>Shop Brno</name>
+      <url>http://www.mammahelp.cz/</url>
+	  <description>Pražská pobočka vás vítá</description>
+	  <type>shop</type>
+      <id>5</id>
+      <location>
+         <mAddressLines>
+            <entry>
+               <integer>0</integer>
+               <string>Senovážné náměstí</string>
+            </entry>
+            <entry>
+               <integer>1</integer>
+               <string>Areál pobočky</string>
+            </entry>
+         </mAddressLines>
+         <mAdminArea>Hlavní město Praha</mAdminArea>
+         <mCountryCode>CZ</mCountryCode>
+         <mCountryName>Czech Republic</mCountryName>
+         <mFeatureName>Palladium</mFeatureName>
+         <mUrl>Url</mUrl>
+         <mThoroughfare>Příjezdovka od hlavního nádraží</mThoroughfare>
+         <mSubThoroughfare>pak do vchodu 116a</mSubThoroughfare>
+         <mLocale>cs_CZ</mLocale>
+         <mLocality>Praha</mLocality>
+         <mSubLocality>Praha 1</mSubLocality>
+         <mSubAdminArea>Hlavní město Praha</mSubAdminArea>
+         <mPhone>+420789236589</mPhone>
+         <mPostalCode>11000</mPostalCode>
+         <mPremises>premises</mPremises>
+         <mLatitude>50.05</mLatitude>
+         <mLongitude>15.05</mLongitude>
+         <mHasLongitude>true</mHasLongitude>
+         <mHasLatitude>true</mHasLatitude> 
+         <mMaxAddressLineIndex>1</mMaxAddressLineIndex>
+         <mExtras>
+             <mMap>
+               <entry>
+                  <string>double</string>
+                  <object class="java.lang.Double">545.546</object>
+               </entry>
+               <entry>
+                  <string>string</string>
+                  <object class="java.lang.String">value</object>
+               </entry>
+               <entry>
+                  <string>boolean</string>
+                  <object class="java.lang.Boolean">true</object>
+               </entry>
+            </mMap>
+            <mHasFds>false</mHasFds>
+            <mFdsKnown>true</mFdsKnown>
+            <mAllowFds>true</mAllowFds>
+            
+         </mExtras>
+         </location>
+     </location>
+     
+    <location>
+      <name>Centrum Praha</name>
+      <url>http://www.mammahelp.cz/</url>
+	  <description>Pražská pobočka vás vítá</description>
+	  <type>center</type>
+      <id>6</id>
+      <location>
+         <mAddressLines>
+            <entry>
+               <integer>0</integer>
+               <string>Senovážné náměstí</string>
+            </entry>
+            <entry>
+               <integer>1</integer>
+               <string>Areál pobočky</string>
+            </entry>
+         </mAddressLines>
+         <mAdminArea>Hlavní město Praha</mAdminArea>
+         <mCountryCode>CZ</mCountryCode>
+         <mCountryName>Czech Republic</mCountryName>
+         <mFeatureName>Palladium</mFeatureName>
+         <mUrl>Url</mUrl>
+         <mThoroughfare>Příjezdovka od hlavního nádraží</mThoroughfare>
+         <mSubThoroughfare>pak do vchodu 116a</mSubThoroughfare>
+         <mLocale>cs_CZ</mLocale>
+         <mLocality>Praha</mLocality>
+         <mSubLocality>Praha 1</mSubLocality>
+         <mSubAdminArea>Hlavní město Praha</mSubAdminArea>
+         <mPhone>+420789236589</mPhone>
+         <mPostalCode>11000</mPostalCode>
+         <mPremises>premises</mPremises>
+         <mLatitude>49.5</mLatitude>
+         <mLongitude>14.20</mLongitude>
+         <mHasLongitude>true</mHasLongitude>
+         <mHasLatitude>true</mHasLatitude> 
+         <mMaxAddressLineIndex>1</mMaxAddressLineIndex>
+         <mExtras>
+             <mMap>
+               <entry>
+                  <string>double</string>
+                  <object class="java.lang.Double">545.546</object>
+               </entry>
+               <entry>
+                  <string>string</string>
+                  <object class="java.lang.String">value</object>
+               </entry>
+               <entry>
+                  <string>boolean</string>
+                  <object class="java.lang.Boolean">true</object>
+               </entry>
+            </mMap>
+            <mHasFds>false</mHasFds>
+            <mFdsKnown>true</mFdsKnown>
+            <mAllowFds>true</mAllowFds>
+            
+         </mExtras>
+         </location>
+     </location>
 </locations>

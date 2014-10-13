@@ -18,6 +18,8 @@ public class LocationPoint implements Identificable<LocationPoint> {
 
 	private Long id;
 
+	private String type;
+
 	public LocationPoint(Long id) {
 		setId(id);
 	}
@@ -90,7 +92,6 @@ public class LocationPoint implements Identificable<LocationPoint> {
 		return c;
 	}
 
-
 	protected <E extends Comparable<E>> int nullableCompare(E one, E another) {
 
 		if (one == null && another == null)
@@ -110,6 +111,14 @@ public class LocationPoint implements Identificable<LocationPoint> {
 	public void setId(Long id) {
 		this.id = id;
 
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getType() {
+		return type;
 	}
 
 }

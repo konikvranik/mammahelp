@@ -37,6 +37,11 @@
         <item>Centers</item>
         <item>Prevention</item>
     </string-array>
+    <string-array name="filter">
+        <item>centers</item>
+        <item>branches</item>
+        <item>shops</item>
+    </string-array>
 
     <string name="title_activity_main">Mamma HELP</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -78,5 +83,7 @@
     <string name="action_refresh">Refresh</string>
     <string name="centers_list">List of centers</string>
     <string name="update_already_running">Upate already running</string>
+    <string name="centers_map">Map</string>
+    <string name="all">All</string>
 
 </resources>

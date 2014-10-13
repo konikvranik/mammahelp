@@ -22,35 +22,41 @@
         android:layout_alignParentTop="true"
         android:visibility="gone" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:background="@color/mammahelp_light_grey" >
+        android:background="@color/mammahelp_light_grey"
+        android:orientation="horizontal" >
 
         <ImageButton
             android:id="@+id/centers_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:contentDescription="@string/centers_list"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/centers_map"
             android:padding="4dp"
-            android:src="@android:drawable/ic_menu_mapmode" />
+            android:src="@android:drawable/ic_menu_mapmode"
+            android:visibility="visible" />
 
         <ImageButton
             android:id="@+id/centers_listing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
             android:contentDescription="@string/centers_list"
             android:padding="4dp"
             android:src="@android:drawable/ic_menu_sort_by_size"
             android:visibility="gone" />
-    </RelativeLayout>
+
+        <cz.mammahelp.handy.ui.MultiSpinner
+            android:id="@+id/filters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown" />
+    </LinearLayout>
 
 </RelativeLayout>

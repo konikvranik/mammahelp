@@ -39,6 +39,11 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAJomtqngY_txuLjy7RrwoJZ9gtmeyYFik" />
+        
+        <!-- dev -->
+<!--         <meta-data -->
+<!--             android:name="com.google.android.maps.v2.API_KEY" -->
+<!--             android:value="AIzaSyDnmYTzLkHzsp06Xf-euGzKff8OIZZR12g" /> -->
 
         <activity
             android:name=".ui.MainActivity"

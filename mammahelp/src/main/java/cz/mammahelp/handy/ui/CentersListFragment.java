@@ -3,6 +3,8 @@ package cz.mammahelp.handy.ui;
 import static cz.mammahelp.handy.Constants.log;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -34,6 +36,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -100,12 +104,16 @@ public class CentersListFragment extends ANamedFragment {
 	private CategoryAdapter adapter;
 	private ListView listView;
 	private MapView mapView;
+	private List<String> filter = new ArrayList<String>();
+	private LocationPointDao adao;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View mainView = inflater.inflate(R.layout.fragment_centers_listing,
 				null);
+
+		adao = new LocationPointDao(getDbHelper());
 
 		mapView = (MapView) mainView.findViewById(R.id.map);
 		mapView.onCreate(savedInstanceState);
@@ -155,7 +163,30 @@ public class CentersListFragment extends ANamedFragment {
 			}
 		});
 
-		LocationPointDao adao = new LocationPointDao(getDbHelper());
+		MultiSpinner filterSpinner = (MultiSpinner) mainView
+				.findViewById(R.id.filters);
+		final String[] strings = LocationPointDao.TYPES;
+		filterSpinner.setItems(
+				Arrays.asList(getResources().getStringArray(R.array.filter)),
+				getResources().getString(R.string.all),
+				new MultiSpinner.MultiSpinnerListener() {
+
+					@Override
+					public void onItemsSelected(boolean[] selected) {
+
+						filter = new ArrayList<String>();
+						for (int i = 0; i < selected.length; i++) {
+							if (selected[i])
+								filter.add(strings[i]);
+						}
+
+						adapter = new CategoryAdapter(adao.findByType(filter));
+						if (listView != null)
+							listView.setAdapter(adapter);
+
+						addMarkers(filter.toArray(new String[0]));
+					}
+				});
 
 		SortedSet<LocationPoint> locations = adao.findAll();
 
@@ -274,20 +305,20 @@ public class CentersListFragment extends ANamedFragment {
 				log.debug("Camera moved.");
 			}
 
-			loadData();
+			addMarkers(filter.toArray(new String[0]));
 		} else {
 			checkGooglePlayServices();
 		}
 	}
 
-	protected void loadData() {
+	protected void addMarkers(String[] type) {
 
 		Geocoder myLocation = new Geocoder(getActivity(), Locale.getDefault());
 		List<Address> loc;
 
-		LocationPointDao lpd = new LocationPointDao(getDbHelper());
+		getMap().clear();
 
-		for (LocationPoint lp : lpd.findAll()) {
+		for (LocationPoint lp : adao.findByType(type)) {
 
 			try {
 
@@ -313,7 +344,7 @@ public class CentersListFragment extends ANamedFragment {
 								.position(
 										new LatLng(addr.getLatitude(), addr
 												.getLongitude()))
-								.title(lp.getName())
+								.title(lp.getName()).icon(getIcon(lp))
 								.snippet(lp.getDescription()));
 
 				log.debug("Added " + lp.getName());
@@ -322,6 +353,21 @@ public class CentersListFragment extends ANamedFragment {
 				log.error(e.getMessage(), e);
 			}
 		}
+	}
+
+	private BitmapDescriptor getIcon(LocationPoint lp) {
+
+		float hue = BitmapDescriptorFactory.HUE_AZURE;
+
+		if ("branch".equals(lp.getType()))
+			hue = BitmapDescriptorFactory.HUE_RED;
+		else if ("shop".equals(lp.getType()))
+			hue = BitmapDescriptorFactory.HUE_GREEN;
+		else if ("center".equals(lp.getType()))
+			hue = BitmapDescriptorFactory.HUE_YELLOW;
+
+		BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(hue);
+		return marker;
 	}
 
 	private void checkGooglePlayServices() {
