@@ -7,7 +7,7 @@ import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
 import static cz.mammahelp.handy.Constants.DEFAULT_PREFERENCES;
 import static cz.mammahelp.handy.Constants.DEFAULT_UPDATE_INTERVAL;
 import static cz.mammahelp.handy.Constants.DEFAULT_WIFI_ONLY;
-import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
+import static cz.mammahelp.handy.Constants.LAST_UPDATED_ARTICLES_KEY;
 import static cz.mammahelp.handy.Constants.PARTICULAR_TIME_KEY;
 import static cz.mammahelp.handy.Constants.UPDATE_INTERVAL_KEY;
 import static cz.mammahelp.handy.Constants.UPDATE_TIME_KEY;
@@ -76,7 +76,7 @@ public class MammaHelpReceiver extends BroadcastReceiver {
 		Calendar now = Calendar.getInstance();
 		now.setTimeInMillis(time);
 
-		Long last = prefs.getLong(LAST_UPDATED_KEY, time - WEEK_IN_MILLIS);
+		Long last = prefs.getLong(LAST_UPDATED_ARTICLES_KEY, time - WEEK_IN_MILLIS);
 
 		Calendar planDefault = Calendar.getInstance(Locale.getDefault());
 		planDefault.set(Calendar.HOUR, 10);
@@ -107,7 +107,7 @@ public class MammaHelpReceiver extends BroadcastReceiver {
 	}
 
 	protected boolean decideOnInterval(SharedPreferences prefs, long time) {
-		long schedule = prefs.getLong(LAST_UPDATED_KEY, -1);
+		long schedule = prefs.getLong(LAST_UPDATED_ARTICLES_KEY, -1);
 
 		try {
 			if (schedule != -1)

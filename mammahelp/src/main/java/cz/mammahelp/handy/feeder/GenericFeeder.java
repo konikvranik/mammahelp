@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.Properties;
+import java.util.SortedSet;
 import java.util.zip.GZIPInputStream;
 
 import javax.xml.namespace.QName;
@@ -33,12 +34,13 @@ import android.content.Context;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.MammaHelpException;
 import cz.mammahelp.handy.R;
+import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.dao.BaseDao;
 import cz.mammahelp.handy.dao.EnclosureDao;
+import cz.mammahelp.handy.model.Articles;
 import cz.mammahelp.handy.model.Enclosure;
 import cz.mammahelp.handy.model.Identificable;
 import cz.mammahelp.handy.provider.LocalDbContentProvider;
-import cz.mammahelp.handy.ui.ArticleDetailViewFragment;
 
 public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificable<?>> {
 
@@ -65,7 +67,8 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 		Properties props = new Properties();
 
 		// suppport of several HTML5 tags due to lunchtime.
-		props.put("new-blocklevel-tags", "header,nav,section,article,aside");
+		props.put("new-blocklevel-tags",
+				"header,nav,section,article,aside,time,footer");
 
 		Configuration conf = tidy.getConfiguration();
 		conf.addProps(props);
@@ -161,11 +164,15 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 			throws TransformerConfigurationException, IOException {
 		if (htmlTransformer == null) {
 			TransformerFactory tFactory = TransformerFactory.newInstance();
-			htmlTransformer = tFactory.newTransformer(new StreamSource(
-					getContext().getAssets().open("htmlFilter.xsl")));
+			StreamSource source = new StreamSource(getContext().getAssets()
+					.open(getFilterName()));
+			source.setSystemId("file:///android_asset/" + getFilterName());
+			htmlTransformer = tFactory.newTransformer(source);
 		}
 		return htmlTransformer;
 	}
+
+	protected abstract String getFilterName();
 
 	protected Tidy getTidy(String enc) {
 
@@ -189,29 +196,42 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 					Attr attr = (Attr) srcArrts.item(i);
 					URL url = new URL(attr.getValue());
 
-					if ("http".equals(url.getProtocol())
-							|| "https".equals(url.getProtocol())) {
-
-					}
-
 					HttpURLConnection conn = (HttpURLConnection) url
 							.openConnection();
 
 					String newValue = attr.getValue();
-					if ("src".equals(attr.getName())) {
 
-						Identificable<?> id = saveEnclosure(conn);
-						newValue = LocalDbContentProvider.CONTENT_ENCLOSURE_URI
-								+ "/" + id.getId();
-					} else {
-						newValue = saveArticle(conn);
+					if ("http".equals(url.getProtocol())
+							|| "https".equals(url.getProtocol())) {
+						if ("src".equals(attr.getName())) {
+
+							Identificable<?> id = saveEnclosure(conn);
+							newValue = LocalDbContentProvider.CONTENT_ENCLOSURE_URI
+									+ "/" + id.getId();
+						} else {
+							if (newValue != null
+									&& newValue
+											.startsWith("http://www.mammahelp.cz/"))
+								newValue = saveArticle(conn);
+						}
 					}
 					attr.setValue(newValue);
 
-				} catch (IOException e) {
+				} catch (MalformedURLException e) {
+					log.warn(e.getMessage());
 					log.debug(e.getMessage(), e);
-					throw new MammaHelpException(R.string.unexpected_exception,
-							e);
+				} catch (IOException e) {
+					log.error(e.getMessage());
+					log.debug(e.getMessage(), e);
+					// throw new
+					// MammaHelpException(R.string.unexpected_exception,
+					// e);
+				} catch (Exception e) {
+					log.error(e.getMessage());
+					log.debug(e.getMessage(), e);
+					// throw new
+					// MammaHelpException(R.string.unexpected_exception,
+					// e);
 				}
 
 			}
@@ -223,12 +243,22 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 
 	}
 
-	private String saveArticle(HttpURLConnection conn) {
+	private String saveArticle(HttpURLConnection conn) throws Exception {
 
-		
+		ArticlesDao adao = new ArticlesDao(getDbHelper());
+		ArticleFeeder af = new ArticleFeeder(getContext());
 
-		// TODO Auto-generated method stub
-		return conn.getURL().toExternalForm();
+		String url = conn.getURL().toExternalForm();
+		Articles article = adao.findByExactUrl(url);
+
+		if (article == null) {
+			article = new Articles();
+			article.setUrl(url);
+			adao.insert(article);
+		}
+		af.feedData(article);
+		return LocalDbContentProvider.CONTENT_ARTICLE_URI + "/"
+				+ article.getId();
 	}
 
 	private Identificable<?> saveEnclosure(HttpURLConnection conn)

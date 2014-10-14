@@ -10,7 +10,6 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPathConstants;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
 import android.content.Context;
 import cz.mammahelp.handy.dao.ArticlesDao;
@@ -57,15 +56,12 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao, Articles> {
 		if (title != null)
 			article.setTitle(title);
 
-		Node bodyNode = (Node) applyXpath(d, "//div[@id='content']/article",
-				XPathConstants.NODE);
-
-		if (bodyNode != null && bodyNode.hasChildNodes()) {
-			extractEnclosures(bodyNode);
+		if (d != null && d.hasChildNodes()) {
+			extractEnclosures(d);
 
 			StringWriter sw = new StringWriter();
-			StreamResult result = new StreamResult(sw);
-			getHtmlTransformer().transform(new DOMSource(bodyNode), result);
+			getHtmlTransformer().transform(new DOMSource(d),
+					new StreamResult(sw));
 
 			String body = sw.toString();
 
@@ -76,6 +72,11 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao, Articles> {
 
 		getDao().update(article);
 
+	}
+
+	@Override
+	protected String getFilterName() {
+		return "articleHtmlFilter.xsl";
 	}
 
 }

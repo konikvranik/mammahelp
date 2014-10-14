@@ -6,6 +6,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import android.app.ActionBar;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentManager.BackStackEntry;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -294,4 +297,21 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		super.setTitle(title);
 		mTitle = title;
 	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		FragmentManager fm = getFragmentManager();
+		for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+			BackStackEntry be = fm.getBackStackEntryAt(i);
+			if (be instanceof Fragment)
+				fm.saveFragmentInstanceState((Fragment) be);
+		}
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+	}
+
 }

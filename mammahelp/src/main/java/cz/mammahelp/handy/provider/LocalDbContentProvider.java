@@ -140,8 +140,6 @@ public class LocalDbContentProvider extends ContentProvider {
 		EnclosureDao edao = new EnclosureDao(getDbHelper());
 		Enclosure enclosure = edao.findById(new Enclosure(id));
 
-		log.debug("Enclosure found: " + enclosure);
-
 		return new ByteArrayInputStream(enclosure.getData());
 	}
 
@@ -162,16 +160,11 @@ public class LocalDbContentProvider extends ContentProvider {
 		articleHtml.append("</title>");
 		articleHtml.append("</head><body>");
 		articleHtml.append("<div class=\"article\">");
-		articleHtml.append("<h1 class=\"title\">");
-		articleHtml.append(article.getTitle());
-		articleHtml.append("</h1>");
 		articleHtml.append("<p class=\"body\">");
 		articleHtml.append(article.getBody());
 		articleHtml.append("</p>");
 		articleHtml.append("</div>");
 		articleHtml.append("</body></html>");
-
-		log.debug("Article: \n" + articleHtml);
 
 		return new ByteArrayInputStream(articleHtml.toString().getBytes(
 				Charset.forName("UTF-8")));
@@ -188,23 +181,19 @@ public class LocalDbContentProvider extends ContentProvider {
 		// articleHtml
 		// .append("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"><meta charset=\"UTF-8\">");
 		articleHtml.append("<head>");
-		articleHtml
-				.append("<link rel='stylesheet' href='file:///android_asset/article.css' type='text/css' />");
+		articleHtml.append("<link rel='stylesheet' href='");
+		articleHtml.append("file:///android_asset/article.css");
+		articleHtml.append("' type='text/css' />");
 		articleHtml.append("<title>");
 		articleHtml.append(article.getTitle());
 		articleHtml.append("</title>");
 		articleHtml.append("</head><body>");
 		articleHtml.append("<div class=\"article\">");
-		articleHtml.append("<h1 class=\"title\">");
-		articleHtml.append(article.getTitle());
-		articleHtml.append("</h1>");
 		articleHtml.append("<p class=\"body\">");
 		articleHtml.append(article.getBody());
 		articleHtml.append("</p>");
 		articleHtml.append("</div>");
 		articleHtml.append("</body></html>");
-
-		log.debug("Article: \n" + articleHtml);
 
 		return new ByteArrayInputStream(articleHtml.toString().getBytes(
 				Charset.forName("UTF-8")));

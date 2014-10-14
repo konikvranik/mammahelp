@@ -42,6 +42,15 @@ li.slide {
 	padding: 0px;
 }
 
-img.attachment-standard { width: 100%; height: auto; }
-img.size-full { width: 100%; height: auto; margin: 0px; padding: 0px; }
+img.attachment-standard {
+	width: 100%;
+	height: auto;
+}
+
+img.size-full {
+	width: 100%;
+	height: auto;
+	margin: 0px;
+	padding: 0px;
+}
 

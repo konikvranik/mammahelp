@@ -7,7 +7,8 @@ public class Constants {
 
 	public static final String DEFAULT_PREFERENCES = "default";
 
-	public static final String LAST_UPDATED_KEY = "last_updated";
+	public static final String LAST_UPDATED_ARTICLES_KEY = "last_updated";
+	public static final String LAST_UPDATED_NEWS_KEY = "last_updated_news";
 
 	public static final String DELETE_DELAY_KEY = "delete_delay";
 

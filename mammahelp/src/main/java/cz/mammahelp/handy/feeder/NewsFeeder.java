@@ -1,5 +1,7 @@
 package cz.mammahelp.handy.feeder;
 
+import static cz.mammahelp.handy.Constants.DEFAULT_PREFERENCES;
+import static cz.mammahelp.handy.Constants.LAST_UPDATED_NEWS_KEY;
 import static cz.mammahelp.handy.Constants.log;
 
 import java.io.FileInputStream;
@@ -16,13 +18,13 @@ import java.util.List;
 
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.xpath.XPathConstants;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndContent;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
@@ -62,8 +64,6 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 
 		for (SyndEntry syndEntry : entries) {
 
-			log.debug("Saving entry: " + syndEntry);
-
 			SyndContent desc = syndEntry.getDescription();
 			String descType = desc.getType();
 
@@ -75,10 +75,9 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 			news.setCategory(Arrays.toString(syndEntry.getCategories()
 					.toArray()));
 
+			getDao().delete(getDao().findByUrl(news.getUrl()));
+
 			feedData(news);
-
-			log.debug("News: " + news);
-
 			getDao().insert(news);
 
 		}
@@ -86,6 +85,12 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 		Collection<News> older = getDao().findOlder(syncTime.getTime());
 		if (older != null)
 			getDao().delete(older);
+
+		SharedPreferences prefs = getContext().getSharedPreferences(
+				DEFAULT_PREFERENCES, Context.MODE_PRIVATE);
+		Editor editor = prefs.edit();
+		editor.putLong(LAST_UPDATED_NEWS_KEY, System.currentTimeMillis());
+		editor.commit();
 
 	}
 
@@ -102,7 +107,8 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 			if (is == null)
 				return null;
 			InputSource source = new InputSource(is);
-			Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
+			Thread.currentThread().setContextClassLoader(
+					getClass().getClassLoader());
 			SyndFeedInput input = new SyndFeedInput();
 			feed = input.build(source);
 
@@ -168,21 +174,23 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 
 		Document d = getTidy(null).parseDOM(is, null);
 
-		Node bodyNode = (Node) applyXpath(d, "//div[@id='content']",
-				XPathConstants.NODE);
-
-		if (bodyNode != null && bodyNode.hasChildNodes()) {
-			extractEnclosures(bodyNode);
+		if (d != null && d.hasChildNodes()) {
+			extractEnclosures(d);
 
 			StringWriter sw = new StringWriter();
-			StreamResult result = new StreamResult(sw);
-			getHtmlTransformer().transform(new DOMSource(bodyNode), result);
+			getHtmlTransformer().transform(new DOMSource(d),
+					new StreamResult(sw));
 
 			String body = sw.toString();
 
 			news.setBody(body);
 		}
 
+	}
+
+	@Override
+	protected String getFilterName() {
+		return "newsHtmlFilter.xsl";
 	}
 
 }

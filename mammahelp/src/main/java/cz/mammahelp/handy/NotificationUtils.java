@@ -17,8 +17,6 @@ import cz.mammahelp.handy.ui.ErrorViewActivity;
 
 public class NotificationUtils {
 
-	@SuppressWarnings("unused")
-
 	public NotificationUtils() {
 	}
 

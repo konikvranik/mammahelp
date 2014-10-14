@@ -141,6 +141,17 @@ public class NewsListFragment extends ANamedFragment {
 
 	private ListView view;
 	private NewsAdapter adapter;
+	private NewsDao adao;
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		if (adao != null && view != null) {
+			adapter = new NewsAdapter(adao.findAll());
+			view.setAdapter(adapter);
+		}
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -148,11 +159,9 @@ public class NewsListFragment extends ANamedFragment {
 		View mainView = inflater.inflate(R.layout.news_listing, null);
 		view = (ListView) mainView.findViewById(R.id.listing);
 
-		NewsDao adao = new NewsDao(getDbHelper());
+		adao = new NewsDao(getDbHelper());
 
-		SortedSet<News> news = adao.findAll();
-
-		adapter = new NewsAdapter(news);
+		adapter = new NewsAdapter(adao.findAll());
 		if (view != null)
 			view.setAdapter(adapter);
 

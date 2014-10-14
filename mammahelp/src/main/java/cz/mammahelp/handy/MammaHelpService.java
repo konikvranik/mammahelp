@@ -3,7 +3,7 @@ package cz.mammahelp.handy;
 import static cz.mammahelp.handy.Constants.DEFAULT_DELETE_DELAY;
 import static cz.mammahelp.handy.Constants.DEFAULT_PREFERENCES;
 import static cz.mammahelp.handy.Constants.DELETE_DELAY_KEY;
-import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
+import static cz.mammahelp.handy.Constants.LAST_UPDATED_ARTICLES_KEY;
 import static cz.mammahelp.handy.Constants.log;
 
 import java.util.Calendar;
@@ -99,7 +99,10 @@ public class MammaHelpService extends Service {
 		for (String type : types) {
 			Long id = intent.getLongExtra(type, -1);
 			if (id > -1) {
-				feedqueue.add(cerateIdByType(type));
+				Identificable<? extends Identificable<?>> obj = cerateIdByType(type);
+				obj.setId(id);
+				if (!feedqueue.contains(obj))
+					feedqueue.add(obj);
 				added = true;
 			}
 		}
@@ -131,6 +134,7 @@ public class MammaHelpService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
 		log.trace("MammaHelpFeederService.onCreate()");
 
 		registerReceiver(timerReceiver = new MammaHelpReceiver(),
@@ -145,20 +149,23 @@ public class MammaHelpService extends Service {
 
 	void updateData() throws MammaHelpException {
 
+		SharedPreferences prefs = getApplicationContext().getSharedPreferences(
+				DEFAULT_PREFERENCES, Context.MODE_PRIVATE);
 		try {
 
 			try {
-
-				// getArticleFeeder().feedData();
-				// getNewsFeeder().feedData();
 
 				for (Identificable<? extends Identificable<?>> item = feedqueue
 						.poll(); item != null; item = feedqueue.poll()) {
 
 					if (item instanceof Articles) {
-						if (item.getId() == null)
+						if (item.getId() == null) {
 							getArticleFeeder().feedData();
-						else
+							Editor editor = prefs.edit();
+							editor.putLong(LAST_UPDATED_ARTICLES_KEY,
+									System.currentTimeMillis());
+							editor.commit();
+						} else
 							getArticleFeeder().feedData((Articles) item);
 					} else if (item instanceof News) {
 						if (item.getId() == null)
@@ -180,12 +187,6 @@ public class MammaHelpService extends Service {
 					+ e.getMessage()));
 			NotificationUtils.makeNotification(getApplicationContext(), e);
 		}
-
-		SharedPreferences prefs = getApplicationContext().getSharedPreferences(
-				DEFAULT_PREFERENCES, Context.MODE_PRIVATE);
-		Editor editor = prefs.edit();
-		editor.putLong(LAST_UPDATED_KEY, System.currentTimeMillis());
-		editor.commit();
 
 		long delay = prefs.getLong(DELETE_DELAY_KEY, DEFAULT_DELETE_DELAY);
 		if (delay >= 0) {

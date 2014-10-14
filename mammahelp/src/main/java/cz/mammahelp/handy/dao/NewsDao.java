@@ -96,8 +96,6 @@ public class NewsDao extends BaseDao<News> {
 		SortedSet<News> result = query(UPDATED + " < ?",
 				new String[] { new SimpleDateFormat(DATE_FORMAT, LOCALE)
 						.format(syncTime) }, null, null, null);
-		if (result.isEmpty())
-			return null;
 		return result;
 
 	}
@@ -106,10 +104,14 @@ public class NewsDao extends BaseDao<News> {
 		SortedSet<News> result = query(UPDATED + " >= ?",
 				new String[] { new SimpleDateFormat(DATE_FORMAT, LOCALE)
 						.format(syncTime) }, null, null, null);
-		if (result.isEmpty())
-			return null;
 		return result;
 
+	}
+
+	public SortedSet<News> findByUrl(String url) {
+		SortedSet<News> result = query(URL + " = ?", new String[] { url },
+				null, null, null);
+		return result;
 	}
 
 }

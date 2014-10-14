@@ -78,12 +78,12 @@ public class ArticleDetailViewFragment extends Fragment {
 		WebSettings s = wv.getSettings();
 		s.setJavaScriptEnabled(false);
 		s.setDefaultTextEncodingName("utf-8");
-		s.setBlockNetworkImage(true);
+		// s.setBlockNetworkImage(true);
 		s.setBlockNetworkLoads(true);
 		s.setAllowContentAccess(true);
-		s.setAllowFileAccess(false);
+		s.setAllowFileAccess(true);
 		s.setBuiltInZoomControls(true);
-		s.setDisplayZoomControls(false);
+		s.setDisplayZoomControls(true);
 		s.setJavaScriptEnabled(false);
 		s.setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
 		s.setLoadWithOverviewMode(true);
