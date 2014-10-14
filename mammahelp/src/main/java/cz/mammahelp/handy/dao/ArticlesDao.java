@@ -108,6 +108,9 @@ public class ArticlesDao extends BaseDao<Articles> {
 
 	public Articles findByExactUrl(String url) {
 
+		if (url != null && url.endsWith("/"))
+			url = url.substring(0, url.length() - 1);
+
 		SortedSet<Articles> result = query(URL.getName() + " = ?",
 				new String[] { url }, null, null, null);
 		if (result.size() > 1)

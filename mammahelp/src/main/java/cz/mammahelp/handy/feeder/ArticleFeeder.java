@@ -1,15 +1,14 @@
 package cz.mammahelp.handy.feeder;
 
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.net.URL;
 import java.util.Date;
 
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.xpath.XPathConstants;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import android.content.Context;
 import cz.mammahelp.handy.dao.ArticlesDao;
@@ -19,6 +18,10 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao, Articles> {
 
 	public ArticleFeeder(Context context) {
 		super(context);
+	}
+
+	public ArticleFeeder(Context context, int i) {
+		super(context, i);
 	}
 
 	@Override
@@ -53,20 +56,19 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao, Articles> {
 
 		String title = (String) applyXpath(d, "//div[@id='title']//h1/text()",
 				XPathConstants.STRING);
+
 		if (title != null)
 			article.setTitle(title);
+		if (getUrl() != null)
+			article.setUrl(getUrl().toExternalForm());
 
-		if (d != null && d.hasChildNodes()) {
-			extractEnclosures(d);
+		if (article.getId() == null)
+			getDao().insert(article);
+		else
+			getDao().update(article);
 
-			StringWriter sw = new StringWriter();
-			getHtmlTransformer().transform(new DOMSource(d),
-					new StreamResult(sw));
+		saveBody(article, transformBody(d));
 
-			String body = sw.toString();
-
-			article.setBody(body);
-		}
 		if (getUrl() != null)
 			article.setUrl(getUrl().toExternalForm());
 

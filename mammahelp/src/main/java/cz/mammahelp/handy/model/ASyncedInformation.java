@@ -14,7 +14,7 @@ public abstract class ASyncedInformation<T extends ASyncedInformation<T>>
 
 	private static final long serialVersionUID = 2046709112271966050L;
 	public Calendar syncTime;
-	//@Element(data = true)
+	// @Element(data = true)
 	public String body;
 	public String title;
 	public String url;
@@ -58,6 +58,8 @@ public abstract class ASyncedInformation<T extends ASyncedInformation<T>>
 	}
 
 	public void setUrl(String url) {
+		if (url != null && url.endsWith("/"))
+			url = url.substring(0, url.length() - 1);
 		this.url = url;
 	}
 

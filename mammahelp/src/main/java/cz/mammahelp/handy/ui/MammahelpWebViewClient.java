@@ -20,7 +20,7 @@ public class MammahelpWebViewClient extends WebViewClient {
 		if (url == null)
 			super.shouldOverrideUrlLoading(view, url);
 
-		if (url.startsWith("http")) {
+		if (url.startsWith("http") || url.startsWith("mailto")) {
 			Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 			context.startActivity(i);
 			return true;

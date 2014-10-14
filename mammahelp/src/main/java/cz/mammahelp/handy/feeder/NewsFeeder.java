@@ -16,10 +16,13 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
 import android.content.Context;
@@ -174,18 +177,7 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 
 		Document d = getTidy(null).parseDOM(is, null);
 
-		if (d != null && d.hasChildNodes()) {
-			extractEnclosures(d);
-
-			StringWriter sw = new StringWriter();
-			getHtmlTransformer().transform(new DOMSource(d),
-					new StreamResult(sw));
-
-			String body = sw.toString();
-
-			news.setBody(body);
-		}
-
+		saveBody(news, transformBody(d));
 	}
 
 	@Override

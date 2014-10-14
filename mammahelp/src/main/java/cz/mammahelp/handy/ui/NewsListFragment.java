@@ -147,10 +147,17 @@ public class NewsListFragment extends ANamedFragment {
 	public void onResume() {
 		super.onResume();
 
+		updateData();
+	}
+
+	private void updateData() {
+
 		if (adao != null && view != null) {
 			adapter = new NewsAdapter(adao.findAll());
 			view.setAdapter(adapter);
+			view.invalidate();
 		}
+
 	}
 
 	@Override
@@ -161,9 +168,7 @@ public class NewsListFragment extends ANamedFragment {
 
 		adao = new NewsDao(getDbHelper());
 
-		adapter = new NewsAdapter(adao.findAll());
-		if (view != null)
-			view.setAdapter(adapter);
+		updateData();
 
 		view.setOnItemClickListener(new ListView.OnItemClickListener() {
 
