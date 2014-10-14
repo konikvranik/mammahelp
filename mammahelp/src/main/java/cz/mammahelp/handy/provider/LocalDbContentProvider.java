@@ -64,14 +64,14 @@ public class LocalDbContentProvider extends ContentProvider {
 	private static final String AUTHORITY = "cz.mammahelp.handy.local.provider";
 	public static final String CONTENT_BASE_URI = "content://" + AUTHORITY;
 
-	public static final String CONTENT_ARTICLE_URI = "content://" + AUTHORITY
-			+ "/" + ARTICLE_PATH;
+	public static final String CONTENT_ARTICLE_URI = CONTENT_BASE_URI + "/"
+			+ ARTICLE_PATH;
 
-	public static final String CONTENT_ENCLOSURE_URI = "content://" + AUTHORITY
-			+ "/" + ENCLOSURE_PATH;
+	public static final String CONTENT_ENCLOSURE_URI = CONTENT_BASE_URI + "/"
+			+ ENCLOSURE_PATH;
 
-	public static final String CONTENT_NEWS_URI = "content://" + AUTHORITY
-			+ "/" + NEWS_PATH;
+	public static final String CONTENT_NEWS_URI = CONTENT_BASE_URI + "/"
+			+ NEWS_PATH;
 
 	static {
 		uriMatcher.addURI(AUTHORITY, ARTICLE_PATH + "/*", 1);

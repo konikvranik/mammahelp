@@ -38,6 +38,7 @@ import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.handy.model.Enclosure;
 import cz.mammahelp.handy.model.Identificable;
 import cz.mammahelp.handy.provider.LocalDbContentProvider;
+import cz.mammahelp.handy.ui.ArticleDetailViewFragment;
 
 public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificable<?>> {
 
@@ -80,7 +81,7 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 	}
 
 	public abstract void feedData() throws Exception;
-	
+
 	public abstract void feedData(E id) throws Exception;
 
 	public Context getContext() {
@@ -160,7 +161,8 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 			throws TransformerConfigurationException, IOException {
 		if (htmlTransformer == null) {
 			TransformerFactory tFactory = TransformerFactory.newInstance();
-			htmlTransformer = tFactory.newTransformer(new StreamSource(getContext().getAssets().open("htmlFilter.xsl")));
+			htmlTransformer = tFactory.newTransformer(new StreamSource(
+					getContext().getAssets().open("htmlFilter.xsl")));
 		}
 		return htmlTransformer;
 	}
@@ -176,13 +178,11 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 		return tidy;
 	}
 
-	public void extractEnclosures(Node dom) throws MalformedURLException {
+	public void extractEnclosures(Node dom) throws MammaHelpException {
 
 		try {
-			NodeList srcArrts = (NodeList) applyXpath(dom, "//img/@src",
-					XPathConstants.NODESET);
-
-			EnclosureDao enclosureDao = new EnclosureDao(getDbHelper());
+			NodeList srcArrts = (NodeList) applyXpath(dom,
+					"//img/@src|//a/@href", XPathConstants.NODESET);
 
 			for (int i = 0; i < srcArrts.getLength(); i++) {
 				try {
@@ -197,45 +197,73 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 					HttpURLConnection conn = (HttpURLConnection) url
 							.openConnection();
 
-					InputStream is = conn.getInputStream();
+					String newValue = attr.getValue();
+					if ("src".equals(attr.getName())) {
 
-					ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-
-					int nRead;
-					byte[] b = new byte[16384];
-
-					while ((nRead = is.read(b, 0, b.length)) != -1) {
-						buffer.write(b, 0, nRead);
+						Identificable<?> id = saveEnclosure(conn);
+						newValue = LocalDbContentProvider.CONTENT_ENCLOSURE_URI
+								+ "/" + id.getId();
+					} else {
+						newValue = saveArticle(conn);
 					}
-
-					buffer.flush();
-
-					is.close();
-
-					Enclosure enclosure = new Enclosure();
-					enclosure.setUrl(url.toExternalForm());
-					enclosure.setType(conn.getContentType());
-					byte[] data = buffer.toByteArray();
-
-					enclosure.setData(data);
-					enclosure.setLength((long) data.length);
-
-					enclosureDao.insert(enclosure);
-
-					attr.setValue(LocalDbContentProvider.CONTENT_ENCLOSURE_URI
-							+ "/" + enclosure.getId());
+					attr.setValue(newValue);
 
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.debug(e.getMessage(), e);
+					throw new MammaHelpException(R.string.unexpected_exception,
+							e);
 				}
 
 			}
 
 		} catch (XPathExpressionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.debug(e.getMessage(), e);
+			throw new MammaHelpException(R.string.unexpected_exception, e);
 		}
+
+	}
+
+	private String saveArticle(HttpURLConnection conn) {
+
+		
+
+		// TODO Auto-generated method stub
+		return conn.getURL().toExternalForm();
+	}
+
+	private Identificable<?> saveEnclosure(HttpURLConnection conn)
+			throws IOException {
+
+		InputStream is = conn.getInputStream();
+
+		URL url = conn.getURL();
+
+		EnclosureDao enclosureDao = new EnclosureDao(getDbHelper());
+
+		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+		int nRead;
+		byte[] b = new byte[16384];
+
+		while ((nRead = is.read(b, 0, b.length)) != -1) {
+			buffer.write(b, 0, nRead);
+		}
+
+		buffer.flush();
+
+		is.close();
+
+		Enclosure enclosure = new Enclosure();
+		enclosure.setUrl(url.toExternalForm());
+		enclosure.setType(conn.getContentType());
+		byte[] data = buffer.toByteArray();
+
+		enclosure.setData(data);
+		enclosure.setLength((long) data.length);
+
+		enclosureDao.insert(enclosure);
+
+		return enclosure;
 
 	}
 

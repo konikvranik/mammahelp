@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import cz.mammahelp.handy.Constants;
@@ -77,9 +78,21 @@ public class ArticleDetailViewFragment extends Fragment {
 		WebSettings s = wv.getSettings();
 		s.setJavaScriptEnabled(false);
 		s.setDefaultTextEncodingName("utf-8");
+		s.setBlockNetworkImage(true);
+		s.setBlockNetworkLoads(true);
+		s.setAllowContentAccess(true);
+		s.setAllowFileAccess(false);
+		s.setBuiltInZoomControls(true);
+		s.setDisplayZoomControls(false);
+		s.setJavaScriptEnabled(false);
+		s.setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
+		s.setLoadWithOverviewMode(true);
+		s.setSupportZoom(true);
 
 		wv.setWebViewClient(new WebViewClient());
 		wv.setWebChromeClient(new WebChromeClient());
+
+		wv.setWebViewClient(new MammahelpWebViewClient(getActivity()));
 
 		Uri uri = null;
 		if (getArticle() instanceof Articles) {
@@ -127,7 +140,8 @@ public class ArticleDetailViewFragment extends Fragment {
 
 		if (getArguments() != null)
 			if (getArguments().containsKey(Constants.ARTICLE_KEY)) {
-				article = new Articles(getArguments().getLong(Constants.ARTICLE_KEY));
+				article = new Articles(getArguments().getLong(
+						Constants.ARTICLE_KEY));
 			} else if (getArguments().containsKey(Constants.NEWS_KEY)) {
 				article = new News(getArguments().getLong(Constants.NEWS_KEY));
 			}
