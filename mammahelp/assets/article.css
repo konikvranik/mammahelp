@@ -27,10 +27,21 @@ h1 a[href],h2 a[href],h3 a[href],h4 a[href] {
 	text-decoration: none;
 }
 
-a[href] {
-	text-decoration: underline;
+a[href='#'] {
+	text-decoration: none;
 }
 
-li ! img {
-	list-style: none;
+ul.slides {
+	margin: 0px;
+	padding:0px;
 }
+
+li.slide {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+img.attachment-standard { width: 100%; height: auto; }
+img.size-full { width: 100%; height: auto; margin: 0px; padding: 0px; }
+
