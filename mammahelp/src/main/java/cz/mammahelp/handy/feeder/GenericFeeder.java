@@ -242,7 +242,8 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 							newValue = LocalDbContentProvider.CONTENT_ENCLOSURE_URI
 									+ "/" + id.getId();
 						} else {
-							if (newValue != null
+							if (false
+									&& newValue != null
 									&& newValue
 											.startsWith("http://www.mammahelp.cz/")
 									&& !newValue.equals(topUrl))
