@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.SortedSet;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.dom.DOMResult;
@@ -78,10 +79,11 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 			news.setCategory(Arrays.toString(syndEntry.getCategories()
 					.toArray()));
 
-			getDao().delete(getDao().findByUrl(news.getUrl()));
+			News on = getDao().findByUrl(news.getUrl());
+			if (on != null)
+				news.setId(on.getId());
 
 			feedData(news);
-			getDao().insert(news);
 
 		}
 
@@ -178,6 +180,12 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 		Document d = getTidy(null).parseDOM(is, null);
 
 		saveBody(news, transformBody(d));
+
+		if (news.getId() == null)
+			getDao().insert(news);
+		else
+			getDao().update(news);
+
 	}
 
 	@Override

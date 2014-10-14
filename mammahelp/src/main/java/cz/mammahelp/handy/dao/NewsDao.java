@@ -8,6 +8,7 @@ import java.util.SortedSet;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
 import cz.mammahelp.handy.model.Enclosure;
@@ -108,10 +109,14 @@ public class NewsDao extends BaseDao<News> {
 
 	}
 
-	public SortedSet<News> findByUrl(String url) {
+	public News findByUrl(String url) {
 		SortedSet<News> result = query(URL + " = ?", new String[] { url },
 				null, null, null);
-		return result;
+		if (result.size() > 1)
+			throw new SQLiteConstraintException();
+		else if (result.isEmpty())
+			return null;
+		return result.first();
 	}
 
 }
