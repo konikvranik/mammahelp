@@ -5,6 +5,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -144,6 +145,98 @@ public class CenterDetailViewFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 		outState.putLong(Constants.CENTER_KEY, getCenter().getId());
+	}
+
+	private String addressIntoHtml(LocationPoint lp) {
+
+		lp.getType();
+		// <img src="file:///android_res/drawable/example.png"/>
+
+		lp.getName();
+
+		lp.getDescription();
+
+		lp.getUrl();
+		lp.getLocation();
+
+		return null;
+	}
+
+	private String addressIntoHtml(Address lp) {
+		StringBuffer sb = new StringBuffer("<address>");
+
+		addElement(sb, "p", "featurename", lp.getFeatureName());
+
+		addElement(sb, "p", "sublocality", lp.getSubLocality());
+		addElement(sb, "p", "locality", lp.getLocality());
+
+		addElement(sb, "p", "subthoroughfare", lp.getSubThoroughfare());
+		addElement(sb, "p", "thoroughfare", lp.getThoroughfare());
+
+		addStartElement(sb, "p", "addrline");
+		for (int i = 0; i <= lp.getMaxAddressLineIndex(); i++) {
+			sb.append(lp.getAddressLine(i));
+			if (i < lp.getMaxAddressLineIndex())
+				sb.append("</br>");
+		}
+		addEndElement(sb, "p");
+
+		sb.append("<p class=\"adminarea\">");
+
+		lp.getSubAdminArea();
+		sb.append(lp.getAdminArea());
+
+		lp.getPostalCode();
+
+		lp.getCountryCode();
+		lp.getCountryName();
+
+		lp.getPremises();
+
+		lp.getExtras();
+
+		lp.getLatitude();
+		lp.getLongitude();
+
+		lp.getPhone();
+
+		lp.getUrl();
+
+		sb.append("<p>");
+		sb.append("</address>");
+		return sb.toString();
+	}
+
+	private void addElement(StringBuffer sb, String element, String htmlClass,
+			String content) {
+		if (isEmpty(content))
+			return;
+		addStartElement(sb, element, htmlClass);
+		sb.append(content);
+		addEndElement(sb, element);
+
+	}
+
+	private void addEndElement(StringBuffer sb, String element) {
+		sb.append("</");
+		sb.append(element);
+		sb.append(">");
+	}
+
+	private void addStartElement(StringBuffer sb, String element,
+			String htmlClass) {
+		sb.append("<");
+		sb.append(element);
+		if (!isEmpty(htmlClass)) {
+			sb.append(" class=\"");
+			sb.append(htmlClass);
+			sb.append("\"");
+		}
+		sb.append(">");
+	}
+
+	private boolean isEmpty(String lp) {
+		return lp != null && lp.trim().length() > 0;
 	}
 
 }

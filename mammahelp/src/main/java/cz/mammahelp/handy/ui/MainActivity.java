@@ -1,10 +1,9 @@
 package cz.mammahelp.handy.ui;
 
 import static cz.mammahelp.handy.Constants.log;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -248,6 +247,7 @@ public class MainActivity extends AbstractMammaHelpActivity {
 
 	void startRefreshHc(final MenuItem refreshItem) {
 		runOnUiThread(new Runnable() {
+			@SuppressLint("InflateParams")
 			@Override
 			public void run() {
 				log.debug("Start refresh");

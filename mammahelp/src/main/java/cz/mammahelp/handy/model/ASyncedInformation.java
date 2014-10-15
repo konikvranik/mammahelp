@@ -2,8 +2,6 @@ package cz.mammahelp.handy.model;
 
 import java.util.Calendar;
 
-import org.simpleframework.xml.Element;
-
 /**
  * <!-- begin-user-doc --> <!-- end-user-doc -->
  * 

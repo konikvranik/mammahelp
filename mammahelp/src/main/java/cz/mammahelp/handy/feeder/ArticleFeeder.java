@@ -4,11 +4,9 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Date;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.xpath.XPathConstants;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
 import android.content.Context;
 import cz.mammahelp.handy.dao.ArticlesDao;

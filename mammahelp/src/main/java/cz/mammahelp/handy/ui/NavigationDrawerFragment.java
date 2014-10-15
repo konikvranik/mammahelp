@@ -2,8 +2,6 @@ package cz.mammahelp.handy.ui;
 
 import static cz.mammahelp.handy.Constants.log;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.SortedSet;
 
 import android.app.ActionBar;

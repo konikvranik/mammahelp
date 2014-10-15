@@ -11,8 +11,6 @@ import android.webkit.WebView;
 
 public class Utils {
 
-	@SuppressWarnings("unused")
-
 	public Utils() {
 	}
 
