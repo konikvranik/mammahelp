@@ -193,50 +193,97 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		}
 	}
 
-	private void updateRefreshButton() {
+	@Override
+	public void invalidateOptionsMenu() {
+
+		if (mainMenu != null)
+			for (int i = 0; i < mainMenu.size(); i++) {
+				controlMenuItemRotation(mainMenu.getItem(i), false);
+			}
+
+		super.invalidateOptionsMenu();
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+
+		boolean show = super.onPrepareOptionsMenu(menu);
+		if (mainMenu == null)
+			return show;
+
+		MenuItem refreshItem = mainMenu.findItem(R.id.action_refresh);
+
+		if (refreshItem != null)
+			controlMenuItemRotation(refreshItem, mBound && mService != null
+					&& mService.isRunning());
+
+		return show;
+	}
+
+	protected void controlMenuItemRotation(final MenuItem item,
+			final boolean rotate) {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 
-				if (mBound && mService != null && mService.isRunning()) {
-					startRefreshHc();
+				ImageView iv = (ImageView) item.getActionView();
+				if (rotate) {
+					if (iv == null) {
+						iv = new ImageView(MainActivity.this);
+						iv.setImageDrawable(item.getIcon());
+					}
+					Animation rotation = AnimationUtils.loadAnimation(
+							MainActivity.this, R.anim.rotate);
+					rotation.setRepeatCount(Animation.INFINITE);
+					iv.startAnimation(rotation);
 				} else {
-					stopRefreshHc();
+					if (iv != null)
+						iv.setAnimation(null);
 				}
+				item.setActionView(iv);
+
 			}
 		});
 	}
 
-	void startRefreshHc() {
-		log.debug("Start refresh");
-		Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate);
-		rotation.setRepeatCount(Animation.INFINITE);
+	void startRefreshHc(final MenuItem refreshItem) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				log.debug("Start refresh");
+				Animation rotation = AnimationUtils.loadAnimation(
+						MainActivity.this, R.anim.rotate);
+				rotation.setRepeatCount(Animation.INFINITE);
 
-		MenuItem refreshItem = mainMenu.findItem(R.id.action_refresh);
-
-		ImageView iv = (ImageView) refreshItem.getActionView();
-		if (iv == null) {
-			LayoutInflater inflater = (LayoutInflater) this
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			iv = (ImageView) inflater.inflate(R.layout.refresh_action_view,
-					null);
-			refreshItem.setActionView(iv);
-		}
-		iv.startAnimation(rotation);
+				ImageView iv = (ImageView) refreshItem.getActionView();
+				if (iv == null) {
+					LayoutInflater inflater = (LayoutInflater) MainActivity.this
+							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					iv = (ImageView) inflater.inflate(
+							R.layout.refresh_action_view, null);
+					refreshItem.setActionView(iv);
+				}
+				iv.startAnimation(rotation);
+			}
+		});
 	}
 
-	void stopRefreshHc() {
-		log.debug("Stop refresh");
-		MenuItem refreshItem = mainMenu.findItem(R.id.action_refresh);
+	void stopRefreshHc(final MenuItem refreshItem) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				log.debug("Stop refresh");
 
-		if (refreshItem == null)
-			return;
+				if (refreshItem == null)
+					return;
 
-		ImageView iv = (ImageView) refreshItem.getActionView();
-		if (iv != null) {
-			iv.setAnimation(null);
-		}
-		refreshItem.setActionView(null);
+				ImageView iv = (ImageView) refreshItem.getActionView();
+				if (iv != null) {
+					iv.setAnimation(null);
+				}
+				refreshItem.setActionView(null);
+			}
+		});
 	}
 
 	/** Defines callbacks for service binding, passed to bindService() */
@@ -255,12 +302,12 @@ public class MainActivity extends AbstractMammaHelpActivity {
 
 				@Override
 				public void onChanged() {
-					updateRefreshButton();
+					invalidateOptionsMenu();
 
 				}
 
 			});
-			updateRefreshButton();
+			invalidateOptionsMenu();
 
 		}
 
@@ -268,7 +315,7 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		public void onServiceDisconnected(ComponentName arg0) {
 			log.debug("service disconnected");
 			mBound = false;
-			updateRefreshButton();
+			invalidateOptionsMenu();
 		}
 
 	};
