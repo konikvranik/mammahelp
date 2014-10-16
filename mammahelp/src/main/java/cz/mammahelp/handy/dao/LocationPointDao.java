@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
 import cz.mammahelp.handy.model.Address;
+import cz.mammahelp.handy.model.Enclosure;
 import cz.mammahelp.handy.model.LocationPoint;
 
 public class LocationPointDao extends BaseDao<LocationPoint> {
@@ -25,6 +26,8 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 	public static final Column DESCRIPTION = new Column("description",
 			SQLiteDataTypes.TEXT);
 	public static final Column URL = new Column("url", SQLiteDataTypes.TEXT);
+	public static final Column MAP = new Column("map",
+			EnclosureDao.ID.getType(), new ForeignKey(EnclosureDao.class));
 
 	static {
 
@@ -36,6 +39,7 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 		getTable().addColumn(NAME);
 		getTable().addColumn(TYPE);
 		getTable().addColumn(DESCRIPTION);
+		getTable().addColumn(MAP);
 
 	}
 
@@ -56,6 +60,7 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 		e.setName(unpackColumnValue(cursor, NAME, String.class));
 		e.setType(unpackColumnValue(cursor, TYPE, String.class));
 		e.setDescription(unpackColumnValue(cursor, DESCRIPTION, String.class));
+		e.setMapImage(unpackColumnValue(cursor, MAP, Enclosure.class));
 
 		return e;
 	}
@@ -79,6 +84,7 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 		values.put(NAME, obj.getName());
 		values.put(TYPE, obj.getType());
 		values.put(DESCRIPTION, obj.getDescription());
+		values.put(MAP, obj.getMapImage());
 
 		return values.getValues();
 	}
@@ -146,7 +152,7 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 
 		SortedSet<LocationPoint> result = query(TYPE + " in ( " + ph + " )",
 				type, null, null, null);
-		
+
 		return result;
 	}
 

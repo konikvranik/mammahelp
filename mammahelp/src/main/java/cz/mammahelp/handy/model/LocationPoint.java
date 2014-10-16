@@ -20,6 +20,8 @@ public class LocationPoint implements Identificable<LocationPoint> {
 
 	private String type;
 
+	private Enclosure mapImage;
+
 	public LocationPoint(Long id) {
 		setId(id);
 	}
@@ -121,4 +123,11 @@ public class LocationPoint implements Identificable<LocationPoint> {
 		return type;
 	}
 
+	public Enclosure getMapImage() {
+		return mapImage;
+	}
+
+	public void setMapImage(Enclosure mapImage) {
+		this.mapImage = mapImage;
+	}
 }

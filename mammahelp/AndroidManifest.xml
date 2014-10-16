@@ -35,15 +35,14 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAJomtqngY_txuLjy7RrwoJZ9gtmeyYFik" />
-        
-        <!-- dev -->
-<!--         <meta-data -->
-<!--             android:name="com.google.android.maps.v2.API_KEY" -->
-<!--             android:value="AIzaSyDnmYTzLkHzsp06Xf-euGzKff8OIZZR12g" /> -->
+            android:value="AIzaSyDXKSwCAIaJq8z4-gJxY5hKSyOogWe1ea8" />
+
+        <!--
+com.google.android.maps.v2.API_KEY
+Production (4E:1D:6E:96:14:F1:06:DA:AA:D2:A7:64:9E:3A:EA:2C:99:7B:F7:C1;cz.mammahelp.handy) : AIzaSyDXKSwCAIaJq8z4-gJxY5hKSyOogWe1ea8DEV TDA (AF:B8:9E:54:06:E6:67:B6:3C:69:FA:C4:7B:5C:E3:ED:57:D9:EC:69;cz.mammahelp.handy) : AIzaSyBi3vvmErVRz97FCP706Wgcga8KRCBeFf0
+        -->
 
         <activity
             android:name=".ui.MainActivity"

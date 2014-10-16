@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
@@ -55,10 +56,33 @@ public class CentersListFragment extends ANamedFragment {
 
 	public class DistanceComparator implements Comparator<LocationPoint> {
 
+		private Location origin;
+
+		public DistanceComparator(Location pos) {
+			origin = pos;
+		}
+
 		@Override
-		public int compare(LocationPoint paramT1, LocationPoint paramT2) {
-			// TODO Auto-generated method stub
-			return 0;
+		public int compare(LocationPoint o1, LocationPoint o2) {
+
+			if (o1 == null)
+				return 1;
+			Address l1 = o1.getLocation();
+			if (l1 == null)
+				return 1;
+
+			if (o2 == null)
+				return -1;
+			Address l2 = o2.getLocation();
+			if (l2 == null)
+				return -1;
+
+			double d1 = distance(origin.getLatitude(), origin.getLongitude(),
+					l1.getLatitude(), l1.getLongitude(), 'm');
+			double d2 = distance(origin.getLatitude(), origin.getLongitude(),
+					l2.getLatitude(), l2.getLongitude(), 'm');
+
+			return (int) Math.round(Math.signum(d1 - d2));
 		}
 
 	}
@@ -67,8 +91,18 @@ public class CentersListFragment extends ANamedFragment {
 
 		private Context context;
 		private LocationPoint[] locations;
+		private Location position;
 
-		public CategoryAdapter(SortedSet<LocationPoint> locations) {
+		public CategoryAdapter(SortedSet<LocationPoint> locations, Location pos) {
+			position = pos;
+
+			if (pos != null) {
+				TreeSet<LocationPoint> l = new TreeSet<LocationPoint>(
+						new DistanceComparator(pos));
+				l.addAll(locations);
+				locations = l;
+			}
+
 			context = CentersListFragment.this.getActivity();
 			this.locations = (locations == null ? new LocationPoint[0]
 					: locations.toArray(new LocationPoint[0]));
@@ -98,12 +132,30 @@ public class CentersListFragment extends ANamedFragment {
 						null);
 			}
 
+			TextView distanceView = (TextView) paramView
+					.findViewById(R.id.distance);
+
+			LocationPoint lp = getItem(paramInt);
+			Address loc = lp.getLocation();
+
+			if (position == null || loc == null || !loc.hasLatitude()
+					|| !loc.hasLongitude()) {
+				distanceView.setVisibility(View.GONE);
+			} else {
+				distanceView.setVisibility(View.VISIBLE);
+				distanceView.setText(String.format(
+						"%.2f",
+						distance(position.getLatitude(),
+								position.getLongitude(), loc.getLatitude(),
+								loc.getLongitude(), 'k'))
+						+ " km");
+			}
+
 			TextView title = (TextView) paramView.findViewById(R.id.title);
-			title.setText(getItem(paramInt).getName());
+			title.setText(lp.getName());
 
 			return paramView;
 		}
-
 	}
 
 	private CategoryAdapter adapter;
@@ -119,11 +171,13 @@ public class CentersListFragment extends ANamedFragment {
 		View mainView = inflater.inflate(R.layout.fragment_centers_listing,
 				null);
 
+		final Location pos = getPosition();
+
 		adao = new LocationPointDao(getDbHelper());
 
 		mapView = (MapView) mainView.findViewById(R.id.map);
 		mapView.onCreate(savedInstanceState);
-		setupMap();
+		setupMap(pos);
 
 		listView = (ListView) mainView.findViewById(R.id.listing);
 		listView.setOnItemClickListener(new ListView.OnItemClickListener() {
@@ -193,7 +247,8 @@ public class CentersListFragment extends ANamedFragment {
 						editor.putStringSet(PREF_KEY_FILTER, filter);
 						editor.commit();
 
-						adapter = new CategoryAdapter(adao.findByType(filter));
+						adapter = new CategoryAdapter(adao.findByType(filter),
+								pos);
 						if (listView != null)
 							listView.setAdapter(adapter);
 
@@ -209,9 +264,7 @@ public class CentersListFragment extends ANamedFragment {
 		}
 		filterSpinner.updateState();
 
-		new TreeSet<LocationPoint>(new DistanceComparator());
-
-		adapter = new CategoryAdapter(adao.findByType(filter));
+		adapter = new CategoryAdapter(adao.findByType(filter), pos);
 		if (listView != null)
 			listView.setAdapter(adapter);
 
@@ -274,7 +327,7 @@ public class CentersListFragment extends ANamedFragment {
 			mapView.onLowMemory();
 	}
 
-	protected void setupMap() {
+	protected void setupMap(Location pos) {
 		GoogleMap map = getMap();
 		if (map != null) {
 			map.setMyLocationEnabled(true);
@@ -288,18 +341,6 @@ public class CentersListFragment extends ANamedFragment {
 			map.getUiSettings().setTiltGesturesEnabled(true);
 			map.getUiSettings().setZoomControlsEnabled(true);
 			map.getUiSettings().setZoomGesturesEnabled(true);
-
-			LocationManager ls = (LocationManager) getActivity()
-					.getSystemService(Context.LOCATION_SERVICE);
-
-			Location pos = ls
-					.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-			if (pos == null)
-				pos = ls.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-			if (pos == null)
-				pos = ls.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 
 			MapsInitializer.initialize(getActivity());
 
@@ -331,6 +372,20 @@ public class CentersListFragment extends ANamedFragment {
 		} else {
 			checkGooglePlayServices();
 		}
+	}
+
+	private Location getPosition() {
+		LocationManager lm = (LocationManager) getActivity().getSystemService(
+				Context.LOCATION_SERVICE);
+
+		Criteria criteria = new Criteria();
+		criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+		criteria.setAltitudeRequired(false);
+		criteria.setBearingRequired(false);
+		criteria.setSpeedRequired(false);
+		Location pos = lm.getLastKnownLocation(lm.getBestProvider(criteria,
+				true));
+		return pos;
 	}
 
 	protected void addMarkers(String[] type) {
@@ -414,4 +469,61 @@ public class CentersListFragment extends ANamedFragment {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void onPause() {
+		GoogleMap map = getMap();
+		if (mapView != null)
+			mapView.onPause();
+
+		/*
+		 * if (map != null) { map.setMyLocationEnabled(false); }
+		 */
+
+		super.onPause();
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		GoogleMap map = getMap();
+		if (map != null) {
+			map.setMyLocationEnabled(true);
+		}
+
+	}
+
+	private double distance(double lat1, double lon1, double lat2, double lon2,
+			char unit) {
+		double theta = lon1 - lon2;
+		double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2))
+				+ Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2))
+				* Math.cos(deg2rad(theta));
+		dist = Math.acos(dist);
+		dist = rad2deg(dist);
+		dist = dist * 60 * 1.1515;
+		if (unit == 'k') {
+			dist = dist * 1.609344;
+		} else if (unit == 'm') {
+			dist = dist * 1609.344;
+		} else if (unit == 'N') {
+			dist = dist * 0.8684;
+		}
+		return (dist);
+	}
+
+	/* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
+	/* :: This function converts decimal degrees to radians : */
+	/* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
+	private double deg2rad(double deg) {
+		return (deg * Math.PI / 180.0);
+	}
+
+	/* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
+	/* :: This function converts radians to decimal degrees : */
+	/* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
+	private double rad2deg(double rad) {
+		return (rad * 180.0 / Math.PI);
+	}
+
 }

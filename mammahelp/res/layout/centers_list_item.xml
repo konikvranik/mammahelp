@@ -13,8 +13,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/distance"
         android:text="Title"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/mammahelp_blue_dark" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Distance"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/mammahelp_dark_grey" />
 
 </RelativeLayout>

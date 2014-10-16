@@ -1,13 +1,11 @@
 package cz.mammahelp.handy.ui;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,7 @@ import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.model.LocationPoint;
-import cz.mammahelp.handy.provider.LocalDbContentProvider;
+import static cz.mammahelp.handy.Constants.log;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment
@@ -32,6 +30,7 @@ import cz.mammahelp.handy.provider.LocalDbContentProvider;
  * 
  */
 public class CenterDetailViewFragment extends Fragment {
+	private static final Object SUB_DIVIDER = "; ";
 	private OnFragmentInteractionListener mListener;
 	private LocationPoint center;
 
@@ -75,13 +74,12 @@ public class CenterDetailViewFragment extends Fragment {
 		wv.setWebViewClient(new WebViewClient());
 		wv.setWebChromeClient(new WebChromeClient());
 
-		Uri uri = null;
-		uri = Uri.parse(LocalDbContentProvider.CONTENT_ARTICLE_URI + "/"
-				+ getCenter().getId() + "?id=" + getCenter().getId());
-
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("Content-Type", "text/html; charset=UTF-8");
-		wv.loadUrl(uri.toString(), headers);
+		LocationPointDao ldao = new LocationPointDao(getDbHelper());
+		Long id = getArguments().getLong(Constants.CENTER_KEY);
+		LocationPoint lp = ldao.findById(id);
+		wv.setWebViewClient(new MammahelpWebViewClient(getActivity()));
+		wv.loadDataWithBaseURL(null, addressIntoHtml(lp), "text/html", "UTF-8",
+				null);
 
 		return view;
 	}
@@ -149,29 +147,53 @@ public class CenterDetailViewFragment extends Fragment {
 
 	private String addressIntoHtml(LocationPoint lp) {
 
-		lp.getType();
+		StringBuilder sb = new StringBuilder("<html>");
+		sb.append("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"/><meta charset=\"UTF-8\"/>");
+		sb.append("<head>");
+		sb.append("<link rel='stylesheet' href='file:///android_asset/location.css' type='text/css' />");
+		sb.append("<title>");
+		sb.append(lp.getName());
+		sb.append("</title>");
+		sb.append("</head><body>");
+
+		sb.append("<div class=\"location ");
+		sb.append(lp.getType());
+		sb.append("\">");
+
 		// <img src="file:///android_res/drawable/example.png"/>
 
-		lp.getName();
+		addElement(sb, "h1", "name", lp.getName());
 
-		lp.getDescription();
+		sb.append("<a class=\"url\" href=\"");
+		sb.append(lp.getUrl());
+		sb.append("\">");
+		sb.append(lp.getUrl());
+		addLinkEndElement(sb);
 
-		lp.getUrl();
-		lp.getLocation();
+		addElement(sb, "p", "description", lp.getDescription());
 
-		return null;
+		addressIntoHtml(sb, lp.getLocation());
+
+		sb.append("</div>");
+		sb.append("</body></html>");
+
+		log.debug("Center:\n" + sb.toString());
+		return sb.toString();
 	}
 
-	private String addressIntoHtml(Address lp) {
-		StringBuffer sb = new StringBuffer("<address>");
+	private String addressIntoHtml(StringBuilder sb, Address lp) {
+
+		sb.append("<address>");
 
 		addElement(sb, "p", "featurename", lp.getFeatureName());
 
-		addElement(sb, "p", "sublocality", lp.getSubLocality());
-		addElement(sb, "p", "locality", lp.getLocality());
+		addElement(sb, "p", "premises", lp.getPremises());
 
-		addElement(sb, "p", "subthoroughfare", lp.getSubThoroughfare());
-		addElement(sb, "p", "thoroughfare", lp.getThoroughfare());
+		addElement(sb, "p", "span", "locality", lp.getLocality(),
+				lp.getSubLocality());
+
+		addElement(sb, "p", "span", "thoroughfare", lp.getThoroughfare(),
+				lp.getSubThoroughfare());
 
 		addStartElement(sb, "p", "addrline");
 		for (int i = 0; i <= lp.getMaxAddressLineIndex(); i++) {
@@ -181,33 +203,117 @@ public class CenterDetailViewFragment extends Fragment {
 		}
 		addEndElement(sb, "p");
 
-		sb.append("<p class=\"adminarea\">");
+		addElement(sb, "p", "span", "adminarea", lp.getAdminArea(),
+				lp.getSubAdminArea());
 
-		lp.getSubAdminArea();
-		sb.append(lp.getAdminArea());
+		addElement(sb, "p", "postalcode", lp.getPostalCode());
 
-		lp.getPostalCode();
+		if (!isEmpty(lp.getCountryCode()) || !isEmpty(lp.getCountryName())) {
 
-		lp.getCountryCode();
-		lp.getCountryName();
+			addStartElement(sb, "p", null);
 
-		lp.getPremises();
+			addElement(sb, "span", "countryname", lp.getCountryName());
 
-		lp.getExtras();
+			if (!isEmpty(lp.getCountryCode()) && !isEmpty(lp.getCountryName())) {
+				sb.append(" (");
+			}
+			addElement(sb, "span", "countrycode", lp.getCountryCode());
+			if (!isEmpty(lp.getCountryCode()) && !isEmpty(lp.getCountryName())) {
+				sb.append(")");
+			}
 
-		lp.getLatitude();
-		lp.getLongitude();
+			addEndElement(sb, "p");
+		}
 
-		lp.getPhone();
+		if (lp.hasLatitude() && lp.hasLongitude()) {
+			addStartElement(sb, "p", "coordinates");
 
-		lp.getUrl();
+			addLinkStartElement(sb, makeGeoUrl(lp), null);
+			addElement(sb, "span", "label", "GPS: ");
+			sb.append(Math.abs(lp.getLatitude()));
+			sb.append("°");
+			sb.append(lp.getLatitude() < 0 ? "S" : "N");
+			sb.append(", ");
+			sb.append(Math.abs(lp.getLongitude()));
+			sb.append("°");
+			sb.append(lp.getLatitude() < 0 ? "W" : "E");
+			addLinkEndElement(sb);
+			addEndElement(sb, "p");
+		}
 
-		sb.append("<p>");
+		if (!isEmpty(lp.getPhone())) {
+			addStartElement(sb, "p", "phone");
+			addLinkStartElement(sb, "tel:" + lp.getPhone(), null);
+			addElement(sb, "span", "label", "TEL: ");
+			sb.append(lp.getPhone());
+			addLinkEndElement(sb);
+			addEndElement(sb, "p");
+
+		}
+		if (!isEmpty(lp.getUrl())) {
+			addStartElement(sb, "p", "url");
+			addLinkElement(sb, lp.getUrl(), null, lp.getUrl());
+			addEndElement(sb, "p");
+
+		}
+
+		Bundle b = lp.getExtras();
+
+		if (b != null && !b.isEmpty()) {
+			for (String key : b.keySet()) {
+				addStartElement(sb, "p", "extra");
+				addElement(sb, "span", null, key + ": ");
+				String value = b.getString(key);
+				if (value != null
+						&& (value.startsWith("mailto:")
+								|| value.startsWith("http:")
+								|| value.startsWith("https:")
+								|| value.startsWith("tel:") || value
+									.startsWith("geo:")))
+					addLinkElement(sb, value, null, value);
+				else
+					sb.append(value);
+				addEndElement(sb, "p");
+			}
+		}
+
 		sb.append("</address>");
 		return sb.toString();
 	}
 
-	private void addElement(StringBuffer sb, String element, String htmlClass,
+	private String makeGeoUrl(Address lp) {
+		StringBuilder sb = new StringBuilder("geo:");
+		sb.append(lp.getLatitude());
+		sb.append(",");
+		sb.append(lp.getLongitude());
+		return sb.toString();
+	}
+
+	private void addLinkElement(StringBuilder sb, String url, String htmlClass,
+			String content) {
+		if (isEmpty(content))
+			return;
+		addLinkStartElement(sb, url, htmlClass);
+		sb.append(content);
+		addLinkEndElement(sb);
+	}
+
+	private void addLinkEndElement(StringBuilder sb) {
+		sb.append("</a>");
+	}
+
+	private void addLinkStartElement(StringBuilder sb, String url,
+			String htmlClass) {
+		sb.append("<a href=\"");
+		sb.append(url);
+		if (!isEmpty(htmlClass)) {
+			sb.append("\" class=\"");
+			sb.append(htmlClass);
+		}
+		sb.append("\">");
+	}
+
+	private void addElement(StringBuilder sb, String element, String htmlClass,
 			String content) {
 		if (isEmpty(content))
 			return;
@@ -217,14 +323,42 @@ public class CenterDetailViewFragment extends Fragment {
 
 	}
 
-	private void addEndElement(StringBuffer sb, String element) {
+	private void addElement(StringBuilder sb, String element,
+			String subelement, String htmlClass, String content,
+			String subcontent) {
+		if (isEmpty(content) && isEmpty(subcontent))
+			return;
+		addStartElement(sb, element, null);
+
+		if (!isEmpty(content)) {
+			addStartElement(sb, subelement, htmlClass);
+			sb.append(content);
+			addEndElement(sb, subelement);
+		}
+		if (!isEmpty(subcontent) && !isEmpty(content)) {
+			sb.append(SUB_DIVIDER);
+		}
+		if (!isEmpty(subcontent)) {
+			addStartElement(sb, subelement, "sub" + htmlClass);
+			sb.append(subcontent);
+			addEndElement(sb, subelement);
+		}
+		addEndElement(sb, element);
+
+	}
+
+	private void addEndElement(StringBuilder sb, String element) {
+		if (isEmpty(element))
+			return;
 		sb.append("</");
 		sb.append(element);
 		sb.append(">");
 	}
 
-	private void addStartElement(StringBuffer sb, String element,
+	private void addStartElement(StringBuilder sb, String element,
 			String htmlClass) {
+		if (isEmpty(element))
+			return;
 		sb.append("<");
 		sb.append(element);
 		if (!isEmpty(htmlClass)) {
@@ -235,8 +369,8 @@ public class CenterDetailViewFragment extends Fragment {
 		sb.append(">");
 	}
 
-	private boolean isEmpty(String lp) {
-		return lp != null && lp.trim().length() > 0;
+	private boolean isEmpty(String string) {
+		return string == null || !(string.trim().length() > 0);
 	}
 
 }

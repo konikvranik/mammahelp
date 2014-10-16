@@ -2,14 +2,28 @@ body {
 	color: #777;
 }
 
-.article h1 {
-	color: 0077B3;
+div.location.center {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+div.location.center {
+	/* file:///android_res/drawable/example.png */
+	
+}
+
+h1 {
 	padding-top: .7em;
 	text-align: center;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	color: 0077B3;
 	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-.article p {
+p {
 	font-family: sans-serif;
 	/* color: #004c79; */
 }
@@ -52,4 +66,12 @@ img.size-full {
 	height: auto;
 	margin: 0px;
 	padding: 0px;
+}
+
+address p {
+	margin: .25ex;
+}
+
+address {
+	font-style: normal;
 }

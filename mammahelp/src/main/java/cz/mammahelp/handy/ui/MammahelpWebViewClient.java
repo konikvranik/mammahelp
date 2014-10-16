@@ -1,5 +1,6 @@
 package cz.mammahelp.handy.ui;
 
+import cz.mammahelp.handy.provider.LocalDbContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,15 +21,14 @@ public class MammahelpWebViewClient extends WebViewClient {
 		if (url == null)
 			super.shouldOverrideUrlLoading(view, url);
 
-		if (url.startsWith("http") || url.startsWith("mailto")) {
+		if (url.startsWith(LocalDbContentProvider.CONTENT_BASE_URI)) {
+			// view.loadUrl(url);
+			return super.shouldOverrideUrlLoading(view, url);
+		} else {
 			Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 			context.startActivity(i);
 			return true;
 		}
-		// view.loadUrl(url);
-
-		return super.shouldOverrideUrlLoading(view, url);
-
 	}
 
 }
