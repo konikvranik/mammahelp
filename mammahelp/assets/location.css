@@ -18,7 +18,7 @@ h1 {
 	text-align: center;
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1, h2, h3, h4, h5, h6 {
 	color: 0077B3;
 	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
@@ -33,11 +33,11 @@ a {
 	color: #005681;
 }
 
-h1 a,h2 a,h3 a,h4 a {
+h1 a, h2 a, h3 a, h4 a {
 	text-decoration: none;
 }
 
-h1 a[href],h2 a[href],h3 a[href],h4 a[href] {
+h1 a[href], h2 a[href], h3 a[href], h4 a[href] {
 	text-decoration: none;
 }
 
@@ -56,13 +56,15 @@ li.slide {
 	padding: 0px;
 }
 
-img.attachment-standard {
+div.map {
+	text-align: center;
 	width: 100%;
-	height: auto;
+	padding-top: 1em;
+	margin-top: 1em;
 }
 
 img.size-full {
-	width: 100%;
+	width: auto;
 	height: auto;
 	margin: 0px;
 	padding: 0px;

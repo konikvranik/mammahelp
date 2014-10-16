@@ -30,10 +30,10 @@ import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
 import cz.mammahelp.handy.Utils;
 import cz.mammahelp.handy.model.Address;
+import cz.mammahelp.handy.model.Enclosure;
 import cz.mammahelp.handy.model.Identificable;
 
 public abstract class BaseDao<T extends Identificable<T>> {
-
 
 	public static class Table {
 
@@ -500,6 +500,16 @@ public abstract class BaseDao<T extends Identificable<T>> {
 			} catch (IllegalAccessException e) {
 				log.error(e.getMessage(), e);
 			}
+		} else if (c == Enclosure.class) {
+			value = null;
+			try {
+				value = c.newInstance();
+				((Identificable<V>) value).setId(cursor.getLong(idx));
+			} catch (InstantiationException e) {
+				log.error(e.getMessage(), e);
+			} catch (IllegalAccessException e) {
+				log.error(e.getMessage(), e);
+			}
 		} else {
 			throw new ClassCastException();
 		}
@@ -539,11 +549,11 @@ public abstract class BaseDao<T extends Identificable<T>> {
 		return sb.toString();
 
 	}
-	
+
 	protected SQLiteDatabase getDb() {
 		return db;
 	}
-	
+
 	protected void setDb(SQLiteDatabase db) {
 		this.db = db;
 	}

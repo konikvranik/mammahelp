@@ -1,10 +1,12 @@
 package cz.mammahelp.handy.ui;
 
 import static cz.mammahelp.handy.Constants.log;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import android.annotation.SuppressLint;
+
 import android.app.ActionBar;
+import android.app.ActionBar.LayoutParams;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentManager.BackStackEntry;
@@ -16,6 +18,8 @@ import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.widget.DrawerLayout;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -228,8 +232,11 @@ public class MainActivity extends AbstractMammaHelpActivity {
 				ImageView iv = (ImageView) item.getActionView();
 				if (rotate) {
 					if (iv == null) {
-						iv = new ImageView(MainActivity.this);
+						iv = (ImageView) ImageView.inflate(MainActivity.this,
+								R.layout.refresh_action_view, null);
 						iv.setImageDrawable(item.getIcon());
+						// iv.setMinimumHeight(m);
+						// iv.setMinimumWidth(m);
 					}
 					Animation rotation = AnimationUtils.loadAnimation(
 							MainActivity.this, R.anim.rotate);
@@ -241,47 +248,6 @@ public class MainActivity extends AbstractMammaHelpActivity {
 				}
 				item.setActionView(iv);
 
-			}
-		});
-	}
-
-	void startRefreshHc(final MenuItem refreshItem) {
-		runOnUiThread(new Runnable() {
-			@SuppressLint("InflateParams")
-			@Override
-			public void run() {
-				log.debug("Start refresh");
-				Animation rotation = AnimationUtils.loadAnimation(
-						MainActivity.this, R.anim.rotate);
-				rotation.setRepeatCount(Animation.INFINITE);
-
-				ImageView iv = (ImageView) refreshItem.getActionView();
-				if (iv == null) {
-					LayoutInflater inflater = (LayoutInflater) MainActivity.this
-							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					iv = (ImageView) inflater.inflate(
-							R.layout.refresh_action_view, null);
-					refreshItem.setActionView(iv);
-				}
-				iv.startAnimation(rotation);
-			}
-		});
-	}
-
-	void stopRefreshHc(final MenuItem refreshItem) {
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				log.debug("Stop refresh");
-
-				if (refreshItem == null)
-					return;
-
-				ImageView iv = (ImageView) refreshItem.getActionView();
-				if (iv != null) {
-					iv.setAnimation(null);
-				}
-				refreshItem.setActionView(null);
 			}
 		});
 	}
@@ -302,12 +268,20 @@ public class MainActivity extends AbstractMammaHelpActivity {
 
 				@Override
 				public void onChanged() {
-					invalidateOptionsMenu();
+					runOnUiThread(new Runnable() {
+						public void run() {
+							invalidateOptionsMenu();
+						}
+					});
 
 				}
 
 			});
-			invalidateOptionsMenu();
+			runOnUiThread(new Runnable() {
+				public void run() {
+					invalidateOptionsMenu();
+				}
+			});
 
 		}
 
@@ -315,7 +289,11 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		public void onServiceDisconnected(ComponentName arg0) {
 			log.debug("service disconnected");
 			mBound = false;
-			invalidateOptionsMenu();
+			runOnUiThread(new Runnable() {
+				public void run() {
+					invalidateOptionsMenu();
+				}
+			});
 		}
 
 	};

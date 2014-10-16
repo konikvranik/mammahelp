@@ -120,7 +120,7 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 		Serializer serializer = new Persister();
 
 		loadArticles(db, serializer);
-		loadLocations(db, serializer);
+		// loadLocations(db, serializer);
 	}
 
 	private void loadLocations(SQLiteDatabase db, Serializer serializer) {

@@ -3,11 +3,15 @@ package cz.mammahelp.handy.feeder;
 import static cz.mammahelp.handy.Constants.log;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Date;
 import java.util.Properties;
@@ -37,6 +41,7 @@ import org.w3c.tidy.Configuration;
 import org.w3c.tidy.Tidy;
 
 import android.content.Context;
+import android.content.res.Resources;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.MammaHelpException;
 import cz.mammahelp.handy.R;
@@ -129,9 +134,31 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 	}
 
 	protected InputStream getInputStreamFromUrl(URL url, Date updatedTime)
-			throws IOException, MalformedURLException, MammaHelpException {
+			throws IOException, MalformedURLException, MammaHelpException,
+			URISyntaxException {
 
 		setUrl(url);
+
+		if ("file".equals(url.getProtocol())) {
+
+			URI uri = url.toURI();
+
+			String path = uri.getPath();
+			if (path.startsWith("/android_res")) {
+				String[] parts = path.split("/");
+				String name = parts[3].substring(0, parts[3].lastIndexOf('.'));
+				String type = parts[2];
+				Resources resources = getContext().getResources();
+				int id = resources.getIdentifier(name, type, getContext()
+						.getPackageName());
+				log.debug("Name: " + name);
+				log.debug("Type: " + type);
+				log.debug("Id: " + id);
+
+				return resources.openRawResource(id);
+			}
+			return new FileInputStream(new File(uri));
+		}
 
 		Long updatedTimeMilis = updatedTime == null ? null : updatedTime
 				.getTime();
@@ -225,13 +252,12 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 				try {
 					Attr attr = (Attr) srcArrts.item(i);
 					URL url = new URL(attr.getValue());
+					String newValue = attr.getValue();
 
 					HttpURLConnection.setFollowRedirects(true);
 					HttpURLConnection conn = (HttpURLConnection) url
 							.openConnection();
 					conn.setInstanceFollowRedirects(true);
-
-					String newValue = attr.getValue();
 
 					if ("http".equals(url.getProtocol())
 							|| "https".equals(url.getProtocol())) {
@@ -251,6 +277,7 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 									newValue = saveArticle(conn);
 						}
 					}
+
 					attr.setValue(newValue);
 
 				} catch (MalformedURLException e) {
@@ -297,7 +324,7 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 				+ article.getId();
 	}
 
-	private Identificable<?> saveEnclosure(HttpURLConnection conn)
+	protected Enclosure saveEnclosure(HttpURLConnection conn)
 			throws IOException {
 
 		InputStream is = conn.getInputStream();

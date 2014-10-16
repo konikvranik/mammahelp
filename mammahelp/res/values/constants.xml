@@ -4,7 +4,9 @@
     <!-- integer name="google_play_services_version">5077000</integer -->
 
     <string name="news_feed_url">http://www.mammahelp.cz/feed/</string>
-    <string name="locations_url">http://www.mammahelp.cz/feed/</string>
+<!--     <string name="locations_url">file:///android_res/raw/locations</string> -->
+    <string name="locations_url">file:///android_res/raw/locations.xml</string>
+<!--      <string name="locations_url">android.resource://cz.mammahelp.handy/raw/locations</string> -->
 
     <integer-array name="plurals">
         <item>1</item>

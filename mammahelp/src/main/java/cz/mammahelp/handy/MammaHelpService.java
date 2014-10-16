@@ -24,12 +24,12 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.widget.Toast;
-import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.feeder.ArticleFeeder;
-import cz.mammahelp.handy.feeder.GenericFeeder;
+import cz.mammahelp.handy.feeder.LocationFeeder;
 import cz.mammahelp.handy.feeder.NewsFeeder;
 import cz.mammahelp.handy.model.Articles;
 import cz.mammahelp.handy.model.Identificable;
+import cz.mammahelp.handy.model.LocationPoint;
 import cz.mammahelp.handy.model.News;
 
 public class MammaHelpService extends Service {
@@ -76,10 +76,12 @@ public class MammaHelpService extends Service {
 	private MammaHelpReceiver timerReceiver;
 
 	private boolean updating;
-	private GenericFeeder<ArticlesDao, Articles> articleFeeder;
+	private ArticleFeeder articleFeeder;
 	private NewsFeeder newsFeeder;
 
 	private Queue<Identificable<? extends Identificable<?>>> feedqueue = new ConcurrentLinkedQueue<Identificable<? extends Identificable<?>>>();
+
+	private LocationFeeder locationPointFeeder;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -97,7 +99,7 @@ public class MammaHelpService extends Service {
 
 		boolean added = false;
 		String[] types = new String[] { Constants.ARTICLE_KEY,
-				Constants.NEWS_KEY };
+				Constants.NEWS_KEY, Constants.CENTER_KEY };
 		for (String type : types) {
 			Long id = intent.getLongExtra(type, -1);
 			if (id > -1) {
@@ -110,6 +112,7 @@ public class MammaHelpService extends Service {
 		}
 		if (!added) {
 			feedqueue.add(new News());
+			feedqueue.add(new LocationPoint());
 			feedqueue.add(new Articles());
 		}
 
@@ -130,6 +133,8 @@ public class MammaHelpService extends Service {
 			return new Articles();
 		else if (Constants.NEWS_KEY.equals(type))
 			return new News();
+		else if (Constants.CENTER_KEY.equals(type))
+			return new LocationPoint();
 		return null;
 	}
 
@@ -174,6 +179,8 @@ public class MammaHelpService extends Service {
 							getNewsFeeder().feedData();
 						else
 							getNewsFeeder().feedData((News) item);
+					} else if (item instanceof LocationPoint) {
+						getLocationPointFeeder().feedData();
 					}
 
 				}
@@ -199,7 +206,14 @@ public class MammaHelpService extends Service {
 		getDbHelper().notifyDataSetChanged();
 	}
 
-	protected GenericFeeder<ArticlesDao, Articles> getArticleFeeder() {
+	private LocationFeeder getLocationPointFeeder() {
+		if (locationPointFeeder == null) {
+			locationPointFeeder = new LocationFeeder(getApplicationContext());
+		}
+		return locationPointFeeder;
+	}
+
+	protected ArticleFeeder getArticleFeeder() {
 
 		if (articleFeeder == null) {
 			articleFeeder = new ArticleFeeder(getApplicationContext());

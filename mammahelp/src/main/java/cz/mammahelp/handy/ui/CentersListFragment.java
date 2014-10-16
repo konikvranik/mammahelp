@@ -466,8 +466,7 @@ public class CentersListFragment extends ANamedFragment {
 	}
 
 	private String getQueryFromAddress(Address addr) {
-		// TODO Auto-generated method stub
-		return null;
+		return cz.mammahelp.handy.model.Address.fomrmatAddressForSearch(addr);
 	}
 
 	@Override

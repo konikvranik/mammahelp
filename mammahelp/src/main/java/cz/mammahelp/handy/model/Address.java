@@ -6,6 +6,7 @@ public class Address extends android.location.Address implements
 		Identificable<Address> {
 
 	private static final long serialVersionUID = -8774880036967501026L;
+	private static final String DIVIDER = ",";
 	private Long id;
 	private Long bundleId;
 
@@ -121,4 +122,34 @@ public class Address extends android.location.Address implements
 		this.bundleId = bundleId;
 	}
 
+	public static String fomrmatAddressForSearch(android.location.Address addr) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(addr.getFeatureName());
+		sb.append(DIVIDER);
+		sb.append(addr.getPremises());
+		sb.append(DIVIDER);
+		sb.append(addr.getLocality());
+		sb.append(DIVIDER);
+		sb.append(addr.getSubLocality());
+		sb.append(DIVIDER);
+		sb.append(addr.getThoroughfare());
+		sb.append(DIVIDER);
+		sb.append(addr.getSubThoroughfare());
+		sb.append(DIVIDER);
+		for (int i = 0; i <= addr.getMaxAddressLineIndex(); i++) {
+			sb.append(addr.getAddressLine(i));
+			sb.append(DIVIDER);
+		}
+		sb.append(addr.getAdminArea());
+		sb.append(DIVIDER);
+		sb.append(addr.getSubAdminArea());
+		sb.append(DIVIDER);
+		sb.append(addr.getPostalCode());
+		sb.append(DIVIDER);
+		sb.append(addr.getCountryName());
+		sb.append(DIVIDER);
+		sb.append(addr.getCountryCode());
+
+		return sb.toString();
+	}
 }
