@@ -1,7 +1,5 @@
 package cz.mammahelp.handy.dao;
 
-import static cz.mammahelp.handy.Constants.log;
-
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,6 +18,9 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -34,6 +35,8 @@ import cz.mammahelp.handy.model.Enclosure;
 import cz.mammahelp.handy.model.Identificable;
 
 public abstract class BaseDao<T extends Identificable<T>> {
+
+	public static Logger log = LoggerFactory.getLogger(BaseDao.class);
 
 	public static class Table {
 

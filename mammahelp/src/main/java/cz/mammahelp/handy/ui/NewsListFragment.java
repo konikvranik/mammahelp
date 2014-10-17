@@ -1,7 +1,5 @@
 package cz.mammahelp.handy.ui;
 
-import static cz.mammahelp.handy.Constants.log;
-
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -13,6 +11,9 @@ import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -30,6 +31,8 @@ import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.model.News;
 
 public class NewsListFragment extends ANamedFragment {
+
+	public static Logger log = LoggerFactory.getLogger(NewsListFragment.class);
 
 	public class NewsAdapter extends BaseAdapter implements ListAdapter {
 

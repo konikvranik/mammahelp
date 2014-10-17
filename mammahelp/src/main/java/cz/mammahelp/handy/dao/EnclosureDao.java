@@ -1,13 +1,18 @@
 package cz.mammahelp.handy.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
 import cz.mammahelp.handy.model.Enclosure;
-import static cz.mammahelp.handy.Constants.log;
+
 @SuppressWarnings("unused")
 public class EnclosureDao extends BaseDao<Enclosure> {
+
+	public static Logger log = LoggerFactory.getLogger(EnclosureDao.class);
 
 	public static final String TABLE_NAME = "enclosures";
 
@@ -61,7 +66,7 @@ public class EnclosureDao extends BaseDao<Enclosure> {
 		values.put(URL, obj.getUrl());
 		values.put(LENGTH, obj.getLength());
 		values.put(TYPE, obj.getType());
-		
+
 		values.put(DATA, obj.getData());
 
 		return values.getValues();

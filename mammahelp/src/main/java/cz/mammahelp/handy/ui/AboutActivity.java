@@ -3,12 +3,14 @@
  */
 package cz.mammahelp.handy.ui;
 
-import static cz.mammahelp.handy.Constants.LAST_UPDATED_ARTICLES_KEY;
-import static cz.mammahelp.handy.Constants.log;
+import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
 
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -26,12 +28,8 @@ import cz.mammahelp.handy.Utils;
  */
 public class AboutActivity extends AbstractMammaHelpActivity {
 
+	public static Logger log = LoggerFactory.getLogger(AboutActivity.class);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,7 +52,7 @@ public class AboutActivity extends AbstractMammaHelpActivity {
 				versionName, versionCode));
 
 		SharedPreferences prefs = getSharedPreferences();
-		Date lastUpdated = new Date(prefs.getLong(LAST_UPDATED_ARTICLES_KEY, 0));
+		Date lastUpdated = new Date(prefs.getLong(LAST_UPDATED_KEY, 0));
 		versionView = (TextView) getWindow().findViewById(R.id.last_updated);
 		versionView.setText(getResources().getString(
 				R.string.date_time,

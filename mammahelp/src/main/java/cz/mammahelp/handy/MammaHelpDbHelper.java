@@ -1,7 +1,5 @@
 package cz.mammahelp.handy;
 
-import static cz.mammahelp.handy.Constants.log;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -10,6 +8,8 @@ import java.util.Locale;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -36,6 +36,8 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 
 	public static final int DATABASE_VERSION = 2;
 	public static final String DATABASE_NAME = "MammaHelp.db";
+
+	public static Logger log = LoggerFactory.getLogger(MammaHelpDbHelper.class);
 
 	private static final String SQL_CREATE_ARTICLES = ArticlesDao.getTable()
 			.createClausule();
@@ -124,8 +126,9 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 	}
 
 	private void loadLocations(SQLiteDatabase db, Serializer serializer) {
-		
-		if(fillOneLocationDebug(serializer)) return;
+
+		if (fillOneLocationDebug(serializer))
+			return;
 
 		try {
 			LocationsXmlWrapper aw = serializer.read(LocationsXmlWrapper.class,
@@ -300,9 +303,10 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 	}
 
 	private boolean fillOneLocationDebug(Serializer serializer) {
-		
-		if (!DEV_FILL_LOCATIONS) return false;
-		
+
+		if (!DEV_FILL_LOCATIONS)
+			return false;
+
 		Collection<LocationPoint> a = new ArrayList<LocationPoint>();
 
 		LocationPoint lp = new LocationPoint((long) 3);
@@ -351,7 +355,7 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
-		
+
 		return true;
 	}
 }

@@ -9,8 +9,7 @@ public class Constants {
 
 	public static final String KEY = "key";
 
-	public static final String LAST_UPDATED_ARTICLES_KEY = "last_updated";
-	public static final String LAST_UPDATED_NEWS_KEY = "last_updated_news";
+	public static final String LAST_UPDATED_KEY = "last_updated";
 
 	public static final String DELETE_DELAY_KEY = "delete_delay";
 
@@ -34,8 +33,6 @@ public class Constants {
 	public static String WIFI_ONLY_KEY = "only_wifi";
 	public static boolean DEFAULT_WIFI_ONLY = true;
 
-	public static Logger log = LoggerFactory.getLogger("MammaHELP");
-
 	public static final String NEWS_KEY = "news";
 
 	// TODO: Rename parameter arguments, choose names that match
@@ -57,5 +54,7 @@ public class Constants {
 	public static final String CENTER_KEY = "center";
 
 	public static final String REGISTER_FLAG = "register";
+
+	public static final int NEWS_NOTIFICATION_ID = 1;
 
 }

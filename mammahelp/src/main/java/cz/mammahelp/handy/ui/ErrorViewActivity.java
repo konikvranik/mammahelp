@@ -4,15 +4,14 @@
 package cz.mammahelp.handy.ui;
 
 import static cz.mammahelp.handy.Constants.EXCEPTION;
-import static cz.mammahelp.handy.Constants.log;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-
 import org.apache.commons.lang3.StringEscapeUtils;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -29,9 +28,10 @@ import cz.mammahelp.handy.Utils;
  */
 public class ErrorViewActivity extends AbstractMammaHelpActivity {
 
+	public static Logger log = LoggerFactory.getLogger(ErrorViewActivity.class);
+
 	private String text;
 	private MammaHelpException exception;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +122,7 @@ public class ErrorViewActivity extends AbstractMammaHelpActivity {
 		this.text = sb;
 	}
 
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	public void sendTo(View v) {
 		try {
 			startActivity(new Intent(android.content.Intent.ACTION_SENDTO,

@@ -1,7 +1,5 @@
 package cz.mammahelp.handy.ui;
 
-import static cz.mammahelp.handy.Constants.log;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -11,6 +9,9 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.app.Activity;
 import android.content.Context;
@@ -51,6 +52,8 @@ import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.model.LocationPoint;
 
 public class CentersListFragment extends ANamedFragment {
+
+	public static Logger log = LoggerFactory.getLogger(ANamedFragment.class);
 
 	private static final String PREF_KEY_FILTER = "filter";
 

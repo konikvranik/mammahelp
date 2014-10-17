@@ -47,8 +47,8 @@ public class NotificationUtils {
 		return id;
 	}
 
-	public static void makeNotification(Context ctx, Integer icon,
-			Class<?> clz, int notifyID, int title, String description) {
+	public static void makeNotification(Context ctx, Class<?> clz,
+			Integer icon, int notifyID, int title, String description) {
 		makeNotification(ctx, clz, notifyID, icon, title, description,
 				new Intent(ctx, clz));
 	}

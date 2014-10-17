@@ -5,10 +5,12 @@ package cz.mammahelp.handy.ui;
 
 import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
 import static cz.mammahelp.handy.Constants.KEY;
-import static cz.mammahelp.handy.Constants.log;
 
 import java.util.List;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
@@ -27,6 +29,9 @@ import cz.mammahelp.handy.R;
  * 
  */
 public class PreferencesActivity extends PreferenceActivity {
+
+	public static Logger log = LoggerFactory
+			.getLogger(PreferencesActivity.class);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

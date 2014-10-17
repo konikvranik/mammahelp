@@ -41,20 +41,14 @@
 
         <!--
 com.google.android.maps.v2.API_KEY
-Production (4E:1D:6E:96:14:F1:06:DA:AA:D2:A7:64:9E:3A:EA:2C:99:7B:F7:C1;cz.mammahelp.handy) : AIzaSyCOvySLyinjKsfmNdlf53McsP_zgVG27zsDEV TDA (AF:B8:9E:54:06:E6:67:B6:3C:69:FA:C4:7B:5C:E3:ED:57:D9:EC:69;cz.mammahelp.handy) : AIzaSyBi3vvmErVRz97FCP706Wgcga8KRCBeFf0DV Stalin (F0:CB:BA:7F:99:C1:54:EE:F3:9F:0C:5A:95:9B:0C:38:08:A3:75:87;cz.mammahelp.handy) : AIzaSyDR5ZGNzSnyFQb4BI25mVCN0ocrYEY0T2o
+Production (4E:1D:6E:96:14:F1:06:DA:AA:D2:A7:64:9E:3A:EA:2C:99:7B:F7:C1;cz.mammahelp.handy) : AIzaSyCOvySLyinjKsfmNdlf53McsP_zgVG27zsDEV TDA (AF:B8:9E:54:06:E6:67:B6:3C:69:FA:C4:7B:5C:E3:ED:57:D9:EC:69;cz.mammahelp.handy) : AIzaSyBi3vvmErVRz97FCP706Wgcga8KRCBeFf0DV Stalin (F0:CB:BA:7F:99:C1:54:EE:F3:9F:0C:5A:95:9B:0C:38:08:A3:75:87;cz.mammahelp.handy) : AIzaSyDR5ZGNzSnyFQb4BI25mVCN0ocrYEY0T2o
         -->
 
         <activity
             android:name=".ui.MainActivity"
-            android:label="@string/title_activity_main"
-            android:parentActivityName=".ui.AbstractMammaHelpActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="cz.mammahelp.handy.ui.AbstractMammaHelpActivity" />
-
+            android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

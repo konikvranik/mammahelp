@@ -1,6 +1,8 @@
 package cz.mammahelp.handy.ui;
 
-import static cz.mammahelp.handy.Constants.log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.location.Address;
@@ -30,6 +32,10 @@ import cz.mammahelp.handy.provider.LocalDbContentProvider;
  * 
  */
 public class CenterDetailViewFragment extends Fragment {
+
+	public static Logger log = LoggerFactory
+			.getLogger(CenterDetailViewFragment.class);
+
 	private static final Object SUB_DIVIDER = "; ";
 	private OnFragmentInteractionListener mListener;
 	private LocationPoint center;

@@ -1,7 +1,5 @@
 package cz.mammahelp.handy.feeder;
 
-import static cz.mammahelp.handy.Constants.log;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,6 +31,8 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -56,6 +56,7 @@ import cz.mammahelp.handy.provider.LocalDbContentProvider;
 
 public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificable<?>> {
 
+	public static Logger log = LoggerFactory.getLogger(GenericFeeder.class);
 	Tidy tidy;
 	Transformer htmlTransformer;
 
@@ -163,8 +164,8 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 
 		HttpURLConnection openConnection = (HttpURLConnection) url
 				.openConnection();
-		openConnection.setIfModifiedSince(lastUpdatedTime == null ? null
-				: lastUpdatedTime.getTime());
+		if (lastUpdatedTime != null)
+			openConnection.setIfModifiedSince(lastUpdatedTime.getTime());
 		openConnection.setInstanceFollowRedirects(true);
 
 		int statusCode = openConnection.getResponseCode();

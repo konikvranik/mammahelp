@@ -16,7 +16,7 @@
             android:id="@+id/annotation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/mammahelp_blue_dark"
+            android:textColor="@color/mammahelp_dark_grey"
             android:layout_below="@+id/title" />
 
         <TextView

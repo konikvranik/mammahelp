@@ -8,14 +8,16 @@ import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
 import static cz.mammahelp.handy.Constants.CENTER_KEY;
 import static cz.mammahelp.handy.Constants.DEFAULT_UPDATE_INTERVAL;
 import static cz.mammahelp.handy.Constants.DEFAULT_WIFI_ONLY;
-import static cz.mammahelp.handy.Constants.LAST_UPDATED_ARTICLES_KEY;
+import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
 import static cz.mammahelp.handy.Constants.NEWS_KEY;
 import static cz.mammahelp.handy.Constants.UPDATE_INTERVAL_KEY;
 import static cz.mammahelp.handy.Constants.WIFI_ONLY_KEY;
-import static cz.mammahelp.handy.Constants.log;
 
 import java.util.Calendar;
 import java.util.Locale;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,6 +28,8 @@ import android.content.SharedPreferences;
  * @author Petr
  */
 public class MammaHelpReceiver extends BroadcastReceiver {
+
+	public static Logger log = LoggerFactory.getLogger(MammaHelpReceiver.class);
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -44,8 +48,10 @@ public class MammaHelpReceiver extends BroadcastReceiver {
 				context.startService(newIntent);
 			}
 
-			if (decideIfStart(context,
-					context.getResources().getString(R.string.others_preferences))) {
+			if (decideIfStart(
+					context,
+					context.getResources().getString(
+							R.string.others_preferences))) {
 				log.debug("Receiver is starting service for news...");
 				Intent newIntent = new Intent(context, MammaHelpService.class);
 				newIntent.putExtra(CENTER_KEY, -1);
@@ -100,7 +106,7 @@ public class MammaHelpReceiver extends BroadcastReceiver {
 	}
 
 	protected boolean decideOnInterval(SharedPreferences prefs, long time) {
-		long schedule = prefs.getLong(LAST_UPDATED_ARTICLES_KEY, -1);
+		long schedule = prefs.getLong(LAST_UPDATED_KEY, -1);
 
 		try {
 			if (schedule != -1)
@@ -113,8 +119,10 @@ public class MammaHelpReceiver extends BroadcastReceiver {
 		log.debug("deciding if start: " + time + ">" + schedule);
 
 		if (time > schedule) {
+			prefs.edit().putLong(LAST_UPDATED_KEY, time);
 			return true;
 		} else
+
 			return false;
 	}
 

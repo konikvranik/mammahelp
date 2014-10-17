@@ -1,9 +1,5 @@
 package cz.mammahelp.handy.feeder;
 
-import static cz.mammahelp.handy.Constants.DEFAULT_PREFERENCES;
-import static cz.mammahelp.handy.Constants.LAST_UPDATED_NEWS_KEY;
-import static cz.mammahelp.handy.Constants.log;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,12 +11,12 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndContent;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
@@ -29,11 +25,16 @@ import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.Syn
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.FeedException;
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.SyndFeedInput;
 
+import cz.mammahelp.handy.Constants;
+import cz.mammahelp.handy.NotificationUtils;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.model.News;
+import cz.mammahelp.handy.ui.MainActivity;
 
 public class NewsFeeder extends GenericFeeder<NewsDao, News> {
+
+	public static Logger log = LoggerFactory.getLogger(NewsFeeder.class);
 
 	private SyndFeed feed;
 
@@ -51,6 +52,7 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 
 		log.debug("updating feed");
 
+		@SuppressWarnings("unchecked")
 		List<SyndEntry> entries = feed.getEntries();
 
 		SyndImage mainImage = feed.getImage();
@@ -83,11 +85,11 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 		if (older != null)
 			getDao().delete(older);
 
-		SharedPreferences prefs = getContext().getSharedPreferences(
-				DEFAULT_PREFERENCES, Context.MODE_PRIVATE);
-		Editor editor = prefs.edit();
-		editor.putLong(LAST_UPDATED_NEWS_KEY, System.currentTimeMillis());
-		editor.commit();
+		NotificationUtils.makeNotification(
+				getContext().getApplicationContext(), MainActivity.class,
+				Constants.NEWS_NOTIFICATION_ID, R.drawable.ic_action_error,
+				R.string.news_updated_title, getContext().getResources()
+						.getString(R.string.news_updated_description));
 
 	}
 

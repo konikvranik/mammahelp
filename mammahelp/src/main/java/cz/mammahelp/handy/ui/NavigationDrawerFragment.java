@@ -1,8 +1,9 @@
 package cz.mammahelp.handy.ui;
 
-import static cz.mammahelp.handy.Constants.log;
-
 import java.util.SortedSet;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -38,6 +39,9 @@ import cz.mammahelp.handy.model.Articles;
  * implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
+
+	public static Logger log = LoggerFactory
+			.getLogger(NavigationDrawerFragment.class);
 
 	/**
 	 * Remember the position of the selected item.

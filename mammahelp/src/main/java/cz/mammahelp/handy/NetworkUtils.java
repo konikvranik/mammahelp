@@ -1,12 +1,13 @@
 package cz.mammahelp.handy;
 
-import static cz.mammahelp.handy.Constants.log;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -16,6 +17,7 @@ import android.telephony.TelephonyManager;
 
 public class NetworkUtils {
 
+	public static Logger log = LoggerFactory.getLogger(NetworkUtils.class);
 
 	public NetworkUtils() {
 	}

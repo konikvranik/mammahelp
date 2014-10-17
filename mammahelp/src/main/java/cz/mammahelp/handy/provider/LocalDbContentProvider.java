@@ -1,13 +1,14 @@
 package cz.mammahelp.handy.provider;
 
-import static cz.mammahelp.handy.Constants.log;
-
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -25,6 +26,9 @@ import cz.mammahelp.handy.model.Enclosure;
 import cz.mammahelp.handy.model.News;
 
 public class LocalDbContentProvider extends ContentProvider {
+
+	public static Logger log = LoggerFactory
+			.getLogger(LocalDbContentProvider.class);
 
 	private static final String ID_PARAM = "id";
 	private static final String ENCLOSURE_PATH = "enclosure";

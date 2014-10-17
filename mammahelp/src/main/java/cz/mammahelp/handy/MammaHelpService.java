@@ -3,13 +3,15 @@ package cz.mammahelp.handy;
 import static cz.mammahelp.handy.Constants.DEFAULT_DELETE_DELAY;
 import static cz.mammahelp.handy.Constants.DEFAULT_PREFERENCES;
 import static cz.mammahelp.handy.Constants.DELETE_DELAY_KEY;
-import static cz.mammahelp.handy.Constants.LAST_UPDATED_ARTICLES_KEY;
-import static cz.mammahelp.handy.Constants.log;
+import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
 
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.app.Service;
 import android.content.Context;
@@ -33,6 +35,8 @@ import cz.mammahelp.handy.model.LocationPoint;
 import cz.mammahelp.handy.model.News;
 
 public class MammaHelpService extends Service {
+
+	public static Logger log = LoggerFactory.getLogger(MammaHelpService.class);
 
 	private DataSetObservable changeObservers = new DataSetObservable();
 
@@ -169,7 +173,7 @@ public class MammaHelpService extends Service {
 						if (item.getId() == null) {
 							getArticleFeeder().feedData();
 							Editor editor = prefs.edit();
-							editor.putLong(LAST_UPDATED_ARTICLES_KEY,
+							editor.putLong(LAST_UPDATED_KEY,
 									System.currentTimeMillis());
 							editor.commit();
 						} else

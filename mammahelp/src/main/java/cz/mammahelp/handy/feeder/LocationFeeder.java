@@ -1,8 +1,5 @@
 package cz.mammahelp.handy.feeder;
 
-import static cz.mammahelp.handy.Constants.log;
-
-import java.io.ByteArrayOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -11,31 +8,29 @@ import java.util.Locale;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.view.ViewGroup.LayoutParams;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.GoogleMap.SnapshotReadyCallback;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.wearable.MessageApi;
+import com.google.android.gms.maps.MapsInitializer;
 
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.model.Enclosure;
-import cz.mammahelp.handy.model.Identificable;
 import cz.mammahelp.handy.model.LocationPoint;
 import cz.mammahelp.handy.model.LocationsXmlWrapper;
-import cz.mammahelp.handy.provider.LocalDbContentProvider;
 
 public class LocationFeeder extends
 		GenericFeeder<LocationPointDao, LocationPoint> {
+
+	public static Logger log = LoggerFactory.getLogger(LocationFeeder.class);
 
 	private Geocoder geocoder;
 	private GoogleMap map;

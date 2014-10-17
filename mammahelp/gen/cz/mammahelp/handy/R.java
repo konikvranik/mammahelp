@@ -1886,6 +1886,8 @@ containing a value of this type.
         /**  <string name="locations_url">android.resource://cz.mammahelp.handy/raw/locations</string> 
          */
         public static final int news_preferences=0x7f08002f;
+        public static final int news_updated_description=0x7f080067;
+        public static final int news_updated_title=0x7f080066;
         public static final int only_wifi_description=0x7f080047;
         public static final int only_wifi_title=0x7f080046;
         public static final int others_preferences=0x7f080030;
@@ -1910,7 +1912,7 @@ containing a value of this type.
         public static final int update_on_particular_time_title=0x7f080049;
         public static final int update_time_description=0x7f080050;
         public static final int update_time_title=0x7f08004f;
-        public static final int update_title=0x7f080066;
+        public static final int update_title=0x7f080068;
         public static final int versionName=0x7f080033;
         public static final int versionString=0x7f080034;
         /**  Text on a placeholder buy button when Google Play services is not

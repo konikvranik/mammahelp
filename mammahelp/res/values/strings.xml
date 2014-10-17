@@ -87,6 +87,9 @@
     <string name="all">All</string>
     <string name="prefs_summary_news">Enable/disable updating of news and allows to change interval.</string>
     <string name="prefs_title_news">News</string>
-    <string name="prefs_summary_articles">Enable/disable updating of articles and allows to change interval.</string>    <string name="prefs_title_articles">Other content</string>
+    <string name="prefs_summary_articles">Enable/disable updating of articles and allows to change interval.</string>
+    <string name="prefs_title_articles">Other content</string>
+    <string name="news_updated_title">News was updated</string>
+    <string name="news_updated_description">Some new informations arrived. Click to open Mamma HELP application.</string>
 
 </resources>

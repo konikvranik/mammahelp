@@ -1,10 +1,11 @@
 package cz.mammahelp.handy.dao;
 
-import static cz.mammahelp.handy.Constants.log;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.SortedSet;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -15,6 +16,8 @@ import cz.mammahelp.handy.SQLiteDataTypes;
 import cz.mammahelp.handy.model.Articles;
 
 public class ArticlesDao extends BaseDao<Articles> {
+
+	public static Logger log = LoggerFactory.getLogger(ArticlesDao.class);
 
 	public static final String TABLE_NAME = "articles";
 

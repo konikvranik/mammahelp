@@ -1,10 +1,12 @@
 package cz.mammahelp.handy.ui;
 
 import static cz.mammahelp.handy.Constants.NEWS_KEY;
-import static cz.mammahelp.handy.Constants.log;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -32,6 +34,8 @@ import cz.mammahelp.handy.MammaHelpService.FeederServiceBinder;
 import cz.mammahelp.handy.R;
 
 public class MainActivity extends AbstractMammaHelpActivity {
+
+	public static Logger log = LoggerFactory.getLogger(MainActivity.class);
 
 	/**
 	 * Fragment managing the behaviors, interactions and presentation of the
