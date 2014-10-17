@@ -1,12 +1,5 @@
 package cz.mammahelp.handy;
 
-import static cz.mammahelp.handy.Constants.DEFAULT_DELETE_DELAY;
-import static cz.mammahelp.handy.Constants.DEFAULT_PREFERENCES;
-import static cz.mammahelp.handy.Constants.DELETE_DELAY_KEY;
-import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
-
-import java.util.Calendar;
-import java.util.Locale;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -14,11 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.database.DataSetObservable;
 import android.database.DataSetObserver;
 import android.os.AsyncTask;
@@ -169,8 +159,6 @@ public class MammaHelpService extends Service {
 
 	void updateData() throws MammaHelpException {
 
-		SharedPreferences prefs = getApplicationContext().getSharedPreferences(
-				DEFAULT_PREFERENCES, Context.MODE_PRIVATE);
 		try {
 
 			try {
@@ -184,10 +172,6 @@ public class MammaHelpService extends Service {
 						if (item.getId() == null || item.getId() < 0) {
 							log.debug("Updating all articles.");
 							getArticleFeeder().feedData();
-							Editor editor = prefs.edit();
-							editor.putLong(LAST_UPDATED_KEY,
-									System.currentTimeMillis());
-							editor.commit();
 						} else {
 							log.debug("Updating article " + item.getId());
 							getArticleFeeder().feedData((Articles) item);
@@ -220,12 +204,12 @@ public class MammaHelpService extends Service {
 			NotificationUtils.makeNotification(getApplicationContext(), e);
 		}
 
-		long delay = prefs.getLong(DELETE_DELAY_KEY, DEFAULT_DELETE_DELAY);
-		if (delay >= 0) {
-			Calendar cal = Calendar.getInstance(Locale.getDefault());
-			cal.setTimeInMillis(System.currentTimeMillis() - delay);
-			// mdao.deleteOlder(cal);
-		}
+		// long delay = prefs.getLong(DELETE_DELAY_KEY, DEFAULT_DELETE_DELAY);
+		// if (delay >= 0) {
+		// Calendar cal = Calendar.getInstance(Locale.getDefault());
+		// cal.setTimeInMillis(System.currentTimeMillis() - delay);
+		// mdao.deleteOlder(cal);
+		// }
 		getDbHelper().notifyDataSetChanged();
 	}
 

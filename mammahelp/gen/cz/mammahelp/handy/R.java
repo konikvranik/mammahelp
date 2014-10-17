@@ -1519,7 +1519,7 @@ containing a value of this type.
         public static final int upper_shadow=0x7f020095;
     }
     public static final class id {
-        public static final int action_about=0x7f0a006c;
+        public static final int action_about=0x7f0a006d;
         public static final int action_bar=0x7f0a002e;
         public static final int action_bar_activity_content=0x7f0a0027;
         public static final int action_bar_container=0x7f0a002d;
@@ -1531,8 +1531,8 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f0a0028;
         public static final int action_menu_presenter=0x7f0a0029;
         public static final int action_mode_close_button=0x7f0a0036;
-        public static final int action_refresh=0x7f0a006d;
-        public static final int action_settings=0x7f0a006b;
+        public static final int action_refresh=0x7f0a006e;
+        public static final int action_settings=0x7f0a006c;
         public static final int activity_chooser_view_content=0x7f0a0037;
         public static final int always=0x7f0a001e;
         public static final int annotation=0x7f0a0066;
@@ -1589,6 +1589,7 @@ containing a value of this type.
         public static final int progress_circular=0x7f0a002a;
         public static final int progress_horizontal=0x7f0a002b;
         public static final int radio=0x7f0a0041;
+        public static final int refresh=0x7f0a006b;
         public static final int sandbox=0x7f0a0008;
         public static final int satellite=0x7f0a0002;
         public static final int search_badge=0x7f0a0044;

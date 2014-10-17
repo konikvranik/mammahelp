@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.view.MenuItem;
+import cz.mammahelp.handy.Constants;
+import cz.mammahelp.handy.MammaHelpService;
 import cz.mammahelp.handy.R;
 
 /**
@@ -121,5 +124,17 @@ public class PreferencesActivity extends PreferenceActivity {
 	@Override
 	protected boolean isValidFragment(String fragmentName) {
 		return PrefsFragmentUpdateInner.class.getName().equals(fragmentName);
+	}
+
+	@Override
+	public void onHeaderClick(Header header, int position) {
+		if (header.id == R.id.refresh) {
+			Intent intent = new Intent(getApplicationContext(),
+					MammaHelpService.class);
+			intent.putExtra(Constants.ARTICLE_KEY, (long) -1);
+			intent.putExtra(Constants.CENTER_KEY, (long) -1);
+			startService(intent);
+		} else
+			super.onHeaderClick(header, position);
 	}
 }

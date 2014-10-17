@@ -1,5 +1,7 @@
 package cz.mammahelp.handy.feeder;
 
+import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +20,6 @@ import org.xml.sax.InputSource;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.Preference;
 
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndContent;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
@@ -86,6 +87,13 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 		Collection<News> older = getDao().findOlder(syncTime.getTime());
 		if (older != null)
 			getDao().delete(older);
+
+		getContext()
+				.getSharedPreferences(
+						getContext().getResources().getString(
+								R.string.news_preferences),
+						Context.MODE_PRIVATE).edit()
+				.putLong(LAST_UPDATED_KEY, System.currentTimeMillis());
 
 		NotificationUtils.makeNotification(
 				getContext().getApplicationContext(), MainActivity.class,

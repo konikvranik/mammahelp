@@ -23,17 +23,23 @@
         <extra
             android:name="update_times"
             android:value="update_times_others" />
-        
     </header>
-    <!--
-    header
+    <header
+        android:id="@+id/refresh"
+        android:key="refresh"
         android:icon="@drawable/ic_action_call"
         android:summary="Launches an Intent."
         android:title="Intent" >
         <intent
-            android:action="android.intent.action.VIEW"
-            android:data="http://www.android.com" />
-    </heade
-    -->
+            android:targetClass="cz.mammahelp.handy.MammaHelpService"
+            android:targetPackage="cz.mammahelp.handy" >
+            <extra
+                android:name="article"
+                android:value="-1" />
+            <extra
+                android:name="center"
+                android:value="-1" />
+        </intent>
+    </header>
 
 </preference-headers>
