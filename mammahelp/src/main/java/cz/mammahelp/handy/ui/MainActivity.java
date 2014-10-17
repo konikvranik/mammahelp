@@ -1,12 +1,12 @@
 package cz.mammahelp.handy.ui;
 
+import static cz.mammahelp.handy.Constants.NEWS_KEY;
 import static cz.mammahelp.handy.Constants.log;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import android.app.ActionBar;
-import android.app.ActionBar.LayoutParams;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentManager.BackStackEntry;
@@ -18,9 +18,6 @@ import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.widget.DrawerLayout;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -139,9 +136,8 @@ public class MainActivity extends AbstractMammaHelpActivity {
 				return true;
 			}
 			Intent intent = new Intent(this, MammaHelpService.class);
+			intent.putExtra(NEWS_KEY, -1);
 			startService(intent);
-
-			startService(new Intent(this, MammaHelpService.class));
 			return true;
 
 			// case R.id.action_find_on_map:
