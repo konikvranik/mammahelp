@@ -101,6 +101,7 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 	public GenericFeeder(Context context, int i) {
 		this(context);
 		level = i;
+
 	}
 
 	public abstract void feedData() throws Exception;
@@ -133,7 +134,7 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 		return getInputStreamFromUrl(url, null);
 	}
 
-	protected InputStream getInputStreamFromUrl(URL url, Date updatedTime)
+	protected InputStream getInputStreamFromUrl(URL url, Date lastUpdatedTime)
 			throws IOException, MalformedURLException, MammaHelpException,
 			URISyntaxException {
 
@@ -160,19 +161,18 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 			return new FileInputStream(new File(uri));
 		}
 
-		Long updatedTimeMilis = updatedTime == null ? null : updatedTime
-				.getTime();
-
-		HttpURLConnection.setFollowRedirects(true);
 		HttpURLConnection openConnection = (HttpURLConnection) url
 				.openConnection();
+		openConnection.setIfModifiedSince(lastUpdatedTime == null ? null
+				: lastUpdatedTime.getTime());
 		openConnection.setInstanceFollowRedirects(true);
 
 		int statusCode = openConnection.getResponseCode();
 		if (statusCode < 300) {
-			if (updatedTimeMilis != null
+			if (lastUpdatedTime != null
 					&& openConnection.getLastModified() > 0
-					&& updatedTimeMilis > openConnection.getLastModified()) {
+					&& lastUpdatedTime.getTime() > openConnection
+							.getLastModified()) {
 				return null;
 			}
 
@@ -180,12 +180,20 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 			if ("gzip".equals(openConnection.getContentEncoding())) {
 				is = new GZIPInputStream(is);
 			}
-			if (updatedTime != null)
-				updatedTime.setTime(openConnection.getLastModified());
+			if (lastUpdatedTime != null
+					&& openConnection.getLastModified() > lastUpdatedTime
+							.getTime())
+				lastUpdatedTime.setTime(openConnection.getLastModified());
 
 			setUrl(openConnection.getURL());
 
 			return is;
+		} else if (statusCode == 300) {
+			throw new MammaHelpException(R.string.failed_to_connect,
+					new String[] { String.valueOf(statusCode) });
+		} else if (statusCode < 305) {
+			setUrl(openConnection.getURL());
+			return null;
 		} else if (statusCode < 400) {
 			return null;
 		} else {
@@ -254,7 +262,6 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 					URL url = new URL(attr.getValue());
 					String newValue = attr.getValue();
 
-					HttpURLConnection.setFollowRedirects(true);
 					HttpURLConnection conn = (HttpURLConnection) url
 							.openConnection();
 					conn.setInstanceFollowRedirects(true);
@@ -266,15 +273,8 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 							Identificable<?> id = saveEnclosure(conn);
 							newValue = LocalDbContentProvider.CONTENT_ENCLOSURE_URI
 									+ "/" + id.getId();
-						} else {
-							if (false
-									&& newValue != null
-									&& newValue
-											.startsWith("http://www.mammahelp.cz/")
-									&& !newValue.equals(topUrl))
-								if (conn.getContentType().startsWith(
-										"text/html"))
-									newValue = saveArticle(conn);
+						} else if ("href".equals(attr.getName())) {
+							newValue = recurseArticles(topUrl, newValue, conn);
 						}
 					}
 
@@ -304,6 +304,15 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 			throw new MammaHelpException(R.string.unexpected_exception, e);
 		}
 
+	}
+
+	private String recurseArticles(String topUrl, String newValue,
+			HttpURLConnection conn) throws Exception {
+		if (newValue != null && newValue.startsWith("http://www.mammahelp.cz/")
+				&& !newValue.equals(topUrl))
+			if (conn.getContentType().startsWith("text/html"))
+				newValue = saveArticle(conn);
+		return newValue;
 	}
 
 	private String saveArticle(HttpURLConnection conn) throws Exception {

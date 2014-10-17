@@ -1,25 +1,39 @@
-<preference-headers
-        xmlns:android="http://schemas.android.com/apk/res/android">
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <header android:fragment="cz.mammahelp.handy.ui.PreferencesActivity$Prefs1FragmentInner"
-            android:icon="@android:drawable/ic_dialog_info"
-            android:title="Prefs 1"
-            android:summary="An example of some preferences." />
-
-    <header android:fragment="cz.mammahelp.handy.ui.PreferencesActivity$Prefs1FragmentInner"
-            android:icon="@drawable/ic_action_about"
-            android:title="Prefs 2"
-            android:summary="Some other preferences you can see.">
-        <!-- Arbitrary key/value pairs can be included with a header as
-             arguments to its fragment. -->
-        <extra android:name="someKey" android:value="someHeaderValue" />
+    <header
+        android:fragment="cz.mammahelp.handy.ui.PreferencesActivity$PrefsFragmentUpdateInner"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:summary="@string/prefs_summary_news"
+        android:title="@string/prefs_title_news" >
+        <extra
+            android:name="key"
+            android:value="@string/news_preferences" />
+        <extra
+            android:name="update_times"
+            android:value="update_times_news" />
     </header>
-
-    <header android:icon="@drawable/ic_action_call"
-            android:title="Intent"
-            android:summary="Launches an Intent.">
-        <intent android:action="android.intent.action.VIEW"
-                android:data="http://www.android.com" />
+    <header
+        android:fragment="cz.mammahelp.handy.ui.PreferencesActivity$PrefsFragmentUpdateInner"
+        android:icon="@drawable/ic_action_about"
+        android:summary="@string/prefs_summary_articles"
+        android:title="@string/prefs_title_articles" >
+        <extra
+            android:name="key"
+            android:value="@string/others_preferences" />
+        <extra
+            android:name="update_times"
+            android:value="update_times_others" />
+        
     </header>
+    <!--
+    header
+        android:icon="@drawable/ic_action_call"
+        android:summary="Launches an Intent."
+        android:title="Intent" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="http://www.android.com" />
+    </heade
+    -->
 
 </preference-headers>

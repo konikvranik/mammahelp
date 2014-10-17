@@ -4,10 +4,7 @@
 package cz.mammahelp.handy.ui;
 
 import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
-import static cz.mammahelp.handy.Constants.DEFAULT_PREFERENCES;
-import static cz.mammahelp.handy.Constants.PARTICULAR_TIME_KEY;
-import static cz.mammahelp.handy.Constants.UPDATE_INTERVAL_KEY;
-import static cz.mammahelp.handy.Constants.UPDATE_TIME_KEY;
+import static cz.mammahelp.handy.Constants.KEY;
 import static cz.mammahelp.handy.Constants.log;
 
 import java.util.List;
@@ -31,13 +28,10 @@ import cz.mammahelp.handy.R;
  */
 public class PreferencesActivity extends PreferenceActivity {
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-			setupActionBar();
-
+		setupActionBar();
 	}
 
 	/**
@@ -48,7 +42,7 @@ public class PreferencesActivity extends PreferenceActivity {
 		loadHeadersFromResource(R.xml.preference_headers, target);
 	}
 
-	public static class Prefs1FragmentInner extends PreferenceFragment
+	public static class PrefsFragmentUpdateInner extends PreferenceFragment
 			implements OnPreferenceChangeListener {
 
 		@Override
@@ -58,16 +52,33 @@ public class PreferencesActivity extends PreferenceActivity {
 			// Can retrieve arguments from preference XML.
 			log.info("args", "Arguments: " + getArguments());
 
-			getPreferenceManager()
-					.setSharedPreferencesName(DEFAULT_PREFERENCES);
+			String prefsName;
+			if (getArguments().containsKey(KEY)) {
+				prefsName = getArguments().getString(KEY);
+			} else {
+				log.error("Preferences not defined. Defaulting to news.");
+				prefsName = getResources().getString(R.string.news_preferences);
+			}
+
+			getPreferenceManager().setSharedPreferencesName(prefsName);
 
 			// Load the preferences from an XML resource
-			addPreferencesFromResource(R.xml.fragmented_preferences_inner);
+			addPreferencesFromResource(R.xml.fragmented_preferences_update);
+
+			if (getArguments().containsKey("update_times")) {
+
+				IntervalPreference auto = (IntervalPreference) findPreference("update_interval");
+
+				int id = getResources().getIdentifier(
+						getArguments().getString("update_times"), "array",
+						getActivity().getPackageName());
+
+				auto.setValues(getResources().getStringArray(id));
+			}
 
 			SharedPreferences sp = getPreferenceManager()
 					.getSharedPreferences();
-			setHandler(sp.getAll(), new String[] { PARTICULAR_TIME_KEY,
-					AUTOMATIC_UPDATES_KEY });
+			setHandler(sp.getAll(), new String[] { AUTOMATIC_UPDATES_KEY });
 
 		}
 
@@ -81,29 +92,6 @@ public class PreferencesActivity extends PreferenceActivity {
 
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
-			boolean state = false;
-			boolean enabled = false;
-
-			if (PARTICULAR_TIME_KEY.equals(preference.getKey())) {
-				if (newValue != null)
-					state = (Boolean) newValue;
-				enabled = getPreferenceManager().getSharedPreferences()
-						.getBoolean(AUTOMATIC_UPDATES_KEY, false);
-			}
-			if (AUTOMATIC_UPDATES_KEY.equals(preference.getKey())) {
-				if (newValue != null)
-					enabled = (Boolean) newValue;
-				state = getPreferenceManager().getSharedPreferences()
-						.getBoolean(PARTICULAR_TIME_KEY, true);
-			}
-			if (PARTICULAR_TIME_KEY.equals(preference.getKey())
-					|| AUTOMATIC_UPDATES_KEY.equals(preference.getKey())) {
-				findPreference(PARTICULAR_TIME_KEY).setEnabled(enabled);
-				findPreference(UPDATE_TIME_KEY).setEnabled(state && enabled);
-				findPreference(UPDATE_INTERVAL_KEY).setEnabled(
-						!state && enabled);
-			}
-
 			return true;
 		}
 	}
@@ -123,5 +111,10 @@ public class PreferencesActivity extends PreferenceActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected boolean isValidFragment(String fragmentName) {
+		return PrefsFragmentUpdateInner.class.getName().equals(fragmentName);
 	}
 }

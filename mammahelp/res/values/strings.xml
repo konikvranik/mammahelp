@@ -85,5 +85,8 @@
     <string name="update_already_running">Upate already running</string>
     <string name="centers_map">Map</string>
     <string name="all">All</string>
+    <string name="prefs_summary_news">Enable/disable updating of news and allows to change interval.</string>
+    <string name="prefs_title_news">News</string>
+    <string name="prefs_summary_articles">Enable/disable updating of articles and allows to change interval.</string>    <string name="prefs_title_articles">Other content</string>
 
 </resources>

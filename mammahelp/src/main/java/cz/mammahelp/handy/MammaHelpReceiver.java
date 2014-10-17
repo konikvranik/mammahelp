@@ -3,15 +3,14 @@
  */
 package cz.mammahelp.handy;
 
+import static cz.mammahelp.handy.Constants.ARTICLE_KEY;
 import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
-import static cz.mammahelp.handy.Constants.DEFAULT_PREFERENCES;
+import static cz.mammahelp.handy.Constants.CENTER_KEY;
 import static cz.mammahelp.handy.Constants.DEFAULT_UPDATE_INTERVAL;
 import static cz.mammahelp.handy.Constants.DEFAULT_WIFI_ONLY;
 import static cz.mammahelp.handy.Constants.LAST_UPDATED_ARTICLES_KEY;
-import static cz.mammahelp.handy.Constants.PARTICULAR_TIME_KEY;
+import static cz.mammahelp.handy.Constants.NEWS_KEY;
 import static cz.mammahelp.handy.Constants.UPDATE_INTERVAL_KEY;
-import static cz.mammahelp.handy.Constants.UPDATE_TIME_KEY;
-import static cz.mammahelp.handy.Constants.WEEK_IN_MILLIS;
 import static cz.mammahelp.handy.Constants.WIFI_ONLY_KEY;
 import static cz.mammahelp.handy.Constants.log;
 
@@ -36,15 +35,30 @@ public class MammaHelpReceiver extends BroadcastReceiver {
 					.putExtra(Constants.REGISTER_FLAG, true));
 		} else if (Intent.ACTION_TIME_TICK.equals(intent.getAction())) {
 			log.debug("DemoReceiver.onReceive(ACTION_TIME_TICK)");
-			if (decideIfStart(context)) {
-				log.debug("Receiver is starting service...");
-				context.startService(new Intent(context, MammaHelpService.class));
+
+			if (decideIfStart(context,
+					context.getResources().getString(R.string.news_preferences))) {
+				log.debug("Receiver is starting service for news...");
+				Intent newIntent = new Intent(context, MammaHelpService.class);
+				newIntent.putExtra(NEWS_KEY, -1);
+				context.startService(newIntent);
 			}
+
+			if (decideIfStart(context,
+					context.getResources().getString(R.string.others_preferences))) {
+				log.debug("Receiver is starting service for news...");
+				Intent newIntent = new Intent(context, MammaHelpService.class);
+				newIntent.putExtra(CENTER_KEY, -1);
+				newIntent.putExtra(ARTICLE_KEY, -1);
+				context.startService(newIntent);
+			}
+
 		} else
+
 			log.debug("DemoReceiver.onReceive(" + intent.getAction() + ")");
 	}
 
-	private boolean decideIfStart(Context context) {
+	private boolean decideIfStart(Context context, String prefsName) {
 
 		log.debug("deciding if start");
 
@@ -53,8 +67,8 @@ public class MammaHelpReceiver extends BroadcastReceiver {
 
 		log.debug("deciding if start: network ok");
 
-		SharedPreferences prefs = context.getSharedPreferences(
-				DEFAULT_PREFERENCES, Context.MODE_PRIVATE);
+		SharedPreferences prefs = context.getSharedPreferences(prefsName,
+				Context.MODE_PRIVATE);
 		long time = System.currentTimeMillis();
 
 		if (prefs.getBoolean(WIFI_ONLY_KEY, DEFAULT_WIFI_ONLY)
@@ -66,28 +80,7 @@ public class MammaHelpReceiver extends BroadcastReceiver {
 		if (!prefs.getBoolean(AUTOMATIC_UPDATES_KEY, false))
 			return false;
 
-		if (prefs.getBoolean(PARTICULAR_TIME_KEY, true))
-			return decideOnTime(prefs, time);
-		else
-			return decideOnInterval(prefs, time);
-	}
-
-	private boolean decideOnTime(SharedPreferences prefs, long time) {
-		Calendar now = Calendar.getInstance();
-		now.setTimeInMillis(time);
-
-		Long last = prefs.getLong(LAST_UPDATED_ARTICLES_KEY, time - WEEK_IN_MILLIS);
-
-		Calendar planDefault = Calendar.getInstance(Locale.getDefault());
-		planDefault.set(Calendar.HOUR, 10);
-		planDefault.set(Calendar.MINUTE, 30);
-		planDefault.set(Calendar.SECOND, 0);
-		planDefault.set(Calendar.MILLISECOND, 0);
-
-		return (time > nextUpdateTime(last,
-				prefs.getLong(UPDATE_TIME_KEY, planDefault.getTimeInMillis()),
-				now));
-
+		return decideOnInterval(prefs, time);
 	}
 
 	protected Long nextUpdateTime(Long last, Long plan, Calendar now) {

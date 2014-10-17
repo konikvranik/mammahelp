@@ -7,6 +7,8 @@ public class Constants {
 
 	public static final String DEFAULT_PREFERENCES = "default";
 
+	public static final String KEY = "key";
+
 	public static final String LAST_UPDATED_ARTICLES_KEY = "last_updated";
 	public static final String LAST_UPDATED_NEWS_KEY = "last_updated_news";
 
@@ -15,7 +17,6 @@ public class Constants {
 	public static final String CATEGORY_BACKGROUND_KEY = "category_background";
 	public static final String UPDATE_INTERVAL_KEY = "update_interval";
 	public static final String UPDATE_TIME_KEY = "update_time";
-	public static final String PARTICULAR_TIME_KEY = "particular_time";
 	public static final String AUTOMATIC_UPDATES_KEY = "automatic_updates";
 
 	public static final long SECOND_IN_MILLIS = 1000;

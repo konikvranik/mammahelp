@@ -4,16 +4,37 @@
     <!-- integer name="google_play_services_version">5077000</integer -->
 
     <string name="news_feed_url">http://www.mammahelp.cz/feed/</string>
-<!--     <string name="locations_url">file:///android_res/raw/locations</string> -->
+    <!-- <string name="locations_url">file:///android_res/raw/locations</string> -->
     <string name="locations_url">file:///android_res/raw/locations.xml</string>
-<!--      <string name="locations_url">android.resource://cz.mammahelp.handy/raw/locations</string> -->
+    <!-- <string name="locations_url">android.resource://cz.mammahelp.handy/raw/locations</string> -->
+
+    <string name="news_preferences">news</string>
+    <string name="others_preferences">others</string>
 
     <integer-array name="plurals">
         <item>1</item>
         <item>2</item>
     </integer-array>
 
-    <string-array name="update_times">
+    <string-array name="update_times_others">
+
+        <!-- 1 day -->
+        <item>86400000</item>
+
+        <!-- 1 wk -->
+        <item>604800000</item>
+
+        <!-- 2 wk -->
+        <item>1209600000</item>
+
+        <!-- 4 wk -->
+        <item>2419200000</item>
+
+        <!-- 13 wk -->
+        <item>7862400000</item>
+        
+    </string-array>
+    <string-array name="update_times_news">
 
         <!-- 10 min -->
         <item>600000</item>
