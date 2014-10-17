@@ -26,7 +26,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:gravity="right"
-            android:textColor="@color/mammahelp_dark_grey"
+            android:textColor="@color/mammahelp_blue_dark"
             android:text="updated"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 

@@ -164,11 +164,17 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 
 		HttpURLConnection openConnection = (HttpURLConnection) url
 				.openConnection();
+
+		log.debug("Last updated: " + lastUpdatedTime);
+
 		if (lastUpdatedTime != null)
 			openConnection.setIfModifiedSince(lastUpdatedTime.getTime());
 		openConnection.setInstanceFollowRedirects(true);
 
 		int statusCode = openConnection.getResponseCode();
+
+		log.debug("Status code: " + statusCode);
+
 		if (statusCode < 300) {
 			if (lastUpdatedTime != null
 					&& openConnection.getLastModified() > 0
@@ -283,16 +289,16 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 
 				} catch (MalformedURLException e) {
 					log.warn(e.getMessage());
-					log.debug(e.getMessage(), e);
+					// log.debug(e.getMessage(), e);
 				} catch (IOException e) {
 					log.error(e.getMessage());
-					log.debug(e.getMessage(), e);
+					// log.debug(e.getMessage(), e);
 					// throw new
 					// MammaHelpException(R.string.unexpected_exception,
 					// e);
 				} catch (Exception e) {
 					log.error("" + e.getMessage());
-					log.debug(e.getMessage(), e);
+					// log.debug(e.getMessage(), e);
 					// throw new
 					// MammaHelpException(R.string.unexpected_exception,
 					// e);

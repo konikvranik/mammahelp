@@ -105,8 +105,11 @@ public class MammaHelpService extends Service {
 		String[] types = new String[] { Constants.ARTICLE_KEY,
 				Constants.NEWS_KEY, Constants.CENTER_KEY };
 		for (String type : types) {
-			Long id = intent.getLongExtra(type, -1);
-			if (id > -1) {
+			Long id = intent.getLongExtra(type, -2);
+			if (id > -2) {
+
+				log.debug("Found " + type + " for update.");
+
 				Identificable<? extends Identificable<?>> obj = cerateIdByType(type);
 				obj.setId(id);
 				if (!feedqueue.contains(obj))
@@ -115,15 +118,21 @@ public class MammaHelpService extends Service {
 			}
 		}
 		if (!added) {
+
+			log.debug("Adding all.");
 			feedqueue.add(new News());
 			feedqueue.add(new LocationPoint());
 			feedqueue.add(new Articles());
 		}
 
+		log.debug("Is running? " + isRunning());
+
 		if (isRunning())
 			return START_NOT_STICKY;
 
 		// this.force = intent.getExtras().getBoolean("force", false);
+
+		log.debug("Is updating? " + updating);
 
 		if (!updating) {
 			new Worker().execute(new Void[0]);
@@ -169,21 +178,31 @@ public class MammaHelpService extends Service {
 				for (Identificable<? extends Identificable<?>> item = feedqueue
 						.poll(); item != null; item = feedqueue.poll()) {
 
+					log.debug("Updateing item " + item);
+
 					if (item instanceof Articles) {
-						if (item.getId() == null) {
+						if (item.getId() == null || item.getId() < 0) {
+							log.debug("Updating all articles.");
 							getArticleFeeder().feedData();
 							Editor editor = prefs.edit();
 							editor.putLong(LAST_UPDATED_KEY,
 									System.currentTimeMillis());
 							editor.commit();
-						} else
+						} else {
+							log.debug("Updating article " + item.getId());
 							getArticleFeeder().feedData((Articles) item);
+						}
+
 					} else if (item instanceof News) {
-						if (item.getId() == null)
+						if (item.getId() == null || item.getId() < 0) {
+							log.debug("Updating all news.");
 							getNewsFeeder().feedData();
-						else
+						} else {
+							log.debug("Updating news " + item.getId());
 							getNewsFeeder().feedData((News) item);
+						}
 					} else if (item instanceof LocationPoint) {
+						log.debug("Updating all locations.");
 						getLocationPointFeeder().feedData();
 					}
 
@@ -246,7 +265,7 @@ public class MammaHelpService extends Service {
 			updating = true;
 			notifyChanged();
 			try {
-
+				log.debug("Trying to update data.");
 				updateData();
 			} catch (MammaHelpException e) {
 				log.error(e.getMessage(), e);

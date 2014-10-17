@@ -44,7 +44,7 @@ public class MammaHelpReceiver extends BroadcastReceiver {
 					context.getResources().getString(R.string.news_preferences))) {
 				log.debug("Receiver is starting service for news...");
 				Intent newIntent = new Intent(context, MammaHelpService.class);
-				newIntent.putExtra(NEWS_KEY, -1);
+				newIntent.putExtra(NEWS_KEY,(long) -1);
 				context.startService(newIntent);
 			}
 
@@ -54,8 +54,8 @@ public class MammaHelpReceiver extends BroadcastReceiver {
 							R.string.others_preferences))) {
 				log.debug("Receiver is starting service for news...");
 				Intent newIntent = new Intent(context, MammaHelpService.class);
-				newIntent.putExtra(CENTER_KEY, -1);
-				newIntent.putExtra(ARTICLE_KEY, -1);
+				newIntent.putExtra(CENTER_KEY,(long) -1);
+				newIntent.putExtra(ARTICLE_KEY,(long) -1);
 				context.startService(newIntent);
 			}
 

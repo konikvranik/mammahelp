@@ -140,7 +140,7 @@ public class MainActivity extends AbstractMammaHelpActivity {
 				return true;
 			}
 			Intent intent = new Intent(this, MammaHelpService.class);
-			intent.putExtra(NEWS_KEY, -1);
+			intent.putExtra(NEWS_KEY, (long) -1);
 			startService(intent);
 			return true;
 

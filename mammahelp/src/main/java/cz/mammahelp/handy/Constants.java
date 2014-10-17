@@ -57,4 +57,6 @@ public class Constants {
 
 	public static final int NEWS_NOTIFICATION_ID = 1;
 
+	public static final String NEWS_LAST_UPDATED = "news_last_updated";
+
 }

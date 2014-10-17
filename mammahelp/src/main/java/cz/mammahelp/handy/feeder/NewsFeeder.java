@@ -17,6 +17,8 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.Preference;
 
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndContent;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
@@ -87,7 +89,7 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 
 		NotificationUtils.makeNotification(
 				getContext().getApplicationContext(), MainActivity.class,
-				Constants.NEWS_NOTIFICATION_ID, R.drawable.ic_action_error,
+				Constants.NEWS_NOTIFICATION_ID, R.drawable.logo,
 				R.string.news_updated_title, getContext().getResources()
 						.getString(R.string.news_updated_description));
 
@@ -102,7 +104,12 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 
 		try {
 
-			is = getInputStreamFromUrl(new URL(url));
+			SharedPreferences prefs = getContext().getSharedPreferences(
+					getContext().getResources().getString(
+							R.string.news_preferences), Context.MODE_PRIVATE);
+			long lastUpdated = prefs.getLong(Constants.NEWS_LAST_UPDATED, 0);
+			Date lastTimeUpdated = new Date(lastUpdated);
+			is = getInputStreamFromUrl(new URL(url), lastTimeUpdated);
 			if (is == null)
 				return null;
 			InputSource source = new InputSource(is);
@@ -110,6 +117,12 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 					getClass().getClassLoader());
 			SyndFeedInput input = new SyndFeedInput();
 			feed = input.build(source);
+
+			if (lastTimeUpdated != null
+					&& lastTimeUpdated.getTime() > lastUpdated)
+				prefs.edit()
+						.putLong(Constants.NEWS_LAST_UPDATED,
+								lastTimeUpdated.getTime()).commit();
 
 			// if(getUrl()!=null)
 			// TODO update redirected URL here!

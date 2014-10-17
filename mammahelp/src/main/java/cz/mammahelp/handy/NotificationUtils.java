@@ -5,6 +5,9 @@ import static cz.mammahelp.handy.Constants.EXCEPTION;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -16,6 +19,9 @@ import android.support.v4.app.TaskStackBuilder;
 import cz.mammahelp.handy.ui.ErrorViewActivity;
 
 public class NotificationUtils {
+
+	private static final Logger log = LoggerFactory
+			.getLogger(NotificationUtils.class);
 
 	public NotificationUtils() {
 	}
@@ -48,7 +54,7 @@ public class NotificationUtils {
 	}
 
 	public static void makeNotification(Context ctx, Class<?> clz,
-			Integer icon, int notifyID, int title, String description) {
+			int notifyID, Integer icon, int title, String description) {
 		makeNotification(ctx, clz, notifyID, icon, title, description,
 				new Intent(ctx, clz));
 	}
@@ -59,6 +65,11 @@ public class NotificationUtils {
 
 		if (icon == null)
 			icon = R.drawable.ic_action_warning;
+
+		log.debug("iconid: " + icon);
+		log.debug("iconname: " + ctx.getResources().getResourceName(icon));
+		log.debug("iconname: " + ctx.getResources().getResourceEntryName(icon));
+		log.debug(ctx.getResources().getDrawable(icon).toString());
 
 		Builder builder = new NotificationCompat.Builder(ctx)
 				.setTicker(ctx.getResources().getString(R.string.app_name))
@@ -74,7 +85,7 @@ public class NotificationUtils {
 			stackBuilder.addNextIntent(intent);
 			builder.setContentIntent(stackBuilder.getPendingIntent(0,
 					PendingIntent.FLAG_UPDATE_CURRENT));
-			builder.setAutoCancel(false);
+			builder.setAutoCancel(true);
 		}
 
 		((NotificationManager) ctx
