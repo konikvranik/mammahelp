@@ -12,6 +12,7 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -51,16 +52,14 @@ public class AboutActivity extends AbstractMammaHelpActivity {
 		versionView.setText(getResources().getString(R.string.versionString,
 				versionName, versionCode));
 
-		SharedPreferences prefs = getSharedPreferences();
-		Date lastUpdated = new Date(prefs.getLong(LAST_UPDATED_KEY, 0));
-		versionView = (TextView) getWindow().findViewById(R.id.last_updated);
-		versionView.setText(getResources().getString(
-				R.string.date_time,
-				DateFormat
-						.getDateInstance(DateFormat.LONG, Locale.getDefault())
-						.format(lastUpdated),
-				DateFormat.getTimeInstance(DateFormat.SHORT,
-						Locale.getDefault()).format(lastUpdated)));
+		updateLastUpdated(
+				getSharedPreferences(
+						getResources().getString(R.string.news_preferences),
+						Context.MODE_PRIVATE), R.id.last_updated_news);
+		updateLastUpdated(
+				getSharedPreferences(
+						getResources().getString(R.string.others_preferences),
+						Context.MODE_PRIVATE), R.id.last_updated);
 
 		WebView usage = (WebView) getWindow().findViewById(R.id.usage);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -72,6 +71,19 @@ public class AboutActivity extends AbstractMammaHelpActivity {
 		usage.getSettings().setStandardFontFamily("sans-serif");
 		usage.loadUrl("file:///android_res/raw/about.html");
 
+	}
+
+	private void updateLastUpdated(SharedPreferences prefs, int viewId) {
+		TextView versionView;
+		Date lastUpdated = new Date(prefs.getLong(LAST_UPDATED_KEY, 0));
+		versionView = (TextView) getWindow().findViewById(viewId);
+		versionView.setText(getResources().getString(
+				R.string.date_time,
+				DateFormat
+						.getDateInstance(DateFormat.LONG, Locale.getDefault())
+						.format(lastUpdated),
+				DateFormat.getTimeInstance(DateFormat.SHORT,
+						Locale.getDefault()).format(lastUpdated)));
 	}
 
 }
