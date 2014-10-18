@@ -54,12 +54,15 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao, Articles> {
 		if (is == null)
 			return;
 
-		article.setSyncTime(syncTime);
-
 		Document d = getTidy(null).parseDOM(is, null);
+
+		if (d == null)
+			return;
 
 		String title = (String) applyXpath(d, "//div[@id='title']//h1/text()",
 				XPathConstants.STRING);
+
+		article.setSyncTime(syncTime);
 
 		if (title != null)
 			article.setTitle(title);

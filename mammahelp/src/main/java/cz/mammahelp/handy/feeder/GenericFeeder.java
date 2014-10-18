@@ -369,6 +369,10 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 		Calendar syncTime = enclosure.getSyncTime();
 		if (syncTime != null)
 			conn.setIfModifiedSince(syncTime.getTimeInMillis());
+		else {
+			syncTime = Calendar.getInstance();
+			syncTime.setTimeInMillis(0);
+		}
 		conn.setInstanceFollowRedirects(true);
 
 		int status = conn.getResponseCode();
@@ -419,7 +423,8 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 		else
 			date = null;
 		InputStream is = getInputStreamFromUrl(url, date);
-		syncTime.setTime(date);
+		if (syncTime != null)
+			syncTime.setTime(date);
 		return is;
 	}
 
