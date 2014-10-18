@@ -1,6 +1,7 @@
 package cz.mammahelp.handy.model;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
 
 /**
  * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -21,6 +22,8 @@ public class Enclosure implements Identificable<Enclosure> {
 	private Long id;
 
 	private byte[] data;
+
+	public Calendar syncTime;
 
 	public Enclosure(Long id) {
 		setId(id);
@@ -102,6 +105,14 @@ public class Enclosure implements Identificable<Enclosure> {
 
 	public void setData(byte[] data) {
 		this.data = data;
+	}
+
+	public Calendar getSyncTime() {
+		return syncTime;
+	}
+
+	public void setSyncTime(Calendar syncTime) {
+		this.syncTime = syncTime;
 	}
 
 	private StringBuffer toStringAppendLine(String key, Object value) {

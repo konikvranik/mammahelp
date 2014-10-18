@@ -377,6 +377,15 @@ public class NavigationDrawerFragment extends Fragment {
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setHomeButtonEnabled(true);
+		if (mDrawerToggle != null) {
+			mDrawerToggle.setDrawerIndicatorEnabled(!(getFragmentManager()
+					.getBackStackEntryCount() > 1));
+			mDrawerToggle.setDrawerIndicatorEnabled(true);
+			mDrawerToggle.syncState();
+		}
+
 		// actionBar.setTitle(R.string.app_name);
 	}
 

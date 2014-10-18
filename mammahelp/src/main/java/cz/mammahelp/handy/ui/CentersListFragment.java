@@ -474,14 +474,8 @@ public class CentersListFragment extends ANamedFragment {
 
 	@Override
 	public void onPause() {
-		GoogleMap map = getMap();
 		if (mapView != null)
 			mapView.onPause();
-
-		/*
-		 * if (map != null) { map.setMyLocationEnabled(false); }
-		 */
-
 		super.onPause();
 	}
 

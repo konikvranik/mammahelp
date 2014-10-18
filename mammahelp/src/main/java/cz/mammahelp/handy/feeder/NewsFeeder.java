@@ -92,8 +92,8 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 				.getSharedPreferences(
 						getContext().getResources().getString(
 								R.string.news_preferences),
-						Context.MODE_PRIVATE).edit()
-				.putLong(LAST_UPDATED_KEY, System.currentTimeMillis());
+						Context.MODE_MULTI_PROCESS).edit()
+				.putLong(LAST_UPDATED_KEY, System.currentTimeMillis()).commit();
 
 		NotificationUtils.makeNotification(
 				getContext().getApplicationContext(), MainActivity.class,
@@ -180,7 +180,8 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 				.getSyncTime().getTime();
 
 		log.debug("Loading body from " + news.getUrl());
-		InputStream is = getInputStreamFromUrl(new URL(news.getUrl()), null);
+		InputStream is = getInputStreamFromUrl(new URL(news.getUrl()),
+				(Date) null);
 		if (is == null)
 			return;
 

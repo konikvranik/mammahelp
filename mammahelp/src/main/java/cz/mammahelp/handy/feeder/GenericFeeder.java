@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 import java.util.zip.GZIPInputStream;
@@ -132,14 +133,14 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 	protected abstract T createDao();
 
 	protected InputStream getInputStreamFromUrl(URL url) throws Exception {
-		return getInputStreamFromUrl(url, null);
+		return getInputStreamFromUrl(url, (Date) null);
 	}
 
 	protected InputStream getInputStreamFromUrl(URL url, Date lastUpdatedTime)
 			throws IOException, MalformedURLException, MammaHelpException,
 			URISyntaxException {
 
-		setUrl(url);
+		setRealUrl(url);
 
 		if ("file".equals(url.getProtocol())) {
 
@@ -192,14 +193,14 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 							.getTime())
 				lastUpdatedTime.setTime(openConnection.getLastModified());
 
-			setUrl(openConnection.getURL());
+			setRealUrl(openConnection.getURL());
 
 			return is;
 		} else if (statusCode == 300) {
 			throw new MammaHelpException(R.string.failed_to_connect,
 					new String[] { String.valueOf(statusCode) });
 		} else if (statusCode < 305) {
-			setUrl(openConnection.getURL());
+			setRealUrl(openConnection.getURL());
 			return null;
 		} else if (statusCode < 400) {
 			return null;
@@ -209,12 +210,26 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 		}
 	}
 
-	public void setUrl(URL url) {
-		realUrl = url;
+	public void setRealUrl(URL url) {
+		realUrl = normalizeUrl(url);
 
 	}
 
-	public URL getUrl() {
+	protected URL normalizeUrl(URL url) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(url.getProtocol());
+		// sb.append(url.getUserInfo());
+		sb.append(url.getHost());
+		int port = url.getPort();
+		if (port > 0 && port != url.getDefaultPort())
+			sb.append(port);
+		sb.append(url.getPath());
+		sb.append(url.getQuery());
+		// sb.append(url.getRef());
+		return url;
+	}
+
+	public URL getRealUrl() {
 		return realUrl;
 	}
 
@@ -341,13 +356,32 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 	}
 
 	protected Enclosure saveEnclosure(HttpURLConnection conn)
-			throws IOException {
-
-		InputStream is = conn.getInputStream();
-
-		URL url = conn.getURL();
+			throws IOException, MammaHelpException, URISyntaxException {
 
 		EnclosureDao enclosureDao = new EnclosureDao(getDbHelper());
+
+		URL url = normalizeUrl(conn.getURL());
+
+		Enclosure enclosure = enclosureDao.findByExactUrl(url.toExternalForm());
+		if (enclosure == null)
+			enclosure = new Enclosure();
+
+		Calendar syncTime = enclosure.getSyncTime();
+		if (syncTime != null)
+			conn.setIfModifiedSince(syncTime.getTimeInMillis());
+		conn.setInstanceFollowRedirects(true);
+
+		int status = conn.getResponseCode();
+
+		if (status >= 400)
+			throw new MammaHelpException(R.string.failed_to_connect,
+					new String[] { String.valueOf(status) });
+		else if (status >= 300)
+			return enclosure;
+
+		URL savedUrl = getRealUrl();
+		InputStream is = getInputStreamFromUrl(url, syncTime);
+		setRealUrl(savedUrl);
 
 		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
@@ -362,7 +396,7 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 
 		is.close();
 
-		Enclosure enclosure = new Enclosure();
+		enclosure.setSyncTime(syncTime);
 		enclosure.setUrl(url.toExternalForm());
 		enclosure.setType(conn.getContentType());
 		byte[] data = buffer.toByteArray();
@@ -374,6 +408,19 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 
 		return enclosure;
 
+	}
+
+	protected InputStream getInputStreamFromUrl(URL url, Calendar syncTime)
+			throws MalformedURLException, IOException, MammaHelpException,
+			URISyntaxException {
+		Date date;
+		if (syncTime != null)
+			date = syncTime.getTime();
+		else
+			date = null;
+		InputStream is = getInputStreamFromUrl(url, date);
+		syncTime.setTime(date);
+		return is;
 	}
 
 	public XPath getXpath() {

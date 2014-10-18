@@ -14,12 +14,6 @@ import org.slf4j.LoggerFactory;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.view.ViewGroup.LayoutParams;
-
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.handy.dao.LocationPointDao;
@@ -33,7 +27,6 @@ public class LocationFeeder extends
 	public static Logger log = LoggerFactory.getLogger(LocationFeeder.class);
 
 	private Geocoder geocoder;
-	private GoogleMap map;
 	private int semaphore;
 	private EnclosureDao edao;
 
@@ -111,17 +104,6 @@ public class LocationFeeder extends
 			lp.setMapImage(e);
 
 		}
-	}
-
-	private GoogleMap getMap() {
-		if (map == null) {
-			MapsInitializer.initialize(getContext());
-			final MapView mv = new MapView(getContext());
-			mv.setLayoutParams(new LayoutParams(1024, 1024));
-			MapsInitializer.initialize(getContext());
-			map = mv.getMap();
-		}
-		return map;
 	}
 
 	private Geocoder getGeocoder() {

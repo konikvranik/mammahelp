@@ -43,6 +43,12 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao, Articles> {
 		if (article.getUrl() == null)
 			return;
 
+		Articles articleByUrl = getDao().findByExactUrl(
+				normalizeUrl(new URL(article.getUrl())).toExternalForm());
+
+		if (articleByUrl != null)
+			article = articleByUrl;
+
 		InputStream is = getInputStreamFromUrl(new URL(article.getUrl()),
 				syncTime);
 		if (is == null)
@@ -57,8 +63,8 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao, Articles> {
 
 		if (title != null)
 			article.setTitle(title);
-		if (getUrl() != null)
-			article.setUrl(getUrl().toExternalForm());
+		if (getRealUrl() != null)
+			article.setUrl(getRealUrl().toExternalForm());
 
 		if (article.getId() == null)
 			getDao().insert(article);
@@ -67,8 +73,8 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao, Articles> {
 
 		saveBody(article, transformBody(d));
 
-		if (getUrl() != null)
-			article.setUrl(getUrl().toExternalForm());
+		if (getRealUrl() != null)
+			article.setUrl(getRealUrl().toExternalForm());
 
 		getDao().update(article);
 

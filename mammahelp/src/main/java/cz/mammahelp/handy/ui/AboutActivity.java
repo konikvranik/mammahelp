@@ -52,14 +52,11 @@ public class AboutActivity extends AbstractMammaHelpActivity {
 		versionView.setText(getResources().getString(R.string.versionString,
 				versionName, versionCode));
 
+		updateLastUpdated(getResources().getString(R.string.news_preferences),
+				R.id.last_updated_news);
 		updateLastUpdated(
-				getSharedPreferences(
-						getResources().getString(R.string.news_preferences),
-						Context.MODE_PRIVATE), R.id.last_updated_news);
-		updateLastUpdated(
-				getSharedPreferences(
-						getResources().getString(R.string.others_preferences),
-						Context.MODE_PRIVATE), R.id.last_updated);
+				getResources().getString(R.string.others_preferences),
+				R.id.last_updated);
 
 		WebView usage = (WebView) getWindow().findViewById(R.id.usage);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -73,9 +70,11 @@ public class AboutActivity extends AbstractMammaHelpActivity {
 
 	}
 
-	private void updateLastUpdated(SharedPreferences prefs, int viewId) {
+	private void updateLastUpdated(String prefsName, int viewId) {
 		TextView versionView;
-		Date lastUpdated = new Date(prefs.getLong(LAST_UPDATED_KEY, 0));
+		SharedPreferences prefs = getApplicationContext().getSharedPreferences(
+				prefsName, Context.MODE_MULTI_PROCESS);
+		Date lastUpdated = new Date(prefs.getLong(LAST_UPDATED_KEY, -1));
 		versionView = (TextView) getWindow().findViewById(viewId);
 		versionView.setText(getResources().getString(
 				R.string.date_time,

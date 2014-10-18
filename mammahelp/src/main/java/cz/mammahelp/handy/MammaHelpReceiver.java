@@ -40,53 +40,54 @@ public class MammaHelpReceiver extends BroadcastReceiver {
 		} else if (Intent.ACTION_TIME_TICK.equals(intent.getAction())) {
 			log.debug("DemoReceiver.onReceive(ACTION_TIME_TICK)");
 
-			if (decideIfStart(context,
-					context.getResources().getString(R.string.news_preferences))) {
+			SharedPreferences prefs = context.getSharedPreferences(context
+					.getResources().getString(R.string.news_preferences),
+					Context.MODE_MULTI_PROCESS);
+			log.debug("test news...");
+			if (decideIfStart(context, prefs)) {
 				log.debug("Receiver is starting service for news...");
 				Intent newIntent = new Intent(context, MammaHelpService.class);
-				newIntent.putExtra(NEWS_KEY,(long) -1);
+				newIntent.putExtra(NEWS_KEY, (long) -1);
 				context.startService(newIntent);
 			}
 
-			if (decideIfStart(
-					context,
-					context.getResources().getString(
-							R.string.others_preferences))) {
+			prefs = context.getSharedPreferences(context.getResources()
+					.getString(R.string.others_preferences),
+					Context.MODE_MULTI_PROCESS);
+			log.debug("test others...");
+			if (decideIfStart(context, prefs)) {
 				log.debug("Receiver is starting service for news...");
 				Intent newIntent = new Intent(context, MammaHelpService.class);
-				newIntent.putExtra(CENTER_KEY,(long) -1);
-				newIntent.putExtra(ARTICLE_KEY,(long) -1);
+				newIntent.putExtra(CENTER_KEY, (long) -1);
+				newIntent.putExtra(ARTICLE_KEY, (long) -1);
 				context.startService(newIntent);
 			}
 
 		} else
-
 			log.debug("DemoReceiver.onReceive(" + intent.getAction() + ")");
 	}
 
-	private boolean decideIfStart(Context context, String prefsName) {
+	private boolean decideIfStart(Context context, SharedPreferences prefs) {
 
 		log.debug("deciding if start");
 
 		if (!NetworkUtils.isConnected(context))
 			return false;
 
-		log.debug("deciding if start: network ok");
-
-		SharedPreferences prefs = context.getSharedPreferences(prefsName,
-				Context.MODE_PRIVATE);
-		long time = System.currentTimeMillis();
+		log.debug("deciding if start: network connected");
 
 		if (prefs.getBoolean(WIFI_ONLY_KEY, DEFAULT_WIFI_ONLY)
 				&& NetworkUtils.isConnectedMobile(context))
 			return false;
 
-		log.debug("deciding if start: wifi ok");
+		log.debug("deciding if start: wifi enabled");
 
 		if (!prefs.getBoolean(AUTOMATIC_UPDATES_KEY, false))
 			return false;
 
-		return decideOnInterval(prefs, time);
+		log.debug("deciding if start: automatic updates enabed");
+
+		return decideOnInterval(prefs);
 	}
 
 	protected Long nextUpdateTime(Long last, Long plan, Calendar now) {
@@ -105,7 +106,7 @@ public class MammaHelpReceiver extends BroadcastReceiver {
 		return now.getTimeInMillis();
 	}
 
-	protected boolean decideOnInterval(SharedPreferences prefs, long time) {
+	protected boolean decideOnInterval(SharedPreferences prefs) {
 		long schedule = prefs.getLong(LAST_UPDATED_KEY, -1);
 
 		try {
@@ -113,16 +114,17 @@ public class MammaHelpReceiver extends BroadcastReceiver {
 				schedule += prefs.getLong(UPDATE_INTERVAL_KEY,
 						DEFAULT_UPDATE_INTERVAL);
 		} catch (ClassCastException e) {
-			prefs.edit().putLong(UPDATE_INTERVAL_KEY, DEFAULT_UPDATE_INTERVAL);
+			prefs.edit().putLong(UPDATE_INTERVAL_KEY, DEFAULT_UPDATE_INTERVAL)
+					.commit();
 		}
 
-		log.debug("deciding if start: " + time + ">" + schedule);
+		long time = System.currentTimeMillis();
+		log.debug("deciding if start: " + time + " > " + schedule);
 
 		if (time > schedule) {
-			prefs.edit().putLong(LAST_UPDATED_KEY, time);
+			prefs.edit().putLong(LAST_UPDATED_KEY, time).commit();
 			return true;
 		} else
-
 			return false;
 	}
 
