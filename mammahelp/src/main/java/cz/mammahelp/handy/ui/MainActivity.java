@@ -1,6 +1,12 @@
 package cz.mammahelp.handy.ui;
 
+import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
+import static cz.mammahelp.handy.Constants.DAY_IN_MILLIS;
 import static cz.mammahelp.handy.Constants.NEWS_KEY;
+import static cz.mammahelp.handy.Constants.REGISTER_FLAG;
+import static cz.mammahelp.handy.Constants.UPDATE_INTERVAL_KEY;
+import static cz.mammahelp.handy.Constants.WEEK_IN_MILLIS;
+import static cz.mammahelp.handy.Constants.WIFI_ONLY_KEY;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -16,6 +22,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -28,7 +35,6 @@ import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.Toast;
-import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.MammaHelpService;
 import cz.mammahelp.handy.MammaHelpService.FeederServiceBinder;
 import cz.mammahelp.handy.R;
@@ -80,8 +86,36 @@ public class MainActivity extends AbstractMammaHelpActivity {
 				.add(R.id.container, new NewsListFragment(), "news")
 				.addToBackStack("news").commit();
 
+		setupDefaultPreferences();
+
 		startService(new Intent(this, MammaHelpService.class).putExtra(
-				Constants.REGISTER_FLAG, true));
+				REGISTER_FLAG, true));
+	}
+
+	private void setupDefaultPreferences() {
+
+		String prefName = getResources().getString(R.string.news_preferences);
+		setupDefaultUpdatePrefserences(prefName, true, true, DAY_IN_MILLIS);
+
+		prefName = getResources().getString(R.string.others_preferences);
+		setupDefaultUpdatePrefserences(prefName, false, true,
+				4 * WEEK_IN_MILLIS);
+
+	}
+
+	private void setupDefaultUpdatePrefserences(String prefName,
+			boolean autoUpdate, boolean onlyWifi, long updateInterval) {
+		SharedPreferences prefs = getSharedPreferences(prefName,
+				Context.MODE_MULTI_PROCESS);
+		if (!prefs.contains(AUTOMATIC_UPDATES_KEY)) {
+			prefs.edit().putBoolean(AUTOMATIC_UPDATES_KEY, autoUpdate).commit();
+		}
+		if (!prefs.contains(UPDATE_INTERVAL_KEY)) {
+			prefs.edit().putLong(UPDATE_INTERVAL_KEY, updateInterval).commit();
+		}
+		if (!prefs.contains(WIFI_ONLY_KEY)) {
+			prefs.edit().putBoolean(WIFI_ONLY_KEY, onlyWifi).commit();
+		}
 	}
 
 	public void restoreActionBar() {
