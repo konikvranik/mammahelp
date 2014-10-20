@@ -3,7 +3,8 @@
 
     <string name="versionName">Verze:</string>
     <string name="versionString">%1$s (kód: %2$d)</string>
-    <string name="last_updated">Naposledy staženo</string>
+    <string name="last_updated">Čas poslední aktualizace obsahu.</string>
+    <string name="last_updated_news">Čas poslední aktualizace novinek.</string>
     <string name="date_time">%1$s v %2$s</string>
     <string name="mismatched_category">Neplatná kategorie</string>
 
@@ -68,5 +69,24 @@
     <string name="banner1_text">Milé mammahelpky a příznivci Mamma HELPu, připravili jsme pro vás diskuzní fórum, kde můžete společně diskutovat o všech problémech týkajících se problematiky rakoviny prsu.</string>
     <string name="banner2_text">Spojení mimořádného sportovního výkonu s projevem lidské sounáležitosti dokumentované poskytnutím finačních prostředků na podporu celospolečensky významného projektu bylo základní myšlenkou organizátorů při vzniku Bohemian Gran Fondo. Jejich inspirací se staly kultovní La Marmotte  ve Francouzských Alpách, jeden z nejtěžších cyklistických amatérských závodů na světě, a Pan Massachusetts Challenge (www.pmc.org) v USA, který každoročně získává od účastníků vytrvalostní cyklistické jízdy mnohamilónové částky v USD na výzkum rakoviny. Tedy sportovní náročnost La Marmotte propojená s lidskou solidaritou Pan Massachusetts Challenge.</string>
     <string name="banner3_text">Náš život se zcela neočekávaně změnil. Přesto se nevzdáváme, neztrácíme naději a bojujeme s nemocí, která nás i naše rodiny hluboce zasáhla a poznamenala. A chceme také pomoci najít odvahu dalším, které se dostanou do stejné situace. Je nás víc jak sedmdesát tisíc, které se denně potýkáme se zkušeností jménem rakovina prsu. Pomozte nám vyhrát!</string>
+    <string name="failed_to_connect">Problém s připojením!</string>
+    <string name="update_failed">NEpodařilo se aktualizovat data!</string>
+    <string name="action_refresh">Aktualizovat</string>
+    <string name="centers_list">Výpis center</string>
+    <string name="update_already_running">Aktualizace právě probíhá</string>
+    <string name="centers_map">Mapa</string>
+    <string name="all">Vše</string>
+    <string name="prefs_summary_news">V tomto nastavení je možné aktivovat nebo deaktivovat automatické aktualizace novinek a nastavit interval aktalizace a typ připojení pod kterým je aktualizace možná.</string>
+    <string name="prefs_title_news">Nastavení pro novinky</string>
+    <string name="prefs_summary_articles">V tomto nastavení je možné aktivovat nebo deaktivovat automatické aktualizace ostatního obsahu a nastavit interval aktalizace a typ připojení pod kterým je aktualizace možná.</string>
+    <string name="prefs_title_articles">Nastavení pro ostatní obsah</string>
+    <string name="news_updated_title">News has been updated</string>
+    <string name="news_updated_description">Jsou k dispozici nové aktuality. Klikněte pro zobrazení.</string>
+    <string name="preferences_run_update_summary">Tato volba vynutí aktualizaci obsahu aplikace.</string>
+    <string name="preferences_run_update_title">Aktualizovat obsah.</string>
+    <string name="action_settings">Nastavení</string>
+    <string name="title_activity_main">Mamma HELP</string>
+    <string name="navigation_drawer_open">Otevřít zasouvací navigaci</string>
+    <string name="navigation_drawer_close">Zavřít zasouvací navigaci</string>
 
 </resources>

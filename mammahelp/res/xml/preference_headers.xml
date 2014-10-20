@@ -28,8 +28,8 @@
         android:id="@+id/refresh"
         android:key="refresh"
         android:icon="@drawable/ic_action_call"
-        android:summary="Launches an Intent."
-        android:title="Intent" >
+        android:summary="@string/preferences_run_update_summary"
+        android:title="@string/preferences_run_update_title" >
         <intent
             android:targetClass="cz.mammahelp.handy.MammaHelpService"
             android:targetPackage="cz.mammahelp.handy" >
