@@ -5,6 +5,7 @@ package cz.mammahelp.handy.ui;
 
 import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
 import static cz.mammahelp.handy.Constants.KEY;
+import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
 
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -134,6 +136,11 @@ public class PreferencesActivity extends PreferenceActivity {
 			intent.putExtra(Constants.ARTICLE_KEY, (long) -1);
 			intent.putExtra(Constants.CENTER_KEY, (long) -1);
 			startService(intent);
+			String prefsName = getResources().getString(
+					R.string.others_preferences);
+			getSharedPreferences(prefsName, Context.MODE_MULTI_PROCESS).edit()
+					.putLong(LAST_UPDATED_KEY, System.currentTimeMillis())
+					.commit();
 		} else
 			super.onHeaderClick(header, position);
 	}
