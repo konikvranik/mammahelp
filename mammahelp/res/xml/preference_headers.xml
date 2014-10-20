@@ -2,7 +2,7 @@
 
     <header
         android:fragment="cz.mammahelp.handy.ui.PreferencesActivity$PrefsFragmentUpdateInner"
-        android:icon="@android:drawable/ic_dialog_info"
+        android:icon="@drawable/ic_menu_news"
         android:summary="@string/prefs_summary_news"
         android:title="@string/prefs_title_news" >
         <extra
@@ -14,7 +14,7 @@
     </header>
     <header
         android:fragment="cz.mammahelp.handy.ui.PreferencesActivity$PrefsFragmentUpdateInner"
-        android:icon="@drawable/ic_action_about"
+        android:icon="@drawable/ic_menu_world"
         android:summary="@string/prefs_summary_articles"
         android:title="@string/prefs_title_articles" >
         <extra
@@ -27,7 +27,7 @@
     <header
         android:id="@+id/refresh"
         android:key="refresh"
-        android:icon="@drawable/ic_action_call"
+        android:icon="@drawable/ic_action_refresh"
         android:summary="@string/preferences_run_update_summary"
         android:title="@string/preferences_run_update_title" >
         <intent

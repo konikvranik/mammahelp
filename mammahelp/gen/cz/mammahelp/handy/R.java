@@ -1500,26 +1500,29 @@ containing a value of this type.
         public static final int ic_action_warning=0x7f020082;
         public static final int ic_drawer=0x7f020083;
         public static final int ic_launcher=0x7f020084;
-        public static final int ic_plusone_medium_off_client=0x7f020085;
-        public static final int ic_plusone_small_off_client=0x7f020086;
-        public static final int ic_plusone_standard_off_client=0x7f020087;
-        public static final int ic_plusone_tall_off_client=0x7f020088;
-        public static final int img_btn_border=0x7f020089;
-        public static final int logo=0x7f02008a;
-        public static final int mammahelp_normal=0x7f02008b;
-        public static final int mammahelp_pressed=0x7f02008c;
-        public static final int mammanet=0x7f02008d;
-        public static final int mammanet_dimmed=0x7f02008e;
-        public static final int mammashop2=0x7f02008f;
-        public static final int mammashop2_dimmed=0x7f020090;
-        public static final int meal_background=0x7f020091;
-        public static final int navigation_selector=0x7f020092;
-        public static final int powered_by_google_dark=0x7f020093;
-        public static final int powered_by_google_light=0x7f020094;
-        public static final int upper_shadow=0x7f020095;
+        public static final int ic_menu_folder=0x7f020085;
+        public static final int ic_menu_news=0x7f020086;
+        public static final int ic_menu_world=0x7f020087;
+        public static final int ic_plusone_medium_off_client=0x7f020088;
+        public static final int ic_plusone_small_off_client=0x7f020089;
+        public static final int ic_plusone_standard_off_client=0x7f02008a;
+        public static final int ic_plusone_tall_off_client=0x7f02008b;
+        public static final int img_btn_border=0x7f02008c;
+        public static final int logo=0x7f02008d;
+        public static final int mammahelp_normal=0x7f02008e;
+        public static final int mammahelp_pressed=0x7f02008f;
+        public static final int mammanet=0x7f020090;
+        public static final int mammanet_dimmed=0x7f020091;
+        public static final int mammashop2=0x7f020092;
+        public static final int mammashop2_dimmed=0x7f020093;
+        public static final int meal_background=0x7f020094;
+        public static final int navigation_selector=0x7f020095;
+        public static final int powered_by_google_dark=0x7f020096;
+        public static final int powered_by_google_light=0x7f020097;
+        public static final int upper_shadow=0x7f020098;
     }
     public static final class id {
-        public static final int action_about=0x7f0a006d;
+        public static final int action_about=0x7f0a006e;
         public static final int action_bar=0x7f0a002e;
         public static final int action_bar_activity_content=0x7f0a0027;
         public static final int action_bar_container=0x7f0a002d;
@@ -1531,8 +1534,8 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f0a0028;
         public static final int action_menu_presenter=0x7f0a0029;
         public static final int action_mode_close_button=0x7f0a0036;
-        public static final int action_refresh=0x7f0a006e;
-        public static final int action_settings=0x7f0a006c;
+        public static final int action_refresh=0x7f0a006c;
+        public static final int action_settings=0x7f0a006d;
         public static final int activity_chooser_view_content=0x7f0a0037;
         public static final int always=0x7f0a001e;
         public static final int annotation=0x7f0a0066;
@@ -1705,9 +1708,7 @@ containing a value of this type.
         public static final int support_simple_spinner_dropdown_item=0x7f03002c;
     }
     public static final class menu {
-        public static final int category_list=0x7f0f0000;
-        public static final int global=0x7f0f0001;
-        public static final int main=0x7f0f0002;
+        public static final int main=0x7f0f0000;
     }
     public static final class raw {
         public static final int about=0x7f060000;
