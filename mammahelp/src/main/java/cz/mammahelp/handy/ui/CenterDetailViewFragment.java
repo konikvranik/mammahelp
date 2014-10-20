@@ -18,6 +18,7 @@ import android.webkit.WebViewClient;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.R;
+import cz.mammahelp.handy.Utils;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.model.LocationPoint;
 import cz.mammahelp.handy.provider.LocalDbContentProvider;
@@ -73,10 +74,9 @@ public class CenterDetailViewFragment extends Fragment {
 
 		WebView wv = (WebView) view.findViewById(R.id.center_detail);
 
-		WebSettings s = wv.getSettings();
-		s.setJavaScriptEnabled(false);
-		s.setDefaultTextEncodingName("utf-8");
-
+	
+		Utils.setupBrowser(wv);
+		
 		wv.setWebViewClient(new WebViewClient());
 		wv.setWebChromeClient(new WebChromeClient());
 

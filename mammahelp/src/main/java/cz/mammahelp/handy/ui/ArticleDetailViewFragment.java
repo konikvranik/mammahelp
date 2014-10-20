@@ -11,13 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.R;
+import cz.mammahelp.handy.Utils;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.model.ASyncedInformation;
@@ -75,19 +74,7 @@ public class ArticleDetailViewFragment extends Fragment {
 
 		WebView wv = (WebView) view.findViewById(R.id.article_detail);
 
-		WebSettings s = wv.getSettings();
-		s.setJavaScriptEnabled(false);
-		s.setDefaultTextEncodingName("utf-8");
-		s.setBlockNetworkImage(false);
-		s.setBlockNetworkLoads(true);
-		s.setAllowContentAccess(true);
-		s.setAllowFileAccess(true);
-		s.setBuiltInZoomControls(true);
-		s.setDisplayZoomControls(true);
-		s.setJavaScriptEnabled(false);
-		s.setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
-		s.setLoadWithOverviewMode(true);
-		s.setSupportZoom(true);
+		Utils.setupBrowser(wv);
 
 		wv.setWebViewClient(new WebViewClient());
 		wv.setWebChromeClient(new WebChromeClient());
