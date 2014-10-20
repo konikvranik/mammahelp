@@ -1364,6 +1364,8 @@ containing a value of this type.
          (the screen is in portrait). This may be either a fraction or a dimension.
          */
         public static final int dialog_fixed_width_minor=0x7f0d0012;
+        /**  Default screen margins, per the Android Design guidelines. 
+         */
         public static final int navigation_drawer_width=0x7f0d0017;
     }
     public static final class drawable {
