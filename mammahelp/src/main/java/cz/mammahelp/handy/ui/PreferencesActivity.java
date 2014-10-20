@@ -137,9 +137,10 @@ public class PreferencesActivity extends PreferenceActivity {
 			intent.putExtra(Constants.ARTICLE_KEY, (long) -1);
 			intent.putExtra(Constants.CENTER_KEY, (long) -1);
 			startService(intent);
-			
-			Toast.makeText(getApplicationContext(), R.string.update_started, Toast.LENGTH_SHORT);
-			
+
+			Toast.makeText(getApplicationContext(), R.string.update_started,
+					Toast.LENGTH_SHORT).show();
+
 			String prefsName = getResources().getString(
 					R.string.others_preferences);
 			getSharedPreferences(prefsName, Context.MODE_MULTI_PROCESS).edit()
