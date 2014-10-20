@@ -1911,9 +1911,10 @@ containing a value of this type.
         public static final int update_failed=0x7f080054;
         public static final int update_on_particular_time_description=0x7f080045;
         public static final int update_on_particular_time_title=0x7f080044;
+        public static final int update_started=0x7f080066;
         public static final int update_time_description=0x7f08004b;
         public static final int update_time_title=0x7f08004a;
-        public static final int update_title=0x7f080066;
+        public static final int update_title=0x7f080067;
         public static final int versionName=0x7f080032;
         public static final int versionString=0x7f080033;
         /**  Text on a placeholder buy button when Google Play services is not

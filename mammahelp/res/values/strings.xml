@@ -89,5 +89,6 @@
     <string name="title_activity_main">Mamma HELP</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Open navigation drawer</string>
+    <string name="update_started">Update started</string>
 
 </resources>

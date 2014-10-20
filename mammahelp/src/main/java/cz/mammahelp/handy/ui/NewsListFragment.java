@@ -150,6 +150,13 @@ public class NewsListFragment extends ANamedFragment {
 		updateData();
 	}
 
+	@Override
+	public void onHiddenChanged(boolean hidden) {
+		super.onHiddenChanged(hidden);
+		if (!hidden)
+			updateData();
+	}
+
 	private void updateData() {
 
 		if (adao != null && view != null) {

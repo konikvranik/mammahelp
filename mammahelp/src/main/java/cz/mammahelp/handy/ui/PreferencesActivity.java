@@ -25,6 +25,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.view.MenuItem;
+import android.widget.Toast;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.MammaHelpService;
 import cz.mammahelp.handy.R;
@@ -136,6 +137,9 @@ public class PreferencesActivity extends PreferenceActivity {
 			intent.putExtra(Constants.ARTICLE_KEY, (long) -1);
 			intent.putExtra(Constants.CENTER_KEY, (long) -1);
 			startService(intent);
+			
+			Toast.makeText(getApplicationContext(), R.string.update_started, Toast.LENGTH_SHORT);
+			
 			String prefsName = getResources().getString(
 					R.string.others_preferences);
 			getSharedPreferences(prefsName, Context.MODE_MULTI_PROCESS).edit()
