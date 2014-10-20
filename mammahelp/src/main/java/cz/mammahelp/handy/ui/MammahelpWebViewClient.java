@@ -21,7 +21,13 @@ public class MammahelpWebViewClient extends WebViewClient {
 		if (url == null)
 			super.shouldOverrideUrlLoading(view, url);
 
-		if (url.startsWith(LocalDbContentProvider.CONTENT_BASE_URI)) {
+		if (url.startsWith(LocalDbContentProvider.CONTENT_ENCLOSURE_URI)) {
+			Intent intent = new Intent();
+			intent.setAction(android.content.Intent.ACTION_VIEW);
+			intent.setDataAndType(Uri.parse(url), "image/*");
+			view.getContext().startActivity(intent);
+			return true;
+		} else if (url.startsWith(LocalDbContentProvider.CONTENT_BASE_URI)) {
 			// view.loadUrl(url);
 			return super.shouldOverrideUrlLoading(view, url);
 		} else {

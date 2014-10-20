@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import cz.mammahelp.handy.Constants;
@@ -74,9 +73,8 @@ public class CenterDetailViewFragment extends Fragment {
 
 		WebView wv = (WebView) view.findViewById(R.id.center_detail);
 
-	
 		Utils.setupBrowser(wv);
-		
+
 		wv.setWebViewClient(new WebViewClient());
 		wv.setWebChromeClient(new WebChromeClient());
 
@@ -181,11 +179,15 @@ public class CenterDetailViewFragment extends Fragment {
 		addressIntoHtml(sb, lp);
 
 		if (lp.getMapImage() != null && lp.getMapImage().getId() != null) {
-			sb.append("<div class=\"map\"><img class=\"size-full\" src=\"");
+			sb.append("<div class=\"map\"><a href=\"");
 			sb.append(LocalDbContentProvider.CONTENT_ENCLOSURE_URI);
 			sb.append("/");
 			sb.append(lp.getMapImage().getId());
-			sb.append("\"/></div>");
+			sb.append("\"><img class=\"size-full\" src=\"");
+			sb.append(LocalDbContentProvider.CONTENT_ENCLOSURE_URI);
+			sb.append("/");
+			sb.append(lp.getMapImage().getId());
+			sb.append("\"/></a></div>");
 		}
 
 		sb.append("</div>");

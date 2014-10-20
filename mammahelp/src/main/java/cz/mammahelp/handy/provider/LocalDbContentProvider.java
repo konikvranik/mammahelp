@@ -1,5 +1,6 @@
 package cz.mammahelp.handy.provider;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -53,14 +54,14 @@ public class LocalDbContentProvider extends ContentProvider {
 
 			try {
 				while ((len = in.read(buf)) > 0) {
+					log.debug("Written " + len + " bytes");
 					out.write(buf, 0, len);
 				}
 
-				in.close();
 				out.flush();
-				out.close();
+				in.close();
 			} catch (IOException e) {
-				log.error("Exception transferring file", e);
+				log.error("Exception transferring file: " + e.getMessage(), e);
 			}
 		}
 	}
@@ -109,6 +110,23 @@ public class LocalDbContentProvider extends ContentProvider {
 
 	private InputStream getInputStreamFromDbFile(Uri uri) {
 
+		switch (uriMatcher.match(uri)) {
+		case 1:
+			return getInputStreamOfArticle(uri);
+
+		case 2:
+			return getInputStreamOfNews(uri);
+
+		case 3:
+			return getInputStreamOfEnclosure(uri);
+
+		default:
+			return null;
+		}
+
+	}
+
+	private Long getIdFromUri(Uri uri) {
 		Long id = null;
 
 		String idString = uri.getQueryParameter(ID_PARAM);
@@ -120,38 +138,29 @@ public class LocalDbContentProvider extends ContentProvider {
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
-
-		switch (uriMatcher.match(uri)) {
-		case 1:
-			return getInputStreamOfArticle(id);
-
-		case 2:
-			return getInputStreamOfNews(id);
-
-		case 3:
-			return getInputStreamOfEnclosure(id);
-
-		default:
-			return null;
-		}
-
+		return id;
 	}
 
-	private InputStream getInputStreamOfEnclosure(Long id) {
+	private InputStream getInputStreamOfEnclosure(Uri uri) {
+
+		Enclosure enclosure = getEnclosureFromUri(uri);
+
+		return new ByteArrayInputStream(enclosure.getData());
+	}
+
+	private Enclosure getEnclosureFromUri(Uri uri) {
+		Long id = getIdFromUri(uri);
 
 		log.debug("Querying enclosure id " + id);
 
 		EnclosureDao edao = new EnclosureDao(getDbHelper());
 		Enclosure enclosure = edao.findById(new Enclosure(id));
-
-		return new ByteArrayInputStream(enclosure.getData());
+		return enclosure;
 	}
 
-	private InputStream getInputStreamOfArticle(Long id) {
+	private InputStream getInputStreamOfArticle(Uri uri) {
 
-		ArticlesDao adao = new ArticlesDao(getDbHelper());
-
-		Articles article = adao.findById(new Articles(id));
+		Articles article = getArticleFromUri(uri);
 
 		StringBuilder articleHtml = new StringBuilder("<html>");
 		// articleHtml
@@ -175,11 +184,18 @@ public class LocalDbContentProvider extends ContentProvider {
 
 	}
 
-	private InputStream getInputStreamOfNews(Long id) {
+	private Articles getArticleFromUri(Uri uri) {
+		Long id = getIdFromUri(uri);
 
-		NewsDao adao = new NewsDao(getDbHelper());
+		ArticlesDao adao = new ArticlesDao(getDbHelper());
 
-		News article = adao.findById(new News(id));
+		Articles article = adao.findById(new Articles(id));
+		return article;
+	}
+
+	private InputStream getInputStreamOfNews(Uri uri) {
+
+		News article = getNewsFromUri(uri);
 
 		StringBuilder articleHtml = new StringBuilder("<html>");
 		// articleHtml
@@ -202,6 +218,15 @@ public class LocalDbContentProvider extends ContentProvider {
 		return new ByteArrayInputStream(articleHtml.toString().getBytes(
 				Charset.forName("UTF-8")));
 
+	}
+
+	private News getNewsFromUri(Uri uri) {
+		Long id = getIdFromUri(uri);
+
+		NewsDao adao = new NewsDao(getDbHelper());
+
+		News article = adao.findById(new News(id));
+		return article;
 	}
 
 	@Override
@@ -231,13 +256,13 @@ public class LocalDbContentProvider extends ContentProvider {
 
 		switch (uriMatcher.match(uri)) {
 		case 1:
-			return ARTICLE_PATH;
+			return "text/html";
 
 		case 2:
-			return NEWS_PATH;
+			return "text/html";
 
 		case 3:
-			return ENCLOSURE_PATH;
+			return getEnclosureFromUri(uri).getType();
 
 		default:
 			return null;

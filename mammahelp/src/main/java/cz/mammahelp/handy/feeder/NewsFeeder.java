@@ -20,6 +20,7 @@ import org.xml.sax.InputSource;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndContent;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
@@ -96,10 +97,15 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 				.putLong(LAST_UPDATED_KEY, System.currentTimeMillis()).commit();
 
 		NotificationUtils.makeNotification(
-				getContext().getApplicationContext(), MainActivity.class,
-				Constants.NEWS_NOTIFICATION_ID, R.drawable.logo,
-				R.string.news_updated_title, getContext().getResources()
-						.getString(R.string.news_updated_description));
+				getContext().getApplicationContext(),
+				MainActivity.class,
+				Constants.NEWS_NOTIFICATION_ID,
+				R.drawable.ic_launcher,
+				BitmapFactory.decodeResource(getContext().getResources(),
+						R.drawable.logo),
+				R.string.news_updated_title,
+				getContext().getResources().getString(
+						R.string.news_updated_description));
 
 	}
 
