@@ -25,10 +25,11 @@ public class MammahelpWebViewClient extends WebViewClient {
 
 		if (url.startsWith(EnclosureContentProvider.CONTENT_URI)) {
 			Intent intent = new Intent();
-			intent.setAction(android.content.Intent.ACTION_VIEW);
+			intent.setAction(Intent.ACTION_VIEW);
 			ContentResolver ressolver = view.getContext().getContentResolver();
 			String type = ressolver.getType(Uri.parse(url));
 			intent.setDataAndType(Uri.parse(url), type);
+			intent.putExtra(Intent.EXTRA_STREAM, url);
 			view.getContext().startActivity(intent);
 			return true;
 		} else if (url.startsWith(Constants.CONTENT_URI_PREFIX)) {

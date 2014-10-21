@@ -42,13 +42,15 @@ public abstract class AbstractMammahelpContentProvider<T extends Identificable<T
 
 		@Override
 		public void run() {
-			byte[] buf = new byte[64 * 1024];
+			byte[] buf = new byte[8192];
 			int len;
 
 			try {
 				while ((len = in.read(buf)) >= 0) {
-					log.debug("Written " + len + " bytes");
-					out.write(buf, 0, len);
+					if (len > 0) {
+						log.debug("Written " + len + " bytes");
+						out.write(buf, 0, len);
+					}
 				}
 			} catch (IOException e) {
 				log.error("Exception transferring file: " + e.getMessage(), e);
