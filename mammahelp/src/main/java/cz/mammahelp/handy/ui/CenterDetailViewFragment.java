@@ -180,11 +180,11 @@ public class CenterDetailViewFragment extends Fragment {
 
 		if (lp.getMapImage() != null && lp.getMapImage().getId() != null) {
 			sb.append("<div class=\"map\"><a href=\"");
-			sb.append(EnclosureContentProvider.CONTENT_ENCLOSURE_URI);
-			sb.append(lp.getMapImage().getId());
+			sb.append(EnclosureContentProvider
+					.makeUri(lp.getMapImage().getId()));
 			sb.append("\"><img class=\"size-full\" src=\"");
-			sb.append(EnclosureContentProvider.CONTENT_ENCLOSURE_URI);
-			sb.append(lp.getMapImage().getId());
+			sb.append(EnclosureContentProvider
+					.makeUri(lp.getMapImage().getId()));
 			sb.append("\"/></a></div>");
 		}
 

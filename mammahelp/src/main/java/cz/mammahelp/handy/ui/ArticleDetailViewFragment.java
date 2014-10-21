@@ -22,7 +22,8 @@ import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.model.ASyncedInformation;
 import cz.mammahelp.handy.model.Articles;
 import cz.mammahelp.handy.model.News;
-import cz.mammahelp.handy.provider.LocalDbContentProvider;
+import cz.mammahelp.handy.provider.ArticlesContentProvider;
+import cz.mammahelp.handy.provider.NewsContentProvider;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment
@@ -83,11 +84,10 @@ public class ArticleDetailViewFragment extends Fragment {
 
 		Uri uri = null;
 		if (getArticle() instanceof Articles) {
-			uri = Uri.parse(LocalDbContentProvider.CONTENT_ARTICLE_URI + "/"
-					+ getArticle().getId() + "?id=" + getArticle().getId());
+			uri = Uri.parse(ArticlesContentProvider
+					.makeUri(getArticle().getId()));
 		} else if (getArticle() instanceof News) {
-			uri = Uri.parse(LocalDbContentProvider.CONTENT_NEWS_URI + "/"
-					+ getArticle().getId() + "?id=" + getArticle().getId());
+			uri = Uri.parse(NewsContentProvider.makeUri(getArticle().getId()));
 		}
 
 		Map<String, String> headers = new HashMap<String, String>();

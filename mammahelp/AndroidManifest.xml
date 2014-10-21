@@ -89,16 +89,23 @@ Production (4E:1D:6E:96:14:F1:06:DA:AA:D2:A7:64:9E:3A:EA:2C:99:7B:F7:C1;cz.mamma
         </receiver>
 
         <provider
-            android:name=".provider.LocalDbContentProvider"
-            android:authorities="cz.mammahelp.handy.local.provider"
-            android:enabled="true"
-            android:exported="false" />
-        <provider
             android:name=".provider.EnclosureContentProvider"
             android:authorities="cz.mammahelp.handy.enclosure"
             android:enabled="true"
             android:exported="true"
             tools:ignore="ExportedContentProvider" />
-    </application>
+        <provider
+            android:name=".provider.ArticlesContentProvider"
+            android:authorities="cz.mammahelp.handy.article"
+            android:enabled="true"
+            android:exported="false"
+            tools:ignore="ExportedContentProvider" />
+                <provider
+            android:name=".provider.NewsContentProvider"
+            android:authorities="cz.mammahelp.handy.news"
+            android:enabled="true"
+            android:exported="false"
+            tools:ignore="ExportedContentProvider" />
+        </application>
 
 </manifest>

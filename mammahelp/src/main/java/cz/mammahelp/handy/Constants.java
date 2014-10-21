@@ -57,4 +57,6 @@ public class Constants {
 
 	public static final String NEWS_LAST_UPDATED = "news_last_updated";
 
+	public static final String CONTENT_URI_PREFIX = "cz.mammahelp.handy.";
+
 }
