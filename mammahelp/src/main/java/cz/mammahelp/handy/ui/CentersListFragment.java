@@ -41,6 +41,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -444,14 +445,13 @@ public class CentersListFragment extends ANamedFragment {
 				log.error(e.getMessage(), e);
 			}
 		}
-		getMap().setOnMarkerClickListener(new OnMarkerClickListener() {
+
+		getMap().setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 
 			@Override
-			public boolean onMarkerClick(Marker marker) {
+			public void onInfoWindowClick(Marker marker) {
 				Long id = markers.get(marker);
 				openCenterDetail(id);
-				// TODO Auto-generated method stub
-				return false;
 			}
 		});
 	}
