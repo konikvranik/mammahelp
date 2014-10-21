@@ -47,4 +47,9 @@ public class EnclosureContentProvider extends
 		return CONTENT_URI + id;
 	}
 
+	@Override
+	protected Long getDataLength(Uri uri) {
+		return getObjectFromUri(uri).getLength();
+	}
+
 }

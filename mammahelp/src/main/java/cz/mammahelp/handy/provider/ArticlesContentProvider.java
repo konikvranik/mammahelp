@@ -37,6 +37,13 @@ public class ArticlesContentProvider extends
 		log.debug("Retrieving inputstream for article id " + article.getId()
 				+ " ... " + article);
 
+		StringBuilder articleHtml = buildArticleHtml(article);
+
+		return new ByteArrayInputStream(articleHtml.toString().getBytes(
+				Charset.forName("UTF-8")));
+	}
+
+	private StringBuilder buildArticleHtml(Articles article) {
 		StringBuilder articleHtml = new StringBuilder("<html>");
 		// articleHtml
 		// .append("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"><meta charset=\"UTF-8\">");
@@ -53,9 +60,7 @@ public class ArticlesContentProvider extends
 		articleHtml.append("</p>");
 		articleHtml.append("</div>");
 		articleHtml.append("</body></html>");
-
-		return new ByteArrayInputStream(articleHtml.toString().getBytes(
-				Charset.forName("UTF-8")));
+		return articleHtml;
 	}
 
 	@Override
@@ -67,5 +72,11 @@ public class ArticlesContentProvider extends
 
 	public static String makeUri(Long id) {
 		return CONTENT_URI + id;
+	}
+
+	@Override
+	protected Long getDataLength(Uri uri) {
+		StringBuilder ah = buildArticleHtml(getObjectFromUri(uri));
+		return (long) ah.length();
 	}
 }

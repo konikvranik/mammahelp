@@ -11,9 +11,11 @@ import org.slf4j.LoggerFactory;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.os.ParcelFileDescriptor.AutoCloseOutputStream;
+import android.provider.OpenableColumns;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.dao.BaseDao;
 import cz.mammahelp.handy.model.Identificable;
@@ -26,6 +28,9 @@ public abstract class AbstractMammahelpContentProvider<T extends Identificable<T
 
 	protected static final String ID_PARAM = "id";
 
+	private final static String[] OPENABLE_PROJECTION = {
+			OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE };
+
 	protected class TransferThread extends Thread {
 		InputStream in;
 		OutputStream out;
@@ -37,19 +42,26 @@ public abstract class AbstractMammahelpContentProvider<T extends Identificable<T
 
 		@Override
 		public void run() {
-			byte[] buf = new byte[8192];
+			byte[] buf = new byte[64 * 1024];
 			int len;
 
 			try {
-				while ((len = in.read(buf)) > 0) {
+				while ((len = in.read(buf)) >= 0) {
 					log.debug("Written " + len + " bytes");
 					out.write(buf, 0, len);
 				}
-
-				out.flush();
-				in.close();
 			} catch (IOException e) {
 				log.error("Exception transferring file: " + e.getMessage(), e);
+			} finally {
+				try {
+					in.close();
+					out.flush();
+					out.close();
+				} catch (IOException e) {
+					log.error(
+							"Exception closing input stream: " + e.getMessage(),
+							e);
+				}
 			}
 		}
 	}
@@ -67,8 +79,8 @@ public abstract class AbstractMammahelpContentProvider<T extends Identificable<T
 		try {
 			pipe = ParcelFileDescriptor.createPipe();
 
-			new TransferThread(getInputStreamFromUri(uri),
-					new AutoCloseOutputStream(pipe[1])).start();
+			OutputStream out = new AutoCloseOutputStream(pipe[1]);
+			new TransferThread(getInputStreamFromUri(uri), out).start();
 		} catch (IOException e) {
 			log.error("Exception opening pipe", e);
 			throw new FileNotFoundException("Could not open pipe for: "
@@ -113,14 +125,36 @@ public abstract class AbstractMammahelpContentProvider<T extends Identificable<T
 	}
 
 	@Override
-	public Cursor query(Uri paramUri, String[] paramArrayOfString1,
-			String paramString1, String[] paramArrayOfString2,
-			String paramString2) {
+	public Cursor query(Uri uri, String[] projection, String selection,
+			String[] selectionArgs, String sortOrder) {
 
 		log.debug("query");
 
-		// TODO Auto-generated method stub
-		return null;
+		if (projection == null) {
+			projection = OPENABLE_PROJECTION;
+		}
+
+		final MatrixCursor cursor = new MatrixCursor(projection, 1);
+
+		MatrixCursor.RowBuilder b = cursor.newRow();
+
+		for (String col : projection) {
+			if (OpenableColumns.DISPLAY_NAME.equals(col)) {
+				b.add(getFileName(uri));
+			} else if (OpenableColumns.SIZE.equals(col)) {
+				b.add(getDataLength(uri));
+			} else { // unknown, so just add null
+				b.add(null);
+			}
+		}
+
+		return (cursor);
+	}
+
+	protected abstract Long getDataLength(Uri uri);
+
+	protected String getFileName(Uri uri) {
+		return (uri.getLastPathSegment());
 	}
 
 	@Override
@@ -128,8 +162,7 @@ public abstract class AbstractMammahelpContentProvider<T extends Identificable<T
 
 		log.debug("insert");
 
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("Operation not supported");
 	}
 
 	@Override
@@ -138,8 +171,7 @@ public abstract class AbstractMammahelpContentProvider<T extends Identificable<T
 
 		log.debug("delete");
 
-		// TODO Auto-generated method stub
-		return 0;
+		throw new RuntimeException("Operation not supported");
 	}
 
 	@Override
@@ -148,8 +180,7 @@ public abstract class AbstractMammahelpContentProvider<T extends Identificable<T
 
 		log.debug("update");
 
-		// TODO Auto-generated method stub
-		return 0;
+		throw new RuntimeException("Operation not supported");
 	}
 
 	public MammaHelpDbHelper getDbHelper() {
