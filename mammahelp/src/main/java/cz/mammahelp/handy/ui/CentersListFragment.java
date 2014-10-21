@@ -3,9 +3,11 @@ package cz.mammahelp.handy.ui;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -39,11 +41,13 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import cz.mammahelp.handy.Constants;
@@ -168,6 +172,8 @@ public class CentersListFragment extends ANamedFragment {
 	private LocationPointDao adao;
 	private MultiSpinner filterSpinner;
 
+	private Map<Marker, Long> markers = new HashMap<Marker, Long>();
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -189,14 +195,10 @@ public class CentersListFragment extends ANamedFragment {
 			public void onItemClick(AdapterView<?> paramAdapterView,
 					View paramView, int paramInt, long paramLong) {
 
-				CenterDetailViewFragment af = new CenterDetailViewFragment();
-				Bundle args = new Bundle();
-				args.putLong(Constants.CENTER_KEY, paramAdapterView
-						.getAdapter().getItemId(paramInt));
-				af.setArguments(args);
-				getFragmentManager().beginTransaction().add(R.id.container, af)
-						.addToBackStack(null).commit();
+				openCenterDetail(paramAdapterView.getAdapter().getItemId(
+						paramInt));
 			}
+
 		});
 
 		final ImageButton mapButton = (ImageButton) mainView
@@ -272,6 +274,15 @@ public class CentersListFragment extends ANamedFragment {
 			listView.setAdapter(adapter);
 
 		return mainView;
+	}
+
+	private void openCenterDetail(long id) {
+		CenterDetailViewFragment af = new CenterDetailViewFragment();
+		Bundle args = new Bundle();
+		args.putLong(Constants.CENTER_KEY, id);
+		af.setArguments(args);
+		getFragmentManager().beginTransaction().add(R.id.container, af)
+				.addToBackStack(null).commit();
 	}
 
 	@Override
@@ -419,20 +430,30 @@ public class CentersListFragment extends ANamedFragment {
 					addr.setLongitude(a.getLongitude());
 				}
 
-				getMap().addMarker(
+				Marker m = getMap().addMarker(
 						new MarkerOptions()
 								.position(
 										new LatLng(addr.getLatitude(), addr
 												.getLongitude()))
 								.title(lp.getName()).icon(getIcon(lp))
 								.snippet(lp.getDescription()));
-
+				markers.put(m, lp.getId());
 				log.debug("Added " + lp.getName());
 
 			} catch (IOException e) {
 				log.error(e.getMessage(), e);
 			}
 		}
+		getMap().setOnMarkerClickListener(new OnMarkerClickListener() {
+
+			@Override
+			public boolean onMarkerClick(Marker marker) {
+				Long id = markers.get(marker);
+				openCenterDetail(id);
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
 	}
 
 	private BitmapDescriptor getIcon(LocationPoint lp) {
