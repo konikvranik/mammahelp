@@ -53,6 +53,7 @@ import cz.mammahelp.handy.model.ASyncedInformation;
 import cz.mammahelp.handy.model.Articles;
 import cz.mammahelp.handy.model.Enclosure;
 import cz.mammahelp.handy.model.Identificable;
+import cz.mammahelp.handy.provider.EnclosureContentProvider;
 import cz.mammahelp.handy.provider.LocalDbContentProvider;
 
 public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificable<?>> {
@@ -293,8 +294,7 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 						if ("src".equals(attr.getName())) {
 
 							Identificable<?> id = saveEnclosure(conn);
-							newValue = LocalDbContentProvider.CONTENT_ENCLOSURE_URI
-									+ "/" + id.getId();
+							newValue = EnclosureContentProvider.CONTENT_ENCLOSURE_URI + id.getId();
 						} else if ("href".equals(attr.getName())) {
 							newValue = recurseArticles(topUrl, newValue, conn);
 						}

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="cz.mammahelp.handy"
     android:versionCode="1"
-    android:versionName="1.0" xmlns:tools="http://schemas.android.com/tools">
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -41,7 +42,7 @@
 
         <!--
 com.google.android.maps.v2.API_KEY
-Production (4E:1D:6E:96:14:F1:06:DA:AA:D2:A7:64:9E:3A:EA:2C:99:7B:F7:C1;cz.mammahelp.handy) : AIzaSyCOvySLyinjKsfmNdlf53McsP_zgVG27zsDEV TDA (AF:B8:9E:54:06:E6:67:B6:3C:69:FA:C4:7B:5C:E3:ED:57:D9:EC:69;cz.mammahelp.handy) : AIzaSyBi3vvmErVRz97FCP706Wgcga8KRCBeFf0DV Stalin (F0:CB:BA:7F:99:C1:54:EE:F3:9F:0C:5A:95:9B:0C:38:08:A3:75:87;cz.mammahelp.handy) : AIzaSyDR5ZGNzSnyFQb4BI25mVCN0ocrYEY0T2o
+Production (4E:1D:6E:96:14:F1:06:DA:AA:D2:A7:64:9E:3A:EA:2C:99:7B:F7:C1;cz.mammahelp.handy) : AIzaSyCOvySLyinjKsfmNdlf53McsP_zgVG27zsDEV TDA (AF:B8:9E:54:06:E6:67:B6:3C:69:FA:C4:7B:5C:E3:ED:57:D9:EC:69;cz.mammahelp.handy) : AIzaSyBi3vvmErVRz97FCP706Wgcga8KRCBeFf0DV Stalin (F0:CB:BA:7F:99:C1:54:EE:F3:9F:0C:5A:95:9B:0C:38:08:A3:75:87;cz.mammahelp.handy) : AIzaSyDR5ZGNzSnyFQb4BI25mVCN0ocrYEY0T2o
         -->
 
         <activity
@@ -49,6 +50,7 @@ Production (4E:1D:6E:96:14:F1:06:DA:AA:D2:A7:64:9E:3A:EA:2C:99:7B:F7:C1;cz.mamma
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -90,7 +92,13 @@ Production (4E:1D:6E:96:14:F1:06:DA:AA:D2:A7:64:9E:3A:EA:2C:99:7B:F7:C1;cz.mamma
             android:name=".provider.LocalDbContentProvider"
             android:authorities="cz.mammahelp.handy.local.provider"
             android:enabled="true"
-            android:exported="true" tools:ignore="ExportedContentProvider"/>
+            android:exported="false" />
+        <provider
+            android:name=".provider.EnclosureContentProvider"
+            android:authorities="cz.mammahelp.handy.enclosure"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedContentProvider" />
     </application>
 
 </manifest>

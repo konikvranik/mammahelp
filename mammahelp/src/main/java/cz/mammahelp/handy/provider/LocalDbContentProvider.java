@@ -1,6 +1,5 @@
 package cz.mammahelp.handy.provider;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,25 +19,28 @@ import android.os.ParcelFileDescriptor;
 import android.os.ParcelFileDescriptor.AutoCloseOutputStream;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.dao.ArticlesDao;
+import cz.mammahelp.handy.dao.BaseDao;
 import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.model.Articles;
 import cz.mammahelp.handy.model.Enclosure;
+import cz.mammahelp.handy.model.Identificable;
 import cz.mammahelp.handy.model.News;
 
-public class LocalDbContentProvider extends ContentProvider {
+public class LocalDbContentProvider<T extends Identificable<T>> extends
+		ContentProvider {
 
 	public static Logger log = LoggerFactory
 			.getLogger(LocalDbContentProvider.class);
 
-	private static final String ID_PARAM = "id";
+	protected static final String ID_PARAM = "id";
 	private static final String ENCLOSURE_PATH = "enclosure";
 	private static final String ARTICLE_PATH = "article";
 	private static final String NEWS_PATH = "news";
 
 	private static UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-	static class TransferThread extends Thread {
+	protected class TransferThread extends Thread {
 		InputStream in;
 		OutputStream out;
 
@@ -66,7 +68,7 @@ public class LocalDbContentProvider extends ContentProvider {
 		}
 	}
 
-	private static final String AUTHORITY = "cz.mammahelp.handy.local.provider";
+	public static final String AUTHORITY = "cz.mammahelp.handy.local.provider";
 	public static final String CONTENT_BASE_URI = "content://" + AUTHORITY;
 
 	public static final String CONTENT_ARTICLE_URI = CONTENT_BASE_URI + "/"
@@ -85,6 +87,8 @@ public class LocalDbContentProvider extends ContentProvider {
 	}
 
 	private MammaHelpDbHelper dbHelper;
+
+	private EnclosureDao edao;
 
 	@Override
 	public ParcelFileDescriptor openFile(Uri uri, String mode)
@@ -126,7 +130,7 @@ public class LocalDbContentProvider extends ContentProvider {
 
 	}
 
-	private Long getIdFromUri(Uri uri) {
+	protected Long getIdFromUri(Uri uri) {
 		Long id = null;
 
 		String idString = uri.getQueryParameter(ID_PARAM);
@@ -143,19 +147,21 @@ public class LocalDbContentProvider extends ContentProvider {
 
 	private InputStream getInputStreamOfEnclosure(Uri uri) {
 
-		Enclosure enclosure = getEnclosureFromUri(uri);
+		Enclosure enclosure = (Enclosure) getObjectFromUri(uri);
 
 		return new ByteArrayInputStream(enclosure.getData());
 	}
 
-	private Enclosure getEnclosureFromUri(Uri uri) {
+	private T getObjectFromUri(Uri uri) {
 		Long id = getIdFromUri(uri);
+		log.debug("Querying object id " + id);
+		return getDao().findById(id);
+	}
 
-		log.debug("Querying enclosure id " + id);
-
-		EnclosureDao edao = new EnclosureDao(getDbHelper());
-		Enclosure enclosure = edao.findById(new Enclosure(id));
-		return enclosure;
+	protected BaseDao<T> getDao() {
+		if (edao == null)
+			edao = new EnclosureDao(getDbHelper());
+		return (BaseDao<T>) edao;
 	}
 
 	private InputStream getInputStreamOfArticle(Uri uri) {
@@ -262,7 +268,7 @@ public class LocalDbContentProvider extends ContentProvider {
 			return "text/html";
 
 		case 3:
-			return getEnclosureFromUri(uri).getType();
+			return ((Enclosure) getObjectFromUri(uri)).getType();
 
 		default:
 			return null;

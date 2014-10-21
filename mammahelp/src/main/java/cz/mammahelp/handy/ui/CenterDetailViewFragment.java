@@ -20,7 +20,7 @@ import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.Utils;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.model.LocationPoint;
-import cz.mammahelp.handy.provider.LocalDbContentProvider;
+import cz.mammahelp.handy.provider.EnclosureContentProvider;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment
@@ -180,12 +180,10 @@ public class CenterDetailViewFragment extends Fragment {
 
 		if (lp.getMapImage() != null && lp.getMapImage().getId() != null) {
 			sb.append("<div class=\"map\"><a href=\"");
-			sb.append(LocalDbContentProvider.CONTENT_ENCLOSURE_URI);
-			sb.append("/");
+			sb.append(EnclosureContentProvider.CONTENT_ENCLOSURE_URI);
 			sb.append(lp.getMapImage().getId());
 			sb.append("\"><img class=\"size-full\" src=\"");
-			sb.append(LocalDbContentProvider.CONTENT_ENCLOSURE_URI);
-			sb.append("/");
+			sb.append(EnclosureContentProvider.CONTENT_ENCLOSURE_URI);
 			sb.append(lp.getMapImage().getId());
 			sb.append("\"/></a></div>");
 		}
