@@ -54,8 +54,6 @@ public class ArticlesContentProvider extends
 		articleHtml.append("</div>");
 		articleHtml.append("</body></html>");
 
-		log.debug("Article: " + articleHtml.toString());
-
 		return new ByteArrayInputStream(articleHtml.toString().getBytes(
 				Charset.forName("UTF-8")));
 	}

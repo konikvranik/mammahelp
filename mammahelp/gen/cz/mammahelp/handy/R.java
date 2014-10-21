@@ -1931,6 +1931,7 @@ containing a value of this type.
 
 
 
+
     
 
             Theme customizations available in newer API levels can go in
@@ -1942,9 +1943,10 @@ containing a value of this type.
         /**  Application theme. 
          */
         public static final int AppTheme=0x7f070091;
-        public static final int AppTheme_ActionBar=0x7f070092;
-        public static final int AppTheme_ActionBar_Text=0x7f070093;
-        public static final int DialogTheme=0x7f070094;
+        public static final int AppTheme_ActionBar=0x7f070093;
+        public static final int AppTheme_ActionBar_Text=0x7f070094;
+        public static final int AppTheme_ListItem=0x7f070092;
+        public static final int DialogTheme=0x7f070095;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f070068;
