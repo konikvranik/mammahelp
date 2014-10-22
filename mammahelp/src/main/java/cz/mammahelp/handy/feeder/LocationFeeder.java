@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.handy.dao.LocationPointDao;
@@ -51,7 +52,13 @@ public class LocationFeeder extends
 			semaphore = 0;
 			for (LocationPoint a : aw.locations) {
 				log.debug("Saving location " + a);
-				feedData(a);
+
+				if (getContext().getSharedPreferences(
+						getContext().getResources().getString(
+								R.string.others_preferences),
+						Context.MODE_MULTI_PROCESS).getBoolean(
+						Constants.AUTOMATIC_UPDATES_KEY, false))
+					feedData(a);
 			}
 			long time = System.currentTimeMillis();
 			while (semaphore > 0

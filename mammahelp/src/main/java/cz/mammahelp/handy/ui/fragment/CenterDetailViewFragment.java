@@ -185,36 +185,35 @@ public class CenterDetailViewFragment extends Fragment {
 		addElement(sb, "p", "description", lp.getDescription());
 
 		addressIntoHtml(sb, lp);
-		if (lp.getMapImage() == null || lp.getMapImage().getId() == null) {
-			if (getActivity().getSharedPreferences(
-					getResources().getString(R.string.others_preferences),
-					Context.MODE_MULTI_PROCESS).getBoolean(
-					Constants.AUTOMATIC_UPDATES_KEY, false)) {
-				new Thread(new Runnable() {
+		if ((lp.getMapImage() == null || lp.getMapImage().getId() == null)
+				&& getActivity().getSharedPreferences(
+						getResources().getString(R.string.others_preferences),
+						Context.MODE_MULTI_PROCESS).getBoolean(
+						Constants.AUTOMATIC_UPDATES_KEY, false)) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
 
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
+					try {
+						new LocationFeeder(getActivity()).feedData(lp);
+						ldao.update(lp);
+						getActivity().runOnUiThread(new Runnable() {
 
-						try {
-							new LocationFeeder(getActivity()).feedData(lp);
-							ldao.update(lp);
-							getActivity().runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								wv.loadDataWithBaseURL(null,
+										locationIntoHtml(ldao, wv, lp),
+										"text/html", "UTF-8", null);
+							}
+						});
 
-								@Override
-								public void run() {
-									wv.loadDataWithBaseURL(null,
-											locationIntoHtml(ldao, wv, lp),
-											"text/html", "UTF-8", null);
-								}
-							});
-
-						} catch (Exception e) {
-							log.error("Error getting map: " + e.getMessage(), e);
-						}
+					} catch (Exception e) {
+						log.error("Error getting map: " + e.getMessage(), e);
 					}
-				}).start();
-			}
+				}
+			}).start();
+
 		}
 
 		if (lp.getMapImage() != null && lp.getMapImage().getId() != null) {
