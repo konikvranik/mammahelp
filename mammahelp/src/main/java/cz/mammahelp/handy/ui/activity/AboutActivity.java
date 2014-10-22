@@ -60,11 +60,7 @@ public class AboutActivity extends AbstractMammaHelpActivity {
 				R.id.last_updated);
 
 		WebView usage = (WebView) getWindow().findViewById(R.id.usage);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-			Utils.transparencyHack(getApplicationContext(), usage);
-		else
-			usage.setBackgroundColor(getResources().getColor(
-					android.R.color.black));
+		Utils.transparencyHack(getApplicationContext(), usage);
 
 		usage.getSettings().setStandardFontFamily("sans-serif");
 		usage.loadUrl("file:///android_res/raw/about.html");
@@ -77,13 +73,19 @@ public class AboutActivity extends AbstractMammaHelpActivity {
 				prefsName, Context.MODE_MULTI_PROCESS);
 		Date lastUpdated = new Date(prefs.getLong(LAST_UPDATED_KEY, -1));
 		versionView = (TextView) getWindow().findViewById(viewId);
-		versionView.setText(getResources().getString(
+		versionView.setText(formatTime(lastUpdated));
+	}
+
+	private String formatTime(Date lastUpdated) {
+		if (lastUpdated.getTime() < 0)
+			return getResources().getString(R.string.never);
+		return getResources().getString(
 				R.string.date_time,
 				DateFormat
 						.getDateInstance(DateFormat.LONG, Locale.getDefault())
 						.format(lastUpdated),
 				DateFormat.getTimeInstance(DateFormat.SHORT,
-						Locale.getDefault()).format(lastUpdated)));
+						Locale.getDefault()).format(lastUpdated));
 	}
 
 }

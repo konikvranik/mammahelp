@@ -110,15 +110,12 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 				.commit();
 
 		NotificationUtils.makeNotification(
-				getContext().getApplicationContext(),
-				MainActivity.class,
-				Constants.NEWS_NOTIFICATION_ID,
-				R.drawable.ic_launcher,
-				BitmapFactory.decodeResource(getContext().getResources(),
-						R.drawable.logo),
-				R.string.news_updated_title,
-				getContext().getResources().getString(
-						R.string.news_updated_description));
+				getContext().getApplicationContext(), MainActivity.class,
+				Constants.NEWS_NOTIFICATION_ID, R.drawable.logo, BitmapFactory
+						.decodeResource(getContext().getResources(),
+								R.drawable.ic_launcher),
+				R.string.news_updated_title, getContext().getResources()
+						.getString(R.string.news_updated_description));
 
 		getDbHelper().notifyDataSetChanged();
 
