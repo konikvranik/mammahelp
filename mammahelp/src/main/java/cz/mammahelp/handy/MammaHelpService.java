@@ -1,8 +1,6 @@
 package cz.mammahelp.handy;
 
-import java.net.URL;
 import java.util.Queue;
-import java.util.SortedSet;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.slf4j.Logger;
@@ -18,7 +16,6 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.widget.Toast;
-import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.feeder.ArticleFeeder;
 import cz.mammahelp.handy.feeder.LocationFeeder;
 import cz.mammahelp.handy.feeder.NewsFeeder;
@@ -91,22 +88,9 @@ public class MammaHelpService extends Service {
 
 		log.trace("MammaHelpFeederService.onStartCommand()");
 
-		if (intent.getBooleanExtra(Constants.REGISTER_FLAG, false)) {
-			try {
-				LocationPointDao ld = new LocationPointDao(getDbHelper());
-				SortedSet<LocationPoint> l = ld.findAll();
-				if (l == null || l.isEmpty()) {
-					log.debug("Loading default locations...");
-					LocationFeeder lf = new LocationFeeder(
-							getApplicationContext());
-					lf.setUrl(new URL("file:///android_res/raw/locations.xml"));
-					lf.feedData();
-				}
-			} catch (Exception e) {
-				log.error("Unable to load locations: " + e.getMessage(), e);
-			}
+		if (intent.getBooleanExtra(Constants.REGISTER_FLAG, false)) 
 			return START_NOT_STICKY;
-		}
+		
 
 		boolean added = false;
 		String[] types = new String[] { Constants.ARTICLE_KEY,

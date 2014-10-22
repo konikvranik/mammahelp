@@ -1,6 +1,8 @@
 package cz.mammahelp.handy.ui.fragment;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -53,6 +55,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.LocationPointDao;
+import cz.mammahelp.handy.feeder.LocationFeeder;
 import cz.mammahelp.handy.model.LocationPoint;
 import cz.mammahelp.handy.ui.ANamedFragment;
 import cz.mammahelp.handy.ui.component.MultiSpinner;
@@ -284,6 +287,30 @@ public class CentersListFragment extends ANamedFragment {
 
 		filter = activity.getPreferences(Activity.MODE_PRIVATE).getStringSet(
 				PREF_KEY_FILTER, new HashSet<String>());
+
+		LocationPointDao ld = new LocationPointDao(getDbHelper());
+		SortedSet<LocationPoint> l = ld.findAll();
+		if (l == null || l.isEmpty()) {
+			log.debug("Loading default locations...");
+			Thread t = new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					LocationFeeder lf = new LocationFeeder(
+							CentersListFragment.this.getActivity());
+					try {
+						lf.setUrl(new URL(
+								"file:///android_res/raw/locations.xml"));
+						lf.feedData();
+					} catch (Exception e) {
+						log.error(
+								"Unable to load locations: " + e.getMessage(),
+								e);
+					}
+				}
+			});
+			t.start();
+		}
 
 	}
 
