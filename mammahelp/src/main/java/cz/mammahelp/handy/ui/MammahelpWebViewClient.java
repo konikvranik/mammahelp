@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import cz.mammahelp.handy.Constants;
@@ -21,6 +22,7 @@ public class MammahelpWebViewClient extends WebViewClient {
 
 	public MammahelpWebViewClient(Context context) {
 		this.context = context;
+
 	}
 
 	@Override
@@ -49,6 +51,13 @@ public class MammahelpWebViewClient extends WebViewClient {
 			context.startActivity(i);
 			return true;
 		}
+	}
+
+	@Override
+	public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+		WebResourceResponse response = super.shouldInterceptRequest(view, url);
+		log.debug("Intercepted response: " + response);
+		return response;
 	}
 
 }

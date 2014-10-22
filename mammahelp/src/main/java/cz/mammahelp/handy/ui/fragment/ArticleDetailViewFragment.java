@@ -86,8 +86,8 @@ public class ArticleDetailViewFragment extends Fragment {
 
 		Uri uri = null;
 		if (getArticle() instanceof Articles) {
-			uri = Uri.parse(ArticlesContentProvider
-					.makeUri(getArticle().getId()));
+			uri = Uri.parse(ArticlesContentProvider.makeUri(getArticle()
+					.getId()));
 		} else if (getArticle() instanceof News) {
 			uri = Uri.parse(NewsContentProvider.makeUri(getArticle().getId()));
 		}

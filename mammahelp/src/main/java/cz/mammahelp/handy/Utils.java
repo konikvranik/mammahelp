@@ -63,6 +63,7 @@ public class Utils {
 	}
 
 	public static void setupBrowser(WebView wv) {
+
 		WebSettings s = wv.getSettings();
 		s.setJavaScriptEnabled(false);
 		s.setDefaultTextEncodingName("utf-8");
@@ -76,5 +77,11 @@ public class Utils {
 		s.setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
 		s.setLoadWithOverviewMode(true);
 		s.setSupportZoom(true);
+
+		s.setAppCacheEnabled(false);
+
+		// s.setAllowFileAccessFromFileURLs(true);
+		// s.setAllowUniversalAccessFromFileURLs(false);
+
 	}
 }
