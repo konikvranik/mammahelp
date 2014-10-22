@@ -74,7 +74,7 @@ public class LocationFeeder extends
 					R.string.locations_url));
 		return url;
 	}
-	
+
 	public void setUrl(URL url) {
 		this.url = url;
 	}
@@ -103,21 +103,27 @@ public class LocationFeeder extends
 		log.debug("Has lat & long: "
 				+ (addr.hasLatitude() && addr.hasLongitude()));
 
-		if (addr.hasLatitude() && addr.hasLongitude()) {
+		try {
+			if (addr.hasLatitude() && addr.hasLongitude()) {
 
-			URL url = new URL(
-					"https://maps.googleapis.com/maps/api/staticmap?center="
-							+ addr.getLatitude()
-							+ ","
-							+ addr.getLongitude()
-							+ "&zoom=12&size=1024x1024&markers=color:red%7Clabel:"
-							+ URLEncoder.encode(lp.getName(), "UTF-8") + "%7C"
-							+ addr.getLatitude() + "," + addr.getLongitude());
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setInstanceFollowRedirects(true);
-			Enclosure e = saveEnclosure(conn);
-			lp.setMapImage(e);
+				URL url = new URL(
+						"https://maps.googleapis.com/maps/api/staticmap?center="
+								+ addr.getLatitude()
+								+ ","
+								+ addr.getLongitude()
+								+ "&zoom=12&size=1024x1024&markers=color:red%7Clabel:"
+								+ URLEncoder.encode(lp.getName(), "UTF-8")
+								+ "%7C" + addr.getLatitude() + ","
+								+ addr.getLongitude());
+				HttpURLConnection conn = (HttpURLConnection) url
+						.openConnection();
+				conn.setInstanceFollowRedirects(true);
+				Enclosure e = saveEnclosure(conn);
+				lp.setMapImage(e);
 
+			}
+		} catch (Exception e) {
+			log.error("Failed to get map image: " + e.getMessage(), e);
 		}
 	}
 
