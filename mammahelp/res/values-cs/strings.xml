@@ -89,5 +89,6 @@
     <string name="navigation_drawer_open">Otevřít zasouvací navigaci</string>
     <string name="navigation_drawer_close">Zavřít zasouvací navigaci</string>
     <string name="update_started">Aktualizace byla zahájena.</string>
+    <string name="no_content_try_later">Žádný další obsah. Zkuste později.</string>
 
 </resources>

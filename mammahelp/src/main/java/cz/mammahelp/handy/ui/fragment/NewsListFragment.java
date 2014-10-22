@@ -27,6 +27,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.NewsDao;
@@ -215,8 +216,12 @@ public class NewsListFragment extends ANamedFragment {
 				News item = (News) paramAdapterView.getAdapter().getItem(
 						paramInt);
 
-				if (item.getBody() == null)
+				if (item.getBody() == null) {
+					Toast.makeText(getActivity(),
+							R.string.no_content_try_later, Toast.LENGTH_SHORT)
+							.show();
 					return;
+				}
 
 				ArticleDetailViewFragment af = new ArticleDetailViewFragment();
 				Bundle args = new Bundle();

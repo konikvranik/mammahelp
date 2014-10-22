@@ -90,5 +90,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Open navigation drawer</string>
     <string name="update_started">Update started</string>
+    <string name="no_content_try_later">No another content. Try later.</string>
 
 </resources>
