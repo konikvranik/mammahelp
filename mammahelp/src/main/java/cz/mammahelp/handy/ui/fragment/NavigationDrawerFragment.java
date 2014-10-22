@@ -1,4 +1,4 @@
-package cz.mammahelp.handy.ui;
+package cz.mammahelp.handy.ui.fragment;
 
 import java.util.SortedSet;
 
@@ -30,6 +30,7 @@ import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.model.Articles;
+import cz.mammahelp.handy.ui.activity.MainActivity;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation
@@ -279,7 +280,7 @@ public class NavigationDrawerFragment extends Fragment {
 		switch (pos) {
 		case 0:
 		case 2:
-			f = new CategoryListFragment();
+			f = new ArticleListFragment();
 
 			b.putString(Constants.CATEGORY_KEY, tag);
 			break;

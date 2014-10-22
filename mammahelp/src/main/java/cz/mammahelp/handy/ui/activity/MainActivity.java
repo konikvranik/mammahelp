@@ -1,4 +1,4 @@
-package cz.mammahelp.handy.ui;
+package cz.mammahelp.handy.ui.activity;
 
 import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
 import static cz.mammahelp.handy.Constants.DAY_IN_MILLIS;
@@ -37,6 +37,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import cz.mammahelp.handy.MammaHelpService;
 import cz.mammahelp.handy.MammaHelpService.FeederServiceBinder;
+import cz.mammahelp.handy.ui.AbstractMammaHelpActivity;
+import cz.mammahelp.handy.ui.fragment.NavigationDrawerFragment;
+import cz.mammahelp.handy.ui.fragment.NewsListFragment;
 import cz.mammahelp.handy.R;
 
 public class MainActivity extends AbstractMammaHelpActivity {

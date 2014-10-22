@@ -1,4 +1,4 @@
-package cz.mammahelp.handy.ui;
+package cz.mammahelp.handy.ui.component;
 
 import java.text.ParseException;
 import java.util.Calendar;

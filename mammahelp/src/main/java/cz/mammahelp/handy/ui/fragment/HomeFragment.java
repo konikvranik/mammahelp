@@ -1,4 +1,4 @@
-package cz.mammahelp.handy.ui;
+package cz.mammahelp.handy.ui.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;

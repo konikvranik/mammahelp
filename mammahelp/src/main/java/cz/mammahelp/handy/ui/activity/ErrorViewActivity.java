@@ -1,16 +1,19 @@
 /**
  * 
  */
-package cz.mammahelp.handy.ui;
+package cz.mammahelp.handy.ui.activity;
 
 import static cz.mammahelp.handy.Constants.EXCEPTION;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,6 +24,7 @@ import android.webkit.WebView;
 import cz.mammahelp.handy.MammaHelpException;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.Utils;
+import cz.mammahelp.handy.ui.AbstractMammaHelpActivity;
 
 /**
  * @author jd39426

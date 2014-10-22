@@ -52,7 +52,7 @@
             android:src="@android:drawable/ic_menu_sort_by_size"
             android:visibility="gone" />
 
-        <cz.mammahelp.handy.ui.MultiSpinner
+        <cz.mammahelp.handy.ui.component.MultiSpinner
             android:id="@+id/filters"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

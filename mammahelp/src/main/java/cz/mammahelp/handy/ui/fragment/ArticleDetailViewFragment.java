@@ -1,4 +1,4 @@
-package cz.mammahelp.handy.ui;
+package cz.mammahelp.handy.ui.fragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +24,8 @@ import cz.mammahelp.handy.model.Articles;
 import cz.mammahelp.handy.model.News;
 import cz.mammahelp.handy.provider.ArticlesContentProvider;
 import cz.mammahelp.handy.provider.NewsContentProvider;
+import cz.mammahelp.handy.ui.AbstractMammaHelpActivity;
+import cz.mammahelp.handy.ui.MammahelpWebViewClient;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment

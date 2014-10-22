@@ -17,7 +17,7 @@
             android:summary="@string/only_wifi_description"
             android:title="@string/only_wifi_title" />
 
-        <cz.mammahelp.handy.ui.IntervalPreference
+        <cz.mammahelp.handy.ui.component.IntervalPreference
             android:defaultValue="14400000"
             android:dependency="automatic_updates"
             android:dialogLayout="@layout/slider_preference"

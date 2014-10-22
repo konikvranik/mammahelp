@@ -17,7 +17,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.app.TaskStackBuilder;
-import cz.mammahelp.handy.ui.ErrorViewActivity;
+import cz.mammahelp.handy.ui.activity.ErrorViewActivity;
 
 public class NotificationUtils {
 

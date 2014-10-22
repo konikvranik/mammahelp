@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="cz.mammahelp.handy.ui.HomeFragment" >
+    tools:context="cz.mammahelp.handy.ui.fragment.HomeFragment" >
 
     <!-- TODO: Update blank fragment layout -->
 
-    <RelativeLayout
+    <RelativeLayout android:id="@+id/home"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_weight="1"

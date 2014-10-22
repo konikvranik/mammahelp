@@ -1,4 +1,4 @@
-package cz.mammahelp.handy.ui;
+package cz.mammahelp.handy.ui.fragment;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -55,6 +55,9 @@ import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.model.LocationPoint;
+import cz.mammahelp.handy.ui.ANamedFragment;
+import cz.mammahelp.handy.ui.component.MultiSpinner;
+import cz.mammahelp.handy.ui.component.MultiSpinner.MultiSpinnerListener;
 
 public class CentersListFragment extends ANamedFragment {
 
@@ -181,13 +184,10 @@ public class CentersListFragment extends ANamedFragment {
 		View mainView = inflater.inflate(R.layout.fragment_centers_listing,
 				null);
 
-		final Location pos = getPosition();
-
 		adao = new LocationPointDao(getDbHelper());
 
 		mapView = (MapView) mainView.findViewById(R.id.map);
 		mapView.onCreate(savedInstanceState);
-		setupMap(pos);
 
 		listView = (ListView) mainView.findViewById(R.id.listing);
 		listView.setOnItemClickListener(new ListView.OnItemClickListener() {
@@ -253,12 +253,7 @@ public class CentersListFragment extends ANamedFragment {
 						editor.putStringSet(PREF_KEY_FILTER, filter);
 						editor.commit();
 
-						adapter = new CategoryAdapter(adao.findByType(filter),
-								pos);
-						if (listView != null)
-							listView.setAdapter(adapter);
-
-						addMarkers(filter.toArray(new String[0]));
+						updateData();
 					}
 				});
 
@@ -270,9 +265,7 @@ public class CentersListFragment extends ANamedFragment {
 		}
 		filterSpinner.updateState();
 
-		adapter = new CategoryAdapter(adao.findByType(filter), pos);
-		if (listView != null)
-			listView.setAdapter(adapter);
+		updateData();
 
 		return mainView;
 	}
@@ -383,7 +376,6 @@ public class CentersListFragment extends ANamedFragment {
 				log.debug("Camera moved.");
 			}
 
-			addMarkers(filter.toArray(new String[0]));
 		} else {
 			checkGooglePlayServices();
 		}
@@ -541,6 +533,18 @@ public class CentersListFragment extends ANamedFragment {
 	/* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
 	private double rad2deg(double rad) {
 		return (rad * 180.0 / Math.PI);
+	}
+
+	@Override
+	public void updateData() {
+		final Location pos = getPosition();
+		setupMap(pos);
+		addMarkers(filter.toArray(new String[0]));
+		adapter = new CategoryAdapter(adao.findByType(filter), pos);
+		adapter = new CategoryAdapter(adao.findByType(filter), pos);
+		if (listView != null)
+			listView.setAdapter(adapter);
+
 	}
 
 }

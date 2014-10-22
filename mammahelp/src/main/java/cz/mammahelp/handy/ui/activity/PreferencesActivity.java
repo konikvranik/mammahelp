@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cz.mammahelp.handy.ui;
+package cz.mammahelp.handy.ui.activity;
 
 import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
 import static cz.mammahelp.handy.Constants.KEY;
@@ -29,6 +29,7 @@ import android.widget.Toast;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.MammaHelpService;
 import cz.mammahelp.handy.R;
+import cz.mammahelp.handy.ui.component.IntervalPreference;
 
 /**
  * @author jd39426

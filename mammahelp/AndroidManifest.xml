@@ -46,7 +46,7 @@ Production (4E:1D:6E:96:14:F1:06:DA:AA:D2:A7:64:9E:3A:EA:2C:99:7B:F7:C1;cz.mamma
         -->
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name="cz.mammahelp.handy.ui.activity.MainActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,20 +54,20 @@ Production (4E:1D:6E:96:14:F1:06:DA:AA:D2:A7:64:9E:3A:EA:2C:99:7B:F7:C1;cz.mamma
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.AboutActivity" >
+        <activity android:name="cz.mammahelp.handy.ui.activity.AboutActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
+                android:value=".ui.activity.MainActivity" />
         </activity>
-        <activity android:name=".ui.ErrorViewActivity" >
+        <activity android:name="cz.mammahelp.handy.ui.activity.ErrorViewActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
+                android:value=".ui.activity.MainActivity" />
         </activity>
-        <activity android:name=".ui.PreferencesActivity" >
+        <activity android:name="cz.mammahelp.handy.ui.activity.PreferencesActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
+                android:value=".ui.activity.MainActivity" />
         </activity>
 
         <service

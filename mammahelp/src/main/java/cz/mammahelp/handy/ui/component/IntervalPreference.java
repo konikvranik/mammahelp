@@ -1,4 +1,4 @@
-package cz.mammahelp.handy.ui;
+package cz.mammahelp.handy.ui.component;
 
 import static cz.mammahelp.handy.Constants.DAY_IN_MILLIS;
 import static cz.mammahelp.handy.Constants.HOUR_IN_MILLIS;

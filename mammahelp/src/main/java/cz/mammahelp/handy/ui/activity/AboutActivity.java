@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cz.mammahelp.handy.ui;
+package cz.mammahelp.handy.ui.activity;
 
 import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
 
@@ -22,6 +22,7 @@ import android.webkit.WebView;
 import android.widget.TextView;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.Utils;
+import cz.mammahelp.handy.ui.AbstractMammaHelpActivity;
 
 /**
  * @author Petr

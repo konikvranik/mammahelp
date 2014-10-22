@@ -1,7 +1,7 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <header
-        android:fragment="cz.mammahelp.handy.ui.PreferencesActivity$PrefsFragmentUpdateInner"
+        android:fragment="cz.mammahelp.handy.ui.activity.PreferencesActivity$PrefsFragmentUpdateInner"
         android:icon="@drawable/ic_menu_news"
         android:summary="@string/prefs_summary_news"
         android:title="@string/prefs_title_news" >
@@ -13,7 +13,7 @@
             android:value="update_times_news" />
     </header>
     <header
-        android:fragment="cz.mammahelp.handy.ui.PreferencesActivity$PrefsFragmentUpdateInner"
+        android:fragment="cz.mammahelp.handy.ui.activity.PreferencesActivity$PrefsFragmentUpdateInner"
         android:icon="@drawable/ic_menu_world"
         android:summary="@string/prefs_summary_articles"
         android:title="@string/prefs_title_articles" >

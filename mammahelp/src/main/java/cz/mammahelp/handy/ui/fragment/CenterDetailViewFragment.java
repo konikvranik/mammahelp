@@ -1,4 +1,4 @@
-package cz.mammahelp.handy.ui;
+package cz.mammahelp.handy.ui.fragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +21,8 @@ import cz.mammahelp.handy.Utils;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.model.LocationPoint;
 import cz.mammahelp.handy.provider.EnclosureContentProvider;
+import cz.mammahelp.handy.ui.AbstractMammaHelpActivity;
+import cz.mammahelp.handy.ui.MammahelpWebViewClient;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment

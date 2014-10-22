@@ -1,4 +1,4 @@
-package cz.mammahelp.handy.ui;
+package cz.mammahelp.handy.ui.fragment;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -29,6 +29,7 @@ import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.model.News;
+import cz.mammahelp.handy.ui.ANamedFragment;
 
 public class NewsListFragment extends ANamedFragment {
 
@@ -139,14 +140,12 @@ public class NewsListFragment extends ANamedFragment {
 		return htmlTransformer;
 	}
 
-	private ListView view;
-	private NewsAdapter adapter;
-	private NewsDao adao;
+	private ListView listView;
+	private NewsDao ndao;
 
 	@Override
 	public void onResume() {
 		super.onResume();
-
 		updateData();
 	}
 
@@ -157,12 +156,12 @@ public class NewsListFragment extends ANamedFragment {
 			updateData();
 	}
 
-	private void updateData() {
+	@Override
+	public void updateData() {
 
-		if (adao != null && view != null) {
-			adapter = new NewsAdapter(adao.findAll());
-			view.setAdapter(adapter);
-			view.invalidate();
+		if (ndao != null && listView != null) {
+			listView.setAdapter(new NewsAdapter(ndao.findAll()));
+			listView.invalidateViews();
 		}
 
 	}
@@ -170,14 +169,18 @@ public class NewsListFragment extends ANamedFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View mainView = inflater.inflate(R.layout.news_listing, null);
-		view = (ListView) mainView.findViewById(R.id.listing);
 
-		adao = new NewsDao(getDbHelper());
+		super.onCreateView(inflater, container, savedInstanceState);
+
+		View mainView = inflater.inflate(R.layout.news_listing, null);
+		listView = (ListView) mainView.findViewById(R.id.listing);
+		listView.setEmptyView(mainView.findViewById(R.id.empty));
+
+		ndao = new NewsDao(getDbHelper());
 
 		updateData();
 
-		view.setOnItemClickListener(new ListView.OnItemClickListener() {
+		listView.setOnItemClickListener(new ListView.OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> paramAdapterView,

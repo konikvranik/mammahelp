@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context="cz.mammahelp.handy.ui.MainActivity" >
+    tools:context="cz.mammahelp.handy.ui.activity.MainActivity" >
 
     <!-- As the main content view, the view below consumes the entire space available using match_parent in both dimensions. -->
 
@@ -14,7 +14,7 @@
 
         <fragment
             android:id="@+id/navigation_drawer"
-            android:name="cz.mammahelp.handy.ui.NavigationDrawerFragment"
+            android:name="cz.mammahelp.handy.ui.fragment.NavigationDrawerFragment"
             android:layout_width="@dimen/navigation_drawer_width"
             android:layout_height="match_parent"
             android:layout_gravity="start"
@@ -29,7 +29,7 @@
         <fragment
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            class="cz.mammahelp.handy.ui.HomeFragment"
+            class="cz.mammahelp.handy.ui.fragment.HomeFragment"
             android:tag="home" >
         </fragment>
     </FrameLayout>

@@ -1,4 +1,4 @@
-package cz.mammahelp.handy.ui;
+package cz.mammahelp.handy.ui.fragment;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -23,11 +23,12 @@ import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.model.Articles;
+import cz.mammahelp.handy.ui.ANamedFragment;
 
-public class CategoryListFragment extends ANamedFragment {
+public class ArticleListFragment extends ANamedFragment {
 
 	public static Logger log = LoggerFactory
-			.getLogger(CategoryListFragment.class);
+			.getLogger(ArticleListFragment.class);
 
 	public class CategoryAdapter extends BaseAdapter implements ListAdapter {
 
@@ -35,7 +36,7 @@ public class CategoryListFragment extends ANamedFragment {
 		private Articles[] articles;
 
 		public CategoryAdapter(SortedSet<Articles> articles) {
-			context = CategoryListFragment.this.getActivity();
+			context = ArticleListFragment.this.getActivity();
 			this.articles = (articles == null ? new Articles[0] : articles
 					.toArray(new Articles[0]));
 		}
@@ -79,6 +80,7 @@ public class CategoryListFragment extends ANamedFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		super.onCreateView(inflater, container, savedInstanceState);
 		View mainView = inflater.inflate(R.layout.category_listing, null);
 		view = (ListView) mainView.findViewById(R.id.listing);
 
@@ -111,15 +113,18 @@ public class CategoryListFragment extends ANamedFragment {
 		else
 			categoryId = getArguments().getString(Constants.CATEGORY_KEY);
 
-		ArticlesDao adao = new ArticlesDao(getDbHelper());
-
-		SortedSet<Articles> articles = adao.findByCategory(categoryId);
-
-		adapter = new CategoryAdapter(articles);
-		if (view != null)
-			view.setAdapter(adapter);
+		updateData();
 
 		return mainView;
+	}
+
+	@Override
+	public void updateData() {
+		ArticlesDao adao = new ArticlesDao(getDbHelper());
+		adapter = new CategoryAdapter(adao.findByCategory(categoryId));
+		if (view != null)
+			view.setAdapter(adapter);
+		view.invalidateViews();
 	}
 
 	@Override
