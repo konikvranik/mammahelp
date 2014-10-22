@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.Utils;
 import cz.mammahelp.handy.dao.LocationPointDao;
+import cz.mammahelp.handy.feeder.LocationFeeder;
 import cz.mammahelp.handy.model.LocationPoint;
 import cz.mammahelp.handy.provider.EnclosureContentProvider;
 import cz.mammahelp.handy.ui.AbstractMammaHelpActivity;
@@ -41,6 +44,8 @@ public class CenterDetailViewFragment extends Fragment {
 	private static final Object SUB_DIVIDER = "; ";
 	private OnFragmentInteractionListener mListener;
 	private LocationPoint center;
+
+	private SharedPreferences prefs;
 
 	/**
 	 * Use this factory method to create a new instance of this fragment using
@@ -84,8 +89,8 @@ public class CenterDetailViewFragment extends Fragment {
 		Long id = getArguments().getLong(Constants.CENTER_KEY);
 		LocationPoint lp = ldao.findById(id);
 		wv.setWebViewClient(new MammahelpWebViewClient(getActivity()));
-		wv.loadDataWithBaseURL(null, locationIntoHtml(lp), "text/html",
-				"UTF-8", null);
+		wv.loadDataWithBaseURL(null, locationIntoHtml(ldao, wv, lp),
+				"text/html", "UTF-8", null);
 
 		return view;
 	}
@@ -151,7 +156,8 @@ public class CenterDetailViewFragment extends Fragment {
 		outState.putLong(Constants.CENTER_KEY, getCenter().getId());
 	}
 
-	private String locationIntoHtml(LocationPoint lp) {
+	private String locationIntoHtml(final LocationPointDao ldao,
+			final WebView wv, final LocationPoint lp) {
 
 		StringBuilder sb = new StringBuilder("<html>");
 		sb.append("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"/><meta charset=\"UTF-8\"/>");
@@ -179,6 +185,37 @@ public class CenterDetailViewFragment extends Fragment {
 		addElement(sb, "p", "description", lp.getDescription());
 
 		addressIntoHtml(sb, lp);
+		if (lp.getMapImage() == null || lp.getMapImage().getId() == null) {
+			if (getActivity().getSharedPreferences(
+					getResources().getString(R.string.others_preferences),
+					Context.MODE_MULTI_PROCESS).getBoolean(
+					Constants.AUTOMATIC_UPDATES_KEY, false)) {
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+
+						try {
+							new LocationFeeder(getActivity()).feedData(lp);
+							ldao.update(lp);
+							getActivity().runOnUiThread(new Runnable() {
+
+								@Override
+								public void run() {
+									wv.loadDataWithBaseURL(null,
+											locationIntoHtml(ldao, wv, lp),
+											"text/html", "UTF-8", null);
+								}
+							});
+
+						} catch (Exception e) {
+							log.error("Error getting map: " + e.getMessage(), e);
+						}
+					}
+				}).start();
+			}
+		}
 
 		if (lp.getMapImage() != null && lp.getMapImage().getId() != null) {
 			sb.append("<div class=\"map\"><a href=\"");

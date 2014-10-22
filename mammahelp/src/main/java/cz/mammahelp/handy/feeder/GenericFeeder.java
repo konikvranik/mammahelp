@@ -218,6 +218,8 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 	}
 
 	protected URL normalizeUrl(URL url) {
+		if (url == null)
+			return null;
 		StringBuffer sb = new StringBuffer();
 		sb.append(url.getProtocol());
 		// sb.append(url.getUserInfo());
