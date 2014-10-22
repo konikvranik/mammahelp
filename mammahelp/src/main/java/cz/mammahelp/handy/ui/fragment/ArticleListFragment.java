@@ -120,11 +120,16 @@ public class ArticleListFragment extends ANamedFragment {
 
 	@Override
 	public void updateData() {
-		ArticlesDao adao = new ArticlesDao(getDbHelper());
-		adapter = new CategoryAdapter(adao.findByCategory(categoryId));
-		if (view != null)
-			view.setAdapter(adapter);
-		view.invalidateViews();
+		getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				ArticlesDao adao = new ArticlesDao(getDbHelper());
+				adapter = new CategoryAdapter(adao.findByCategory(categoryId));
+				if (view != null)
+					view.setAdapter(adapter);
+				view.invalidateViews();
+			}
+		});
 	}
 
 	@Override

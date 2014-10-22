@@ -458,17 +458,18 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 			throws MammaHelpException, TransformerException,
 			TransformerConfigurationException, IOException {
 
-		if (bodyNode != null && bodyNode.hasChildNodes()) {
+		if (bodyNode == null || !bodyNode.hasChildNodes())
+			return;
 
-			extractEnclosures(bodyNode, article.getUrl());
+		extractEnclosures(bodyNode, article.getUrl());
 
-			StringWriter sw = new StringWriter();
-			getTransformer().transform(new DOMSource(bodyNode),
-					new StreamResult(sw));
+		StringWriter sw = new StringWriter();
+		getTransformer().transform(new DOMSource(bodyNode),
+				new StreamResult(sw));
 
-			String body = sw.toString();
+		String body = sw.toString();
 
-			article.setBody(body);
-		}
+		article.setBody(body);
+
 	}
 }

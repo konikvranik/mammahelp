@@ -42,7 +42,6 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -57,7 +56,6 @@ import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.model.LocationPoint;
 import cz.mammahelp.handy.ui.ANamedFragment;
 import cz.mammahelp.handy.ui.component.MultiSpinner;
-import cz.mammahelp.handy.ui.component.MultiSpinner.MultiSpinnerListener;
 
 public class CentersListFragment extends ANamedFragment {
 
@@ -390,9 +388,11 @@ public class CentersListFragment extends ANamedFragment {
 		criteria.setAltitudeRequired(false);
 		criteria.setBearingRequired(false);
 		criteria.setSpeedRequired(false);
-		Location pos = lm.getLastKnownLocation(lm.getBestProvider(criteria,
-				true));
-		return pos;
+		String prov = lm.getBestProvider(criteria, true);
+		if (prov != null)
+			return lm.getLastKnownLocation(prov);
+		else
+			return null;
 	}
 
 	protected void addMarkers(String[] type) {
@@ -537,14 +537,18 @@ public class CentersListFragment extends ANamedFragment {
 
 	@Override
 	public void updateData() {
-		final Location pos = getPosition();
-		setupMap(pos);
-		addMarkers(filter.toArray(new String[0]));
-		adapter = new CategoryAdapter(adao.findByType(filter), pos);
-		adapter = new CategoryAdapter(adao.findByType(filter), pos);
-		if (listView != null)
-			listView.setAdapter(adapter);
-
+		getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				final Location pos = getPosition();
+				setupMap(pos);
+				addMarkers(filter.toArray(new String[0]));
+				adapter = new CategoryAdapter(adao.findByType(filter), pos);
+				adapter = new CategoryAdapter(adao.findByType(filter), pos);
+				if (listView != null)
+					listView.setAdapter(adapter);
+			}
+		});
 	}
 
 }

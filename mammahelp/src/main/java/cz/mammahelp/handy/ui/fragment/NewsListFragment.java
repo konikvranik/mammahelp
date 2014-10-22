@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -158,11 +160,33 @@ public class NewsListFragment extends ANamedFragment {
 
 	@Override
 	public void updateData() {
-
-		if (ndao != null && listView != null) {
-			listView.setAdapter(new NewsAdapter(ndao.findAll()));
-			listView.invalidateViews();
-		}
+		getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				if (ndao != null && listView != null) {
+					TreeSet<News> ordered = new TreeSet<News>(
+							new Comparator<News>() {
+								@Override
+								public int compare(News o1, News o2) {
+									if (o1.getSyncTime() != null) {
+										if (o2.getSyncTime() == null)
+											return -1;
+										return (int) Math.abs(o1.getSyncTime()
+												.getTimeInMillis()
+												- o2.getSyncTime()
+														.getTimeInMillis());
+									}
+									if (o2.getSyncTime() != null)
+										return 1;
+									return o1.compareTo(o2);
+								}
+							});
+					ordered.addAll(ndao.findAll());
+					listView.setAdapter(new NewsAdapter(ordered));
+					listView.invalidateViews();
+				}
+			}
+		});
 
 	}
 

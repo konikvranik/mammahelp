@@ -1,6 +1,7 @@
 package cz.mammahelp.handy.feeder;
 
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
@@ -30,6 +31,8 @@ public class LocationFeeder extends
 	private int semaphore;
 	private EnclosureDao edao;
 
+	private URL url;
+
 	public LocationFeeder(Context context) {
 		super(context);
 	}
@@ -41,8 +44,7 @@ public class LocationFeeder extends
 			Serializer serializer = new Persister();
 
 			LocationsXmlWrapper aw = serializer.read(LocationsXmlWrapper.class,
-					getInputStreamFromUrl(new URL(getContext().getResources()
-							.getString(R.string.locations_url))));
+					getInputStreamFromUrl(getUrl()));
 
 			log.debug("Read " + aw.locations.size() + " locations.");
 
@@ -59,9 +61,22 @@ public class LocationFeeder extends
 			getDao().delete(getDao().findAll());
 			getDao().insert(aw.locations);
 
+			getDbHelper().notifyDataSetChanged();
+
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
+	}
+
+	public URL getUrl() throws MalformedURLException {
+		if (url == null)
+			url = new URL(getContext().getResources().getString(
+					R.string.locations_url));
+		return url;
+	}
+	
+	public void setUrl(URL url) {
+		this.url = url;
 	}
 
 	@Override

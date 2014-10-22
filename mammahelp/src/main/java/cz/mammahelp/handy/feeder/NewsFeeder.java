@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 import android.content.Context;
@@ -64,6 +63,10 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 		Calendar syncTime = Calendar.getInstance();
 		syncTime.setTime(feed.getPublishedDate());
 
+		Collection<News> old = getDao().findAll();
+		if (old != null)
+			getDao().delete(old);
+
 		for (SyndEntry syndEntry : entries) {
 
 			SyndContent desc = syndEntry.getDescription();
@@ -72,7 +75,12 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 			News news = new News();
 			news.setTitle(syndEntry.getTitle());
 			news.setAnnotation(desc.getValue());
-			news.setSyncTime(syncTime);
+			Calendar pubdate = Calendar.getInstance();
+			if (syndEntry.getPublishedDate() != null)
+				pubdate.setTime(syndEntry.getPublishedDate());
+			else
+				pubdate.setTime(syncTime.getTime());
+			news.setSyncTime(pubdate);
 			news.setUrl(syndEntry.getUri());
 			news.setCategory(Arrays.toString(syndEntry.getCategories()
 					.toArray()));
@@ -81,20 +89,25 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 			if (on != null)
 				news.setId(on.getId());
 
+			if (news.getId() == null)
+				getDao().insert(news);
+			else
+				getDao().update(news);
+
 			feedData(news);
 
 		}
 
-		Collection<News> older = getDao().findOlder(syncTime.getTime());
-		if (older != null)
-			getDao().delete(older);
+		SharedPreferences prefs = getContext().getSharedPreferences(
+				getContext().getResources()
+						.getString(R.string.news_preferences),
+				Context.MODE_MULTI_PROCESS);
+		prefs.edit()
+				.putLong(Constants.NEWS_LAST_UPDATED,
+						feed.getPublishedDate().getTime()).commit();
 
-		getContext()
-				.getSharedPreferences(
-						getContext().getResources().getString(
-								R.string.news_preferences),
-						Context.MODE_MULTI_PROCESS).edit()
-				.putLong(LAST_UPDATED_KEY, System.currentTimeMillis()).commit();
+		prefs.edit().putLong(LAST_UPDATED_KEY, System.currentTimeMillis())
+				.commit();
 
 		NotificationUtils.makeNotification(
 				getContext().getApplicationContext(),
@@ -106,6 +119,8 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 				R.string.news_updated_title,
 				getContext().getResources().getString(
 						R.string.news_updated_description));
+
+		getDbHelper().notifyDataSetChanged();
 
 	}
 
@@ -121,8 +136,10 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 			SharedPreferences prefs = getContext().getSharedPreferences(
 					getContext().getResources().getString(
 							R.string.news_preferences), Context.MODE_PRIVATE);
+
 			long lastUpdated = prefs.getLong(Constants.NEWS_LAST_UPDATED, 0);
 			Date lastTimeUpdated = new Date(lastUpdated);
+
 			is = getInputStreamFromUrl(new URL(url), lastTimeUpdated);
 			if (is == null)
 				return null;
@@ -132,11 +149,9 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 			SyndFeedInput input = new SyndFeedInput();
 			feed = input.build(source);
 
-			if (lastTimeUpdated != null
-					&& lastTimeUpdated.getTime() > lastUpdated)
-				prefs.edit()
-						.putLong(Constants.NEWS_LAST_UPDATED,
-								lastTimeUpdated.getTime()).commit();
+			if (feed.getPublishedDate() == null) {
+				feed.setPublishedDate(new Date());
+			}
 
 			// if(getUrl()!=null)
 			// TODO update redirected URL here!
@@ -182,26 +197,21 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 		if (news.getUrl() == null)
 			return;
 
-		Date syncedDate = news.getSyncTime() == null ? new Date(0) : news
+		Date syncedDate = news.getSyncTime() == null ? new Date() : news
 				.getSyncTime().getTime();
 
 		log.debug("Loading body from " + news.getUrl());
 		InputStream is = getInputStreamFromUrl(new URL(news.getUrl()),
-				(Date) null);
-		if (is == null)
-			return;
+				syncedDate);
 
-		if (syncedDate == null) {
-			news.setSyncTime(null);
-		} else {
-			Calendar cal = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
+		if (syncedDate != null && news.getSyncTime() != null) {
 			cal.setTime(syncedDate);
-			news.setSyncTime(cal);
 		}
+		news.setSyncTime(cal);
 
-		Document d = getTidy(null).parseDOM(is, null);
-
-		saveBody(news, transformBody(d));
+		if (is != null)
+			saveBody(news, transformBody(getTidy(null).parseDOM(is, null)));
 
 		if (news.getId() == null)
 			getDao().insert(news);

@@ -37,10 +37,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import cz.mammahelp.handy.MammaHelpService;
 import cz.mammahelp.handy.MammaHelpService.FeederServiceBinder;
+import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.ui.AbstractMammaHelpActivity;
 import cz.mammahelp.handy.ui.fragment.NavigationDrawerFragment;
 import cz.mammahelp.handy.ui.fragment.NewsListFragment;
-import cz.mammahelp.handy.R;
 
 public class MainActivity extends AbstractMammaHelpActivity {
 
@@ -334,6 +334,8 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		}
 
 	};
+
+	private DataSetObserver refreshObserver;
 
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
