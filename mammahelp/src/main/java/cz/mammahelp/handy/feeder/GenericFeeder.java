@@ -43,6 +43,7 @@ import org.w3c.tidy.Tidy;
 
 import android.content.Context;
 import android.content.res.Resources;
+import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.MammaHelpException;
 import cz.mammahelp.handy.R;
@@ -303,8 +304,8 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 							newValue = recurseArticles(topUrl, newValue, conn);
 						}
 					}
-
-					attr.setValue(newValue);
+					if (newValue != null)
+						attr.setValue(newValue);
 
 				} catch (MalformedURLException e) {
 					log.warn(e.getMessage());
@@ -334,8 +335,9 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 
 	private String recurseArticles(String topUrl, String newValue,
 			HttpURLConnection conn) throws Exception {
-		if (newValue != null && newValue.startsWith("http://www.mammahelp.cz/")
-				&& !newValue.equals(topUrl))
+		if (newValue != null && newValue.startsWith(Constants.SOURCE_ROOT_URL)
+				&& !newValue.equals(topUrl)
+				&& !newValue.equals(Constants.SOURCE_ROOT_URL))
 			if (conn.getContentType().startsWith("text/html"))
 				newValue = saveArticle(conn);
 		return newValue;
@@ -348,13 +350,18 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 		String url = conn.getURL().toExternalForm();
 		Articles article = adao.findByExactUrl(url);
 
+		GenericFeeder<ArticlesDao, Articles> af = new ArticleFeeder(
+				getContext(), level + 1);
 		if (article == null || article.getId() == null) {
-			GenericFeeder<ArticlesDao, Articles> af = new ArticleFeeder(
-					getContext(), level + 1);
 			article = new Articles();
 			article.setUrl(url);
-			af.feedData(article);
 		}
+		if (article.getBody() == null || article.getBody().isEmpty()) {
+			af.feedData(article);
+
+		}
+		if (article == null || article.getId() == null)
+			return null;
 		return ArticlesContentProvider.makeUri(article.getId());
 	}
 

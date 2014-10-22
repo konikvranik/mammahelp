@@ -1,9 +1,13 @@
 package cz.mammahelp.handy.ui;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import cz.mammahelp.handy.Constants;
@@ -12,6 +16,8 @@ import cz.mammahelp.handy.provider.EnclosureContentProvider;
 public class MammahelpWebViewClient extends WebViewClient {
 
 	private Context context;
+	private static Logger log = LoggerFactory
+			.getLogger(MammahelpWebViewClient.class);
 
 	public MammahelpWebViewClient(Context context) {
 		this.context = context;
@@ -24,6 +30,7 @@ public class MammahelpWebViewClient extends WebViewClient {
 			super.shouldOverrideUrlLoading(view, url);
 
 		if (url.startsWith(EnclosureContentProvider.CONTENT_URI)) {
+			log.debug("force view enclosure: " + url);
 			Intent intent = new Intent();
 			intent.setAction(Intent.ACTION_VIEW);
 			ContentResolver ressolver = view.getContext().getContentResolver();
@@ -32,10 +39,12 @@ public class MammahelpWebViewClient extends WebViewClient {
 			intent.putExtra(Intent.EXTRA_STREAM, url);
 			view.getContext().startActivity(intent);
 			return true;
-		} else if (url.startsWith(Constants.CONTENT_URI_PREFIX)) {
+		} else if (url.startsWith("content://" + Constants.CONTENT_URI_PREFIX)) {
 			// view.loadUrl(url);
+			log.debug("let decide nativelly: " + url);
 			return super.shouldOverrideUrlLoading(view, url);
 		} else {
+			log.debug("force view: " + url);
 			Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 			context.startActivity(i);
 			return true;

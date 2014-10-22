@@ -20,11 +20,17 @@
 		<xsl:apply-templates select="node()" />
 	</xsl:template>
 
+	<xsl:template match="div[contains(@class,'post-meta')]//a|div[contains(@class,'post-tags')]//a">
+		<sapn class="a-href" data-href="{@href}">
+			<xsl:apply-templates select="@*|node()" />
+		</sapn>
+	</xsl:template>
+
 	<!-- Default: copy everything -->
 	<xsl:template match="@*|node()">
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:copy>
 	</xsl:template>
-	
+
 </xsl:stylesheet>

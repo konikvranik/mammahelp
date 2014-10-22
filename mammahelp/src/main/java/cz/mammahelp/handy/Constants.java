@@ -61,4 +61,6 @@ public class Constants {
 
 	public static final String NEWS_LAST_UPDATE_RUN = "news_last_update_run";
 
+	public static final String SOURCE_ROOT_URL = "http://www.mammahelp.cz/";
+
 }
