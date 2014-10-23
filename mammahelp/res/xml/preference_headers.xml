@@ -38,6 +38,7 @@
     </header>
     <header
         android:id="@+id/refresh"
+        android:background="@color/mammahelp_pink"
         android:icon="@drawable/ic_action_refresh"
         android:key="refresh"
         android:summary="@string/preferences_run_update_summary"
@@ -68,7 +69,7 @@
                 android:name="cleanup"
                 android:value="-1" />
         </intent>
-    </header
+    </header
     -->
 
 </preference-headers>
