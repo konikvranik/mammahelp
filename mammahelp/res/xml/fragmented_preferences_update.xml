@@ -7,12 +7,14 @@
         android:title="@string/update_title" >
         <SwitchPreference
             android:defaultValue="false"
+            android:icon="@drawable/av_download"
             android:key="automatic_updates"
             android:summary="@string/update_automatically_description"
             android:title="@string/update_automatically_title" />
         <SwitchPreference
             android:defaultValue="true"
             android:dependency="automatic_updates"
+            android:icon="@drawable/device_access_network_wifi"
             android:key="only_wifi"
             android:summary="@string/only_wifi_description"
             android:title="@string/only_wifi_title" />
@@ -21,6 +23,7 @@
             android:defaultValue="14400000"
             android:dependency="automatic_updates"
             android:dialogLayout="@layout/slider_preference"
+            android:icon="@drawable/ic_action_time"
             android:key="update_interval"
             android:summary="@string/refresh_period_description"
             android:title="@string/refresh_period_title"

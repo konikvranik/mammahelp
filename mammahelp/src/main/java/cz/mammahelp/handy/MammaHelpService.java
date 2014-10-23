@@ -1,6 +1,8 @@
 package cz.mammahelp.handy;
 
 import java.io.StringReader;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
@@ -345,14 +347,13 @@ public class MammaHelpService extends Service {
 			LocationPointDao ldao = new LocationPointDao(getDbHelper());
 			NewsDao ndao = new NewsDao(getDbHelper());
 
-			Set<Long> articles = new TreeSet<Long>();
+			Set<Long> articles = new HashSet<Long>();
 			for (Articles a : adao.findAll())
 				articles.add(a.getId());
 
-			Set<Long> enclosures = new TreeSet<Long>();
+			Set<Long> enclosures = new HashSet<Long>();
 			for (Enclosure e : edao.findAll())
 				enclosures.add(e.getId());
-
 			for (Articles a : adao.findAll()) {
 				if (a.getCategory() != null && !a.getCategory().isEmpty())
 					extractFromArticle(a, articles, enclosures);
@@ -364,7 +365,11 @@ public class MammaHelpService extends Service {
 				extractFromNews(n, articles, enclosures);
 			}
 
+			log.debug("articles to delete : "
+					+ Arrays.toString(articles.toArray()));
 			adao.deleteAllById(articles);
+			log.debug("enclosures to delete : "
+					+ Arrays.toString(enclosures.toArray()));
 			edao.deleteAllById(enclosures);
 
 		}
@@ -374,15 +379,20 @@ public class MammaHelpService extends Service {
 			processBody(n.getBody(), articles, enclosures);
 		}
 
-		private void extractFromCenter(LocationPoint a, Set<Long> articles,
+		private void extractFromCenter(LocationPoint l, Set<Long> articles,
 				Set<Long> enclosures) throws MammaHelpException {
-			processBody(a.getDescription(), articles, enclosures);
-			if (a.getMapImage() != null && a.getMapImage().getId() != null)
-				enclosures.remove(a.getMapImage().getId());
+			processBody(l.getDescription(), articles, enclosures);
+			if (l.getMapImage() != null && l.getMapImage().getId() != null) {
+				enclosures.remove(l.getMapImage().getId());
+				log.debug("successfully safed map enclosure "
+						+ l.getMapImage().getId() + " ... "
+						+ Arrays.toString(enclosures.toArray()));
+			}
 		}
 
 		private void extractFromArticle(Articles a, Set<Long> articles,
 				Set<Long> enclosures) throws MammaHelpException {
+
 			if (!articles.contains(a.getId()))
 				return;
 
@@ -398,6 +408,7 @@ public class MammaHelpService extends Service {
 			try {
 				refs = findReferences(body);
 			} catch (XPathExpressionException e) {
+				log.debug("Body: " + body);
 				throw new MammaHelpException(R.string.unexpected_exception, e);
 			}
 			for (String string : refs) {
@@ -405,17 +416,22 @@ public class MammaHelpService extends Service {
 			}
 		}
 
-		private void processRef(String string, Set<Long> articles,
+		private void processRef(String ref, Set<Long> articles,
 				Set<Long> enclosures) throws MammaHelpException {
 
-			Uri uri = Uri.parse(string);
+			Uri uri = Uri.parse(ref);
 
-			if (string.startsWith(EnclosureContentProvider.CONTENT_URI)) {
+			log.debug("processing ref " + ref);
+
+			if (ref.startsWith(EnclosureContentProvider.CONTENT_URI)) {
 				long id = Long.parseLong(uri.getLastPathSegment());
+				log.debug("trying to safe enclosure " + id);
 				enclosures.remove(id);
+				log.debug("successfully safed enclosure " + id + " ... "
+						+ Arrays.toString(enclosures.toArray()));
 			}
 
-			if (string.startsWith(ArticlesContentProvider.CONTENT_URI)) {
+			if (ref.startsWith(ArticlesContentProvider.CONTENT_URI)) {
 				long id = Long.parseLong(uri.getLastPathSegment());
 				ArticlesDao adao = new ArticlesDao(getDbHelper());
 				Articles a = adao.findById(id);
@@ -431,7 +447,7 @@ public class MammaHelpService extends Service {
 			XPathFactory xPathfactory = XPathFactory.newInstance();
 			XPath xpath = xPathfactory.newXPath();
 
-			XPathExpression b = xpath.compile("//@*[starts-with(.,\"content:"
+			XPathExpression b = xpath.compile("//@*[starts-with(.,\"content://"
 					+ Constants.CONTENT_URI_PREFIX + "\")]");
 
 			NodeList nl = (NodeList) b.evaluate(new InputSource(

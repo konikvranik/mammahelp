@@ -24,6 +24,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 import android.view.MenuItem;
 import android.widget.Toast;
 import cz.mammahelp.handy.Constants;
@@ -161,6 +162,16 @@ public class PreferencesActivity extends PreferenceActivity {
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
 			return true;
 		}
+
+		@Override
+		public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
+				Preference preference) {
+			if ("run".equals(preference.getKey())) {
+				runCleanup(getActivity());
+				return true;
+			}
+			return super.onPreferenceTreeClick(preferenceScreen, preference);
+		}
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -204,21 +215,24 @@ public class PreferencesActivity extends PreferenceActivity {
 			getSharedPreferences(prefsName, Context.MODE_MULTI_PROCESS).edit()
 					.putLong(LAST_UPDATED_KEY, System.currentTimeMillis())
 					.commit();
-		} else 	if (header.id == R.id.cleanup) {
-			Intent intent = new Intent(getApplicationContext(),
-					MammaHelpService.class);
-			intent.putExtra(Constants.CLEANUP_FLAG, true);
-			startService(intent);
-
-			Toast.makeText(getApplicationContext(), R.string.cleanup_started,
-					Toast.LENGTH_SHORT).show();
-
-			String prefsName = getResources().getString(
-					R.string.cleanup_preferences);
-			getSharedPreferences(prefsName, Context.MODE_MULTI_PROCESS).edit()
-					.putLong(LAST_UPDATED_KEY, System.currentTimeMillis())
-					.commit();
+		} else if (header.id == R.id.run) {
+			runCleanup(getApplicationContext());
 		} else
 			super.onHeaderClick(header, position);
+	}
+
+	private static void runCleanup(Context context) {
+		Intent intent = new Intent(context, MammaHelpService.class);
+		intent.putExtra(Constants.CLEANUP_FLAG, true);
+		context.startService(intent);
+
+		Toast.makeText(context, R.string.cleanup_started, Toast.LENGTH_SHORT)
+				.show();
+
+		String prefsName = context.getResources().getString(
+				R.string.cleanup_preferences);
+		context.getSharedPreferences(prefsName, Context.MODE_MULTI_PROCESS)
+				.edit().putLong(LAST_UPDATED_KEY, System.currentTimeMillis())
+				.commit();
 	}
 }

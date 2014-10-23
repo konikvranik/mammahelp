@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_action_time"
         android:title="@string/update_title" >
         <SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="false" android:icon="@drawable/ic_action_discard"
             android:key="automatic_updates"
             android:summary="@string/update_automatically_description"
             android:title="@string/update_automatically_title" />
@@ -15,10 +15,18 @@
             android:defaultValue="14400000"
             android:dependency="automatic_updates"
             android:dialogLayout="@layout/slider_preference"
+            android:icon="@drawable/ic_action_time"
             android:key="update_interval"
             android:summary="@string/refresh_period_description"
             android:title="@string/refresh_period_title"
             suteren:values="@array/update_times_others" />
+
+        <Preference
+            android:id="@+id/run"
+            android:icon="@drawable/social_forward"
+            android:key="run"
+            android:summary="@string/preferences_run_cleanup_summary"
+            android:title="@string/preferences_run_cleanup_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

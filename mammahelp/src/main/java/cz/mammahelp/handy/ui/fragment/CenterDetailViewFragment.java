@@ -225,7 +225,6 @@ public class CenterDetailViewFragment extends Fragment {
 		sb.append("</div>");
 		sb.append("</body></html>");
 
-		log.debug("Center:\n" + sb.toString());
 		return sb.toString();
 	}
 

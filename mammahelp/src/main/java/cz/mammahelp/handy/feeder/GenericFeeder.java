@@ -18,6 +18,7 @@ import java.util.zip.GZIPInputStream;
 
 import javax.xml.namespace.QName;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -250,6 +251,8 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 					.open(getFilterName()));
 			source.setSystemId("file:///android_asset/" + getFilterName());
 			htmlTransformer = gettFactory().newTransformer(source);
+			htmlTransformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
+					"yes");
 		}
 		return htmlTransformer;
 	}
@@ -258,6 +261,8 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 			throws TransformerConfigurationException, IOException {
 		if (transformer == null) {
 			transformer = gettFactory().newTransformer();
+			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
+					"yes");
 		}
 		return transformer;
 	}

@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
@@ -139,6 +140,8 @@ public class NewsListFragment extends ANamedFragment {
 			TransformerFactory tFactory = TransformerFactory.newInstance();
 			htmlTransformer = tFactory.newTransformer(new StreamSource(
 					getActivity().getAssets().open("htmlToTextFilter.xsl")));
+			htmlTransformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
+					"yes");
 		}
 		return htmlTransformer;
 	}
