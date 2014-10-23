@@ -335,8 +335,6 @@ public class MainActivity extends AbstractMammaHelpActivity {
 
 	};
 
-	private DataSetObserver refreshObserver;
-
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);

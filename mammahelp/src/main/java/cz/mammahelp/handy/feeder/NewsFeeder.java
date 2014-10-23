@@ -24,7 +24,6 @@ import android.graphics.BitmapFactory;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndContent;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
-import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndImage;
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.FeedException;
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.SyndFeedInput;
 
@@ -58,7 +57,7 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 		@SuppressWarnings("unchecked")
 		List<SyndEntry> entries = feed.getEntries();
 
-		SyndImage mainImage = feed.getImage();
+		// SyndImage mainImage = feed.getImage();
 
 		Calendar syncTime = Calendar.getInstance();
 		syncTime.setTime(feed.getPublishedDate());
@@ -70,7 +69,7 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 		for (SyndEntry syndEntry : entries) {
 
 			SyndContent desc = syndEntry.getDescription();
-			String descType = desc.getType();
+			// String descType = desc.getType();
 
 			News news = new News();
 			news.setTitle(syndEntry.getTitle());

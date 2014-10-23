@@ -37,7 +37,6 @@ import cz.mammahelp.handy.ui.MammahelpWebViewClient;
  * 
  */
 public class ArticleDetailViewFragment extends Fragment {
-	private OnFragmentInteractionListener mListener;
 	private ASyncedInformation<?> article;
 
 	/**
@@ -146,7 +145,6 @@ public class ArticleDetailViewFragment extends Fragment {
 	@Override
 	public void onDetach() {
 		super.onDetach();
-		mListener = null;
 	}
 
 	/**

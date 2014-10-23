@@ -41,7 +41,6 @@ public class CenterDetailViewFragment extends Fragment {
 			.getLogger(CenterDetailViewFragment.class);
 
 	private static final Object SUB_DIVIDER = "; ";
-	private OnFragmentInteractionListener mListener;
 	private LocationPoint center;
 
 	/**
@@ -129,7 +128,6 @@ public class CenterDetailViewFragment extends Fragment {
 	@Override
 	public void onDetach() {
 		super.onDetach();
-		mListener = null;
 	}
 
 	/**

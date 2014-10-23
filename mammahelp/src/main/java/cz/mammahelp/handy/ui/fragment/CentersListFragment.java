@@ -1,7 +1,6 @@
 package cz.mammahelp.handy.ui.fragment;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Comparator;
