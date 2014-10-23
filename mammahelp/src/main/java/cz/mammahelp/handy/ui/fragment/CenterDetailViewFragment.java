@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,8 +43,6 @@ public class CenterDetailViewFragment extends Fragment {
 	private static final Object SUB_DIVIDER = "; ";
 	private OnFragmentInteractionListener mListener;
 	private LocationPoint center;
-
-	private SharedPreferences prefs;
 
 	/**
 	 * Use this factory method to create a new instance of this fragment using

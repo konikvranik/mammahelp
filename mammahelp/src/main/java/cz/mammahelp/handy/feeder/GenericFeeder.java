@@ -56,7 +56,6 @@ import cz.mammahelp.handy.model.Enclosure;
 import cz.mammahelp.handy.model.Identificable;
 import cz.mammahelp.handy.provider.ArticlesContentProvider;
 import cz.mammahelp.handy.provider.EnclosureContentProvider;
-import cz.mammahelp.handy.provider.AbstractMammahelpContentProvider;
 
 public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificable<?>> {
 
@@ -418,7 +417,10 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 		enclosure.setData(data);
 		enclosure.setLength((long) data.length);
 
-		enclosureDao.insert(enclosure);
+		if (enclosure.getId() == null)
+			enclosureDao.insert(enclosure);
+		else
+			enclosureDao.update(enclosure);
 
 		return enclosure;
 
