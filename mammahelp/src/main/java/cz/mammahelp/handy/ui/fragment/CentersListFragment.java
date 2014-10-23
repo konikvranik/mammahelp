@@ -287,6 +287,11 @@ public class CentersListFragment extends ANamedFragment {
 		filter = activity.getPreferences(Activity.MODE_PRIVATE).getStringSet(
 				PREF_KEY_FILTER, new HashSet<String>());
 
+		loadCentersIfEmpty();
+
+	}
+
+	private void loadCentersIfEmpty() {
 		LocationPointDao ld = new LocationPointDao(getDbHelper());
 		SortedSet<LocationPoint> l = ld.findAll();
 		if (l == null || l.isEmpty()) {
@@ -310,7 +315,6 @@ public class CentersListFragment extends ANamedFragment {
 			});
 			t.start();
 		}
-
 	}
 
 	@Override
