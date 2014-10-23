@@ -48,8 +48,9 @@ public class ArticlesContentProvider extends
 		// articleHtml
 		// .append("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"><meta charset=\"UTF-8\">");
 		articleHtml.append("<head>");
+		// articleHtml.append("<link rel='stylesheet' href='file:///android_asset/article.css' type='text/css' />");
 		articleHtml
-				.append("<link rel='stylesheet' href='file:///android_asset/article.css' type='text/css' />");
+				.append("<link rel=\"stylesheet\" href=\"content://cz.mammahelp.handy.asset/article.css\" type=\"text/css\" />");
 		articleHtml.append("<title>");
 		articleHtml.append(article.getTitle());
 		articleHtml.append("</title>");

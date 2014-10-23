@@ -162,7 +162,8 @@ public class CenterDetailViewFragment extends Fragment {
 		StringBuilder sb = new StringBuilder("<html>");
 		sb.append("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"/><meta charset=\"UTF-8\"/>");
 		sb.append("<head>");
-		sb.append("<link rel='stylesheet' href='file:///android_asset/location.css' type='text/css' />");
+		// sb.append("<link rel='stylesheet' href='file:///android_asset/location.css' type='text/css' />");
+		sb.append("<link rel=\"stylesheet\" href=\"content://cz.mammahelp.handy.asset/location.css\" type=\"text/css\" />");
 		sb.append("<title>");
 		sb.append(lp.getName());
 		sb.append("</title>");
