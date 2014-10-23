@@ -25,9 +25,21 @@
             android:value="update_times_others" />
     </header>
     <header
+        android:fragment="cz.mammahelp.handy.ui.activity.PreferencesActivity$PrefsFragmentCleanupInner"
+        android:icon="@drawable/ic_action_discard"
+        android:summary="@string/prefs_summary_cleanup"
+        android:title="@string/prefs_title_cleanup" >
+        <extra
+            android:name="key"
+            android:value="@string/cleanup_preferences" />
+        <extra
+            android:name="update_times"
+            android:value="update_times_cleanup" />
+    </header>
+    <header
         android:id="@+id/refresh"
-        android:key="refresh"
         android:icon="@drawable/ic_action_refresh"
+        android:key="refresh"
         android:summary="@string/preferences_run_update_summary"
         android:title="@string/preferences_run_update_title" >
         <intent
@@ -38,6 +50,20 @@
                 android:value="-1" />
             <extra
                 android:name="center"
+                android:value="-1" />
+        </intent>
+    </header>
+    <header
+        android:id="@+id/cleanup"
+        android:icon="@drawable/ic_action_discard"
+        android:key="refresh"
+        android:summary="@string/preferences_run_cleanup_summary"
+        android:title="@string/preferences_run_cleanup_title" >
+        <intent
+            android:targetClass="cz.mammahelp.handy.MammaHelpService"
+            android:targetPackage="cz.mammahelp.handy" >
+            <extra
+                android:name="cleanup"
                 android:value="-1" />
         </intent>
     </header>

@@ -65,7 +65,7 @@ public class LocationFeeder extends
 					&& (System.currentTimeMillis() - time) < 120000) {
 				Thread.yield();
 			}
-			getDao().delete(getDao().findAll());
+			getDao().deleteAll(getDao().findAll());
 			getDao().insert(aw.locations);
 
 			getDbHelper().notifyDataSetChanged();

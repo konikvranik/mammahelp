@@ -324,25 +324,20 @@ public abstract class BaseDao<T extends Identificable<T>> {
 		}
 	}
 
-	public void delete(Collection<T> obj) {
+	public void deleteAll(Collection<T> obj) {
+		for (T t : obj) {
+			delete(t);
+		}
+	}
 
-		SQLiteDatabase db = getDatabase(true);
-		try {
-			for (T t : obj) {
-				delete(db, t);
-			}
-		} finally {
-			// db.close();
+	public void deleteAllById(Collection<Long> obj) {
+		for (Long t : obj) {
+			delete(t);
 		}
 	}
 
 	public void delete(T obj) {
-		SQLiteDatabase db = getDatabase(true);
-		try {
-			delete(db, obj);
-		} finally {
-			// db.close();
-		}
+		delete(obj);
 	}
 
 	private SQLiteDatabase getDatabase(boolean writable) {
@@ -360,10 +355,18 @@ public abstract class BaseDao<T extends Identificable<T>> {
 			return db;
 	}
 
-	protected void delete(SQLiteDatabase db, T obj) {
-		log.trace("SQL delete: " + getTableName() + ", id=" + obj.getId());
-		db.delete(getTableName(), "id = ?",
-				new String[] { Long.toString(obj.getId()) });
+	public void delete(Long id) {
+		SQLiteDatabase db = getDatabase(true);
+		try {
+			delete(db, id);
+		} finally {
+			// db.close();
+		}
+	}
+
+	protected void delete(SQLiteDatabase db, Long id) {
+		log.trace("SQL delete: " + getTableName() + ", id=" + id);
+		db.delete(getTableName(), "id = ?", new String[] { Long.toString(id) });
 	}
 
 	public SortedSet<T> findAll() {

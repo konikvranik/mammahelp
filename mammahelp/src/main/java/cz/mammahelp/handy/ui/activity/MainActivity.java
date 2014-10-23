@@ -104,6 +104,10 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		setupDefaultUpdatePrefserences(prefName, false, true,
 				4 * WEEK_IN_MILLIS);
 
+		prefName = getResources().getString(R.string.cleanup_preferences);
+		setupDefaultUpdatePrefserences(prefName, true, true,
+				1 * WEEK_IN_MILLIS);
+
 	}
 
 	private void setupDefaultUpdatePrefserences(String prefName,

@@ -117,13 +117,24 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 	}
 
 	@Override
-	protected void delete(SQLiteDatabase db, LocationPoint obj) {
+	public void delete(LocationPoint obj) {
 
 		AddressDao addressDao = new AddressDao(getDbHelper());
 		if (obj.getLocation() != null && obj.getLocation().getId() != null)
 			addressDao.delete(obj.getLocation());
 
-		super.delete(db, obj);
+		super.delete(obj);
+	}
+
+	@Override
+	public void delete(Long id) {
+		LocationPoint obj = findById(id);
+		if (obj == null)
+			obj = new LocationPoint(id);
+		AddressDao addressDao = new AddressDao(getDbHelper());
+		if (obj.getLocation() != null && obj.getLocation().getId() != null)
+			addressDao.delete(obj.getLocation());
+		super.delete(id);
 	}
 
 	public static Table getTable() {

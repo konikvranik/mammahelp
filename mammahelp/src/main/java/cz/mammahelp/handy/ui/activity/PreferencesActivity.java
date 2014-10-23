@@ -108,6 +108,61 @@ public class PreferencesActivity extends PreferenceActivity {
 		}
 	}
 
+	public static class PrefsFragmentCleanupInner extends PreferenceFragment
+			implements OnPreferenceChangeListener {
+
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+
+			// Can retrieve arguments from preference XML.
+			log.info("args", "Arguments: " + getArguments());
+
+			String prefsName;
+			if (getArguments().containsKey(KEY)) {
+				prefsName = getArguments().getString(KEY);
+			} else {
+				log.error("Preferences not defined. Defaulting to news.");
+				prefsName = getResources().getString(
+						R.string.cleanup_preferences);
+			}
+
+			getPreferenceManager().setSharedPreferencesName(prefsName);
+
+			// Load the preferences from an XML resource
+			addPreferencesFromResource(R.xml.fragmented_preferences_cleanup);
+
+			if (getArguments().containsKey("update_times")) {
+
+				IntervalPreference auto = (IntervalPreference) findPreference("update_interval");
+
+				int id = getResources().getIdentifier(
+						getArguments().getString("update_times"), "array",
+						getActivity().getPackageName());
+
+				auto.setValues(getResources().getStringArray(id));
+			}
+
+			SharedPreferences sp = getPreferenceManager()
+					.getSharedPreferences();
+			setHandler(sp.getAll(), new String[] { AUTOMATIC_UPDATES_KEY });
+
+		}
+
+		protected void setHandler(Map<String, ?> prefs, String... keys) {
+			for (String key : keys) {
+				Preference preference = (Preference) findPreference(key);
+				preference.setOnPreferenceChangeListener(this);
+				onPreferenceChange(preference, prefs.get(key));
+			}
+		}
+
+		@Override
+		public boolean onPreferenceChange(Preference preference, Object newValue) {
+			return true;
+		}
+	}
+
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private ActionBar setupActionBar() {
 		ActionBar ab = getActionBar();
@@ -127,7 +182,9 @@ public class PreferencesActivity extends PreferenceActivity {
 
 	@Override
 	protected boolean isValidFragment(String fragmentName) {
-		return PrefsFragmentUpdateInner.class.getName().equals(fragmentName);
+		return PrefsFragmentUpdateInner.class.getName().equals(fragmentName)
+				|| PrefsFragmentCleanupInner.class.getName().equals(
+						fragmentName);
 	}
 
 	@Override
@@ -144,6 +201,20 @@ public class PreferencesActivity extends PreferenceActivity {
 
 			String prefsName = getResources().getString(
 					R.string.others_preferences);
+			getSharedPreferences(prefsName, Context.MODE_MULTI_PROCESS).edit()
+					.putLong(LAST_UPDATED_KEY, System.currentTimeMillis())
+					.commit();
+		} else 	if (header.id == R.id.cleanup) {
+			Intent intent = new Intent(getApplicationContext(),
+					MammaHelpService.class);
+			intent.putExtra(Constants.CLEANUP_FLAG, true);
+			startService(intent);
+
+			Toast.makeText(getApplicationContext(), R.string.cleanup_started,
+					Toast.LENGTH_SHORT).show();
+
+			String prefsName = getResources().getString(
+					R.string.cleanup_preferences);
 			getSharedPreferences(prefsName, Context.MODE_MULTI_PROCESS).edit()
 					.putLong(LAST_UPDATED_KEY, System.currentTimeMillis())
 					.commit();

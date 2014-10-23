@@ -64,7 +64,7 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 
 		Collection<News> old = getDao().findAll();
 		if (old != null)
-			getDao().delete(old);
+			getDao().deleteAll(old);
 
 		for (SyndEntry syndEntry : entries) {
 

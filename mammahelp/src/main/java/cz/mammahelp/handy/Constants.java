@@ -52,6 +52,7 @@ public class Constants {
 	public static final String CENTER_KEY = "center";
 
 	public static final String REGISTER_FLAG = "register";
+	public static final String CLEANUP_FLAG = "cleanup";
 
 	public static final int NEWS_NOTIFICATION_ID = 1;
 

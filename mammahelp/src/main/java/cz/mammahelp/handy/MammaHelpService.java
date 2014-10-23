@@ -1,28 +1,48 @@
 package cz.mammahelp.handy;
 
+import java.io.StringReader;
 import java.util.Queue;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Attr;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.DataSetObservable;
 import android.database.DataSetObserver;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.widget.Toast;
+import cz.mammahelp.handy.dao.ArticlesDao;
+import cz.mammahelp.handy.dao.EnclosureDao;
+import cz.mammahelp.handy.dao.LocationPointDao;
+import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.feeder.ArticleFeeder;
 import cz.mammahelp.handy.feeder.LocationFeeder;
 import cz.mammahelp.handy.feeder.NewsFeeder;
 import cz.mammahelp.handy.model.Articles;
+import cz.mammahelp.handy.model.Enclosure;
 import cz.mammahelp.handy.model.Identificable;
 import cz.mammahelp.handy.model.LocationPoint;
 import cz.mammahelp.handy.model.News;
+import cz.mammahelp.handy.provider.ArticlesContentProvider;
+import cz.mammahelp.handy.provider.EnclosureContentProvider;
 
 public class MammaHelpService extends Service {
 
@@ -88,9 +108,20 @@ public class MammaHelpService extends Service {
 
 		log.trace("MammaHelpFeederService.onStartCommand()");
 
-		if (intent.getBooleanExtra(Constants.REGISTER_FLAG, false)) 
+		if (intent.getBooleanExtra(Constants.REGISTER_FLAG, false))
 			return START_NOT_STICKY;
-		
+
+		if (intent.getBooleanExtra(Constants.CLEANUP_FLAG, false)) {
+
+			log.debug("Is running? " + isRunning());
+
+			if (isRunning())
+				return START_NOT_STICKY;
+			if (!updating) {
+				new CleanupWorker().execute(new Void[0]);
+			}
+			return START_REDELIVER_INTENT;
+		}
 
 		boolean added = false;
 		String[] types = new String[] { Constants.ARTICLE_KEY,
@@ -265,6 +296,153 @@ public class MammaHelpService extends Service {
 				notifyChanged();
 			}
 			return null;
+		}
+
+		@Override
+		protected void onCancelled() {
+			super.onCancelled();
+			updating = false;
+			notifyChanged();
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			updating = false;
+			notifyChanged();
+		}
+
+	}
+
+	protected class CleanupWorker extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			updating = true;
+			notifyChanged();
+			try {
+				log.debug("Trying to update data.");
+				cleanupData();
+			} catch (MammaHelpException e) {
+				log.error(e.getMessage(), e);
+				mHandler.post(new ToastRunnable(getResources().getString(
+						R.string.import_failed)
+						+ e.getMessage()));
+
+				NotificationUtils.makeNotification(getApplicationContext(), e);
+
+			} finally {
+				updating = false;
+				notifyChanged();
+			}
+			return null;
+		}
+
+		private void cleanupData() throws MammaHelpException {
+
+			ArticlesDao adao = new ArticlesDao(getDbHelper());
+			EnclosureDao edao = new EnclosureDao(getDbHelper());
+			LocationPointDao ldao = new LocationPointDao(getDbHelper());
+			NewsDao ndao = new NewsDao(getDbHelper());
+
+			Set<Long> articles = new TreeSet<Long>();
+			for (Articles a : adao.findAll())
+				articles.add(a.getId());
+
+			Set<Long> enclosures = new TreeSet<Long>();
+			for (Enclosure e : edao.findAll())
+				enclosures.add(e.getId());
+
+			for (Articles a : adao.findAll()) {
+				if (a.getCategory() != null && !a.getCategory().isEmpty())
+					extractFromArticle(a, articles, enclosures);
+			}
+			for (LocationPoint l : ldao.findAll()) {
+				extractFromCenter(l, articles, enclosures);
+			}
+			for (News n : ndao.findAll()) {
+				extractFromNews(n, articles, enclosures);
+			}
+
+			adao.deleteAllById(articles);
+			edao.deleteAllById(enclosures);
+
+		}
+
+		private void extractFromNews(News n, Set<Long> articles,
+				Set<Long> enclosures) throws MammaHelpException {
+			processBody(n.getBody(), articles, enclosures);
+		}
+
+		private void extractFromCenter(LocationPoint a, Set<Long> articles,
+				Set<Long> enclosures) throws MammaHelpException {
+			processBody(a.getDescription(), articles, enclosures);
+			if (a.getMapImage() != null && a.getMapImage().getId() != null)
+				enclosures.remove(a.getMapImage().getId());
+		}
+
+		private void extractFromArticle(Articles a, Set<Long> articles,
+				Set<Long> enclosures) throws MammaHelpException {
+			if (!articles.contains(a.getId()))
+				return;
+
+			processBody(a.getBody(), articles, enclosures);
+
+			articles.remove(a.getId());
+
+		}
+
+		private void processBody(String body, Set<Long> articles,
+				Set<Long> enclosures) throws MammaHelpException {
+			Set<String> refs;
+			try {
+				refs = findReferences(body);
+			} catch (XPathExpressionException e) {
+				throw new MammaHelpException(R.string.unexpected_exception, e);
+			}
+			for (String string : refs) {
+				processRef(string, articles, enclosures);
+			}
+		}
+
+		private void processRef(String string, Set<Long> articles,
+				Set<Long> enclosures) throws MammaHelpException {
+
+			Uri uri = Uri.parse(string);
+
+			if (string.startsWith(EnclosureContentProvider.CONTENT_URI)) {
+				long id = Long.parseLong(uri.getLastPathSegment());
+				enclosures.remove(id);
+			}
+
+			if (string.startsWith(ArticlesContentProvider.CONTENT_URI)) {
+				long id = Long.parseLong(uri.getLastPathSegment());
+				ArticlesDao adao = new ArticlesDao(getDbHelper());
+				Articles a = adao.findById(id);
+				extractFromArticle(a, articles, enclosures);
+			}
+		}
+
+		private Set<String> findReferences(String body)
+				throws XPathExpressionException {
+
+			Set<String> refs = new TreeSet<String>();
+
+			XPathFactory xPathfactory = XPathFactory.newInstance();
+			XPath xpath = xPathfactory.newXPath();
+
+			XPathExpression b = xpath.compile("//@*[starts-with(.,\"content:"
+					+ Constants.CONTENT_URI_PREFIX + "\")]");
+
+			NodeList nl = (NodeList) b.evaluate(new InputSource(
+					new StringReader("<root>" + body + "</root>")),
+					XPathConstants.NODESET);
+			for (int i = 0; i < nl.getLength(); i++) {
+				Attr a = (Attr) nl.item(i);
+				refs.add(a.getValue());
+			}
+
+			return refs;
 		}
 
 		@Override

@@ -4,6 +4,7 @@
 package cz.mammahelp.handy;
 
 import static cz.mammahelp.handy.Constants.ARTICLE_KEY;
+import static cz.mammahelp.handy.Constants.CLEANUP_FLAG;
 import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
 import static cz.mammahelp.handy.Constants.CENTER_KEY;
 import static cz.mammahelp.handy.Constants.DEFAULT_UPDATE_INTERVAL;
@@ -60,6 +61,18 @@ public class MammaHelpReceiver extends BroadcastReceiver {
 				Intent newIntent = new Intent(context, MammaHelpService.class);
 				newIntent.putExtra(CENTER_KEY, (long) -1);
 				newIntent.putExtra(ARTICLE_KEY, (long) -1);
+				context.startService(newIntent);
+			}
+
+			prefs = context.getSharedPreferences(context.getResources()
+					.getString(R.string.cleanup_preferences),
+					Context.MODE_MULTI_PROCESS);
+			log.debug("test cleanup...");
+			if (prefs.getBoolean(AUTOMATIC_UPDATES_KEY, false)
+					&& decideOnInterval(prefs)) {
+				log.debug("Receiver is starting service for cleanup...");
+				Intent newIntent = new Intent(context, MammaHelpService.class);
+				newIntent.putExtra(CLEANUP_FLAG, true);
 				context.startService(newIntent);
 			}
 

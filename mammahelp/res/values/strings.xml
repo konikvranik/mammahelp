@@ -91,5 +91,9 @@
     <string name="navigation_drawer_close">Open navigation drawer</string>
     <string name="update_started">Update started</string>
     <string name="no_content_try_later">No another content. Try later.</string>
-
+    <string name="prefs_title_cleanup">Cleanup</string>
+    <string name="prefs_summary_cleanup">Removes unused objects from database.</string>
+    <string name="preferences_run_cleanup_title">Cleanup</string>
+    <string name="preferences_run_cleanup_summary">Run cleanup service. It tries to remove no longer used articles and enclosures.</string>
+<string name="cleanup_started">Cleanup started</string>
 </resources>

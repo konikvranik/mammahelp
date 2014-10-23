@@ -10,6 +10,7 @@
 
     <string name="news_preferences">news</string>
     <string name="others_preferences">others</string>
+    <string name="cleanup_preferences">cleanup</string>
 
     <integer-array name="plurals">
         <item>1</item>
@@ -32,7 +33,17 @@
 
         <!-- 13 wk -->
         <item>7862400000</item>
-        
+    </string-array>
+    <string-array name="update_times_cleanup">
+
+        <!-- 1 day -->
+        <item>86400000</item>
+
+        <!-- 1 wk -->
+        <item>604800000</item>
+
+        <!-- 2 wk -->
+        <item>1209600000</item>
     </string-array>
     <string-array name="update_times_news">
 
