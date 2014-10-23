@@ -16,6 +16,7 @@ import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
+import android.os.ParcelFileDescriptor;
 import android.provider.OpenableColumns;
 
 public abstract class AbstractDummyContentProvider extends ContentProvider {
@@ -132,7 +133,7 @@ public abstract class AbstractDummyContentProvider extends ContentProvider {
 		throw new RuntimeException("Operation not supported");
 	}
 
-	protected File serveFileThroughCache(InputStream inputStream, String path)
+	protected AssetFileDescriptor serveFileThroughCache(InputStream inputStream, String path)
 			throws IOException {
 
 		final File cacheFile = new File(getContext().getCacheDir(), path);
@@ -148,7 +149,9 @@ public abstract class AbstractDummyContentProvider extends ContentProvider {
 		} finally {
 			inputStream.close();
 		}
-		return cacheFile;
+		return
+		new AssetFileDescriptor(ParcelFileDescriptor.open(
+				cacheFile, ParcelFileDescriptor.MODE_READ_ONLY), 0, -1);
 	}
 
 	@Override

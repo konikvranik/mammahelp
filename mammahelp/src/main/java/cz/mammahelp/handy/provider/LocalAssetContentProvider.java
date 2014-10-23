@@ -1,13 +1,11 @@
 package cz.mammahelp.handy.provider;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.net.Uri;
-import android.os.ParcelFileDescriptor;
 
 public class LocalAssetContentProvider extends AbstractDummyContentProvider {
 
@@ -37,11 +35,9 @@ public class LocalAssetContentProvider extends AbstractDummyContentProvider {
 				return assets.openFd(assetPath);
 			} catch (FileNotFoundException e) {
 				log.warn("Direct read failed: " + e.getMessage());
-				File cacheFile = serveFileThroughCache(
+				return serveFileThroughCache(
 						assets.open(assetPath, AssetManager.ACCESS_BUFFER),
 						"assets/" + assetPath);
-				return new AssetFileDescriptor(ParcelFileDescriptor.open(
-						cacheFile, ParcelFileDescriptor.MODE_READ_ONLY), 0, -1);
 			}
 		} catch (FileNotFoundException ex) {
 			throw ex;
