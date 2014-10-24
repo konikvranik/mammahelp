@@ -8,10 +8,14 @@ import static cz.mammahelp.handy.Constants.UPDATE_INTERVAL_KEY;
 import static cz.mammahelp.handy.Constants.WEEK_IN_MILLIS;
 import static cz.mammahelp.handy.Constants.WIFI_ONLY_KEY;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.app.ActionBar;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentManager.BackStackEntry;
 import android.content.ComponentName;
 import android.content.Context;
@@ -353,4 +357,67 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		mTitle = title;
 	}
 
+	@Override
+	protected void onResumeFragments() {
+		super.onResumeFragments();
+		FragmentManager fm = getFragmentManager();
+		Toast.makeText(this,
+				"After resume " + fm.getBackStackEntryCount() + " fragments",
+				Toast.LENGTH_SHORT).show();
+		log.debug("After resume " + fm.getBackStackEntryCount() + " fragments");
+		BackStackEntry lastEntry = fm.getBackStackEntryAt(fm
+				.getBackStackEntryCount() - 1);
+		log.debug("Last backstack item is " + lastEntry);
+
+		log.debug("BackStackE backstackEntries: "
+				+ Arrays.toString(backstackEntries));
+		if (backstackEntries == null || backstackEntries.length < 1) {
+			return;
+		}
+
+		for (int i = 0; i < backstackEntries.length; i++) {
+			lastEntry = backstackEntries[i];
+			if (lastEntry instanceof Fragment) {
+				fm.beginTransaction()
+						.add((Fragment) lastEntry,
+								((Fragment) lastEntry).getTag())
+						.addToBackStack(((Fragment) lastEntry).getTag())
+						.commit();
+				((Fragment) lastEntry).onResume();
+			}
+		}
+		fm.executePendingTransactions();
+		Toast.makeText(
+				this,
+				"After my resume " + fm.getBackStackEntryCount() + " fragments",
+				Toast.LENGTH_SHORT).show();
+		log.debug("After my resume " + fm.getBackStackEntryCount()
+				+ " fragments");
+		log.debug("Last backstack item is " + lastEntry);
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+
+		FragmentManager fm = getFragmentManager();
+		backstackEntries = new BackStackEntry[fm.getBackStackEntryCount()];
+		for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+			backstackEntries[i] = fm.getBackStackEntryAt(i);
+		}
+
+		Toast.makeText(
+				this,
+				"After save " + getFragmentManager().getBackStackEntryCount()
+						+ " fragments", Toast.LENGTH_SHORT).show();
+		log.debug("After save " + getFragmentManager().getBackStackEntryCount()
+				+ " fragments");
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+	}
 }
