@@ -8,15 +8,10 @@ import static cz.mammahelp.handy.Constants.UPDATE_INTERVAL_KEY;
 import static cz.mammahelp.handy.Constants.WEEK_IN_MILLIS;
 import static cz.mammahelp.handy.Constants.WIFI_ONLY_KEY;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentManager.BackStackEntry;
 import android.content.ComponentName;
 import android.content.Context;
@@ -105,8 +100,7 @@ public class MainActivity extends AbstractMammaHelpActivity {
 				4 * WEEK_IN_MILLIS);
 
 		prefName = getResources().getString(R.string.cleanup_preferences);
-		setupDefaultUpdatePrefserences(prefName, true, true,
-				1 * WEEK_IN_MILLIS);
+		setupDefaultUpdatePrefserences(prefName, true, true, 1 * WEEK_IN_MILLIS);
 
 	}
 
@@ -217,13 +211,6 @@ public class MainActivity extends AbstractMammaHelpActivity {
 		} catch (ClassCastException e) {
 			log.error(e.getMessage(), e);
 		}
-
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-
-		getFragmentManager().dump(null, null, pw, null);
-
-		log.debug("Fragments: " + getFragmentManager().getBackStackEntryCount());
 
 		if (articleDetail != null && articleDetail.canGoBack()) {
 			log.debug("Go back in article history");
@@ -339,6 +326,8 @@ public class MainActivity extends AbstractMammaHelpActivity {
 
 	};
 
+	private BackStackEntry[] backstackEntries;
+
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
@@ -362,22 +351,6 @@ public class MainActivity extends AbstractMammaHelpActivity {
 	public void setTitle(CharSequence title) {
 		super.setTitle(title);
 		mTitle = title;
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		FragmentManager fm = getFragmentManager();
-		for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
-			BackStackEntry be = fm.getBackStackEntryAt(i);
-			if (be instanceof Fragment)
-				fm.saveFragmentInstanceState((Fragment) be);
-		}
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
 	}
 
 }
