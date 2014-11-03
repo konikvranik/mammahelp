@@ -1,93 +1,9 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="cz.mammahelp.handy.ui.fragment.HomeFragment" >
 
-    <!-- TODO: Update blank fragment layout -->
+    <include layout="@layout/about" />
 
-    <RelativeLayout android:id="@+id/home"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_weight="1"
-        android:padding="4dp" >
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/banner1"
-            android:scaleType="centerCrop"
-            android:src="@drawable/mammanet_dimmed" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" android:fillViewport="true" >
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/banner1_text"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-        </ScrollView>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_weight="1"
-        android:padding="4dp" >
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/banner2"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bohemiangranfondo_dimmed" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:fillViewport="true">
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/banner2_text"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-        </ScrollView>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_weight="1"
-        android:padding="4dp" >
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/banner3"
-            android:scaleType="centerCrop"
-            android:src="@drawable/mammashop2_dimmed" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:fillViewport="true">
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/banner3_text"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-        </ScrollView>
-    </RelativeLayout>
-
-</LinearLayout>
+</FrameLayout>

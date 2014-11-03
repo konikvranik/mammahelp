@@ -361,10 +361,6 @@ public class MainActivity extends AbstractMammaHelpActivity {
 	protected void onResumeFragments() {
 		super.onResumeFragments();
 		FragmentManager fm = getFragmentManager();
-		Toast.makeText(this,
-				"After resume " + fm.getBackStackEntryCount() + " fragments",
-				Toast.LENGTH_SHORT).show();
-		log.debug("After resume " + fm.getBackStackEntryCount() + " fragments");
 		BackStackEntry lastEntry = fm.getBackStackEntryAt(fm
 				.getBackStackEntryCount() - 1);
 		log.debug("Last backstack item is " + lastEntry);
@@ -387,10 +383,6 @@ public class MainActivity extends AbstractMammaHelpActivity {
 			}
 		}
 		fm.executePendingTransactions();
-		Toast.makeText(
-				this,
-				"After my resume " + fm.getBackStackEntryCount() + " fragments",
-				Toast.LENGTH_SHORT).show();
 		log.debug("After my resume " + fm.getBackStackEntryCount()
 				+ " fragments");
 		log.debug("Last backstack item is " + lastEntry);
@@ -407,10 +399,6 @@ public class MainActivity extends AbstractMammaHelpActivity {
 			backstackEntries[i] = fm.getBackStackEntryAt(i);
 		}
 
-		Toast.makeText(
-				this,
-				"After save " + getFragmentManager().getBackStackEntryCount()
-						+ " fragments", Toast.LENGTH_SHORT).show();
 		log.debug("After save " + getFragmentManager().getBackStackEntryCount()
 				+ " fragments");
 	}
