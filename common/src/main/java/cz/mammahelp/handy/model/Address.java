@@ -2,8 +2,7 @@ package cz.mammahelp.handy.model;
 
 import java.util.Locale;
 
-public class Address extends android.location.Address implements
-		Identificable<Address> {
+public class Address implements Identificable<Address> {
 
 	private static final long serialVersionUID = -8774880036967501026L;
 	private static final String DIVIDER = ",";
