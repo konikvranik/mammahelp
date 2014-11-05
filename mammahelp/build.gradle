@@ -103,7 +103,7 @@ eclipse {
 		 buildCommand 'org.eclipse.jdt.core.javabuilder'
 		 buildCommand 'com.android.ide.eclipse.adt.ApkBuilder'
 
-		name 'mammahelp'
+		name 'mammahelp-android'
 	}
 
 }
