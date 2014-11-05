@@ -9,7 +9,7 @@
 	</xsl:template>
 
 	<xsl:template match="table">
-		<xsl:apply-templates select="tr" />
+		<xsl:apply-templates select="tr[1]/following-sibling::tr" />
 	</xsl:template>
 
 	<xsl:template match="tr">
