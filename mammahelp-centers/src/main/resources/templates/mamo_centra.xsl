@@ -21,17 +21,27 @@
 			</name>
 			<description>
 				<p>
-					<xsl:apply-templates select="td[1]/strong/following-sibling::br[1]/following-sibling::node()"
+					<xsl:apply-templates
+						select="td[1]/strong/following-sibling::br[1]/following-sibling::node()"
 						mode="html" />
 				</p>
 				<h3>Objednací doba</h3>
 				<p>
-					<xsl:apply-templates select="td[2]/child::node()" mode="html" />
+					<xsl:apply-templates select="td[2]/child::node()"
+						mode="html" />
 				</p>
 			</description>
 			<url>
 				<xsl:apply-templates select="td[4]/a[text() = 'www']/@href" />
 			</url>
+
+
+			<address>
+				<xsl:for-each select="td[3]//text()">
+					<xsl:value-of select="." />
+					<xsl:text>&#10;</xsl:text>
+				</xsl:for-each>
+			</address>
 			<location>
 				<mAddressLines>
 					<entry>

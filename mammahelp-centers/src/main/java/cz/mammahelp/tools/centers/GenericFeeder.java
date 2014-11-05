@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -11,6 +12,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 import java.util.zip.GZIPInputStream;
 
@@ -23,8 +25,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
@@ -33,14 +37,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.tidy.Configuration;
 import org.w3c.tidy.Tidy;
+
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderAddressComponent;
+import com.google.code.geocoder.model.GeocoderGeometry;
+import com.google.code.geocoder.model.GeocoderRequest;
+import com.google.code.geocoder.model.GeocoderResult;
+import com.google.code.geocoder.model.GeocoderStatus;
+import com.google.code.geocoder.model.LatLng;
 
 public abstract class GenericFeeder {
 
 	public static Logger log = LoggerFactory.getLogger(GenericFeeder.class);
 	Tidy tidy;
 	Transformer htmlTransformer;
+
+	XPath xpath = XPathFactory.newInstance().newXPath();
+	final Geocoder geocoder = new Geocoder();
 
 	private static void setupTidy(Tidy tidy, String enc) {
 		tidy.setInputEncoding(enc == null ? "UTF-8" : enc);
@@ -253,8 +271,15 @@ public abstract class GenericFeeder {
 
 		if (d == null)
 			return null;
+		Node n = transformBody(d);
 
-		return transformBody(d);
+		Transformer tr = gettFactory().newTransformer();
+		tr.setOutputProperty("indent", "yes");
+		StringWriter sw = new StringWriter();
+		tr.transform(new DOMSource(n), new StreamResult(sw));
+		log.debug(sw.toString());
+
+		return makeGeo(n);
 	}
 
 	protected String getEncoding() {
@@ -262,5 +287,117 @@ public abstract class GenericFeeder {
 	}
 
 	public abstract URL getUrl() throws MalformedURLException;
+
+	public Node makeGeo(Node d) throws XPathExpressionException, IOException {
+		XPathExpression e = xpath.compile("/locations/location");
+		NodeList nl = (NodeList) e.evaluate(d, XPathConstants.NODESET);
+		for (int i = 0; i < nl.getLength(); i++) {
+			applyGeoOnLocation(nl.item(i));
+		}
+		return d;
+	}
+
+	private void applyGeoOnLocation(Node item) throws XPathExpressionException,
+			IOException {
+		XPathExpression addrExpr = xpath.compile("address/text()");
+		XPathExpression latExpr = xpath.compile("location/mLatitude");
+		XPathExpression lonExpr = xpath.compile("location/mLongitude");
+		XPathExpression hasLatExpr = xpath.compile("location/mHasLatitude");
+		XPathExpression hasLonExpr = xpath.compile("location/mHasLongitude");
+		XPathExpression textExpr = xpath.compile("text()");
+
+		Node hasLatNode = (Node) hasLatExpr.evaluate(item, XPathConstants.NODE);
+		Node hasLonNode = (Node) hasLonExpr.evaluate(item, XPathConstants.NODE);
+		Node latNode = (Node) latExpr.evaluate(item, XPathConstants.NODE);
+		Node lonNode = (Node) lonExpr.evaluate(item, XPathConstants.NODE);
+
+		String latitude = null;
+		if (latNode != null)
+			latitude = (String) textExpr.evaluate(latNode,
+					XPathConstants.STRING);
+		String longitude = null;
+		if (lonNode != null)
+			longitude = (String) textExpr.evaluate(lonNode,
+					XPathConstants.STRING);
+		String hasLatitude = null;
+		if (hasLatNode != null)
+			hasLatitude = (String) textExpr.evaluate(hasLatNode,
+					XPathConstants.STRING);
+		String hasLongitude = null;
+		if (hasLonNode != null)
+			hasLongitude = (String) textExpr.evaluate(hasLonNode,
+					XPathConstants.STRING);
+
+		if (longitude == null || longitude.isEmpty()
+				|| !hasLongitude.equals("true") || latitude == null
+				|| latitude.isEmpty() || !hasLatitude.equals("true")) {
+
+			String address = (String) addrExpr.evaluate(item,
+					XPathConstants.STRING);
+
+			if (address == null || address.isEmpty())
+				return;
+
+			GeocoderRequest geocoderRequest = new GeocoderRequestBuilder()
+					.setAddress(address).setLanguage("cs").getGeocoderRequest();
+			GeocodeResponse geocoderResponse = geocoder
+					.geocode(geocoderRequest);
+
+			GeocoderStatus status = geocoderResponse.getStatus();
+			List<GeocoderResult> results = geocoderResponse.getResults();
+			Document doc = hasLatNode.getOwnerDocument();
+			if (GeocoderStatus.OK == status && results != null
+					&& results.size() > 0) {
+				for (GeocoderResult geocoderResult : results) {
+
+					GeocoderGeometry geo = geocoderResult.getGeometry();
+					LatLng loc = geo.getLocation();
+
+					removeAllChildren(latNode);
+					removeAllChildren(lonNode);
+
+					latNode.appendChild(doc.createTextNode(loc.getLat()
+							.toString()));
+					lonNode.appendChild(doc.createTextNode(loc.getLng()
+							.toString()));
+
+					List<GeocoderAddressComponent> addrComps = geocoderResult
+							.getAddressComponents();
+
+					for (GeocoderAddressComponent geocoderAddressComponent : addrComps) {
+						geocoderAddressComponent.getShortName();
+					}
+
+				}
+
+				removeAllChildren(hasLatNode);
+				hasLatNode.appendChild(doc.createTextNode("true"));
+
+				removeAllChildren(hasLonNode);
+				hasLonNode.appendChild(doc.createTextNode("true"));
+
+			} else {
+				Node parent = latNode.getParentNode();
+				parent.removeChild(latNode);
+				parent.removeChild(lonNode);
+
+				removeAllChildren(hasLatNode);
+				hasLatNode.appendChild(doc.createTextNode("false"));
+
+				removeAllChildren(hasLonNode);
+				hasLonNode.appendChild(doc.createTextNode("false"));
+			}
+
+		}
+
+		// TODO Auto-generated method stub
+
+	}
+
+	public static void removeAllChildren(Node node) {
+		for (Node child; (child = node.getFirstChild()) != null; node
+				.removeChild(child))
+			;
+	}
 
 }
