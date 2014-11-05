@@ -1,5 +1,7 @@
 package cz.mammahelp.handy.ui.fragment;
 
+import static cz.mammahelp.handy.Utils.gAddresToMhAddress;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
@@ -20,7 +22,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
@@ -55,6 +56,7 @@ import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.feeder.LocationFeeder;
+import cz.mammahelp.handy.model.Address;
 import cz.mammahelp.handy.model.LocationPoint;
 import cz.mammahelp.handy.ui.ANamedFragment;
 import cz.mammahelp.handy.ui.component.MultiSpinner;
@@ -428,7 +430,7 @@ public class CentersListFragment extends ANamedFragment {
 	protected void addMarkers(String[] type) {
 
 		Geocoder myLocation = new Geocoder(getActivity(), Locale.getDefault());
-		List<Address> loc;
+		List<android.location.Address> loc;
 
 		getMap().clear();
 
@@ -442,13 +444,13 @@ public class CentersListFragment extends ANamedFragment {
 					loc = myLocation.getFromLocationName(lp.getName(), 1);
 					if (loc.isEmpty())
 						continue;
-					addr = loc.get(0);
+					addr = gAddresToMhAddress(loc.get(0));
 				} else if (!(addr.hasLatitude() && addr.hasLongitude())) {
 					loc = myLocation.getFromLocationName(
 							getQueryFromAddress(addr), 1);
 					if (loc.isEmpty())
 						continue;
-					Address a = loc.get(0);
+					Address a = gAddresToMhAddress(loc.get(0));
 					addr.setLatitude(a.getLatitude());
 					addr.setLongitude(a.getLongitude());
 				}

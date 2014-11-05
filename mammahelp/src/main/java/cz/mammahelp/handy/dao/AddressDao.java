@@ -1,6 +1,7 @@
 package cz.mammahelp.handy.dao;
 
 import java.util.Locale;
+import static cz.mammahelp.handy.Utils.bundleToMap;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -91,7 +92,8 @@ public class AddressDao extends BaseDao<Address> {
 		e.setCountryCode(unpackColumnValue(cursor, COUNTRY_CODE, String.class));
 		e.setCountryName(unpackColumnValue(cursor, COUNTRY_NAME, String.class));
 		e.setBundleId(unpackColumnValue(cursor, EXTRAS, Long.class));
-		e.setExtras(unpackColumnValue(cursor, EXTRAS, Bundle.class));
+		e.setExtras(bundleToMap(unpackColumnValue(cursor, EXTRAS,
+				Bundle.class)));
 		e.setFeatureName(unpackColumnValue(cursor, FEATURE_NAME, String.class));
 		e.setLatitude(unpackColumnValue(cursor, LATITUDE, Double.class));
 		e.setLocality(unpackColumnValue(cursor, LOCALITY, String.class));

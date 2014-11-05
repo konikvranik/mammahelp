@@ -9,13 +9,9 @@ group = "cz.mammahelp"
 
 repositories {
 	mavenCentral()
-	maven {
-            url "https://android-rome-feed-reader.googlecode.com/svn/maven2/releases"
-    }
 }
 
 dependencies {
-	compile 'com.google.code.geocoder-java:geocoder-java:0.16'
 	compile 'com.squareup.retrofit:converter-simplexml:1.6.1'
 }
 
@@ -72,7 +68,10 @@ sourceSets {
 }
 
 jar {
-	excludes
+	manifest.attributes provider: 'gradle'
+    manifest.attributes 'Implementation-Vendor-Id': 'hPa'
+    manifest.attributes 'Implementation-Vendor': 'Petr Vraník'
+    manifest.attributes 'Implementation-Version': 1.0
 }
 
 buildscript {

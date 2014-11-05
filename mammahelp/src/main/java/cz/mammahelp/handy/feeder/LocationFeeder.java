@@ -13,12 +13,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.content.Context;
-import android.location.Address;
 import android.location.Geocoder;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.handy.dao.LocationPointDao;
+import cz.mammahelp.handy.model.Address;
 import cz.mammahelp.handy.model.Enclosure;
 import cz.mammahelp.handy.model.LocationPoint;
 import cz.mammahelp.handy.model.LocationsXmlWrapper;
@@ -96,7 +96,7 @@ public class LocationFeeder extends
 
 		Address addr = lp.getLocation();
 		if (!(addr.hasLatitude() && addr.hasLongitude())) {
-			List<Address> locs = getGeocoder()
+			List<android.location.Address> locs = getGeocoder()
 					.getFromLocationName(
 							cz.mammahelp.handy.model.Address
 									.fomrmatAddressForSearch(addr),

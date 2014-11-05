@@ -1,12 +1,13 @@
 package cz.mammahelp.handy.ui.fragment;
 
+import static cz.mammahelp.handy.Utils.mapToBundle;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.Utils;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.feeder.LocationFeeder;
+import cz.mammahelp.handy.model.Address;
 import cz.mammahelp.handy.model.LocationPoint;
 import cz.mammahelp.handy.provider.EnclosureContentProvider;
 import cz.mammahelp.handy.ui.AbstractMammaHelpActivity;
@@ -308,7 +310,7 @@ public class CenterDetailViewFragment extends Fragment {
 
 		}
 
-		Bundle b = addr.getExtras();
+		Bundle b = mapToBundle(addr.getExtras());
 
 		if (b != null && !b.isEmpty()) {
 			for (String key : b.keySet()) {

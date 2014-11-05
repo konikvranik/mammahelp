@@ -15,6 +15,7 @@ repositories {
 }
 
 dependencies {
+	compile project(':common')
 	compile 'com.google.code.geocoder-java:geocoder-java:0.16'
 	compile 'com.squareup.retrofit:converter-simplexml:1.6.1'
 }

@@ -1,12 +1,17 @@
 package cz.mammahelp.handy;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
+import cz.mammahelp.handy.model.Address;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
+import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
@@ -83,5 +88,45 @@ public class Utils {
 		// s.setAllowFileAccessFromFileURLs(true);
 		// s.setAllowUniversalAccessFromFileURLs(false);
 
+	}
+
+	public static Map<String, String> bundleToMap(Bundle bundle) {
+		Map<String, String> map = new HashMap<String, String>();
+		for (String key : bundle.keySet()) {
+			map.put(key, bundle.get(key).toString());
+		}
+		return map;
+	}
+
+	public static Bundle mapToBundle(Map<String, String> map) {
+		Bundle bundle = new Bundle();
+		for (Entry<String, String> entry : map.entrySet()) {
+			bundle.putString(entry.getKey(), entry.getValue());
+		}
+		return bundle;
+	}
+
+	public static Address gAddresToMhAddress(android.location.Address gaddr) {
+		Address mhaddr = new Address();
+		mhaddr.setAdminArea(gaddr.getAdminArea());
+		mhaddr.setCountryCode(gaddr.getCountryCode());
+		mhaddr.setCountryName(gaddr.getCountryName());
+		mhaddr.setExtras(bundleToMap(gaddr.getExtras()));
+		mhaddr.setFeatureName(gaddr.getFeatureName());
+		mhaddr.setLatitude(gaddr.getLatitude());
+		mhaddr.setLongitude(gaddr.getLongitude());
+		mhaddr.setLocality(gaddr.getLocality());
+		mhaddr.setPhone(gaddr.getPhone());
+		mhaddr.setPostalCode(gaddr.getPostalCode());
+		mhaddr.setPremises(gaddr.getPremises());
+		mhaddr.setSubAdminArea(gaddr.getSubAdminArea());
+		mhaddr.setSubLocality(gaddr.getSubLocality());
+		mhaddr.setSubThoroughfare(gaddr.getSubThoroughfare());
+		mhaddr.setThoroughfare(gaddr.getThoroughfare());
+		mhaddr.setUrl(gaddr.getUrl());
+		for (int i = 0; i <= gaddr.getMaxAddressLineIndex(); i++) {
+			mhaddr.setAddressLine(i, gaddr.getAddressLine(i));
+		}
+		return mhaddr;
 	}
 }
