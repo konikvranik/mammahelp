@@ -142,7 +142,8 @@ public abstract class GenericFeeder {
 			return is;
 		} else if (statusCode == 300) {
 			throw new RuntimeException("failed_to_connect: "
-					+ String.valueOf(statusCode));
+					+ String.valueOf(statusCode) + " ... "
+					+ openConnection.getResponseMessage());
 		} else if (statusCode < 305) {
 			setRealUrl(openConnection.getURL());
 			return null;
@@ -150,7 +151,8 @@ public abstract class GenericFeeder {
 			return null;
 		} else {
 			throw new RuntimeException("failed_to_connect: "
-					+ String.valueOf(statusCode));
+					+ String.valueOf(statusCode) + " ... "
+					+ openConnection.getResponseMessage());
 		}
 	}
 
