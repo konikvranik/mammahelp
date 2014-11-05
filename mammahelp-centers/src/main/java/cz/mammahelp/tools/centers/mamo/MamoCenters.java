@@ -18,6 +18,7 @@ public class MamoCenters {
 		Node d = feeder.getDom();
 
 		Transformer tr = TransformerFactory.newInstance().newTransformer();
+		tr.setOutputProperty("indent", "yes");
 		StringWriter sw = new StringWriter();
 		tr.transform(new DOMSource(d), new StreamResult(sw));
 

@@ -21,12 +21,12 @@
 			</name>
 			<description>
 				<p>
-					<xsl:apply-templates select="td[1]/strong/following-sibling::node()"
+					<xsl:apply-templates select="td[1]/strong/following-sibling::br[1]/following-sibling::node()"
 						mode="html" />
 				</p>
 				<h3>Objednací doba</h3>
 				<p>
-					<xsl:apply-templates select="td[2]" mode="html" />
+					<xsl:apply-templates select="td[2]/child::node()" mode="html" />
 				</p>
 			</description>
 			<url>

@@ -249,12 +249,16 @@ public abstract class GenericFeeder {
 		if (is == null)
 			return null;
 
-		Document d = getTidy(null).parseDOM(is, null);
+		Document d = getTidy(getEncoding()).parseDOM(is, null);
 
 		if (d == null)
 			return null;
 
 		return transformBody(d);
+	}
+
+	protected String getEncoding() {
+		return null;
 	}
 
 	public abstract URL getUrl() throws MalformedURLException;
