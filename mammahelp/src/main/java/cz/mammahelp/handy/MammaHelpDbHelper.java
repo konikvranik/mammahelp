@@ -19,8 +19,8 @@ import cz.mammahelp.handy.dao.BundleDao;
 import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.dao.NewsDao;
-import cz.mammahelp.handy.model.Articles;
-import cz.mammahelp.handy.model.ArticlesXmlWrapper;
+import cz.mammahelp.model.Articles;
+import cz.mammahelp.model.ArticlesXmlWrapper;
 
 public class MammaHelpDbHelper extends SQLiteOpenHelper {
 

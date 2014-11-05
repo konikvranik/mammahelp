@@ -38,13 +38,13 @@ import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.feeder.ArticleFeeder;
 import cz.mammahelp.handy.feeder.LocationFeeder;
 import cz.mammahelp.handy.feeder.NewsFeeder;
-import cz.mammahelp.handy.model.Articles;
-import cz.mammahelp.handy.model.Enclosure;
-import cz.mammahelp.handy.model.Identificable;
-import cz.mammahelp.handy.model.LocationPoint;
-import cz.mammahelp.handy.model.News;
 import cz.mammahelp.handy.provider.ArticlesContentProvider;
 import cz.mammahelp.handy.provider.EnclosureContentProvider;
+import cz.mammahelp.model.Articles;
+import cz.mammahelp.model.Enclosure;
+import cz.mammahelp.model.Identificable;
+import cz.mammahelp.model.LocationPoint;
+import cz.mammahelp.model.News;
 
 public class MammaHelpService extends Service {
 

@@ -13,7 +13,7 @@ import android.os.ParcelFileDescriptor;
 import android.os.ParcelFileDescriptor.AutoCloseOutputStream;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.dao.BaseDao;
-import cz.mammahelp.handy.model.Identificable;
+import cz.mammahelp.model.Identificable;
 
 public abstract class AbstractMammahelpContentProvider<T extends Identificable<T>>
 		extends AbstractDummyContentProvider {

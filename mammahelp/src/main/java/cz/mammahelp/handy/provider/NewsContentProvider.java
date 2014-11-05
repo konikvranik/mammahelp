@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import android.net.Uri;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.dao.NewsDao;
-import cz.mammahelp.handy.model.News;
+import cz.mammahelp.model.News;
 
 public class NewsContentProvider extends AbstractMammahelpContentProvider<News> {
 

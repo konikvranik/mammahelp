@@ -13,6 +13,11 @@ repositories {
 }
 
 dependencies {
+	compile('com.squareup.retrofit:converter-simplexml:1.6.1'){
+	    exclude module: 'stax'
+	    exclude module: 'stax-api'
+	    exclude module: 'xpp3'
+	}
 }
 
 configurations {
@@ -29,7 +34,7 @@ eclipse {
 
 	classpath {
 		file {
-		    beforeMerged { classpath -> 
+		    beforeMerged { classpath ->
 		    	classpath.entries.clear()
 		    }
 			withXml {
@@ -38,7 +43,7 @@ eclipse {
 			    // node.appendNode('classpathentry kind="output" path="target"')
 			}	   
 		    whenMerged {  cp -> 
-		        cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/main/") }*.output = "target/main" 
+		        cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/main/") }*.output = "target/main"
 		        cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/test/") }*.output = "target/test"
 		        cp.entries.findAll { it instanceof Container && it.path.endsWith("JRE_CONTAINER") }*.exported = false 
 		        // cp.entries.removeAll { it.kind == "output" }

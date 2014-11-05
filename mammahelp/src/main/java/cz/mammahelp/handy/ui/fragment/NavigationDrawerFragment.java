@@ -29,8 +29,8 @@ import android.widget.Toast;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
-import cz.mammahelp.handy.model.Articles;
 import cz.mammahelp.handy.ui.activity.MainActivity;
+import cz.mammahelp.model.Articles;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation

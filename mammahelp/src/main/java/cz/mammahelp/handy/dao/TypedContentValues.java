@@ -2,7 +2,7 @@ package cz.mammahelp.handy.dao;
 
 import android.content.ContentValues;
 import cz.mammahelp.handy.dao.BaseDao.Column;
-import cz.mammahelp.handy.model.Identificable;
+import cz.mammahelp.model.Identificable;
 
 public class TypedContentValues {
 

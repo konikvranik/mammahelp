@@ -36,6 +36,18 @@ dependencies {
 
 }
 
+/*
+subprojects {
+	dependencies {
+		compile('com.squareup.retrofit:converter-simplexml:1.6.1'){
+		    exclude module: 'stax'
+		    exclude module: 'stax-api'
+		    exclude module: 'xpp3'
+		}
+	}
+}
+*/
+
 configurations {
 	provided
 	// all*.exclude group: 'com.android.support', module: 'support-v4'

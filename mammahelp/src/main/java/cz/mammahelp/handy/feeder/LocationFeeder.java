@@ -18,10 +18,10 @@ import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.handy.dao.LocationPointDao;
-import cz.mammahelp.handy.model.Address;
-import cz.mammahelp.handy.model.Enclosure;
-import cz.mammahelp.handy.model.LocationPoint;
-import cz.mammahelp.handy.model.LocationsXmlWrapper;
+import cz.mammahelp.model.Address;
+import cz.mammahelp.model.Enclosure;
+import cz.mammahelp.model.LocationPoint;
+import cz.mammahelp.model.LocationsXmlWrapper;
 
 public class LocationFeeder extends
 		GenericFeeder<LocationPointDao, LocationPoint> {
@@ -98,7 +98,7 @@ public class LocationFeeder extends
 		if (!(addr.hasLatitude() && addr.hasLongitude())) {
 			List<android.location.Address> locs = getGeocoder()
 					.getFromLocationName(
-							cz.mammahelp.handy.model.Address
+							cz.mammahelp.model.Address
 									.fomrmatAddressForSearch(addr),
 							1);
 			if (locs.size() > 0) {

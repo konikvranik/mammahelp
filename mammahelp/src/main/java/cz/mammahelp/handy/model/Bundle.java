@@ -1,5 +1,7 @@
 package cz.mammahelp.handy.model;
 
+import cz.mammahelp.model.Identificable;
+
 public class Bundle implements Identificable<Bundle> {
 
 	private static final long serialVersionUID = 8570514357854055957L;

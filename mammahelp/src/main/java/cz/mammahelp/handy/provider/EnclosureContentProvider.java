@@ -14,7 +14,7 @@ import android.net.Uri;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.dao.BaseDao;
 import cz.mammahelp.handy.dao.EnclosureDao;
-import cz.mammahelp.handy.model.Enclosure;
+import cz.mammahelp.model.Enclosure;
 
 public class EnclosureContentProvider extends
 		AbstractMammahelpContentProvider<Enclosure> {

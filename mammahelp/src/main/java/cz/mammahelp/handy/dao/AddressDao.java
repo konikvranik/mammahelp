@@ -1,15 +1,15 @@
 package cz.mammahelp.handy.dao;
 
 import java.util.Locale;
-import static cz.mammahelp.handy.Utils.bundleToMap;
 
+import static cz.mammahelp.handy.Utils.bundleToMap;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
-import cz.mammahelp.handy.model.Address;
+import cz.mammahelp.model.Address;
 
 public class AddressDao extends BaseDao<Address> {
 

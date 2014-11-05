@@ -13,8 +13,8 @@ import android.database.sqlite.SQLiteConstraintException;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
 import cz.mammahelp.handy.dao.BaseDao.Column;
-import cz.mammahelp.handy.model.Articles;
-import cz.mammahelp.handy.model.Enclosure;
+import cz.mammahelp.model.Articles;
+import cz.mammahelp.model.Enclosure;
 
 @SuppressWarnings("unused")
 public class EnclosureDao extends BaseDao<Enclosure> {

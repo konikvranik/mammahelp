@@ -1,4 +1,4 @@
-package cz.mammahelp.handy.model;
+package cz.mammahelp.model;
 
 import java.io.Serializable;
 

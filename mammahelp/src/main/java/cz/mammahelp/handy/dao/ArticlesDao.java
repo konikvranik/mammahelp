@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
-import cz.mammahelp.handy.model.Articles;
+import cz.mammahelp.model.Articles;
 
 public class ArticlesDao extends BaseDao<Articles> {
 

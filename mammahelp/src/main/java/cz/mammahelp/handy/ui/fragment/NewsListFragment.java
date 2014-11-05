@@ -32,8 +32,8 @@ import android.widget.Toast;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.NewsDao;
-import cz.mammahelp.handy.model.News;
 import cz.mammahelp.handy.ui.ANamedFragment;
+import cz.mammahelp.model.News;
 
 public class NewsListFragment extends ANamedFragment {
 

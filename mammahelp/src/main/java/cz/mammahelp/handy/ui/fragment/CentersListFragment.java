@@ -56,10 +56,10 @@ import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.feeder.LocationFeeder;
-import cz.mammahelp.handy.model.Address;
-import cz.mammahelp.handy.model.LocationPoint;
 import cz.mammahelp.handy.ui.ANamedFragment;
 import cz.mammahelp.handy.ui.component.MultiSpinner;
+import cz.mammahelp.model.Address;
+import cz.mammahelp.model.LocationPoint;
 
 public class CentersListFragment extends ANamedFragment {
 
@@ -514,7 +514,7 @@ public class CentersListFragment extends ANamedFragment {
 	}
 
 	private String getQueryFromAddress(Address addr) {
-		return cz.mammahelp.handy.model.Address.fomrmatAddressForSearch(addr);
+		return cz.mammahelp.model.Address.fomrmatAddressForSearch(addr);
 	}
 
 	@Override

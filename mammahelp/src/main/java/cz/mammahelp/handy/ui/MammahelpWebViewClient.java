@@ -19,9 +19,9 @@ import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.feeder.LocationFeeder;
-import cz.mammahelp.handy.model.LocationPoint;
 import cz.mammahelp.handy.provider.EnclosureContentProvider;
 import cz.mammahelp.handy.ui.fragment.CenterDetailViewFragment;
+import cz.mammahelp.model.LocationPoint;
 
 public class MammahelpWebViewClient extends WebViewClient {
 

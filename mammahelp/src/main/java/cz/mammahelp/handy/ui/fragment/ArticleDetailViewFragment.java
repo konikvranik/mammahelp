@@ -19,13 +19,13 @@ import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.Utils;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.dao.NewsDao;
-import cz.mammahelp.handy.model.ASyncedInformation;
-import cz.mammahelp.handy.model.Articles;
-import cz.mammahelp.handy.model.News;
 import cz.mammahelp.handy.provider.ArticlesContentProvider;
 import cz.mammahelp.handy.provider.NewsContentProvider;
 import cz.mammahelp.handy.ui.AbstractMammaHelpActivity;
 import cz.mammahelp.handy.ui.MammahelpWebViewClient;
+import cz.mammahelp.model.ASyncedInformation;
+import cz.mammahelp.model.Articles;
+import cz.mammahelp.model.News;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment

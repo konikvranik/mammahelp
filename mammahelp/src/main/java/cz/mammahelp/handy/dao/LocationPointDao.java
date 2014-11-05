@@ -8,9 +8,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
-import cz.mammahelp.handy.model.Address;
-import cz.mammahelp.handy.model.Enclosure;
-import cz.mammahelp.handy.model.LocationPoint;
+import cz.mammahelp.model.Address;
+import cz.mammahelp.model.Enclosure;
+import cz.mammahelp.model.LocationPoint;
 
 public class LocationPointDao extends BaseDao<LocationPoint> {
 

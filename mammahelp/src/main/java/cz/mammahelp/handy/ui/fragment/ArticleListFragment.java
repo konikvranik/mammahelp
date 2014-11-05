@@ -22,8 +22,8 @@ import android.widget.TextView;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
-import cz.mammahelp.handy.model.Articles;
 import cz.mammahelp.handy.ui.ANamedFragment;
+import cz.mammahelp.model.Articles;
 
 public class ArticleListFragment extends ANamedFragment {
 

@@ -30,9 +30,9 @@ import android.os.Bundle;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
 import cz.mammahelp.handy.Utils;
-import cz.mammahelp.handy.model.Address;
-import cz.mammahelp.handy.model.Enclosure;
-import cz.mammahelp.handy.model.Identificable;
+import cz.mammahelp.model.Address;
+import cz.mammahelp.model.Enclosure;
+import cz.mammahelp.model.Identificable;
 
 public abstract class BaseDao<T extends Identificable<T>> {
 

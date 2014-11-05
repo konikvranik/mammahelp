@@ -1,1 +1,2 @@
-includeFlat 'common'
+include 'common'
+project(":common").projectDir = file("../common")

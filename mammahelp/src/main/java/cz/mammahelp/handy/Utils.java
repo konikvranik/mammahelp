@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
-import cz.mammahelp.handy.model.Address;
+import cz.mammahelp.model.Address;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
@@ -91,6 +91,8 @@ public class Utils {
 	}
 
 	public static Map<String, String> bundleToMap(Bundle bundle) {
+		if (bundle == null)
+			return null;
 		Map<String, String> map = new HashMap<String, String>();
 		for (String key : bundle.keySet()) {
 			map.put(key, bundle.get(key).toString());
@@ -99,6 +101,8 @@ public class Utils {
 	}
 
 	public static Bundle mapToBundle(Map<String, String> map) {
+		if (map == null)
+			return null;
 		Bundle bundle = new Bundle();
 		for (Entry<String, String> entry : map.entrySet()) {
 			bundle.putString(entry.getKey(), entry.getValue());
@@ -107,6 +111,8 @@ public class Utils {
 	}
 
 	public static Address gAddresToMhAddress(android.location.Address gaddr) {
+		if (gaddr == null)
+			return null;
 		Address mhaddr = new Address();
 		mhaddr.setAdminArea(gaddr.getAdminArea());
 		mhaddr.setCountryCode(gaddr.getCountryCode());

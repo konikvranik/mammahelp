@@ -10,7 +10,7 @@ import org.w3c.dom.Document;
 
 import android.content.Context;
 import cz.mammahelp.handy.dao.ArticlesDao;
-import cz.mammahelp.handy.model.Articles;
+import cz.mammahelp.model.Articles;
 
 public class ArticleFeeder extends GenericFeeder<ArticlesDao, Articles> {
 

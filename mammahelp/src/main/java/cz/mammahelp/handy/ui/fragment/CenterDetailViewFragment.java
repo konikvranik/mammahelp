@@ -22,11 +22,11 @@ import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.Utils;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.feeder.LocationFeeder;
-import cz.mammahelp.handy.model.Address;
-import cz.mammahelp.handy.model.LocationPoint;
 import cz.mammahelp.handy.provider.EnclosureContentProvider;
 import cz.mammahelp.handy.ui.AbstractMammaHelpActivity;
 import cz.mammahelp.handy.ui.MammahelpWebViewClient;
+import cz.mammahelp.model.Address;
+import cz.mammahelp.model.LocationPoint;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment

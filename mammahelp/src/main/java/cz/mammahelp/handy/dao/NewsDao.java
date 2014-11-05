@@ -11,8 +11,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
-import cz.mammahelp.handy.model.Enclosure;
-import cz.mammahelp.handy.model.News;
+import cz.mammahelp.model.Enclosure;
+import cz.mammahelp.model.News;
 
 public class NewsDao extends BaseDao<News> {
 
