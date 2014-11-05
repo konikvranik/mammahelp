@@ -34,7 +34,7 @@ eclipse {
 
 	classpath {
 		file {
-		    beforeMerged { classpath ->
+		    beforeMerged { classpath -> 
 		    	classpath.entries.clear()
 		    }
 			withXml {
@@ -44,6 +44,7 @@ eclipse {
 			}	   
 		    whenMerged {  cp -> 
 		        cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/main/") }*.output = "target/main"
+		        cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/main/") }*.export = true 
 		        cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/test/") }*.output = "target/test"
 		        cp.entries.findAll { it instanceof Container && it.path.endsWith("JRE_CONTAINER") }*.exported = false 
 		        // cp.entries.removeAll { it.kind == "output" }
@@ -68,7 +69,7 @@ eclipse {
 sourceSets {
     main {
         java {
-            srcDirs = ["src/main/java","src/main/resources","src/test/java","src/test/resources"]
+            srcDirs = ["src/main/java","src/test/java"]
         }
     }
 }
