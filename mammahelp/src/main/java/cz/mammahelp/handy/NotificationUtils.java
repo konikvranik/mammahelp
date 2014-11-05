@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.app.TaskStackBuilder;
-import cz.mammahelp.handy.ui.activity.ErrorViewActivity;
 
 public class NotificationUtils {
 
@@ -28,7 +27,7 @@ public class NotificationUtils {
 	}
 
 	public static void makeNotification(Context ctx, MammaHelpException e) {
-		makeNotification(ctx, e.isHandled() ? null : ErrorViewActivity.class,
+		makeNotification(ctx, null,
 				e.isHandled() ? R.drawable.ic_action_warning
 						: R.drawable.ic_action_error, e);
 	}
