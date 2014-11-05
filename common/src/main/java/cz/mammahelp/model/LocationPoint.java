@@ -2,25 +2,36 @@ package cz.mammahelp.model;
 
 import java.util.Collection;
 
+import org.simpleframework.xml.Element;
+
 public class LocationPoint implements Identificable<LocationPoint> {
 
 	private static final long serialVersionUID = -7455279647237387292L;
 
+	@Element
 	public Address location;
 
+	@Element
 	public String name;
 
+	@Element(data = true)
 	public String description;
 
 	public Collection<News> actions;
 
+	@Element
 	public String url;
 
+	@Element(required = false)
 	private Long id;
 
+	@Element
 	private String type;
 
 	private Enclosure mapImage;
+
+	@Element
+	private String address;
 
 	public LocationPoint(Long id) {
 		setId(id);

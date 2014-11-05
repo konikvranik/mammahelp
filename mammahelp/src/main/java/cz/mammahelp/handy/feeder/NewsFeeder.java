@@ -109,12 +109,15 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 				.commit();
 
 		NotificationUtils.makeNotification(
-				getContext().getApplicationContext(), MainActivity.class,
-				Constants.NEWS_NOTIFICATION_ID, R.drawable.ic_launcher, BitmapFactory
-						.decodeResource(getContext().getResources(),
-								R.drawable.ic_launcher),
-				R.string.news_updated_title, getContext().getResources()
-						.getString(R.string.news_updated_description));
+				getContext().getApplicationContext(),
+				MainActivity.class,
+				Constants.NEWS_NOTIFICATION_ID,
+				R.drawable.ic_launcher,
+				BitmapFactory.decodeResource(getContext().getResources(),
+						R.drawable.ic_launcher),
+				R.string.news_updated_title,
+				getContext().getResources().getString(
+						R.string.news_updated_description));
 
 		getDbHelper().notifyDataSetChanged();
 
@@ -207,7 +210,7 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 		news.setSyncTime(cal);
 
 		if (is != null)
-			saveBody(news, transformBody(getTidy(null).parseDOM(is, null)));
+			saveBody(news, transform(getTidy(null).parseDOM(is, null)));
 
 		if (news.getId() == null)
 			getDao().insert(news);
@@ -217,8 +220,14 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 	}
 
 	@Override
-	protected String getFilterName() {
+	public String getFilterName() {
 		return "newsHtmlFilter.xsl";
+	}
+
+	@Override
+	public Collection<News> getItems() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

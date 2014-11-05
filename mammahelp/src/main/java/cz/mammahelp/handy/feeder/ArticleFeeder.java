@@ -2,6 +2,7 @@ package cz.mammahelp.handy.feeder;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.xml.xpath.XPathConstants;
@@ -74,7 +75,7 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao, Articles> {
 		else
 			getDao().update(article);
 
-		saveBody(article, transformBody(d));
+		saveBody(article, transform(d));
 
 		if (getRealUrl() != null)
 			article.setUrl(getRealUrl().toExternalForm());
@@ -84,8 +85,20 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao, Articles> {
 	}
 
 	@Override
-	protected String getFilterName() {
+	public String getFilterName() {
 		return "articleHtmlFilter.xsl";
+	}
+
+	@Override
+	protected InputStream getTemplate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<Articles> getItems() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

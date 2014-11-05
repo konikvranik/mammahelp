@@ -4,6 +4,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -141,7 +142,7 @@ public class LocationFeeder extends
 	}
 
 	@Override
-	protected String getFilterName() {
+	public String getFilterName() {
 		return "newsHtmlFilter.xsl";
 	}
 
@@ -149,6 +150,12 @@ public class LocationFeeder extends
 		if (edao == null)
 			edao = new EnclosureDao(getDbHelper());
 		return edao;
+	}
+
+	@Override
+	public Collection<LocationPoint> getItems() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

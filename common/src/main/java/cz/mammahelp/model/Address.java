@@ -3,8 +3,6 @@ package cz.mammahelp.model;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 public class Address implements Identificable<Address> {
 
@@ -12,33 +10,33 @@ public class Address implements Identificable<Address> {
 	private static final String DIVIDER = ",";
 	private Long id;
 	private Long bundleId;
-	protected Locale locale;
-	private String countryCode;
-	private String adminArea;
-	private String countryName;
-	private String featureName;
-	private double latitude;
-	private double longitude;
-	private String locality;
-	private String phone;
-	private String postalCode;
-	private String premises;
-	private String subAdminArea;
-	private String subLocality;
-	private String subThoroughfare;
-	private String url;
-	private String thoroughfare;
-	private Map<String, String> extras;
-	private ArrayList<String> addressLines = new ArrayList<String>();
-	private boolean hasLAtitude;
-	private boolean hasLongitude;
+	protected Locale mLocale;
+	private String mCountryCode;
+	private String mAdminArea;
+	private String mCountryName;
+	private String mFeatureName;
+	private double mLatitude;
+	private double mLongitude;
+	private String mLocality;
+	private String mPhone;
+	private String mPostalCode;
+	private String mPremises;
+	private String mSubAdminArea;
+	private String mSubLocality;
+	private String mSubThoroughfare;
+	private String mUrl;
+	private String mThoroughfare;
+	private Map<String, String> mExtras;
+	private ArrayList<String> mAddressLines = new ArrayList<String>();
+	private boolean mHasLatitude;
+	private boolean mHasLongitude;
 
 	public Address() {
-		locale = Locale.getDefault();
+		mLocale = Locale.getDefault();
 	}
 
 	public Address(Locale locale) {
-		this.locale = locale;
+		this.mLocale = locale;
 	}
 
 	public Address(Long id, Locale locale) {
@@ -118,59 +116,59 @@ public class Address implements Identificable<Address> {
 	}
 
 	public String getUrl() {
-		return url;
+		return mUrl;
 	}
 
 	public String getSubThoroughfare() {
-		return subThoroughfare;
+		return mSubThoroughfare;
 	}
 
 	public String getSubLocality() {
-		return subLocality;
+		return mSubLocality;
 	}
 
 	public String getSubAdminArea() {
-		return subAdminArea;
+		return mSubAdminArea;
 	}
 
 	public String getPremises() {
-		return premises;
+		return mPremises;
 	}
 
 	public String getPostalCode() {
-		return postalCode;
+		return mPostalCode;
 	}
 
 	public String getPhone() {
-		return phone;
+		return mPhone;
 	}
 
 	public String getLocality() {
-		return locality;
+		return mLocality;
 	}
 
 	public double getLongitude() {
-		return longitude;
+		return mLongitude;
 	}
 
 	public double getLatitude() {
-		return latitude;
+		return mLatitude;
 	}
 
 	public String getFeatureName() {
-		return featureName;
+		return mFeatureName;
 	}
 
 	public String getCountryName() {
-		return countryName;
+		return mCountryName;
 	}
 
 	public String getCountryCode() {
-		return countryCode;
+		return mCountryCode;
 	}
 
 	public String getAdminArea() {
-		return adminArea;
+		return mAdminArea;
 	}
 
 	protected <E extends Comparable<E>> int nullableCompare(E one, E another) {
@@ -243,88 +241,88 @@ public class Address implements Identificable<Address> {
 	}
 
 	public String getThoroughfare() {
-		return thoroughfare;
+		return mThoroughfare;
 	}
 
 	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
+		this.mCountryCode = countryCode;
 	}
 
 	public void setAdminArea(String adminArea) {
-		this.adminArea = adminArea;
+		this.mAdminArea = adminArea;
 	}
 
 	public void setCountryName(String countryName) {
-		this.countryName = countryName;
+		this.mCountryName = countryName;
 	}
 
 	public void setFeatureName(String featureName) {
-		this.featureName = featureName;
+		this.mFeatureName = featureName;
 	}
 
 	public void setLatitude(double latitude) {
-		this.latitude = latitude;
+		this.mLatitude = latitude;
 	}
 
 	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+		this.mLongitude = longitude;
 	}
 
 	public void setLocality(String locality) {
-		this.locality = locality;
+		this.mLocality = locality;
 	}
 
 	public void setPhone(String phone) {
-		this.phone = phone;
+		this.mPhone = phone;
 	}
 
 	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
+		this.mPostalCode = postalCode;
 	}
 
 	public void setPremises(String premises) {
-		this.premises = premises;
+		this.mPremises = premises;
 	}
 
 	public void setSubAdminArea(String subAdminArea) {
-		this.subAdminArea = subAdminArea;
+		this.mSubAdminArea = subAdminArea;
 	}
 
 	public void setSubLocality(String subLocality) {
-		this.subLocality = subLocality;
+		this.mSubLocality = subLocality;
 	}
 
 	public void setSubThoroughfare(String subThoroughfare) {
-		this.subThoroughfare = subThoroughfare;
+		this.mSubThoroughfare = subThoroughfare;
 	}
 
 	public void setUrl(String url) {
-		this.url = url;
+		this.mUrl = url;
 	}
 
 	public void setExtras(Map<String, String> map) {
-		extras = map;
+		mExtras = map;
 	}
 
 	public Map<String, String> getExtras() {
-		return extras;
+		return mExtras;
 	}
 
 	public void setThoroughfare(String thoroughfare) {
-		this.thoroughfare = thoroughfare;
+		this.mThoroughfare = thoroughfare;
 	}
 
 	public void setAddressLine(int i, String string) {
-		addressLines.add(i, string);
+		mAddressLines.add(i, string);
 
 	}
 
 	public boolean hasLatitude() {
-		return hasLAtitude;
+		return mHasLatitude;
 	}
 
 	public boolean hasLongitude() {
-		return hasLongitude;
+		return mHasLongitude;
 	}
 
 }

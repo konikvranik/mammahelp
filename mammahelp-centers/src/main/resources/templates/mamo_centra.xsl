@@ -16,10 +16,13 @@
 		<location>
 			<type>mamo</type>
 			<name>
+				<xsl:call-template name="cdata-start" />
 				<xsl:apply-templates select="td[1]/strong/child::node()"
 					mode="html" />
+				<xsl:call-template name="cdata-end" />
 			</name>
 			<description>
+				<xsl:call-template name="cdata-start" />
 				<p>
 					<xsl:apply-templates
 						select="td[1]/strong/following-sibling::br[1]/following-sibling::node()"
@@ -30,6 +33,7 @@
 					<xsl:apply-templates select="td[2]/child::node()"
 						mode="html" />
 				</p>
+				<xsl:call-template name="cdata-end" />
 			</description>
 			<url>
 				<xsl:apply-templates select="td[4]/a[text() = 'www']/@href" />
@@ -37,10 +41,12 @@
 
 
 			<address>
+				<xsl:call-template name="cdata-start" />
 				<xsl:for-each select="td[3]//text()">
 					<xsl:value-of select="." />
 					<xsl:text>&#10;</xsl:text>
 				</xsl:for-each>
+				<xsl:call-template name="cdata-end" />
 			</address>
 			<location>
 				<mAddressLines>
@@ -51,7 +57,6 @@
 						</string>
 					</entry>
 				</mAddressLines>
-				<mMaxAddressLineIndex>0</mMaxAddressLineIndex>
 				<mExtras>
 					<mMap>
 						<entry>
@@ -74,8 +79,10 @@
 				<mUrl>Url</mUrl>
 				<mLocale>cs_CZ</mLocale>
 				<mLocality>
+					<xsl:call-template name="cdata-start" />
 					<xsl:apply-templates select="td[3]/strong/child::node()"
 						mode="html" />
+					<xsl:call-template name="cdata-end" />
 				</mLocality>
 				<mPhone>phone</mPhone>
 				<mPostalCode>
@@ -96,4 +103,10 @@
 		</xsl:copy>
 	</xsl:template>
 
+	<xsl:template name="cdata-start">
+<!-- 		<xsl:text disable-output-escaping="yes"><![CDATA[<![CDATA]]>[</xsl:text> -->
+	</xsl:template>
+	<xsl:template name="cdata-end">
+<!-- 		<xsl:text disable-output-escaping="yes">]<![CDATA[]>]]></xsl:text> -->
+	</xsl:template>
 </xsl:stylesheet>
