@@ -2,18 +2,25 @@ package cz.mammahelp.feeder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.InvalidKeyException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.TreeSet;
 
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
-import org.simpleframework.xml.stream.InputNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -23,7 +30,7 @@ import org.w3c.dom.NodeList;
 import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
-import com.google.code.geocoder.model.GeocoderGeometry;
+import com.google.code.geocoder.model.GeocoderAddressComponent;
 import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
@@ -32,7 +39,6 @@ import com.google.code.geocoder.model.LatLng;
 import cz.mammahelp.model.Address;
 import cz.mammahelp.model.LocationPoint;
 import cz.mammahelp.model.LocationsXmlWrapper;
-import cz.mammahelp.tools.NodeWrapper;
 
 public abstract class GenericXMLLocationFeeder extends
 		cz.mammahelp.feeder.GenericXMLFeeder<LocationPoint> {
@@ -40,9 +46,16 @@ public abstract class GenericXMLLocationFeeder extends
 	public static Logger log = LoggerFactory
 			.getLogger(GenericXMLLocationFeeder.class);
 
-	final Geocoder geocoder = new Geocoder();
+	Geocoder geocoder;
 
 	private GeocoderRequestBuilder geocoderBuilder;
+
+	private TreeSet<Object> types = new TreeSet<>();
+
+	public GenericXMLLocationFeeder() {
+		geocoder = new Geocoder();
+
+	}
 
 	public Node getDom() throws MalformedURLException, Exception {
 		InputStream is = getInputStreamFromUrl(getUrl());
@@ -73,12 +86,40 @@ public abstract class GenericXMLLocationFeeder extends
 
 	protected LocationPoint applyGeoOnLocation(LocationPoint lp)
 			throws IOException {
-		LatLng ll = ressolveAddress(lp.getAddress());
+		GeocoderResult res = ressolveAddress(lp.getName(), lp.getAddress());
+		if (res == null)
+			return lp;
+		LatLng ll = null;
+		if (res.getGeometry() != null)
+			ll = res.getGeometry().getLocation();
 		if (ll != null) {
 			Address location = lp.getLocation();
 			location.setLatitude(ll.getLat().doubleValue());
 			location.setLongitude(ll.getLng().doubleValue());
 		}
+
+		String a = res.getFormattedAddress();
+		if (a != null && !a.isEmpty())
+			lp.setAddress(a);
+
+		List<GeocoderAddressComponent> adco = res.getAddressComponents();
+
+		log.debug("..... " + a);
+
+		for (GeocoderAddressComponent geocoderAddressComponent : adco) {
+
+			log.debug(".\t"
+					+ geocoderAddressComponent.getShortName()
+					+ " ... "
+					+ geocoderAddressComponent.getLongName()
+					+ " ... "
+					+ Arrays.toString(geocoderAddressComponent.getTypes()
+							.toArray()));
+
+			types.addAll(geocoderAddressComponent.getTypes());
+
+		}
+
 		return lp;
 	}
 
@@ -94,6 +135,7 @@ public abstract class GenericXMLLocationFeeder extends
 	protected void applyGeoOnLocation(Node item)
 			throws XPathExpressionException, IOException {
 		Document doc = item.getOwnerDocument();
+		XPathExpression nameExpr = getXpath("name/text()");
 		XPathExpression addrExpr = getXpath("address/text()");
 		XPathExpression locExpr = getXpath("location");
 		XPathExpression latExpr = getXpath("mLatitude");
@@ -138,11 +180,14 @@ public abstract class GenericXMLLocationFeeder extends
 
 			String address = (String) addrExpr.evaluate(item,
 					XPathConstants.STRING);
+			String name = (String) nameExpr.evaluate(item,
+					XPathConstants.STRING);
 
 			if (address == null || address.isEmpty())
 				return;
 
-			LatLng ll = ressolveAddress(address);
+			GeocoderResult res = ressolveAddress(name, address);
+			LatLng ll = res.getGeometry().getLocation();
 
 			if (ll != null) {
 				removeAllChildren(latNode);
@@ -179,19 +224,50 @@ public abstract class GenericXMLLocationFeeder extends
 		return geocoderResponse;
 	}
 
-	private LatLng ressolveAddress(String address) throws IOException {
-		GeocodeResponse geocoderResponse = geoCode(address);
+	private GeocoderResult ressolveAddress(String name, String address)
+			throws IOException {
+
+		String[] combinations = new String[] { name, address,
+				name + ", " + address };
+
+		List<GeocoderResult> results = null;
+
+		for (String add : combinations) {
+			results = getResults(add, results);
+			log.debug("Size: " + (results == null ? 0 : results.size()));
+			if (results != null && results.size() == 1)
+				break;
+		}
+
+		if (results == null || results.size() < 1) {
+			log.warn("No results found for address " + name + ", " + address);
+			return null;
+		}
+
+		if (results.size() > 1)
+			log.warn("Ambiguous results (" + results.size() + ") for address "
+					+ name + ", " + address);
+
+		return results.get(0);
+
+	}
+
+	private List<GeocoderResult> getResults(String name,
+			List<GeocoderResult> origResults) throws IOException {
+
+		if (origResults == null || origResults.size() < 1)
+			origResults = null;
+		GeocodeResponse geocoderResponse = geoCode(name);
 		List<GeocoderResult> results = geocoderResponse.getResults();
 
 		if (GeocoderStatus.OK == geocoderResponse.getStatus()
 				&& results != null && results.size() > 0) {
-			if (results.size() > 1)
-				log.warn("Ambiguous results for address " + address);
-			GeocoderResult geocoderResult = results.get(0);
-			GeocoderGeometry geo = geocoderResult.getGeometry();
-			return geo.getLocation();
+			if (origResults != null && results.size() > origResults.size())
+				results = origResults;
+			return results;
 		} else {
-			return null;
+			log.warn("Geocoder status: " + geocoderResponse.getStatus());
+			return origResults;
 		}
 	}
 
@@ -211,8 +287,34 @@ public abstract class GenericXMLLocationFeeder extends
 	public Collection<LocationPoint> getItems() throws Exception {
 
 		Serializer serializer = new Persister();
-		InputNode in = new NodeWrapper(getDom());
-		LocationsXmlWrapper aw = serializer.read(LocationsXmlWrapper.class, in);
+		// InputNode in = new NodeWrapper(getDom());
+
+		int BUFFER = 2048;
+
+		PipedInputStream input = new PipedInputStream(BUFFER);
+		PipedOutputStream output = new PipedOutputStream(input);
+
+		Node d = getDom();
+
+		Thread t = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					getTransformer().transform(new DOMSource(d),
+							new StreamResult(output));
+					output.close();
+				} catch (TransformerException | IOException e) {
+					log.error(e.getMessage(), e);
+				}
+			}
+		});
+		t.start();
+
+		LocationsXmlWrapper aw = serializer.read(LocationsXmlWrapper.class,
+				input);
+
+		input.close();
 		return aw.locations;
 	}
 
@@ -228,4 +330,7 @@ public abstract class GenericXMLLocationFeeder extends
 
 	}
 
+	public TreeSet<Object> getTypes() {
+		return types;
+	}
 }

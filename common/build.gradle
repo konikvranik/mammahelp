@@ -8,6 +8,8 @@ version = '0.1'
 
 group = "cz.mammahelp"
 
+sourceCompatibility = 1.6
+
 repositories { mavenCentral() }
 
 dependencies {

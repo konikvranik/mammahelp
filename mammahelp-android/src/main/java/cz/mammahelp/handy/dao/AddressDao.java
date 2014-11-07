@@ -92,12 +92,15 @@ public class AddressDao extends BaseDao<Address> {
 		e.setCountryCode(unpackColumnValue(cursor, COUNTRY_CODE, String.class));
 		e.setCountryName(unpackColumnValue(cursor, COUNTRY_NAME, String.class));
 		e.setBundleId(unpackColumnValue(cursor, EXTRAS, Long.class));
-		e.setExtras(bundleToMap(unpackColumnValue(cursor, EXTRAS,
-				Bundle.class)));
+		e.setExtras(bundleToMap(unpackColumnValue(cursor, EXTRAS, Bundle.class)));
 		e.setFeatureName(unpackColumnValue(cursor, FEATURE_NAME, String.class));
-		e.setLatitude(unpackColumnValue(cursor, LATITUDE, Double.class));
+		Double lat = unpackColumnValue(cursor, LATITUDE, Double.class);
+		if (lat != null)
+			e.setLatitude(lat);
 		e.setLocality(unpackColumnValue(cursor, LOCALITY, String.class));
-		e.setLongitude(unpackColumnValue(cursor, LONGITUDE, Double.class));
+		Double lon = unpackColumnValue(cursor, LONGITUDE, Double.class);
+		if (lon != null)
+			e.setLongitude(lon);
 		e.setPhone(unpackColumnValue(cursor, PHONE, String.class));
 		e.setPostalCode(unpackColumnValue(cursor, POSTAL_CODE, String.class));
 		e.setPremises(unpackColumnValue(cursor, PREMISES, String.class));

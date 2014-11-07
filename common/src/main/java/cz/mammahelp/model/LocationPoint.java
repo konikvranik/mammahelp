@@ -8,18 +8,18 @@ public class LocationPoint implements Identificable<LocationPoint> {
 
 	private static final long serialVersionUID = -7455279647237387292L;
 
-	@Element
+	@Element(required = false)
 	public Address location;
 
 	@Element
 	public String name;
 
-	@Element(data = true)
+	@Element(data = true, required = false)
 	public String description;
 
 	public Collection<News> actions;
 
-	@Element
+	@Element(required = false)
 	public String url;
 
 	@Element(required = false)
@@ -30,7 +30,7 @@ public class LocationPoint implements Identificable<LocationPoint> {
 
 	private Enclosure mapImage;
 
-	@Element
+	@Element(required = false)
 	private String address;
 
 	public String getAddress() {

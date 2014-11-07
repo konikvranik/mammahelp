@@ -1,294 +1,2985 @@
 <locations>
-   <location>
-      <description>Some description</description>
-      <id>3</id>
-      <location>
-         <mAddressLines>
-            <entry>
-               <integer>0</integer>
-               <string>addrline 0</string>
-            </entry>
-            <entry>
-               <integer>1</integer>
-               <string>addrline 1</string>
-            </entry>
-         </mAddressLines>
-         <mAdminArea>Admin Area</mAdminArea>
-         <mCountryCode>countryCode</mCountryCode>
-         <mCountryName>countryName</mCountryName>
-         <mExtras>
-            <mMap>
-               <entry>
-                  <string>double</string>
-                  <object class="java.lang.Double">545.546</object>
-               </entry>
-               <entry>
-                  <string>string</string>
-                  <object class="java.lang.String">value</object>
-               </entry>
-               <entry>
-                  <string>boolean</string>
-                  <object class="java.lang.Boolean">true</object>
-               </entry>
-            </mMap>
-            <mHasFds>false</mHasFds>
-            <mFdsKnown>true</mFdsKnown>
-            <mAllowFds>true</mAllowFds>
-            </mExtras>
-         <mFeatureName>featureName</mFeatureName>
-         <mUrl>Url</mUrl>
-         <mThoroughfare>thoroughfare</mThoroughfare>
-         <mSubThoroughfare>subthoroughfare</mSubThoroughfare>
-         <mLocale>cs_CZ</mLocale>
-         <mLocality>locality</mLocality>
-         <mSubLocality>sublocality</mSubLocality>
-         <mSubAdminArea>subAdminArea</mSubAdminArea>
-         <mPhone>phone</mPhone>
-         <mPostalCode>11000</mPostalCode>
-         <mPremises>premises</mPremises>
-         <mLatitude>50.05</mLatitude>
-         <mLongitude>14.05</mLongitude>
-         <mHasLongitude>true</mHasLongitude>
-         <mHasLatitude>true</mHasLatitude> 
-         <mMaxAddressLineIndex>1</mMaxAddressLineIndex>
-      </location>
-      <name>Some name</name>
-      <url>Some url</url>
-   </location>
-   
-    <location>
-      <name>Mamma HELP Praha</name>
-      <url>http://www.mammahelp.cz/</url>
-	  <description>Pražská pobočka vás vítá</description>
-	  <type>branch</type>
-      <id>1</id>
-      <location>
-         <mAddressLines>
-            <entry>
-               <integer>0</integer>
-               <string>Senovážné náměstí</string>
-            </entry>
-            <entry>
-               <integer>1</integer>
-               <string>Areál pobočky</string>
-            </entry>
-         </mAddressLines>
-         <mAdminArea>Hlavní město Praha</mAdminArea>
-         <mCountryCode>CZ</mCountryCode>
-         <mCountryName>Czech Republic</mCountryName>
-         <mFeatureName>Palladium</mFeatureName>
-         <mUrl>Url</mUrl>
-         <mThoroughfare>Příjezdovka od hlavního nádraží</mThoroughfare>
-         <mSubThoroughfare>pak do vchodu 116a</mSubThoroughfare>
-         <mLocale>cs_CZ</mLocale>
-         <mLocality>Praha</mLocality>
-         <mSubLocality>Praha 1</mSubLocality>
-         <mSubAdminArea>Hlavní město Praha</mSubAdminArea>
-         <mPhone>+420789236589</mPhone>
-         <mPostalCode>11000</mPostalCode>
-         <mPremises>premises</mPremises>
-         <mLatitude>50.05</mLatitude>
-         <mLongitude>14.20</mLongitude>
-         <mHasLongitude>true</mHasLongitude>
-         <mHasLatitude>true</mHasLatitude> 
-         <mMaxAddressLineIndex>1</mMaxAddressLineIndex>
-         <mExtras>
-             <mMap>
-               <entry>
-                  <string>double</string>
-                  <object class="java.lang.Double">545.546</object>
-               </entry>
-               <entry>
-                  <string>string</string>
-                  <object class="java.lang.String">value</object>
-               </entry>
-               <entry>
-                  <string>boolean</string>
-                  <object class="java.lang.Boolean">true</object>
-               </entry>
-            </mMap>
-            <mHasFds>false</mHasFds>
-            <mFdsKnown>true</mFdsKnown>
-            <mAllowFds>true</mAllowFds>
-            
-         </mExtras>
-         </location>
-     </location>
-     
-    <location>
-      <name>Mamma HELP Brno</name>
-      <url>http://www.mammahelp.cz/</url>
-	  <description>Pražská pobočka vás vítá</description>
-	  <type>branch</type>
-      <id>4</id>
-      <location>
-         <mAddressLines>
-            <entry>
-               <integer>0</integer>
-               <string>Senovážné náměstí</string>
-            </entry>
-            <entry>
-               <integer>1</integer>
-               <string>Areál pobočky</string>
-            </entry>
-         </mAddressLines>
-         <mAdminArea>Hlavní město Praha</mAdminArea>
-         <mCountryCode>CZ</mCountryCode>
-         <mCountryName>Czech Republic</mCountryName>
-         <mFeatureName>Palladium</mFeatureName>
-         <mUrl>Url</mUrl>
-         <mThoroughfare>Příjezdovka od hlavního nádraží</mThoroughfare>
-         <mSubThoroughfare>pak do vchodu 116a</mSubThoroughfare>
-         <mLocale>cs_CZ</mLocale>
-         <mLocality>Praha</mLocality>
-         <mSubLocality>Praha 1</mSubLocality>
-         <mSubAdminArea>Hlavní město Praha</mSubAdminArea>
-         <mPhone>+420789236589</mPhone>
-         <mPostalCode>11000</mPostalCode>
-         <mPremises>premises</mPremises>
-         <mLatitude>49.05</mLatitude>
-         <mLongitude>15.05</mLongitude>
-         <mHasLongitude>true</mHasLongitude>
-         <mHasLatitude>true</mHasLatitude> 
-         <mMaxAddressLineIndex>1</mMaxAddressLineIndex>
-         <mExtras>
-             <mMap>
-               <entry>
-                  <string>double</string>
-                  <object class="java.lang.Double">545.546</object>
-               </entry>
-               <entry>
-                  <string>string</string>
-                  <object class="java.lang.String">value</object>
-               </entry>
-               <entry>
-                  <string>boolean</string>
-                  <object class="java.lang.Boolean">true</object>
-               </entry>
-            </mMap>
-            <mHasFds>false</mHasFds>
-            <mFdsKnown>true</mFdsKnown>
-            <mAllowFds>true</mAllowFds>
-            
-         </mExtras>
-         </location>
-     </location>
-   
-    <location>
-      <name>Shop Brno</name>
-      <url>http://www.mammahelp.cz/</url>
-	  <description>Pražská pobočka vás vítá</description>
-	  <type>shop</type>
-      <id>5</id>
-      <location>
-         <mAddressLines>
-            <entry>
-               <integer>0</integer>
-               <string>Senovážné náměstí</string>
-            </entry>
-            <entry>
-               <integer>1</integer>
-               <string>Areál pobočky</string>
-            </entry>
-         </mAddressLines>
-         <mAdminArea>Hlavní město Praha</mAdminArea>
-         <mCountryCode>CZ</mCountryCode>
-         <mCountryName>Czech Republic</mCountryName>
-         <mFeatureName>Palladium</mFeatureName>
-         <mUrl>Url</mUrl>
-         <mThoroughfare>Příjezdovka od hlavního nádraží</mThoroughfare>
-         <mSubThoroughfare>pak do vchodu 116a</mSubThoroughfare>
-         <mLocale>cs_CZ</mLocale>
-         <mLocality>Praha</mLocality>
-         <mSubLocality>Praha 1</mSubLocality>
-         <mSubAdminArea>Hlavní město Praha</mSubAdminArea>
-         <mPhone>+420789236589</mPhone>
-         <mPostalCode>11000</mPostalCode>
-         <mPremises>premises</mPremises>
-         <mLatitude>50.05</mLatitude>
-         <mLongitude>15.05</mLongitude>
-         <mHasLongitude>true</mHasLongitude>
-         <mHasLatitude>true</mHasLatitude> 
-         <mMaxAddressLineIndex>1</mMaxAddressLineIndex>
-         <mExtras>
-             <mMap>
-               <entry>
-                  <string>double</string>
-                  <object class="java.lang.Double">545.546</object>
-               </entry>
-               <entry>
-                  <string>string</string>
-                  <object class="java.lang.String">value</object>
-               </entry>
-               <entry>
-                  <string>boolean</string>
-                  <object class="java.lang.Boolean">true</object>
-               </entry>
-            </mMap>
-            <mHasFds>false</mHasFds>
-            <mFdsKnown>true</mFdsKnown>
-            <mAllowFds>true</mAllowFds>
-            
-         </mExtras>
-         </location>
-     </location>
-     
-    <location>
-      <name>Centrum Praha</name>
-      <url>http://www.mammahelp.cz/</url>
-	  <description>Pražská pobočka vás vítá</description>
-	  <type>center</type>
-      <id>6</id>
-      <location>
-         <mAddressLines>
-            <entry>
-               <integer>0</integer>
-               <string>Senovážné náměstí</string>
-            </entry>
-            <entry>
-               <integer>1</integer>
-               <string>Areál pobočky</string>
-            </entry>
-         </mAddressLines>
-         <mAdminArea>Hlavní město Praha</mAdminArea>
-         <mCountryCode>CZ</mCountryCode>
-         <mCountryName>Czech Republic</mCountryName>
-         <mFeatureName>Palladium</mFeatureName>
-         <mUrl>Url</mUrl>
-         <mThoroughfare>Příjezdovka od hlavního nádraží</mThoroughfare>
-         <mSubThoroughfare>pak do vchodu 116a</mSubThoroughfare>
-         <mLocale>cs_CZ</mLocale>
-         <mLocality>Praha</mLocality>
-         <mSubLocality>Praha 1</mSubLocality>
-         <mSubAdminArea>Hlavní město Praha</mSubAdminArea>
-         <mPhone>+420789236589</mPhone>
-         <mPostalCode>11000</mPostalCode>
-         <mPremises>premises</mPremises>
-         <mLatitude>49.5</mLatitude>
-         <mLongitude>14.20</mLongitude>
-         <mHasLongitude>true</mHasLongitude>
-         <mHasLatitude>true</mHasLatitude> 
-         <mMaxAddressLineIndex>1</mMaxAddressLineIndex>
-         <mExtras>
-             <mMap>
-               <entry>
-                  <string>double</string>
-                  <object class="java.lang.Double">545.546</object>
-               </entry>
-               <entry>
-                  <string>string</string>
-                  <object class="java.lang.String">value</object>
-               </entry>
-               <entry>
-                  <string>boolean</string>
-                  <object class="java.lang.Boolean">true</object>
-               </entry>
-            </mMap>
-            <mHasFds>false</mHasFds>
-            <mFdsKnown>true</mFdsKnown>
-            <mAllowFds>true</mAllowFds>
-            
-         </mExtras>
-         </location>
-     </location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>49.7823359</mLatitude>
+			<mLongitude>14.689829</mLongitude>
+			<mLocality>Benešov</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>256 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Masarykovo nám. 4</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Diagnostické centrum pro onemocnění prsu</name>
+		<description>
+			<![CDATA[<p> MUDr. Roman Kříž<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 317 724 333<br xmlns="http://www.w3.org/1999/xhtml"/></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>6 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.lekari.net/kriz-roman/</url>
+		<type>mamo</type>
+		<address>Masarykovo nám. 4
+256 01 
+Benešov
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>49.9652103</mLatitude>
+			<mLongitude>14.0694248</mLongitude>
+			<mLocality>Beroun</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>266 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Pod Kaplankou 1888</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Mamodiagnostické centrum, Radiodiagnostika, s.r.o.</name>
+		<description>
+			<![CDATA[<p> prof. MUDr. Jan Daneš, CSc.<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 607 502 846, 311 612 162<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po, út, čt: 8:00 - 15:00, st: 8:00 - 17:00, pá: 8:00 - 12:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>5 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 22.10.2014]</span></div></p>]]></description>
+		<url>http://www.mamocentrum.eu</url>
+		<type>mamo</type>
+		<address>Pod Kaplankou 1888
+266 01 
+Beroun
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>49.3615631</mLatitude>
+			<mLongitude>16.6521927</mLongitude>
+			<mLocality>Blansko</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>678 31</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Sadová 33</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Nemocnice Blansko, p.o. - radiodiagnostické oddělení</name>
+		<description>
+			<![CDATA[<p> MUDr. Dana Kolmačková<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 800 149 485<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po,st,čt,pá: 7-15 hod., út: 7-17 hod</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>35 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 16.10.2014]</span></div></p>]]></description>
+		<url>http://www.nemobk.cz/oddeleni-radiologie.html</url>
+		<type>mamo</type>
+		<address>Sadová 33
+678 31 
+Blansko
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>49.1989166</mLatitude>
+			<mLongitude>16.5969012</mLongitude>
+			<mLocality>Brno</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>602 00</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Obilní trh 11</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Fakultní nemocnice Brno - pracoviště Porodnice</name>
+		<description>
+			<![CDATA[<p> MUDr. Karel Dvořák<br xmlns="http://www.w3.org/1999/xhtml"/><a xmlns="http://www.w3.org/1999/xhtml" href="http://www.fnbrno.cz/porodnice/radiologicka-klinika-mammo-a-rtg/on-line-objednani/t4014">On-line objednání</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 532 238 433<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po+pá: 7:00 - 15:30, út+st: 7:00 - 17:00, čt: 7:00 - 12:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>1 den</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 16.10.2014]</span></div></p>]]></description>
+		<url>http://www.fnbrno.cz/radiologicka-klinika-mammo-a-rtg/k1499</url>
+		<type>mamo</type>
+		<address>Obilní trh 11
+602 00 
+Brno
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>49.1976623</mLatitude>
+			<mLongitude>16.6108169</mLongitude>
+			<mLocality>Brno</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>602 00</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Rooseveltova 6</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>G - Medica screening, s.r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Rudolf Stupka<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 542 210 016<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po - čt 7:30 - 18:00, pá 7:30 - 15:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>4 dny</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.gmedica.cz</url>
+		<type>mamo</type>
+		<address>Rooseveltova 6
+602 00 
+Brno
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>49.1986832</mLatitude>
+			<mLongitude>16.6564299</mLongitude>
+			<mLocality>Brno</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>615 00</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Viniční 235</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>FEMMA, s.r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Hana Říčková<br xmlns="http://www.w3.org/1999/xhtml"/><a xmlns="http://www.w3.org/1999/xhtml" href="http://www.femma.cz/objednavky.php">On-line objednání</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 533 306 275, 725 811 525<br xmlns="http://www.w3.org/1999/xhtml"/></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>4 dny</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.femma.cz</url>
+		<type>mamo</type>
+		<address>Viniční 235
+615 00 
+Brno
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>49.1778894</mLatitude>
+			<mLongitude>16.5854018</mLongitude>
+			<mLocality>Brno</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>656 53</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Žlutý kopec 7</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Masarykův onkologický ústav</name>
+		<description>
+			<![CDATA[<p> MUDr. Helena Bartoňková<br xmlns="http://www.w3.org/1999/xhtml"/><a xmlns="http://www.w3.org/1999/xhtml" href="http://www.mou.cz/cz/moznost-objednani-k-mamografickemu-vysetreni-elektronicky/article.html?id=162">On-line objednání</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 844 844 885, 543 136 010<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:00 - 15:30</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>1 den</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.mou.cz</url>
+		<type>mamo</type>
+		<address>Žlutý kopec 7
+656 53 
+Brno
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>48.753146</mLatitude>
+			<mLongitude>16.8824994</mLongitude>
+			<mLocality>Břeclav</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>690 02</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Bří Mrštíků 38</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Poliklinika Břeclav, s.r.o. - RTG oddělení</name>
+		<description>
+			<![CDATA[<p> MUDr. Monika Petrjanošová<br xmlns="http://www.w3.org/1999/xhtml"/><a xmlns="http://www.w3.org/1999/xhtml" href="http://www.mamobreclav.cz">On-line objednání</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 519 303 258<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-st: 7:00 - 15:00, čt: 7:00 - 16:30, pá: 7:00 - 14:30</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>5 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.mamobreclav.cz</url>
+		<type>mamo</type>
+		<address>Bří Mrštíků 38
+690 02 
+Břeclav
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>50.685857</mLatitude>
+			<mLongitude>14.5488444</mLongitude>
+			<mLocality>Česká Lípa</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>470 77</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Purkyňova 1849</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Nemocnice s poliklinikou Česká Lípa</name>
+		<description>
+			<![CDATA[<p> MUDr. Hana Čerbáková<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 487 954 399<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 8:00 - 15:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>28 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 17.10.2014]</span></div></p>]]></description>
+		<url>http://www.nemcl.cz/</url>
+		<type>mamo</type>
+		<address>Purkyňova 1849
+470 77 
+Česká Lípa
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>48.96660920000001</mLatitude>
+			<mLongitude>14.4760952</mLongitude>
+			<mLocality>České Budějovice</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>370 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Matice školské 17</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Medipont s.r.o - Poliklinika Jih (EUROCLINICUM GROUP)</name>
+		<description>
+			<![CDATA[<p> MUDr. Boris Pouzar<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 386 357 309<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-čt: 7:15 - 15:00, pá: 7:15 - 14:00<br/>Telefonické objednávky: po-pá 7:15 - 15:15</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>5 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.medipont.cz</url>
+		<type>mamo</type>
+		<address>Matice školské 17
+370 01 
+České Budějovice
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>48.9724079</mLatitude>
+			<mLongitude>14.4790175</mLongitude>
+			<mLocality>České Budějovice</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>370 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Senovážné náměstí 2</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Medipont s.r.o - Senovážné náměstí (EUROCLINICUM GROUP)</name>
+		<description>
+			<![CDATA[<p> MUDr. Petra Šíslová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 387 438 668<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord.doba: 7:00 - 16:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>15 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.medipont.cz</url>
+		<type>mamo</type>
+		<address>Senovážné náměstí 2
+370 01 
+České Budějovice
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>50.7769901</mLatitude>
+			<mLongitude>14.2116289</mLongitude>
+			<mLocality>Děčín</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>405 02</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>U plovárny 1190</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>WF Hospital spol. s r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Luděk Tyle<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 412 502 159<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord.doba: 7:30 - 14:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>5 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 19.10.2014]</span></div></p>]]></description>
+		<type>mamo</type>
+		<address>U plovárny 1190
+405 02 
+Děčín
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>49.67730599999999</mLatitude>
+			<mLongitude>18.3420099</mLongitude>
+			<mLocality>Frýdek-Místek</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>738 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>8. pěšího pluku 85</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Poliklinika Místek, s.r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Marie Bučková<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 558 900 243<br xmlns="http://www.w3.org/1999/xhtml"/></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>8 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.pkmistek.cz/rtg</url>
+		<type>mamo</type>
+		<address>8. pěšího pluku 85
+738 01 
+Frýdek-Místek
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>49.6080709</mLatitude>
+			<mLongitude>15.5793781</mLongitude>
+			<mLocality>Havlíčkův Brod</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>580 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Vrabčí trh 187</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Mgr. Karel Havlíček - Mamografie</name>
+		<description>
+			<![CDATA[<p> Mgr. Karel Havlíček<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 569 429 733<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord.doba: 7:00 - 12:30</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>26 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 20.10.2014]</span></div></p>]]></description>
+		<url>http://www.mamografiehb.wz.cz</url>
+		<type>mamo</type>
+		<address>Vrabčí trh 187
+580 01 
+Havlíčkův Brod
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>50.2003609</mLatitude>
+			<mLongitude>15.8484892</mLongitude>
+			<mLocality>Hradec Králové</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>500 09</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Fr. Halase 1050</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Privátní mammologická ordinace - MUDr. M. Paikertová</name>
+		<description>
+			<![CDATA[<p> MUDr. Miluše Paikertová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 495 271 107<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord.doba: 7:00 - 14:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>20 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<type>mamo</type>
+		<address>Fr. Halase 1050
+500 09 
+Hradec Králové
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>50.2004274</mLatitude>
+			<mLongitude>15.8269539</mLongitude>
+			<mLocality>Hradec Králové</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>500 05</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Sokolská 581</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Fakultní nemocnice Hradec Králové - Radiologická klinika</name>
+		<description>
+			<![CDATA[<p> MUDr. Hana Urminská<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 495 832 118<br xmlns="http://www.w3.org/1999/xhtml"/></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>32 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 17.10.2014]</span></div></p>]]></description>
+		<url>http://www.fnhk.cz</url>
+		<type>mamo</type>
+		<address>Sokolská 581
+500 05 
+Hradec Králové
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>50.45518209999999</mLatitude>
+			<mLongitude>13.4113082</mLongitude>
+			<mLocality>Chomutov</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>430 12</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Kochova 1185</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Krajská zdravotní, a.s. - Nemocnice Chomutov, o.z.</name>
+		<description>
+			<![CDATA[<p> MUDr. Eva Mašínová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 474 447 687<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:00 - 14:30</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>43 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 22.10.2014]</span></div></p>]]></description>
+		<url>http://www.kzcr.eu</url>
+		<type>mamo</type>
+		<address>Kochova 1185
+430 12 
+Chomutov
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>50.7289201</mLatitude>
+			<mLongitude>15.1600481</mLongitude>
+			<mLocality>Jablonec nad Nisou</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>466 60</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Nemocniční 15</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Nemocnice Jablonec nad Nisou, p.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Miloš Rejmont<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 483 345 854<br xmlns="http://www.w3.org/1999/xhtml"/></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>21 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.nemjbc.cz</url>
+		<type>mamo</type>
+		<address>Nemocniční 15
+466 60 
+Jablonec nad Nisou
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>50.4335795</mLatitude>
+			<mLongitude>15.3566525</mLongitude>
+			<mLocality>Jičín</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>506 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Jungmannova 54</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>RTG - U, s.r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Jaroslav Rychtera<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 493 588 232<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:30 - 14:00 (po objednání)</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>6 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<type>mamo</type>
+		<address>Jungmannova 54
+506 01 
+Jičín
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>49.3975908</mLatitude>
+			<mLongitude>15.5709121</mLongitude>
+			<mLocality>Jihlava</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>586 33</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Vrchlického 59</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Nemocnice Jihlava, p.o. - oddělení zobrazovacích metod</name>
+		<description>
+			<![CDATA[<p> MUDr. Alexander Černoch<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 567 157 602<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-pá: 7:00 - 15:30</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>21 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.nemji.cz</url>
+		<type>mamo</type>
+		<address>Vrchlického 59
+586 33 
+Jihlava
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Karlovy Vary</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>360 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>nám. Dr. M. Horákové 8</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>MEDIAG PB, s.r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Pavel Bouška<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 353 112 226<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ordinační doba: Po-Čt: 7:30-15:30, Pá: 7:30-14:30</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>15 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 16.10.2014]</span></div></p>]]></description>
+		<url>http://www.mediag.cz/kontakt</url>
+		<type>mamo</type>
+		<address>nám. Dr. M. Horákové 8
+360 01 
+Karlovy Vary
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Karviná</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>735 06</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Zakladatelská 22</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Karvinská hornická nemocnice, a.s.</name>
+		<description>
+			<![CDATA[<p> MUDr. Šárka Kováčová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 596 380 176, 800 546 546<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-pá: 7:00 - 15:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>56 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.khn.cz</url>
+		<type>mamo</type>
+		<address>Zakladatelská 22
+735 06 
+Karviná
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Kladno</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>272 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Huťská 211</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>P-P Klinika Kladno, s.r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Regina Kutilová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 312 619 128<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:00 - 15:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>14 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 16.10.2014]</span></div></p>]]></description>
+		<type>mamo</type>
+		<address>Huťská 211
+272 01 
+Kladno
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Klatovy</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>339 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Nerudova 607/3</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Mammocentrum Klatovy, s.r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Miloš Chroust<br xmlns="http://www.w3.org/1999/xhtml"/><a xmlns="http://www.w3.org/1999/xhtml" href="http://www.mammocentrum.eu/objednavky.html">On-line objednání</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 376 315 554, 724 122 034<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po - čt: 7:00 - 16:00, pá: 7:00 - 11:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>8 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.mammocentrum.eu</url>
+		<type>mamo</type>
+		<address>Nerudova 607/3
+339 01 
+Klatovy
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Kolín</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>280 20</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Žižkova 146</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Oblastní nemocnice Kolín, a.s.</name>
+		<description>
+			<![CDATA[<p> MUDr. Pavla Vančurová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 321 756 254<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:00 - 15:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>30 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 16.10.2014]</span></div></p>]]></description>
+		<url>http://www.nemocnicekolin.cz/mammocentrum</url>
+		<type>mamo</type>
+		<address>Žižkova 146
+280 20 
+Kolín
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Kroměříž</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>767 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>náměstí Míru 3287</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>MEDICOOP, s.r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Jiří Vodák<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 573 337 347<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-čt: 7:30-15:00, pá: 7:30-14:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>6 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 16.10.2014]</span></div></p>]]></description>
+		<url>http://www.jv-medicentrum.com</url>
+		<type>mamo</type>
+		<address>náměstí Míru 3287
+767 01 
+Kroměříž
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Kyjov</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>697 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Strážovská 976</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Nemocnice Kyjov, p.o. - radiodiagnostické oddělení</name>
+		<description>
+			<![CDATA[<p> MUDr. Andrea Strýčková<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 518 601 584<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:00 - 15:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>40 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 19.10.2014]</span></div></p>]]></description>
+		<url>http://www.nemkyj.cz</url>
+		<type>mamo</type>
+		<address>Strážovská 976
+697 01 
+Kyjov
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Liberec</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>460 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Klášterní 2</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Poliklinika Liberec, s.r.o. (EUROCLINICUM GROUP)</name>
+		<description>
+			<![CDATA[<p> MUDr. Jozef Prattinger<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 485 312 199<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-čt: 7:00-16:00, pá: 7:00-14:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>7 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://rdgliberec.webnode.cz</url>
+		<type>mamo</type>
+		<address>Klášterní 2
+460 01 
+Liberec
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Mladá Boleslav</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>293 50</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>V. Klementa 147</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Oblastní nemocnice Mladá Boleslav, a.s.</name>
+		<description>
+			<![CDATA[<p> MUDr. Eva Balvínová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 326 742 208<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:00 - 15:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>30 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.klaudianovanemocnice.cz</url>
+		<type>mamo</type>
+		<address>V. Klementa 147
+293 50 
+Mladá Boleslav
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Náchod</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>547 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Purkyňova 446</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Oblastní nemocnice Náchod, a.s.</name>
+		<description>
+			<![CDATA[<p> MUDr. Monika Dvořáková<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 491 601 375<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po, st, pá: 7:00 - 14:00, út, čt: 7:00 - 17:00 </p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>16 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.nemocnicenachod.cz</url>
+		<type>mamo</type>
+		<address>Purkyňova 446
+547 01 
+Náchod
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Nové Město n. M.</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>592 31</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Žďárská 610</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Nemocnice Nové Město na Moravě, p.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Irena Hladká<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 566 801 461<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:00 - 14:30</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>10 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 17.10.2014]</span></div></p>]]></description>
+		<url>http://www.nnm.cz</url>
+		<type>mamo</type>
+		<address>Žďárská 610
+592 31 
+Nové Město n. M.
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Nový Jičín</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>741 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Dvořákova 27</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Mammocentrum Nový Jičín</name>
+		<description>
+			<![CDATA[<p> MUDr. Zdeněk Mutina<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 555 538 811, 603 313 593<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 6:45 - 15:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>23 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 20.10.2014]</span></div></p>]]></description>
+		<type>mamo</type>
+		<address>Dvořákova 27
+741 01 
+Nový Jičín
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Olomouc</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>779 00</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Dlouhá 28</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>MAMMACENTRUM Olomouc, s.r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Dana Houserková, Ph.D.<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 731 613 485, 585 204 386<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po, st, pá: 7:30 - 16:00, út: 7:30 - 19:00, čt: 7:30 - 13:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>5 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 29.10.2014]</span></div></p>]]></description>
+		<url>http://www.mammacentrum-olomouc.cz</url>
+		<type>mamo</type>
+		<address>Dlouhá 28
+779 00 
+Olomouc
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Olomouc</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>775 20</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>I. P. Pavlova 6</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Fakultní nemocnice Olomouc - Radiologická klinika</name>
+		<description>
+			<![CDATA[<p> MUDr. Ivan Šišola<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 588 444 736<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:00 - 19:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>14 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.fnol.cz</url>
+		<type>mamo</type>
+		<address>I. P. Pavlova 6
+775 20 
+Olomouc
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Olomouc</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>779 00</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>náměstí Národních hrdinů 2</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>G - Medica screening, s.r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Rudolf Stupka<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. +420 585 505 456, +420 722 227 558<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po: 8:00 - 14:00, út, st, čt: 8:00 - 17:00, pá: 8:00 - 14:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>5 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.gmedica.cz</url>
+		<type>mamo</type>
+		<address>náměstí Národních hrdinů 2
+779 00 
+Olomouc
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Opava</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>746 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Olomoucká 86</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Slezská nemocnice v Opavě - RDG oddělení</name>
+		<description>
+			<![CDATA[<p> MUDr. Milan Cvek<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 553 766 477<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:45 - 16:15<br/>Telefonické objednávky: 7:00 - 15:00<br/> </p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>21 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.nemocnice.opava.cz</url>
+		<type>mamo</type>
+		<address>Olomoucká 86
+746 01 
+Opava
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Ostrava-Poruba</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>708 00</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Havanská 6145/4a</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Silesia Medical, s.r.o. - Centrum pro nemoci prsu</name>
+		<description>
+			<![CDATA[<p> MUDr. Radomír Ichnovský<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 596 910 378, 596 910 551<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-čt: 7:00 - 19:00, pá: 7:00 - 13:00, so: dle objednání</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>7 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.mamograf-ostrava.cz</url>
+		<type>mamo</type>
+		<address>Havanská 6145/4a
+708 00 
+Ostrava-Poruba
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Ostrava-Poruba</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>708 68</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Opavská 962/39</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>MephaCentrum, a.s.</name>
+		<description>
+			<![CDATA[<p> MUDr. Alena Zezulová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 597 437 561<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po, út: 7:00 - 17:00, st, čt: 7:00 - 15:00, pá: 7:00 - 13:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>9 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 16.10.2014]</span></div></p>]]></description>
+		<url>http://www.mephacentrum.cz</url>
+		<type>mamo</type>
+		<address>Opavská 962/39
+708 68 
+Ostrava-Poruba
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Ostrava-Poruba</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>708 52</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>17. listopadu 1790</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Fakultní nemocnice Ostrava - mamodiagnostické centrum</name>
+		<description>
+			<![CDATA[<p> MUDr. Alena Jahodová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 597 374 083<br xmlns="http://www.w3.org/1999/xhtml"/>Objednání e-mailem: <a xmlns="http://www.w3.org/1999/xhtml" href="mailto:mamografie@fno.cz">mamografie@fno.cz</a><br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-út: 7:00 - 19:00, st-pá: 7:00 - 15:30, so: 7:00 - 13:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>14 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 23.10.2014]</span></div></p>]]></description>
+		<url>http://mamografie.fno.cz/</url>
+		<type>mamo</type>
+		<address>17. listopadu 1790
+708 52 
+Ostrava-Poruba
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Ostrava-Vítkovice</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>703 84</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Zalužanského 1192/15</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Vítkovická nemocnice, a.s. - RDG oddělení</name>
+		<description>
+			<![CDATA[<p> MUDr. Yveta Lenertová<br xmlns="http://www.w3.org/1999/xhtml"/><a xmlns="http://www.w3.org/1999/xhtml" href="http://mamograficky-screening.nemvitkovice.cz">On-line objednání</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 595 633 475<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:00 - 15:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>5 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.nemvitkovice.cz</url>
+		<type>mamo</type>
+		<address>Zalužanského 1192/15
+703 84 
+Ostrava-Vítkovice
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Pardubice</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>530 02</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Nábřeží Závodu míru 1962</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Mamodiagnostické centrum Pardubice, s.r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Ivana Hrnčířová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 466 614 420, 607 939 022<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 8:00 - 16:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>13 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<type>mamo</type>
+		<address>Nábřeží Závodu míru 1962
+530 02 
+Pardubice
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Pelhřimov</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>393 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Osvobození 1699</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>AGUR, s.r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Věra Koubová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 565 325 036<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po, út, st: 7:30 - 14:30, čt: 7:30 - 15:30, pá: 7:30 - 14:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>5 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.agur.cz</url>
+		<type>mamo</type>
+		<address>Osvobození 1699
+393 01 
+Pelhřimov
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>49.3032462</mLatitude>
+			<mLongitude>14.1546765</mLongitude>
+			<mLocality>Písek</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>397 23</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Karla Čapka 589</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Nemocnice Písek, a.s. - Mamografie MUDr. J. Holan, MBA</name>
+		<description>
+			<![CDATA[<p> MUDr. Jiří Holan, MBA<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 382 772 401<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-pá: 9:00 - 14:30<br/>Telefonické objednávky: po-pá: 6:30 - 14:30</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>10 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 20.10.2014]</span></div></p>]]></description>
+		<url>http://www.nemopisek.cz</url>
+		<type>mamo</type>
+		<address>Karla Čapka 589
+397 23 
+Písek
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>49.7450877</mLatitude>
+			<mLongitude>13.3830692</mLongitude>
+			<mLocality>Plzeň</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>301 49</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Denisovo nábřeží 4</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Mediray, s.r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Ivana Chocová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 377 220 462<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-čt 7:15 - 15:30, pá 7:15 - 14:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>12 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.mediray.cz</url>
+		<type>mamo</type>
+		<address>Denisovo nábřeží 4
+301 49 
+Plzeň
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Plzeň-Bory</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>305 99</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Edvarda Beneše 13</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Fakultní nemocnice Plzeň-Bory</name>
+		<description>
+			<![CDATA[<p> MUDr. Zdeněk Chudáček, Ph.D.<br xmlns="http://www.w3.org/1999/xhtml"/><a xmlns="http://www.w3.org/1999/xhtml" href="http://www.fnplzen.cz/asp/screening/objed.asp">On-line objednání</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 377 402 116<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:00 - 14:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>5 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 20.10.2014]</span></div></p>]]></description>
+		<url>http://www.fnplzen.cz</url>
+		<type>mamo</type>
+		<address>Edvarda Beneše 13
+305 99 
+Plzeň-Bory
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>50.0585915</mLatitude>
+			<mLongitude>14.4972684</mLongitude>
+			<mLocality>Praha 10</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>106 00</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Chmelová 3312/6a</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>První česká lékařská spol., s.r.o. - Centrum pro nemoci prsu</name>
+		<description>
+			<![CDATA[<p> MUDr. Halka Bitmanová<br xmlns="http://www.w3.org/1999/xhtml"/><a xmlns="http://www.w3.org/1999/xhtml" href="http://www.pcls.cz/online-objednani">On-line objednání</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 272 653 884<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-čt: 8:00 - 16:30, pá: 8:00 - 15:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>2 dny</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.pcls.cz</url>
+		<type>mamo</type>
+		<address>Chmelová 3312/6a
+106 00 
+Praha 10
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>50.0759348</mLatitude>
+			<mLongitude>14.4748118</mLongitude>
+			<mLocality>Praha 10</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>100 34</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Šrobárova 50</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Fakultní nemocnice Královské Vinohrady - Radiodiagnost. klinika</name>
+		<description>
+			<![CDATA[<p> MUDr. Lívia Večeřová<br xmlns="http://www.w3.org/1999/xhtml"/><a xmlns="http://www.w3.org/1999/xhtml" href="http://www.objednavky.fnkv.cz">On-line objednání</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 267 162 406, 267 162 400, 267 162 350<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:00 - 15:15</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>21 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.fnkv.cz</url>
+		<type>mamo</type>
+		<address>Šrobárova 50
+100 34 
+Praha 10
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>50.02865860000001</mLatitude>
+			<mLongitude>14.5215709</mLongitude>
+			<mLocality>Praha 11</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>149 00</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Konstantinova 1479/1</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>BREAST UNIT PRAGUE</name>
+		<description>
+			<![CDATA[<p> MUDr. Miroslava Skovajsová, Ph.D.<br xmlns="http://www.w3.org/1999/xhtml"/><a xmlns="http://www.w3.org/1999/xhtml" href="http://mammacentrumhaje.cz/objednavka.html">On-line objednání</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 775 13 11 11<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">pondělí 12:00 - 18:00<br/>úterý 8:00 - 15:00<br/>středa 8:00 - 15:00<br/>čtvrtek 8:00 - 15:00<br/>pátek 8:00 - 13:30</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>3 dny</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.buprague.cz</url>
+		<type>mamo</type>
+		<address>Konstantinova 1479/1
+149 00 
+Praha 11
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>50.0761928</mLatitude>
+			<mLongitude>14.4210744</mLongitude>
+			<mLocality>Praha 2</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>121 11</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Karlovo nám. 33</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>VFN v Praze, Centrum diagnostiky chorob prsu V. Polaka</name>
+		<description>
+			<![CDATA[<p> MUDr. Jana Červenková<br xmlns="http://www.w3.org/1999/xhtml"/><a xmlns="http://www.w3.org/1999/xhtml" href="https://mysolp.vfn.cz/Tree.aspx?pracoviste=508">On-line objednání</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 224 966 344<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-čt: 7:30 - 15:00, pá: 7:30 - 14:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>35 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.mamocentrum.cz</url>
+		<type>mamo</type>
+		<address>Karlovo nám. 33
+121 11 
+Praha 2
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>50.0410332</mLatitude>
+			<mLongitude>14.429098</mLongitude>
+			<mLocality>Praha 4</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>140 44</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Roškotova 1717/2</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Mammacentrum Zelený pruh</name>
+		<description>
+			<![CDATA[<p> MUDr. Alena Bílková, Ph.D.<br xmlns="http://www.w3.org/1999/xhtml"/><a xmlns="http://www.w3.org/1999/xhtml" href="http://www.mammacentrum.cz/online-objednani">On-line objednání</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 234 105 351<br xmlns="http://www.w3.org/1999/xhtml"/> Tel. objednávky: po-pá: 7:30 - 15:00<p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-čt: 7:30 - 15:30, pá: 7:30 - 15:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>23 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.mammacentrum.cz</url>
+		<type>mamo</type>
+		<address>Roškotova 1717/2
+140 44 
+Praha 4
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>50.0372534</mLatitude>
+			<mLongitude>14.4542711</mLongitude>
+			<mLocality>Praha 4</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>140 59</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Vídeňská 800</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Thomayerova nemocnice</name>
+		<description>
+			<![CDATA[<p> MUDr. Dagmar Sečkařová<br xmlns="http://www.w3.org/1999/xhtml"/><a xmlns="http://www.w3.org/1999/xhtml" href="http://www.digipartners.cz/mamograf/objednavkovyformular.aspx">On-line objednání</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 261 082 190, 261 084 000<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:00 - 15:30</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>7 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.ftn.cz</url>
+		<type>mamo</type>
+		<address>Vídeňská 800
+140 59 
+Praha 4
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>50.0747951</mLatitude>
+			<mLongitude>14.3543272</mLongitude>
+			<mLocality>Praha 5</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>150 30</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Roentgenova 2</string>
+			</mAddressLines>
+			<mHasLatitude>true</mHasLatitude>
+			<mHasLongitude>true</mHasLongitude>
+		</location>
+		<name>Nemocnice Na Homolce</name>
+		<description>
+			<![CDATA[<p> MUDr. Eva Abtová<br xmlns="http://www.w3.org/1999/xhtml"/><a xmlns="http://www.w3.org/1999/xhtml" href="http://www.homolka.cz/cs-CZ/homolka/formulare/objednani-na-mamograficky-screening.html">On-line objednání</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 257 272 516, 800 664 734<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Mamografie: po, st, čt: 7:30-15:30, út: 7:30-16:30, pá: 7:30-14:30.<br/>Sonografie: po-pá 7:00-15:00 (út do 17:00), tel.: 257 272 483</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>42 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 17.10.2014]</span></div></p>]]></description>
+		<url>http://www.homolka.cz</url>
+		<type>mamo</type>
+		<address>Roentgenova 2
+150 30 
+Praha 5
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Praha 8</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>180 81</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Budínova 2</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Nemocnice Na Bulovce, Radiodiagnostická klinika</name>
+		<description>
+			<![CDATA[<p> MUDr. Lenka Pleschingerová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 266 084 561<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:00 - 15:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>35 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 22.10.2014]</span></div></p>]]></description>
+		<url>http://www.fnb.cz</url>
+		<type>mamo</type>
+		<address>Budínova 2
+180 81 
+Praha 8
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Prostějov</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>796 04</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Mathonova 1</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Nemocnice Prostějov, SMN a.s., člen skupiny Agel</name>
+		<description>
+			<![CDATA[<p> MUDr. Lucie Krpcová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 582 315 302<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po, út, pá: 7:00 - 15:00, st, čt: 7:00 - 17:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>10 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 16.10.2014]</span></div></p>]]></description>
+		<url>http://www.nempv.cz</url>
+		<type>mamo</type>
+		<address>Mathonova 1
+796 04 
+Prostějov
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Přerov</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>750 02</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Dr. Skaláka 14</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Nemocnice Hranice a.s. - Mamodiagnostické centrum</name>
+		<description>
+			<![CDATA[<p> MUDr. Daniel Bartík<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 800 900 885<br xmlns="http://www.w3.org/1999/xhtml"/>Objednání e-mailem: <a xmlns="http://www.w3.org/1999/xhtml" href="mailto:mamograf.prerov@nemocnice-hranice.cz">mamograf.prerov@nemocnice-hranice.cz</a><br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-pá: 7:00 - 15:30</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>1 den</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.nemocnice-hranice.cz</url>
+		<type>mamo</type>
+		<address>Dr. Skaláka 14
+750 02 
+Přerov
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Rychnov nad Kněžnou</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>516 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Jiráskova 1389</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>RDG Centrum, s.r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Milan Čižinský<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 494 502 651<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-pá: 7:00 - 14:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>5 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 22.10.2014]</span></div></p>]]></description>
+		<type>mamo</type>
+		<address>Jiráskova 1389
+516 01 
+Rychnov nad Kněžnou
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Sokolov</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>356 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Slovenská 545</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Nemos Sokolov, s. r. o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Gabriela Šteinfeldová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 352 520 101<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: 7:00 - 15:30</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>30 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 17.10.2014]</span></div></p>]]></description>
+		<url>http://www.nemosok.cz/radiodiagnosticke-oddeleni.html</url>
+		<type>mamo</type>
+		<address>Slovenská 545
+356 01 
+Sokolov
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Svitavy</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>568 02</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Kollárova 22</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Litomyšlská nemocnice a.s. - Mamografie Svitavy</name>
+		<description>
+			<![CDATA[<p> MUDr. Eva Machová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 461 531 831<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po, čt: 7:30 - 15:00, út, st: 7:30 - 16:00, pá: 7:30 - 12:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>7 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.litnem.cz</url>
+		<type>mamo</type>
+		<address>Kollárova 22
+568 02 
+Svitavy
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Šumperk</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>787 52</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Nerudova 41</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Šumperská nemocnice a.s.</name>
+		<description>
+			<![CDATA[<p> MUDr. Alena Dočkalová<br xmlns="http://www.w3.org/1999/xhtml"/><a xmlns="http://www.w3.org/1999/xhtml" href="http://mamograficky-screening.nemspk.cz">On-line objednání</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 583 333 560 (mamografie), 583 333 558 (sonografie)<br xmlns="http://www.w3.org/1999/xhtml"/></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>28 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://nemocnicesumperk.agel.cz/oddeleni/rdg/mamograficky-screening.html</url>
+		<type>mamo</type>
+		<address>Nerudova 41
+787 52 
+Šumperk
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Tachov</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>347 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Václavská 1560</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Poliklinika Tachov - satelitní pracoviště FN Plzeň</name>
+		<description>
+			<![CDATA[<p> MUDr. Marcela Pěchotová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 374 718 222, 374 718 111<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-čt: 7:00 - 12:00 a 13:00 - 15:30, pá: 7:00 - 12:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>neuvedeno</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 20.10.2014]</span></div></p>]]></description>
+		<url>http://www.poltc.cz</url>
+		<type>mamo</type>
+		<address>Václavská 1560
+347 01 
+Tachov
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Třebíč</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>674 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Vltavínská 1289</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>DS radiodiagnostika, s.r.o. (Lékařský dům Třebíč)</name>
+		<description>
+			<![CDATA[<p> MUDr. Věra Oberreiterová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 568 808 154<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po - čt: 7:00 - 16:00, pá: 7:00 - 13:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>5 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 16.10.2014]</span></div></p>]]></description>
+		<url>http://www.dsradiodiagnostika.cz/</url>
+		<type>mamo</type>
+		<address>Vltavínská 1289
+674 01 
+Třebíč
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Uherské Hradiště</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>686 68</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>J.E.Purkyně 365</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Uherskohradišťská nemocnice, a.s.</name>
+		<description>
+			<![CDATA[<p> MUDr. Libuše Nabitá<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 572 529 787<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-pá: 7:00 - 15:15</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>5 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 20.10.2014]</span></div></p>]]></description>
+		<url>http://www.nemuh.cz</url>
+		<type>mamo</type>
+		<address>J.E.Purkyně 365
+686 68 
+Uherské Hradiště
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Ústí nad Labem</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>400 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Masarykova 2000/92</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>ÚSTECKÁ POLIKLINIKA, s.r.o. (EUROCLINICUM GROUP)</name>
+		<description>
+			<![CDATA[<p> MUDr. Petr Váša<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 477 102 179, 477 102 153,<br xmlns="http://www.w3.org/1999/xhtml"/>Objednání e-mailem: <a xmlns="http://www.w3.org/1999/xhtml" href="mailto:rdg@usteckapoliklinika.cz">rdg@usteckapoliklinika.cz</a><br xmlns="http://www.w3.org/1999/xhtml"/>Objednání pomocí SMS: 720 001 520<p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-čt: 7:00 - 14:30, pá: 7:00 - 12:30</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>7 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.usteckapoliklinika.cz</url>
+		<type>mamo</type>
+		<address>Masarykova 2000/92
+400 01 
+Ústí nad Labem
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Ústí nad Orlicí</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>562 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Dělnická 1391</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>RENTGEN, s.r.o.</name>
+		<description>
+			<![CDATA[<p> MUDr. Zdeňka Svobodová<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 465 526 081, 465 524 117<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba:<br/>po-čt: 7:00 - 12:15, 12:45 - 16:00<br/>pá: 7:00 - 12:15, 12:45 - 14:30</p><p xmlns="http://www.w3.org/1999/xhtml"> </p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>5 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.rentgen-uo.cz</url>
+		<type>mamo</type>
+		<address>Dělnická 1391
+562 01 
+Ústí nad Orlicí
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Vrchlabí</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>543 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Jihoslovanská 465</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>RTG Poliklinika, MUDr. Hana Záveská</name>
+		<description>
+			<![CDATA[<p> MUDr. Hana Záveská<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 499 422 159, 800 100 770<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po-pá: 7:00 - 15:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>14 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 16.10.2014]</span></div></p>]]></description>
+		<type>mamo</type>
+		<address>Jihoslovanská 465
+543 01 
+Vrchlabí
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Vsetín</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>755 01</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Nemocniční 945</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Mammocentrum Vsetín - satelitní pracoviště Mammocentra N. Jičín</name>
+		<description>
+			<![CDATA[<p> MUDr. Zdeněk Mutina<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 555 538 811, 603 313 593<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Út a Čt 7.00-15.00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>21 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 20.10.2014]</span></div></p>]]></description>
+		<type>mamo</type>
+		<address>Nemocniční 945
+755 01 
+Vsetín
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Zlín</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>76701</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>Třída T. Bati 5135</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Nemocnice Atlas (EUROCLINICUM GROUP)</name>
+		<description>
+			<![CDATA[<p> MUDr. Josef Katrušák<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 571 857 211<br xmlns="http://www.w3.org/1999/xhtml"/><p xmlns="http://www.w3.org/1999/xhtml">Ord. doba: po, st, čt, pá: 7:00 - 14:30, út 7:00-17:00</p></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>8 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 16.10.2014]</span></div></p>]]></description>
+		<url>http://www.nemocniceatlas.cz/produkty/rtg/mamograf/</url>
+		<type>mamo</type>
+		<address>Třída T. Bati 5135
+76701 
+Zlín
+		</address>
+	</location>
+	<location>
+		<location>
+			<mLocale>cs_CZ</mLocale>
+			<mLatitude>0.0</mLatitude>
+			<mLongitude>0.0</mLongitude>
+			<mLocality>Znojmo</mLocality>
+			<mPhone>phone</mPhone>
+			<mPostalCode>669 02</mPostalCode>
+			<mUrl>Url</mUrl>
+			<mExtras class="java.util.HashMap">
+				<entry>
+					<string/>
+					<string/>
+				</entry>
+				<entry>
+					<string>boolean</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>string</string>
+					<string/>
+				</entry>
+				<entry>
+					<string>double</string>
+					<string/>
+				</entry>
+			</mExtras>
+			<mAddressLines>
+				<string>0</string>
+				<string>MUDr. Jana Janského 11</string>
+			</mAddressLines>
+			<mHasLatitude>false</mHasLatitude>
+			<mHasLongitude>false</mHasLongitude>
+		</location>
+		<name>Nemocnice Znojmo, p.o. - odd. radiologické a zobrazovacích metod</name>
+		<description>
+			<![CDATA[<p> MUDr. František Podzimek<br xmlns="http://www.w3.org/1999/xhtml"/>Objednávky na tel. 515 215 149<br xmlns="http://www.w3.org/1999/xhtml"/></p><h3>Objednací doba</h3><p><div xmlns="http://www.w3.org/1999/xhtml" class="center"><strong>30 dní</strong><br/><span title="Datum poslední aktualizace tohoto údaje">[údaj z 15.10.2014]</span></div></p>]]></description>
+		<url>http://www.nemzn.cz</url>
+		<type>mamo</type>
+		<address>MUDr. Jana Janského 11
+669 02 
+Znojmo
+		</address>
+	</location>
 </locations>

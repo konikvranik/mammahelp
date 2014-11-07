@@ -42,9 +42,12 @@
 
 			<address>
 				<xsl:call-template name="cdata-start" />
+				<!-- <xsl:value-of select="td[1]/strong/child::node()" />, -->
 				<xsl:for-each select="td[3]//text()">
 					<xsl:value-of select="." />
-					<xsl:text>&#10;</xsl:text>
+					<xsl:if test="not(position()=last())">
+						<xsl:text>, </xsl:text>
+					</xsl:if>
 				</xsl:for-each>
 				<xsl:call-template name="cdata-end" />
 			</address>
@@ -104,9 +107,9 @@
 	</xsl:template>
 
 	<xsl:template name="cdata-start">
-<!-- 		<xsl:text disable-output-escaping="yes"><![CDATA[<![CDATA]]>[</xsl:text> -->
+		<xsl:text disable-output-escaping="yes"><![CDATA[<![CDATA]]>[</xsl:text>
 	</xsl:template>
 	<xsl:template name="cdata-end">
-<!-- 		<xsl:text disable-output-escaping="yes">]<![CDATA[]>]]></xsl:text> -->
+		<xsl:text disable-output-escaping="yes">]<![CDATA[]>]]></xsl:text>
 	</xsl:template>
 </xsl:stylesheet>
