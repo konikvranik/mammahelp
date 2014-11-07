@@ -76,7 +76,8 @@ public abstract class GenericXMLFeeder<E extends Identificable<?>> extends
 			throws TransformerConfigurationException, IOException {
 		if (htmlTransformer == null) {
 			StreamSource source = new StreamSource(getTemplate());
-			source.setSystemId(getTemplateName());
+			if (getTemplateName() != null)
+				source.setSystemId(getTemplateName());
 			htmlTransformer = gettFactory().newTransformer(source);
 			htmlTransformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
 					"yes");

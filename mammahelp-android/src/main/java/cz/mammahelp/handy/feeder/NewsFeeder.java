@@ -230,7 +230,4 @@ public class NewsFeeder extends GenericAndroidXMLFeeder<NewsDao, News> {
 		return null;
 	}
 
-	public void feedData(NewsDao id) throws Exception {
-	}
-
 }

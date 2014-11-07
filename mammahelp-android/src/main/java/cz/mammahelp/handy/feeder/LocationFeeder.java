@@ -158,7 +158,4 @@ public class LocationFeeder extends
 		return null;
 	}
 
-	public void feedData(LocationPointDao id) throws Exception {
-	}
-
 }

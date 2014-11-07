@@ -38,9 +38,11 @@
         <item>Prevention</item>
     </string-array>
     <string-array name="filter">
-        <item>centers</item>
-        <item>branches</item>
-        <item>shops</item>
+        <item>Mamma HELP centers</item>
+        <item>Lymphoma centers</item>
+        <item>Complex oncological centers</item>
+        <item>Centers against pain</item>
+        <item>Screening centers</item>
     </string-array>
 
     <string name="unsupported_protocol">Unsupported protocol</string>

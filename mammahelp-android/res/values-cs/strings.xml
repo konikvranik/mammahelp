@@ -40,6 +40,14 @@
         <item>Centra</item>
         <item>Prevence</item>
     </string-array>
+        <string-array name="filter">
+        <item>centra Mamma HELP</item>
+        <item>Lymfocentra</item>
+        <item>Komplexní onkologická centra</item>
+        <item >Centra proti bolesti</item>
+        <item >Screeningová centra</item>
+    </string-array>
+    
 
     <string name="unsupported_protocol">Nepodporovaný protokol</string>
     <string name="malformed_url">Neplatná URL "%s"</string>

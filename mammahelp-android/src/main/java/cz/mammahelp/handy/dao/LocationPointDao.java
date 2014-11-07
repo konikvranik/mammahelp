@@ -14,8 +14,8 @@ import cz.mammahelp.model.LocationPoint;
 
 public class LocationPointDao extends BaseDao<LocationPoint> {
 
-	public final static String[] TYPES = new String[] { "center", "branch",
-			"shop" };
+	public final static String[] TYPES = new String[] { "mammahelp", "lymfo",
+			"onkolog", "pain", "screening" };
 
 	public static final String TABLE_NAME = "location_points";
 
