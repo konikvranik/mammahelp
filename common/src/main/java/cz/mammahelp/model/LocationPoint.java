@@ -33,6 +33,14 @@ public class LocationPoint implements Identificable<LocationPoint> {
 	@Element
 	private String address;
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	public LocationPoint(Long id) {
 		setId(id);
 	}

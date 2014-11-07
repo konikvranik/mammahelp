@@ -262,10 +262,12 @@ public class Address implements Identificable<Address> {
 
 	public void setLatitude(double latitude) {
 		this.mLatitude = latitude;
+		mHasLatitude = true;
 	}
 
 	public void setLongitude(double longitude) {
 		this.mLongitude = longitude;
+		mHasLongitude = true;
 	}
 
 	public void setLocality(String locality) {
@@ -323,6 +325,14 @@ public class Address implements Identificable<Address> {
 
 	public boolean hasLongitude() {
 		return mHasLongitude;
+	}
+
+	public void clearLongitude() {
+		mHasLongitude = false;
+	}
+
+	public void clearLatitude() {
+		mHasLatitude = false;
 	}
 
 }

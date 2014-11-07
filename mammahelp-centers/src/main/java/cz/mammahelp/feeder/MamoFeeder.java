@@ -1,4 +1,4 @@
-package cz.mammahelp.tools.centers.mamo;
+package cz.mammahelp.feeder;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,9 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import cz.mammahelp.tools.centers.GenericFeeder;
-
-public class MamoFeeder extends GenericFeeder {
+public class MamoFeeder extends GenericXMLLocationFeeder {
 
 	private static final String URL = "http://www.mamo.cz/index.php?pg=mamograficky-screening--centra--seznam";
 

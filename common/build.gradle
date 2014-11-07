@@ -8,48 +8,40 @@ version = '0.1'
 
 group = "cz.mammahelp"
 
-repositories {
-	mavenCentral()
-}
+repositories { mavenCentral() }
 
 dependencies {
 	compile 'net.sf.jtidy:jtidy:r938'
-	compile 'org.slf4j:slf4j-log4j12:1.7.7'
+	compile 'org.slf4j:slf4j-api:1.7.7'
 	compile('com.squareup.retrofit:converter-simplexml:1.6.1'){
-	    exclude module: 'stax'
-	    exclude module: 'stax-api'
-	    exclude module: 'xpp3'
+		exclude module: 'stax'
+		exclude module: 'stax-api'
+		exclude module: 'xpp3'
 	}
 }
 
-configurations {
-	provided
-	// all*.exclude group: 'com.android.support', module: 'support-v4'
-	// all*.exclude group: 'com.google.android.gms', module: 'play-services'
-}
-
+configurations { provided }
 
 eclipse.classpath.plusConfigurations += configurations.compile
-
 
 eclipse {
 
 	classpath {
 		file {
-		    beforeMerged { classpath ->
-		    	classpath.entries.clear()
-		    }
+			beforeMerged { classpath ->
+				classpath.entries.clear()
+			}
 			withXml {
-			    def node = it.asNode()
-			    // node.appendNode('classpathentry kind="src" path="src/main/java"')
-			    // node.appendNode('classpathentry kind="output" path="target"')
-			}	   
-		    whenMerged {  cp -> 
-		        cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/main/") }*.output = "target/main"
-		        cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/test/") }*.output = "target/test"
-		        cp.entries.findAll { it instanceof Container && it.path.endsWith("JRE_CONTAINER") }*.exported = false 
-		        // cp.entries.removeAll { it.kind == "output" }
-		    }
+				def node = it.asNode()
+				// node.appendNode('classpathentry kind="src" path="src/main/java"')
+				// node.appendNode('classpathentry kind="output" path="target"')
+			}
+			whenMerged {  cp ->
+				cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/main/") }*.output = "target/main"
+				cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/test/") }*.output = "target/test"
+				cp.entries.findAll { it instanceof Container && it.path.endsWith("JRE_CONTAINER") }*.exported = false
+				// cp.entries.removeAll { it.kind == "output" }
+			}
 		}
 		defaultOutputDir = file('target')
 
@@ -59,33 +51,19 @@ eclipse {
 		natures 'org.springsource.ide.eclipse.gradle.core.nature',
 				'org.eclipse.jdt.core.javanature',
 				'org.eclipse.jdt.groovy.core.groovyNature'
-				
-		 buildCommand 'org.eclipse.jdt.core.javabuilder'
+
+		buildCommand 'org.eclipse.jdt.core.javabuilder'
 		name 'mammahelp-common'
 	}
-	
 
-}
 
-sourceSets {
-    main {
-        java {
-            srcDirs = ["src/main/java","src/main/resources","src/test/java","src/test/resources"]
-        }
-    }
 }
 
 jar {
-	manifest.attributes provider: 'gradle'
-    manifest.attributes 'Implementation-Vendor-Id': 'hPa'
-    manifest.attributes 'Implementation-Vendor': 'Petr Vraník'
-    manifest.attributes 'Implementation-Version': 1.0
+	manifest.
+			attributes ( provider: 'gradle',
+			'Implementation-Vendor-Id': 'hPa',
+			'Implementation-Vendor': 'Petr Vraník',
+			'Implementation-Version': 1.0
+			)
 }
-
-buildscript {
-	repositories { mavenCentral() }
-	dependencies { classpath 'com.android.tools.build:gradle:0.11.+' }
-}
-
-
-

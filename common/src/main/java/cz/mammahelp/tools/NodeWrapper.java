@@ -10,7 +10,6 @@ import org.simpleframework.xml.stream.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Attr;
-import org.w3c.dom.CDATASection;
 import org.w3c.dom.CharacterData;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -19,8 +18,6 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
-
-import com.sun.xml.internal.ws.util.StringUtils;
 
 public class NodeWrapper implements InputNode {
 

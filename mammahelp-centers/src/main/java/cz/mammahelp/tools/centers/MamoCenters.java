@@ -1,4 +1,4 @@
-package cz.mammahelp.tools.centers.mamo;
+package cz.mammahelp.tools.centers;
 
 import java.io.StringWriter;
 import java.util.Collection;
@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
+import cz.mammahelp.feeder.MamoFeeder;
 import cz.mammahelp.model.LocationPoint;
 import cz.mammahelp.model.LocationsXmlWrapper;
 
@@ -36,7 +37,7 @@ public class MamoCenters {
 //		 log.info(sw.toString());
 
 		Collection<LocationPoint> locs = feeder.getItems();
-
+		feeder.makeGeo(locs);
 		LocationsXmlWrapper lxw = new LocationsXmlWrapper(locs);
 
 		Serializer serializer = new Persister();

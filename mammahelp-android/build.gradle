@@ -13,44 +13,39 @@ sourceCompatibility = 1.6
 
 repositories {
 	mavenCentral()
-	maven {
-            url "https://android-rome-feed-reader.googlecode.com/svn/maven2/releases"
-    }
+	maven { url "https://android-rome-feed-reader.googlecode.com/svn/maven2/releases" }
 }
 
 dependencies {
-	
+
 	compile project(':common')
 	compile 'com.android.support:support-v4:19.0.0'
 	compile 'com.android.support:appcompat-v7:19.0.0@aar'
 	compile 'com.google.android.gms:play-services:5.0.+@aar'
 	compile 'net.sf.jtidy:jtidy:r938'
-	compile 'org.slf4j:slf4j-android:1.6.1-RC1'
+	compile 'org.slf4j:slf4j-android:1.7.7'
 	compile 'org.apache.commons:commons-lang3:3.2.1'
 	compile 'com.google.code.android-rome-feed-reader:android-rome-feed-reader:1.0.0-r2'
 	compile('com.squareup.retrofit:converter-simplexml:1.6.1'){
-	    exclude module: 'stax'
-	    exclude module: 'stax-api'
-	    exclude module: 'xpp3'
+		exclude module: 'stax'
+		exclude module: 'stax-api'
+		exclude module: 'xpp3'
 	}
-
 }
 
 /*
-subprojects {
-	dependencies {
-		compile('com.squareup.retrofit:converter-simplexml:1.6.1'){
-		    exclude module: 'stax'
-		    exclude module: 'stax-api'
-		    exclude module: 'xpp3'
-		}
-	}
-}
-*/
+ subprojects {
+ dependencies {
+ compile('com.squareup.retrofit:converter-simplexml:1.6.1'){
+ exclude module: 'stax'
+ exclude module: 'stax-api'
+ exclude module: 'xpp3'
+ }
+ }
+ }
+ */
 
-configurations {
-	provided
-	// all*.exclude group: 'com.android.support', module: 'support-v4'
+configurations { provided // all*.exclude group: 'com.android.support', module: 'support-v4'
 	// all*.exclude group: 'com.google.android.gms', module: 'play-services'
 }
 
@@ -58,64 +53,65 @@ def libDir = new File(project.projectDir, 'libs')
 
 eclipse {
 
-	classpath.plusConfigurations += configurations.compile
-	classpath.noExportConfigurations += configurations.compile
-	
-	eclipse.classpath.file {
-	    beforeMerged {
-	    	classpath -> classpath.entries.removeAll() {
-	    		c -> c.kind == 'src'
-	    	}
-		}
+	classpath{
+
+		plusConfigurations += configurations.compile
+		noExportConfigurations += configurations.compile
+
+		containers (
+				"com.android.ide.eclipse.adt.ANDROID_FRAMEWORK",
+				"com.android.ide.eclipse.adt.DEPENDENCIES",
+				"com.android.ide.eclipse.adt.LIBRARIES"
+				)
 		
-   		withXml {
-		    def node = it.asNode()
-		
-		    node.appendNode('classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"')
-		    node.appendNode('classpathentry kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES" exported="true"')
-		    node.appendNode('classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES" exported="true"')
-		
-		    node.children().removeAll() { c ->
-		        def path = c.attribute('path')
-		        path != null && (
-		                path.contains('/com.android.support/support-v4')
-		        )
-		    }
-	
-			println node.children()
-			
-			delete libDir
-			libDir.mkdirs()
-		
-			node.children().each() {
-				def path = it.attribute("path")
-				if (it.attribute("kind") == "lib" && !(
-					path.contains("appcompat-v7")
-					||path.contains("support-v4")
-//					||path.contains("stax")
-//					||path.contains("xpp3")
-				)) {
-					copy {
-						from path
-						into libDir
+		file {
+			beforeMerged { classpath ->
+				classpath.entries.removeAll() { c -> c.kind == 'con' && c.path == 'com.android.ide.eclipse.adt.ANDROID_FRAMEWORK' } 
+			 /*classpath.entries.removeAll() { c ->
+			 c.kind == 'src'
+			 } */
+			 }
+
+			whenMerged { classpath ->
+
+				classpath.entries -= classpath.entries.findAll() { c ->
+					def path = c.path
+					path != null && (path.contains('/com.android.support/support-v4'))
+				}
+
+				delete libDir
+				libDir.mkdirs()
+
+				classpath.entries.each() { c ->
+					if (c.kind == "src" && c.path.startsWith("/")) c.exported = true
+					if (c.kind == "con" && c.path == "com.android.ide.eclipse.adt.ANDROID_FRAMEWORK") c.exported = false
+
+					def path = c.path
+					if (c.kind == "lib" && !(path.contains("appcompat-v7")||path.contains("support-v4") )) { // ||path.contains("stax")||path.contains("xpp3")
+						copy {
+							from path
+							into libDir
+						}
 					}
 				}
 			}
 		}
 	}
-	
+
 	project {
+
+		name 'mammahelp-android'
+
 		natures 'com.android.ide.eclipse.adt.AndroidNature',
 				'org.springsource.ide.eclipse.gradle.core.nature',
 				'org.eclipse.jdt.core.javanature',
 				'org.eclipse.jdt.groovy.core.groovyNature'
-				
-		 buildCommand 'com.android.ide.eclipse.adt.ResourceManagerBuilder'
-		 buildCommand 'com.android.ide.eclipse.adt.PreCompilerBuilder'
-		 buildCommand 'org.eclipse.jdt.core.javabuilder'
-		 buildCommand 'com.android.ide.eclipse.adt.ApkBuilder'
 
-		name 'mammahelp-android'
+		buildCommand 'com.android.ide.eclipse.adt.ResourceManagerBuilder'
+		buildCommand 'com.android.ide.eclipse.adt.PreCompilerBuilder'
+		buildCommand 'org.eclipse.jdt.core.javabuilder'
+		buildCommand 'com.android.ide.eclipse.adt.ApkBuilder'
+
 	}
 
 }
@@ -127,9 +123,7 @@ buildscript {
 
 
 sourceSets {
-	main {
-		java { srcDir 'gen' }
-	}
+	main { java { srcDir 'gen' } }
 }
 
 android {
@@ -186,15 +180,11 @@ android {
 			signingConfig signingConfigs.release
 		}
 	}
-	
+
 	android {
-		packagingOptions {
-			exclude 'META-INF/LICENSE.txt'
-		}
-		
-		lintOptions {
-        	abortOnError false
-    	}
+		packagingOptions { exclude 'META-INF/LICENSE.txt' }
+
+		lintOptions { abortOnError false }
 	}
 
 }

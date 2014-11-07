@@ -1,4 +1,4 @@
-package cz.mammahelp.tools.centers;
+package cz.mammahelp.feeder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,23 +23,26 @@ import org.w3c.dom.NodeList;
 import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
-import com.google.code.geocoder.model.GeocoderAddressComponent;
 import com.google.code.geocoder.model.GeocoderGeometry;
 import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
 import com.google.code.geocoder.model.LatLng;
 
+import cz.mammahelp.model.Address;
 import cz.mammahelp.model.LocationPoint;
 import cz.mammahelp.model.LocationsXmlWrapper;
 import cz.mammahelp.tools.NodeWrapper;
 
-public abstract class GenericFeeder extends
+public abstract class GenericXMLLocationFeeder extends
 		cz.mammahelp.feeder.GenericXMLFeeder<LocationPoint> {
 
-	public static Logger log = LoggerFactory.getLogger(GenericFeeder.class);
+	public static Logger log = LoggerFactory
+			.getLogger(GenericXMLLocationFeeder.class);
 
 	final Geocoder geocoder = new Geocoder();
+
+	private GeocoderRequestBuilder geocoderBuilder;
 
 	public Node getDom() throws MalformedURLException, Exception {
 		InputStream is = getInputStreamFromUrl(getUrl());
@@ -60,6 +63,25 @@ public abstract class GenericFeeder extends
 
 	public abstract URL getUrl() throws MalformedURLException;
 
+	public Collection<LocationPoint> makeGeo(Collection<LocationPoint> locations)
+			throws IOException {
+		for (LocationPoint locationPoint : locations) {
+			applyGeoOnLocation(locationPoint);
+		}
+		return locations;
+	}
+
+	protected LocationPoint applyGeoOnLocation(LocationPoint lp)
+			throws IOException {
+		LatLng ll = ressolveAddress(lp.getAddress());
+		if (ll != null) {
+			Address location = lp.getLocation();
+			location.setLatitude(ll.getLat().doubleValue());
+			location.setLongitude(ll.getLng().doubleValue());
+		}
+		return lp;
+	}
+
 	public Node makeGeo(Node d) throws XPathExpressionException, IOException {
 		XPathExpression e = getXpath("/locations/location");
 		NodeList nl = (NodeList) e.evaluate(d, XPathConstants.NODESET);
@@ -69,8 +91,8 @@ public abstract class GenericFeeder extends
 		return d;
 	}
 
-	private void applyGeoOnLocation(Node item) throws XPathExpressionException,
-			IOException {
+	protected void applyGeoOnLocation(Node item)
+			throws XPathExpressionException, IOException {
 		Document doc = item.getOwnerDocument();
 		XPathExpression addrExpr = getXpath("address/text()");
 		XPathExpression locExpr = getXpath("location");
@@ -120,36 +142,13 @@ public abstract class GenericFeeder extends
 			if (address == null || address.isEmpty())
 				return;
 
-			GeocoderRequest geocoderRequest = new GeocoderRequestBuilder()
-					.setAddress(address).setLanguage("cs").getGeocoderRequest();
-			GeocodeResponse geocoderResponse = geocoder
-					.geocode(geocoderRequest);
+			LatLng ll = ressolveAddress(address);
 
-			GeocoderStatus status = geocoderResponse.getStatus();
-			List<GeocoderResult> results = geocoderResponse.getResults();
-
-			if (GeocoderStatus.OK == status && results != null
-					&& results.size() > 0) {
-				for (GeocoderResult geocoderResult : results) {
-
-					GeocoderGeometry geo = geocoderResult.getGeometry();
-					LatLng loc = geo.getLocation();
-
-					removeAllChildren(latNode);
-					latNode.appendChild(doc.createTextNode(loc.getLat()
-							.toString()));
-					removeAllChildren(lonNode);
-					lonNode.appendChild(doc.createTextNode(loc.getLng()
-							.toString()));
-
-					List<GeocoderAddressComponent> addrComps = geocoderResult
-							.getAddressComponents();
-
-					for (GeocoderAddressComponent geocoderAddressComponent : addrComps) {
-						geocoderAddressComponent.getShortName();
-					}
-
-				}
+			if (ll != null) {
+				removeAllChildren(latNode);
+				latNode.appendChild(doc.createTextNode(ll.getLat().toString()));
+				removeAllChildren(lonNode);
+				lonNode.appendChild(doc.createTextNode(ll.getLng().toString()));
 
 				removeAllChildren(hasLatNode);
 				hasLatNode.appendChild(doc.createTextNode("true"));
@@ -171,8 +170,35 @@ public abstract class GenericFeeder extends
 
 		}
 
-		// TODO Auto-generated method stub
+	}
 
+	private GeocodeResponse geoCode(String address) throws IOException {
+		GeocoderRequest geocoderRequest = getGeocoderBuilder().setAddress(
+				address).getGeocoderRequest();
+		GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
+		return geocoderResponse;
+	}
+
+	private LatLng ressolveAddress(String address) throws IOException {
+		GeocodeResponse geocoderResponse = geoCode(address);
+		List<GeocoderResult> results = geocoderResponse.getResults();
+
+		if (GeocoderStatus.OK == geocoderResponse.getStatus()
+				&& results != null && results.size() > 0) {
+			if (results.size() > 1)
+				log.warn("Ambiguous results for address " + address);
+			GeocoderResult geocoderResult = results.get(0);
+			GeocoderGeometry geo = geocoderResult.getGeometry();
+			return geo.getLocation();
+		} else {
+			return null;
+		}
+	}
+
+	private GeocoderRequestBuilder getGeocoderBuilder() {
+		if (geocoderBuilder == null)
+			geocoderBuilder = new GeocoderRequestBuilder().setLanguage("cs");
+		return geocoderBuilder;
 	}
 
 	private static void removeAllChildren(Node node) {

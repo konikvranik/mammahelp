@@ -1,2 +1,2 @@
-include 'common'
-project(":common").projectDir = file("../common")
+includeFlat 'common'
+// project(":common").projectDir = file("../common")
