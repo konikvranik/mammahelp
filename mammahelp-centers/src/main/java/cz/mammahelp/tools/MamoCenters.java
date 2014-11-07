@@ -1,4 +1,4 @@
-package cz.mammahelp.tools.centers;
+package cz.mammahelp.tools;
 
 import java.io.StringWriter;
 import java.util.Collection;

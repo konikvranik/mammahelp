@@ -6,9 +6,11 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -25,6 +27,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.tidy.Tidy;
 
 import android.content.Context;
+import android.content.res.Resources;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.MammaHelpException;
@@ -42,7 +45,8 @@ import cz.mammahelp.model.Identificable;
 public abstract class GenericAndroidXMLFeeder<T extends BaseDao<?>, E extends Identificable<?>>
 		extends cz.mammahelp.feeder.GenericXMLFeeder<E> {
 
-	public static Logger log = LoggerFactory.getLogger(GenericAndroidXMLFeeder.class);
+	public static Logger log = LoggerFactory
+			.getLogger(GenericAndroidXMLFeeder.class);
 	Tidy tidy;
 
 	private Context context;
@@ -268,4 +272,25 @@ public abstract class GenericAndroidXMLFeeder<T extends BaseDao<?>, E extends Id
 
 	public abstract String getFilterName();
 
+	protected InputStream getInputStreamFromUrl(URL url, Date lastUpdatedTime)
+			throws IOException, MalformedURLException, URISyntaxException {
+
+		if ("file".equals(url.getProtocol())) {
+			URI uri = url.toURI();
+			String path = uri.getPath();
+			if (path.startsWith("/android_res")) {
+				String[] parts = path.split("/");
+				String name = parts[3].substring(0, parts[3].lastIndexOf('.'));
+				String type = parts[2];
+				Resources resources = getContext().getResources();
+				int id = resources.getIdentifier(name, type, getContext()
+						.getPackageName());
+				log.debug("Name: " + name);
+				log.debug("Type: " + type);
+				log.debug("Id: " + id);
+				return resources.openRawResource(id);
+			}
+		}
+		return super.getInputStreamFromUrl(url, lastUpdatedTime);
+	}
 }

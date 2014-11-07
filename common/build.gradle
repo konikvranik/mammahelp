@@ -31,11 +31,6 @@ eclipse {
 			beforeMerged { classpath ->
 				classpath.entries.clear()
 			}
-			withXml {
-				def node = it.asNode()
-				// node.appendNode('classpathentry kind="src" path="src/main/java"')
-				// node.appendNode('classpathentry kind="output" path="target"')
-			}
 			whenMerged {  cp ->
 				cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/main/") }*.output = "target/main"
 				cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/test/") }*.output = "target/test"
@@ -43,8 +38,7 @@ eclipse {
 				// cp.entries.removeAll { it.kind == "output" }
 			}
 		}
-		defaultOutputDir = file('target')
-
+		defaultOutputDir = file('target/main')
 	}
 
 	project {
@@ -55,8 +49,6 @@ eclipse {
 		buildCommand 'org.eclipse.jdt.core.javabuilder'
 		name 'mammahelp-common'
 	}
-
-
 }
 
 jar {

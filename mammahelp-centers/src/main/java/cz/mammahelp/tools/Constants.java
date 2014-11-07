@@ -1,4 +1,4 @@
-package cz.mammahelp.tools.centers;
+package cz.mammahelp.tools;
 
 public class Constants {
 
