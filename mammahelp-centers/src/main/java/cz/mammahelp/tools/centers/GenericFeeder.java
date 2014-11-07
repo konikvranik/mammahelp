@@ -35,7 +35,7 @@ import cz.mammahelp.model.LocationsXmlWrapper;
 import cz.mammahelp.tools.NodeWrapper;
 
 public abstract class GenericFeeder extends
-		cz.mammahelp.feeder.GenericFeeder<LocationPoint> {
+		cz.mammahelp.feeder.GenericXMLFeeder<LocationPoint> {
 
 	public static Logger log = LoggerFactory.getLogger(GenericFeeder.class);
 

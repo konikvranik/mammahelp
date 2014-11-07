@@ -34,7 +34,7 @@ import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.ui.activity.MainActivity;
 import cz.mammahelp.model.News;
 
-public class NewsFeeder extends GenericFeeder<NewsDao, News> {
+public class NewsFeeder extends GenericAndroidXMLFeeder<NewsDao, News> {
 
 	public static Logger log = LoggerFactory.getLogger(NewsFeeder.class);
 
@@ -228,6 +228,9 @@ public class NewsFeeder extends GenericFeeder<NewsDao, News> {
 	public Collection<News> getItems() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void feedData(NewsDao id) throws Exception {
 	}
 
 }

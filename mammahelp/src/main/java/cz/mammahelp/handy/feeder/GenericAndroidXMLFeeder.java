@@ -39,10 +39,10 @@ import cz.mammahelp.model.Articles;
 import cz.mammahelp.model.Enclosure;
 import cz.mammahelp.model.Identificable;
 
-public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificable<?>>
-		extends cz.mammahelp.feeder.GenericFeeder<E> {
+public abstract class GenericAndroidXMLFeeder<T extends BaseDao<?>, E extends Identificable<?>>
+		extends cz.mammahelp.feeder.GenericXMLFeeder<E> {
 
-	public static Logger log = LoggerFactory.getLogger(GenericFeeder.class);
+	public static Logger log = LoggerFactory.getLogger(GenericAndroidXMLFeeder.class);
 	Tidy tidy;
 
 	private Context context;
@@ -50,11 +50,11 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 	private T dao;
 	private int level = 0;
 
-	public GenericFeeder(Context context) {
+	public GenericAndroidXMLFeeder(Context context) {
 		setContext(context);
 	}
 
-	public GenericFeeder(Context context, int i) {
+	public GenericAndroidXMLFeeder(Context context, int i) {
 		this(context);
 		level = i;
 
@@ -160,7 +160,7 @@ public abstract class GenericFeeder<T extends BaseDao<?>, E extends Identificabl
 		String url = conn.getURL().toExternalForm();
 		Articles article = adao.findByExactUrl(url);
 
-		GenericFeeder<ArticlesDao, Articles> af = new ArticleFeeder(
+		GenericAndroidXMLFeeder<ArticlesDao, Articles> af = new ArticleFeeder(
 				getContext(), level + 1);
 		if (article == null || article.getId() == null) {
 			article = new Articles();

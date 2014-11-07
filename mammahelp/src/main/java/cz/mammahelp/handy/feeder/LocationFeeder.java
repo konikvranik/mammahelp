@@ -25,7 +25,7 @@ import cz.mammahelp.model.LocationPoint;
 import cz.mammahelp.model.LocationsXmlWrapper;
 
 public class LocationFeeder extends
-		GenericFeeder<LocationPointDao, LocationPoint> {
+		GenericAndroidXMLFeeder<LocationPointDao, LocationPoint> {
 
 	public static Logger log = LoggerFactory.getLogger(LocationFeeder.class);
 
@@ -156,6 +156,9 @@ public class LocationFeeder extends
 	public Collection<LocationPoint> getItems() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void feedData(LocationPointDao id) throws Exception {
 	}
 
 }

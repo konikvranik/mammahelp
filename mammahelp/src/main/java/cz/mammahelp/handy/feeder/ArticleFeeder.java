@@ -13,7 +13,7 @@ import android.content.Context;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.model.Articles;
 
-public class ArticleFeeder extends GenericFeeder<ArticlesDao, Articles> {
+public class ArticleFeeder extends GenericAndroidXMLFeeder<ArticlesDao, Articles> {
 
 	public ArticleFeeder(Context context) {
 		super(context);
@@ -99,6 +99,9 @@ public class ArticleFeeder extends GenericFeeder<ArticlesDao, Articles> {
 	public Collection<Articles> getItems() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void feedData(ArticlesDao id) throws Exception {
 	}
 
 }
