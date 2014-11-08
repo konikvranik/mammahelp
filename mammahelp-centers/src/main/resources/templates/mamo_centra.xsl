@@ -14,7 +14,7 @@
 
 	<xsl:template match="tr">
 		<location>
-			<type>screning</type>
+			<type>screening</type>
 			<name>
 				<xsl:call-template name="cdata-start" />
 				<xsl:apply-templates select="td[1]/strong/child::node()"

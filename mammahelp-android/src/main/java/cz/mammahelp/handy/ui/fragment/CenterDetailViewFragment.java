@@ -195,14 +195,12 @@ public class CenterDetailViewFragment extends Fragment {
 						Constants.AUTOMATIC_UPDATES_KEY, false)) {
 
 			new AsyncTask<Void, Void, Void>() {
-
 				@Override
 				protected Void doInBackground(Void... params) {
 					try {
 						new LocationFeeder(getActivity()).feedData(lp);
 						ldao.update(lp);
 						getActivity().runOnUiThread(new Runnable() {
-
 							@Override
 							public void run() {
 								wv.loadDataWithBaseURL(null,
