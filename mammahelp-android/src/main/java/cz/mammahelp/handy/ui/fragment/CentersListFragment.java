@@ -486,10 +486,10 @@ public class CentersListFragment extends ANamedFragment {
 			hue = BitmapDescriptorFactory.HUE_GREEN;
 		else if ("center".equals(lp.getType()))
 			hue = BitmapDescriptorFactory.HUE_YELLOW;
-
+		else if ("screening".equals(lp.getType()))
+			return BitmapDescriptorFactory
+			.fromResource(R.drawable.map_mamo);
 		BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(hue);
-		marker = BitmapDescriptorFactory
-				.fromResource(R.drawable.ic_action_call);
 		return marker;
 	}
 
