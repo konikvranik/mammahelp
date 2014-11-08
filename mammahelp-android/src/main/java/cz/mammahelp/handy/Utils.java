@@ -6,20 +6,25 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
-import cz.mammahelp.model.Address;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 
-public class Utils {
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
-	public Utils() {
-	}
+import cz.mammahelp.model.Address;
+
+public class Utils {
 
 	public static Locale stringToLocale(String s) {
 		if (s == null)
@@ -134,5 +139,71 @@ public class Utils {
 			mhaddr.setAddressLine(i, gaddr.getAddressLine(i));
 		}
 		return mhaddr;
+	}
+
+	/* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
+	/* :: This function converts decimal degrees to radians : */
+	/* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
+	public static double deg2rad(double deg) {
+		return (deg * Math.PI / 180.0);
+	}
+
+	/* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
+	/* :: This function converts radians to decimal degrees : */
+	/* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
+	public static double rad2deg(double rad) {
+		return (rad * 180.0 / Math.PI);
+	}
+
+	public static double distance(double lat1, double lon1, double lat2,
+			double lon2, char unit) {
+		double theta = lon1 - lon2;
+		double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2))
+				+ Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2))
+				* Math.cos(deg2rad(theta));
+		dist = Math.acos(dist);
+		dist = rad2deg(dist);
+		dist = dist * 60 * 1.1515;
+		if (unit == 'k') {
+			dist = dist * 1.609344;
+		} else if (unit == 'm') {
+			dist = dist * 1609.344;
+		} else if (unit == 'N') {
+			dist = dist * 0.8684;
+		}
+		return (dist);
+	}
+
+	public static void checkGooglePlayServices(Activity context) {
+		int checkGooglePlayServices = GooglePlayServicesUtil
+				.isGooglePlayServicesAvailable(context);
+		if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
+			// google play services is missing!!!!
+			/*
+			 * Returns status code indicating whether there was an error. Can be
+			 * one of following in ConnectionResult: SUCCESS, SERVICE_MISSING,
+			 * SERVICE_VERSION_UPDATE_REQUIRED, SERVICE_DISABLED,
+			 * SERVICE_INVALID.
+			 */
+			GooglePlayServicesUtil.getErrorDialog(checkGooglePlayServices,
+					context, Constants.REQUEST_CODE_RECOVER_PLAY_SERVICES)
+					.show();
+		}
+	}
+
+	public static Location getPosition(Context context) {
+		LocationManager lm = (LocationManager) context
+				.getSystemService(Context.LOCATION_SERVICE);
+
+		Criteria criteria = new Criteria();
+		criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+		criteria.setAltitudeRequired(false);
+		criteria.setBearingRequired(false);
+		criteria.setSpeedRequired(false);
+		String prov = lm.getBestProvider(criteria, true);
+		if (prov != null)
+			return lm.getLastKnownLocation(prov);
+		else
+			return null;
 	}
 }

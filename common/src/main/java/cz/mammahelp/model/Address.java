@@ -335,4 +335,8 @@ public class Address implements Identificable<Address> {
 		mHasLatitude = false;
 	}
 
+	public static String getQueryFromAddress(Address addr) {
+		return cz.mammahelp.model.Address.fomrmatAddressForSearch(addr);
+	}
+
 }

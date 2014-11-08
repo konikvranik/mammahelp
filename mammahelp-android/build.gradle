@@ -1,5 +1,8 @@
 import java.security.KeyStore.Builder;
+import groovy.xml.DOMBuilder
+import groovy.xml.dom.DOMCategory
 import org.gradle.plugins.ide.eclipse.model.SourceFolder
+import groovy.xml.XmlUtil
 
 apply plugin: 'android'
 apply plugin: 'eclipse'
@@ -51,6 +54,16 @@ configurations { provided // all*.exclude group: 'com.android.support', module: 
 
 def libDir = new File(project.projectDir, 'libs')
 
+def modifyManifest(manifest, key) {
+
+	def root = new XmlParser().parse(manifest)
+	def androidns = new groovy.xml.Namespace("http://schemas.android.com/apk/res/android",'android')	
+	root.'application'.'meta-data'.findAll{ it.attributes()[androidns.name] == "com.google.android.maps.v2.API_KEY" }.each {
+		it.attributes()[androidns.value] = key
+	}
+	manifest.write( XmlUtil.serialize(root) )
+}
+
 eclipse {
 
 	classpath{
@@ -63,14 +76,14 @@ eclipse {
 				"com.android.ide.eclipse.adt.DEPENDENCIES",
 				"com.android.ide.eclipse.adt.LIBRARIES"
 				)
-		
+
 		file {
 			beforeMerged { classpath ->
-				classpath.entries.removeAll() { c -> c.kind == 'con' && c.path == 'com.android.ide.eclipse.adt.ANDROID_FRAMEWORK' } 
-			 /*classpath.entries.removeAll() { c ->
-			 c.kind == 'src'
-			 } */
-			 }
+				classpath.entries.removeAll() { c -> c.kind == 'con' && c.path == 'com.android.ide.eclipse.adt.ANDROID_FRAMEWORK' }
+				/*classpath.entries.removeAll() { c ->
+				 c.kind == 'src'
+				 } */
+			}
 
 			whenMerged { classpath ->
 
@@ -175,17 +188,23 @@ android {
 	buildTypes {
 		release {
 			runProguard false
-			proguardFile getDefaultProguardFile('proguard-android.txt')
+			//proguardFile getDefaultProguardFile('proguard-android.txt')
 			proguardFile 'proguard-project.txt'
 			signingConfig signingConfigs.release
 		}
 	}
 
-	android {
-		packagingOptions { exclude 'META-INF/LICENSE.txt' }
+	packagingOptions { exclude 'META-INF/LICENSE.txt' }
 
-		lintOptions { abortOnError false }
+	lintOptions { abortOnError false }
+
+	applicationVariants.all { variant ->
+		if(variant.name == "release")
+		variant.processManifest.doLast { 
+			println "Manifest file: " + it.manifestOutputFile
+			project.modifyManifest(it.manifestOutputFile, "AIzaSyCOvySLyinjKsfmNdlf53McsP_zgVG27zs" ) 
+		}
 	}
-
 }
+
 

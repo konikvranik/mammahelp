@@ -1,10 +1,14 @@
 package cz.mammahelp.handy.ui.fragment;
 
+import static cz.mammahelp.handy.Utils.checkGooglePlayServices;
+import static cz.mammahelp.handy.Utils.distance;
 import static cz.mammahelp.handy.Utils.gAddresToMhAddress;
+import static cz.mammahelp.handy.Utils.getPosition;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,10 +26,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -38,8 +41,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -269,6 +270,8 @@ public class CentersListFragment extends ANamedFragment {
 
 		updateData();
 
+		setupMap(getPosition(getActivity()));
+
 		return mainView;
 	}
 
@@ -382,6 +385,14 @@ public class CentersListFragment extends ANamedFragment {
 
 			MapsInitializer.initialize(getActivity());
 
+			map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+				@Override
+				public void onInfoWindowClick(Marker marker) {
+					Long id = markers.get(marker);
+					openCenterDetail(id);
+				}
+			});
+
 			if (pos != null) {
 
 				log.debug("Moving camera to " + pos.getLatitude() + ", "
@@ -407,24 +418,8 @@ public class CentersListFragment extends ANamedFragment {
 			}
 
 		} else {
-			checkGooglePlayServices();
+			checkGooglePlayServices(getActivity());
 		}
-	}
-
-	private Location getPosition() {
-		LocationManager lm = (LocationManager) getActivity().getSystemService(
-				Context.LOCATION_SERVICE);
-
-		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-		criteria.setAltitudeRequired(false);
-		criteria.setBearingRequired(false);
-		criteria.setSpeedRequired(false);
-		String prov = lm.getBestProvider(criteria, true);
-		if (prov != null)
-			return lm.getLastKnownLocation(prov);
-		else
-			return null;
 	}
 
 	protected void addMarkers(String[] type) {
@@ -432,50 +427,51 @@ public class CentersListFragment extends ANamedFragment {
 		Geocoder myLocation = new Geocoder(getActivity(), Locale.getDefault());
 		List<android.location.Address> loc;
 
-		getMap().clear();
+		getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				getMap().clear();
+			}
+		});
 
-		for (LocationPoint lp : adao.findByType(type)) {
-
-			try {
-
-				Address addr = lp.getLocation();
-
-				if (addr == null) {
-					loc = myLocation.getFromLocationName(lp.getName(), 1);
-					if (loc.isEmpty())
-						continue;
-					addr = gAddresToMhAddress(loc.get(0));
-				} else if (!(addr.hasLatitude() && addr.hasLongitude())) {
-					loc = myLocation.getFromLocationName(
-							getQueryFromAddress(addr), 1);
-					if (loc.isEmpty())
-						continue;
-					Address a = gAddresToMhAddress(loc.get(0));
-					addr.setLatitude(a.getLatitude());
-					addr.setLongitude(a.getLongitude());
-				}
-
-				Marker m = getMap().addMarker(
-						new MarkerOptions()
-								.position(
-										new LatLng(addr.getLatitude(), addr
-												.getLongitude()))
-								.title(lp.getName()).icon(getIcon(lp))
-								.snippet(lp.getDescription()));
-				markers.put(m, lp.getId());
+		Collection<LocationPoint> ressolveLater = new HashSet<LocationPoint>();
+		for (final LocationPoint lp : adao.findByType(type)) {
+			Address addr = lp.getLocation();
+			if (addr == null || !(addr.hasLatitude() && addr.hasLongitude())) {
+				ressolveLater.add(lp);
+			} else {
+				addMarker(lp);
 				log.debug("Added " + lp.getName());
-
+			}
+		}
+		for (LocationPoint lp : ressolveLater) {
+			try {
+				loc = myLocation.getFromLocationName(lp.getName(), 1);
+				if (loc.isEmpty())
+					continue;
+				lp.setLocation(gAddresToMhAddress(loc.get(0)));
+				addMarker(lp);
+				log.debug("Added " + lp.getName());
 			} catch (IOException e) {
 				log.error(e.getMessage(), e);
 			}
 		}
+	}
 
-		getMap().setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
-
+	private void addMarker(final LocationPoint lp) {
+		getActivity().runOnUiThread(new Runnable() {
 			@Override
-			public void onInfoWindowClick(Marker marker) {
-				Long id = markers.get(marker);
-				openCenterDetail(id);
+			public void run() {
+				Marker m = getMap().addMarker(
+						new MarkerOptions()
+								.position(
+										new LatLng(lp.getLocation()
+												.getLatitude(), lp
+												.getLocation().getLongitude()))
+								.title(lp.getName()).icon(getIcon(lp))
+								.snippet(lp.getDescription()));
+
+				markers.put(m, lp.getId());
 			}
 		});
 	}
@@ -495,28 +491,6 @@ public class CentersListFragment extends ANamedFragment {
 		return marker;
 	}
 
-	private void checkGooglePlayServices() {
-		int checkGooglePlayServices = GooglePlayServicesUtil
-				.isGooglePlayServicesAvailable(getActivity());
-		if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
-			// google play services is missing!!!!
-			/*
-			 * Returns status code indicating whether there was an error. Can be
-			 * one of following in ConnectionResult: SUCCESS, SERVICE_MISSING,
-			 * SERVICE_VERSION_UPDATE_REQUIRED, SERVICE_DISABLED,
-			 * SERVICE_INVALID.
-			 */
-			GooglePlayServicesUtil
-					.getErrorDialog(checkGooglePlayServices, getActivity(),
-							Constants.REQUEST_CODE_RECOVER_PLAY_SERVICES)
-					.show();
-		}
-	}
-
-	private String getQueryFromAddress(Address addr) {
-		return cz.mammahelp.model.Address.fomrmatAddressForSearch(addr);
-	}
-
 	@Override
 	public void onPause() {
 		if (mapView != null)
@@ -534,53 +508,19 @@ public class CentersListFragment extends ANamedFragment {
 
 	}
 
-	private double distance(double lat1, double lon1, double lat2, double lon2,
-			char unit) {
-		double theta = lon1 - lon2;
-		double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2))
-				+ Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2))
-				* Math.cos(deg2rad(theta));
-		dist = Math.acos(dist);
-		dist = rad2deg(dist);
-		dist = dist * 60 * 1.1515;
-		if (unit == 'k') {
-			dist = dist * 1.609344;
-		} else if (unit == 'm') {
-			dist = dist * 1609.344;
-		} else if (unit == 'N') {
-			dist = dist * 0.8684;
-		}
-		return (dist);
-	}
-
-	/* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
-	/* :: This function converts decimal degrees to radians : */
-	/* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
-	private double deg2rad(double deg) {
-		return (deg * Math.PI / 180.0);
-	}
-
-	/* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
-	/* :: This function converts radians to decimal degrees : */
-	/* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
-	private double rad2deg(double rad) {
-		return (rad * 180.0 / Math.PI);
-	}
-
 	@Override
 	public void updateData() {
-		getActivity().runOnUiThread(new Runnable() {
+		final Location pos = getPosition(getActivity());
+		new AsyncTask<Void, Void, Void>() {
 			@Override
-			public void run() {
-				final Location pos = getPosition();
-				setupMap(pos);
+			protected Void doInBackground(Void... params) {
 				addMarkers(filter.toArray(new String[0]));
-				adapter = new CategoryAdapter(adao.findByType(filter), pos);
-				adapter = new CategoryAdapter(adao.findByType(filter), pos);
-				if (listView != null)
-					listView.setAdapter(adapter);
+				return null;
 			}
-		});
+		}.execute(new Void[0]);
+		adapter = new CategoryAdapter(adao.findByType(filter), pos);
+		if (listView != null)
+			listView.setAdapter(adapter);
 	}
 
 }
