@@ -6,6 +6,8 @@ import static cz.mammahelp.handy.Utils.gAddresToMhAddress;
 import static cz.mammahelp.handy.Utils.getPosition;
 
 import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,6 +20,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +53,7 @@ import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -64,7 +74,8 @@ import cz.mammahelp.model.LocationPoint;
 
 public class CentersListFragment extends ANamedFragment {
 
-	public static Logger log = LoggerFactory.getLogger(ANamedFragment.class);
+	public static Logger log = LoggerFactory
+			.getLogger(CentersListFragment.class);
 
 	private static final String PREF_KEY_FILTER = "filter";
 
@@ -384,6 +395,23 @@ public class CentersListFragment extends ANamedFragment {
 
 			MapsInitializer.initialize(getActivity());
 
+			map.setInfoWindowAdapter(new InfoWindowAdapter() {
+
+				@Override
+				public View getInfoWindow(Marker marker) {
+					return null;
+				}
+
+				@Override
+				public View getInfoContents(Marker marker) {
+					View v = View.inflate(getActivity(), R.layout.marker, null);
+					TextView t = (TextView) v.findViewById(R.id.title);
+					t.setText(marker.getTitle());
+					TextView wv = (TextView) v.findViewById(R.id.info);
+					wv.setText(htmlTransform(marker.getSnippet()));
+					return v;
+				}
+			});
 			map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 				@Override
 				public void onInfoWindowClick(Marker marker) {
@@ -457,10 +485,40 @@ public class CentersListFragment extends ANamedFragment {
 		}
 	}
 
+	private Transformer htmlTransformer;
+
+	protected Transformer getHtmlTransformer()
+			throws TransformerConfigurationException, IOException {
+		if (htmlTransformer == null) {
+			TransformerFactory tFactory = TransformerFactory.newInstance();
+			htmlTransformer = tFactory.newTransformer(new StreamSource(
+					getActivity().getAssets().open("htmlToTextFilter.xsl")));
+			htmlTransformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
+					"yes");
+		}
+		return htmlTransformer;
+	}
+
+	private String htmlTransform(String annotation) {
+		try {
+			StringReader sr = new StringReader("<root>" + annotation
+					+ "</root>");
+			StringWriter sw = new StringWriter();
+			getHtmlTransformer().transform(new StreamSource(sr),
+					new StreamResult(sw));
+			return sw.toString();
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return annotation;
+		}
+	}
+
 	private void addMarker(final LocationPoint lp) {
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
+				String description = (lp.getDescription());
+				log.debug("Description: " + description);
 				Marker m = getMap().addMarker(
 						new MarkerOptions()
 								.position(
@@ -468,7 +526,7 @@ public class CentersListFragment extends ANamedFragment {
 												.getLatitude(), lp
 												.getLocation().getLongitude()))
 								.title(lp.getName()).icon(getIcon(lp))
-								.snippet(lp.getDescription()));
+								.snippet(description));
 
 				markers.put(m, lp.getId());
 			}

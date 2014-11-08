@@ -11,8 +11,8 @@ import groovy.xml.XmlUtil
 apply plugin: 'android'
 apply plugin: 'eclipse'
 
-version = '0.86'
-android.defaultConfig.versionCode = 86
+version = '0.87'
+android.defaultConfig.versionCode = 87
 
 group = "cz.mammahelp.handy"
 
@@ -31,12 +31,12 @@ repositories {
 
 dependencies {
 
-	compile project(':common')
+	compile( project(':common')) { exclude module: 'slf4j-api' }
 	compile 'com.android.support:support-v4:19.0.0'
 	compile 'com.android.support:appcompat-v7:19.0.0@aar'
 	compile 'com.google.android.gms:play-services:5.0.+@aar'
 	compile 'net.sf.jtidy:jtidy:r938'
-	compile 'org.slf4j:slf4j-android:1.7.7'
+	compile 'org.slf4j:slf4j-android:1.6.1-RC1'
 	compile 'org.apache.commons:commons-lang3:3.2.1'
 	compile 'com.google.code.android-rome-feed-reader:android-rome-feed-reader:1.0.0-r2'
 	compile('com.squareup.retrofit:converter-simplexml:1.6.1'){

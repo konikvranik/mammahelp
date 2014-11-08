@@ -158,8 +158,8 @@ public class CenterDetailViewFragment extends Fragment {
 			final WebView wv, final LocationPoint lp) {
 
 		StringBuilder sb = new StringBuilder("<html>");
-		sb.append("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"/><meta charset=\"UTF-8\"/>");
 		sb.append("<head>");
+		sb.append("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"/><meta charset=\"UTF-8\"/>");
 		// sb.append("<link rel='stylesheet' href='file:///android_asset/location.css' type='text/css' />");
 		sb.append("<link rel=\"stylesheet\" href=\"content://cz.mammahelp.handy.asset/location.css\" type=\"text/css\" />");
 		sb.append("<title>");
