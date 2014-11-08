@@ -488,6 +488,8 @@ public class CentersListFragment extends ANamedFragment {
 			hue = BitmapDescriptorFactory.HUE_YELLOW;
 
 		BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(hue);
+		marker = BitmapDescriptorFactory
+				.fromResource(R.drawable.ic_action_call);
 		return marker;
 	}
 

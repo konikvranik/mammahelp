@@ -1,14 +1,18 @@
 import java.security.KeyStore.Builder;
+import java.util.logging.Logger;
+
 import groovy.xml.DOMBuilder
 import groovy.xml.dom.DOMCategory
+
 import org.gradle.plugins.ide.eclipse.model.SourceFolder
+
 import groovy.xml.XmlUtil
 
 apply plugin: 'android'
 apply plugin: 'eclipse'
 
-version = '0.83'
-android.defaultConfig.versionCode = 83
+version = '0.84'
+android.defaultConfig.versionCode = 84
 
 group = "cz.mammahelp.handy"
 
@@ -101,10 +105,12 @@ eclipse {
 					def path = c.path
 					path != null && (path.contains('/com.android.support/support-v4'))
 				}
-
-				delete libDir
-				libDir.mkdirs()
-
+				try {
+					delete libDir
+					libDir.mkdirs()
+				} catch (e) {
+					logger.warn(e.message, e)
+				}
 				classpath.entries.each() { c ->
 					if (c.kind == "src" && c.path.startsWith("/")) c.exported = true
 					if (c.kind == "con" && c.path == "com.android.ide.eclipse.adt.ANDROID_FRAMEWORK") c.exported = false
