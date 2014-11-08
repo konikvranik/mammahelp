@@ -11,8 +11,8 @@ import groovy.xml.XmlUtil
 apply plugin: 'android'
 apply plugin: 'eclipse'
 
-version = '0.84'
-android.defaultConfig.versionCode = 84
+version = '0.85'
+android.defaultConfig.versionCode = 85
 
 group = "cz.mammahelp.handy"
 

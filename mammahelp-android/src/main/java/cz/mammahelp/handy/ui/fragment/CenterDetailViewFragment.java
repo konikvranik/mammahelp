@@ -182,7 +182,11 @@ public class CenterDetailViewFragment extends Fragment {
 
 		addElement(sb, "p", "description", lp.getDescription());
 
+		addElement(sb, "h2", "label", getResources()
+				.getString(R.string.address));
+
 		addressIntoHtml(sb, lp);
+
 		if ((lp.getMapImage() == null || lp.getMapImage().getId() == null)
 				&& getActivity().getSharedPreferences(
 						getResources().getString(R.string.others_preferences),
@@ -248,6 +252,8 @@ public class CenterDetailViewFragment extends Fragment {
 
 		addStartElement(sb, "p", "addrline");
 		for (int i = 0; i <= addr.getMaxAddressLineIndex(); i++) {
+			if (addr.getAddressLine(i) == null)
+				continue;
 			sb.append(addr.getAddressLine(i));
 			if (i < addr.getMaxAddressLineIndex())
 				sb.append("</br>");

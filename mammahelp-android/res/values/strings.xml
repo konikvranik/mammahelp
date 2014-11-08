@@ -100,5 +100,6 @@
     <string name="cleanup_started">Cleanup started</string>
     <string name="preferences">Preferences</string>
     <string name="actions">Actions</string>
+    <string name="address">Address</string>
 
 </resources>
