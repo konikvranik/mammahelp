@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -192,11 +193,11 @@ public class CenterDetailViewFragment extends Fragment {
 						getResources().getString(R.string.others_preferences),
 						Context.MODE_MULTI_PROCESS).getBoolean(
 						Constants.AUTOMATIC_UPDATES_KEY, false)) {
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
 
+			new AsyncTask<Void, Void, Void>() {
+
+				@Override
+				protected Void doInBackground(Void... params) {
 					try {
 						new LocationFeeder(getActivity()).feedData(lp);
 						ldao.update(lp);
@@ -213,8 +214,9 @@ public class CenterDetailViewFragment extends Fragment {
 					} catch (Exception e) {
 						log.error("Error getting map: " + e.getMessage(), e);
 					}
+					return null;
 				}
-			}).start();
+			}.execute(new Void[0]);
 
 		}
 

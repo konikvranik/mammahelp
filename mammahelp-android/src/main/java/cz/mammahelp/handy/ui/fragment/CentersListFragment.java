@@ -301,10 +301,9 @@ public class CentersListFragment extends ANamedFragment {
 		SortedSet<LocationPoint> l = ld.findAll();
 		if (l == null || l.isEmpty()) {
 			log.debug("Loading default locations...");
-			Thread t = new Thread(new Runnable() {
-
+			new AsyncTask<Void, Void, Void>() {
 				@Override
-				public void run() {
+				protected Void doInBackground(Void... params) {
 					LocationFeeder lf = new LocationFeeder(
 							CentersListFragment.this.getActivity());
 					try {
@@ -316,9 +315,9 @@ public class CentersListFragment extends ANamedFragment {
 								"Unable to load locations: " + e.getMessage(),
 								e);
 					}
+					return null;
 				}
-			});
-			t.start();
+			}.execute(new Void[0]);
 		}
 	}
 
@@ -487,8 +486,7 @@ public class CentersListFragment extends ANamedFragment {
 		else if ("center".equals(lp.getType()))
 			hue = BitmapDescriptorFactory.HUE_YELLOW;
 		else if ("screening".equals(lp.getType()))
-			return BitmapDescriptorFactory
-			.fromResource(R.drawable.map_mamo);
+			return BitmapDescriptorFactory.fromResource(R.drawable.map_mamo);
 		BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(hue);
 		return marker;
 	}
@@ -522,7 +520,12 @@ public class CentersListFragment extends ANamedFragment {
 		}.execute(new Void[0]);
 		adapter = new CategoryAdapter(adao.findByType(filter), pos);
 		if (listView != null)
-			listView.setAdapter(adapter);
+			getActivity().runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					listView.setAdapter(adapter);
+				}
+			});
 	}
 
 }
