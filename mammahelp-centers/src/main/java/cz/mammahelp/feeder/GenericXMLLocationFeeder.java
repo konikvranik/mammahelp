@@ -6,7 +6,6 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.InvalidKeyException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -80,6 +79,11 @@ public abstract class GenericXMLLocationFeeder extends
 			throws IOException {
 		for (LocationPoint locationPoint : locations) {
 			applyGeoOnLocation(locationPoint);
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				log.warn("Interrupted! " + e.getMessage(), e);
+			}
 		}
 		return locations;
 	}
@@ -118,9 +122,51 @@ public abstract class GenericXMLLocationFeeder extends
 
 			types.addAll(geocoderAddressComponent.getTypes());
 
+			Address addr = lp.getLocation();
+			if (addr == null)
+				lp.setLocation(addr = new Address());
+
+			if (isType(geocoderAddressComponent, "administrative_area_level_1")
+					&& addr.getAdminArea() == null)
+				addr.setAdminArea(geocoderAddressComponent.getLongName());
+			if (isType(geocoderAddressComponent, "administrative_area_level_2")
+					&& addr.getSubAdminArea() == null)
+				addr.setSubAdminArea(geocoderAddressComponent.getLongName());
+			if (isType(geocoderAddressComponent, "country")) {
+				if (addr.getCountryCode() == null)
+					addr.setCountryCode(geocoderAddressComponent.getShortName());
+				if (addr.getCountryName() == null)
+					addr.setCountryName(geocoderAddressComponent.getLongName());
+			}
+			if (isType(geocoderAddressComponent, "point_of_interest")
+					&& addr.getFeatureName() == null)
+				addr.setFeatureName(geocoderAddressComponent.getLongName());
+			if (isType(geocoderAddressComponent, "locality")
+					&& addr.getLocality() == null)
+				addr.setLocality(geocoderAddressComponent.getLongName());
+			if (isType(geocoderAddressComponent, "sublocality")
+					&& addr.getSubLocality() == null)
+				addr.setSubLocality(geocoderAddressComponent.getLongName());
+			if (isType(geocoderAddressComponent, "postal_code")
+					&& addr.getPostalCode() == null)
+				addr.setPostalCode(geocoderAddressComponent.getLongName());
+			if (isType(geocoderAddressComponent, "premise")
+					&& addr.getPremises() == null)
+				addr.setPremises(geocoderAddressComponent.getLongName());
+			if (isType(geocoderAddressComponent, "postal_town")
+					&& addr.getThoroughfare() == null)
+				addr.setThoroughfare(geocoderAddressComponent.getLongName());
+			if (isType(geocoderAddressComponent, "neighborhood")
+					&& addr.getSubThoroughfare() == null)
+				addr.setSubThoroughfare(geocoderAddressComponent.getLongName());
 		}
 
 		return lp;
+	}
+
+	private static boolean isType(
+			GeocoderAddressComponent geocoderAddressComponent, String string) {
+		return geocoderAddressComponent.getTypes().contains(string);
 	}
 
 	public Node makeGeo(Node d) throws XPathExpressionException, IOException {
@@ -187,6 +233,8 @@ public abstract class GenericXMLLocationFeeder extends
 				return;
 
 			GeocoderResult res = ressolveAddress(name, address);
+			if (res != null)
+				log.debug("Found address for " + name + ", " + address);
 			LatLng ll = res.getGeometry().getLocation();
 
 			if (ll != null) {
@@ -227,10 +275,12 @@ public abstract class GenericXMLLocationFeeder extends
 	private GeocoderResult ressolveAddress(String name, String address)
 			throws IOException {
 
-		String[] combinations = new String[] { name, address,
-				name + ", " + address };
+		String[] combinations = new String[] { name + ", " + address, address,
+				name };
 
 		List<GeocoderResult> results = null;
+
+		log.debug("Looking for " + combinations[2]);
 
 		for (String add : combinations) {
 			results = getResults(add, results);
@@ -266,7 +316,8 @@ public abstract class GenericXMLLocationFeeder extends
 				results = origResults;
 			return results;
 		} else {
-			log.warn("Geocoder status: " + geocoderResponse.getStatus());
+			log.warn("Geocoder status: " + geocoderResponse.getStatus()
+					+ " for address " + name);
 			return origResults;
 		}
 	}

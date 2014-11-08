@@ -79,7 +79,9 @@
 					<mFdsKnown>true</mFdsKnown>
 					<mAllowFds>true</mAllowFds>
 				</mExtras>
-				<mUrl>Url</mUrl>
+				<mUrl>
+					<xsl:value-of select="normalize-space(td[4]/a[. = 'www']/@href)" />
+				</mUrl>
 				<mLocale>cs_CZ</mLocale>
 				<mLocality>
 					<xsl:call-template name="cdata-start" />
@@ -87,7 +89,14 @@
 						mode="html" />
 					<xsl:call-template name="cdata-end" />
 				</mLocality>
-				<mPhone>phone</mPhone>
+				<mPhone>
+					<xsl:for-each select="td[4]/text()">
+						<xsl:value-of select="." />
+						<xsl:if test="not(position()=last())">
+							<xsl:text>, </xsl:text>
+						</xsl:if>
+					</xsl:for-each>
+				</mPhone>
 				<mPostalCode>
 					<xsl:value-of
 						select="normalize-space(td[3]/br/following-sibling::node()[count(preceding-sibling::strong) = 0])" />
