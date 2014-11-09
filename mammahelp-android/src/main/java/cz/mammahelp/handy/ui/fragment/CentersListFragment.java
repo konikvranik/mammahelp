@@ -50,7 +50,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
@@ -78,6 +77,12 @@ public class CentersListFragment extends ANamedFragment {
 			.getLogger(CentersListFragment.class);
 
 	private static final String PREF_KEY_FILTER = "filter";
+
+	private static final double DEFAULT_LONGITUDE = 15.663252;
+
+	private static final double DEFAULT_LATITUDE = 49.843707;
+
+	private static final float DEFAULT_ZOOM = 7;
 
 	public class DistanceComparator implements Comparator<LocationPoint> {
 
@@ -281,8 +286,8 @@ public class CentersListFragment extends ANamedFragment {
 
 		updateData();
 
-		setupMap(getPosition(getActivity()));
-
+		setupMap();
+		moveToDefaultPosition(getPosition(getActivity()));
 		return mainView;
 	}
 
@@ -378,7 +383,7 @@ public class CentersListFragment extends ANamedFragment {
 			mapView.onLowMemory();
 	}
 
-	protected void setupMap(Location pos) {
+	protected void setupMap() {
 		GoogleMap map = getMap();
 		if (map != null) {
 			map.setMyLocationEnabled(true);
@@ -420,33 +425,32 @@ public class CentersListFragment extends ANamedFragment {
 				}
 			});
 
-			if (pos != null) {
-
-				log.debug("Moving camera to " + pos.getLatitude() + ", "
-						+ pos.getLongitude());
-				CameraUpdate cu;
-
-				try {
-					cu = CameraUpdateFactory.newLatLng(new LatLng(pos
-							.getLatitude(), pos.getLongitude()));
-					map.moveCamera(cu);
-				} catch (Exception e) {
-					log.warn(e.getMessage(), e);
-				}
-
-				try {
-					cu = CameraUpdateFactory.zoomTo(10);
-					map.moveCamera(cu);
-				} catch (Exception e) {
-					log.warn(e.getMessage(), e);
-				}
-
-				log.debug("Camera moved.");
-			}
-
 		} else {
 			checkGooglePlayServices(getActivity());
 		}
+	}
+
+	private void moveToDefaultPosition(Location pos) {
+		if (pos == null) {
+			pos = new Location("?");
+			pos.reset();
+			pos.setLatitude(DEFAULT_LATITUDE);
+			pos.setLongitude(DEFAULT_LONGITUDE);
+		}
+
+		log.debug("Moving camera to " + pos.getLatitude() + ", "
+				+ pos.getLongitude());
+
+		try {
+			getMap().moveCamera(CameraUpdateFactory.zoomTo(DEFAULT_ZOOM));
+			getMap().moveCamera(
+					CameraUpdateFactory.newLatLng(new LatLng(pos.getLatitude(),
+							pos.getLongitude())));
+		} catch (Exception e) {
+			log.warn("Failed to move camera: " + e.getMessage(), e);
+		}
+
+		log.debug("Camera moved.");
 	}
 
 	protected void addMarkers(String[] type) {

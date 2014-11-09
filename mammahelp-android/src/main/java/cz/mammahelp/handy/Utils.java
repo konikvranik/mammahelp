@@ -82,7 +82,7 @@ public class Utils {
 		s.setAllowContentAccess(true);
 		s.setAllowFileAccess(true);
 		s.setBuiltInZoomControls(true);
-		s.setDisplayZoomControls(true);
+		s.setDisplayZoomControls(false);
 		s.setJavaScriptEnabled(false);
 		s.setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
 		s.setLoadWithOverviewMode(true);
