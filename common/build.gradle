@@ -14,7 +14,7 @@ repositories { mavenCentral() }
 
 dependencies {
 	compile 'net.sf.jtidy:jtidy:r938'
-	compile 'org.slf4j:slf4j-api:1.7.7'
+	compile 'org.slf4j:slf4j-api:1.6.1'
 	compile('com.squareup.retrofit:converter-simplexml:1.6.1'){
 		exclude module: 'stax'
 		exclude module: 'stax-api'
@@ -37,6 +37,7 @@ eclipse {
 				cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/main/") }*.output = "build/classes/main"
 				cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/test/") }*.output = "build/classes/test"
 				cp.entries.findAll { it instanceof Container && it.path.endsWith("JRE_CONTAINER") }*.exported = false
+				cp.entries.findAll { it.kind == "lib" && it.path.contains("slf4j-api") }*.exported = false
 				// cp.entries.removeAll { it.kind == "output" }
 			}
 		}
