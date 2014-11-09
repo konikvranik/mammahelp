@@ -1,10 +1,14 @@
 package cz.mammahelp.handy;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -25,6 +29,8 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import cz.mammahelp.model.Address;
 
 public class Utils {
+
+	private static Logger log = LoggerFactory.getLogger(Utils.class);
 
 	public static Locale stringToLocale(String s) {
 		if (s == null)
@@ -200,10 +206,25 @@ public class Utils {
 		criteria.setAltitudeRequired(false);
 		criteria.setBearingRequired(false);
 		criteria.setSpeedRequired(false);
+		log.debug("All providers: "
+				+ Arrays.toString(lm.getAllProviders().toArray()));
+		log.debug("Available providers: "
+				+ Arrays.toString(lm.getProviders(false).toArray()));
+		log.debug("Enables providers: "
+				+ Arrays.toString(lm.getProviders(true).toArray()));
 		String prov = lm.getBestProvider(criteria, true);
+		log.debug("Location provider is: " + prov);
+		Location loc = null;
 		if (prov != null)
-			return lm.getLastKnownLocation(prov);
-		else
-			return null;
+			loc = lm.getLastKnownLocation(prov);
+		if (loc == null)
+			loc = lm.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+		if (loc == null)
+			loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		if (loc == null)
+			loc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		log.debug("Last known location: " + loc);
+		return loc;
+
 	}
 }

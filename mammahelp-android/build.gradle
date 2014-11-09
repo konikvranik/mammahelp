@@ -36,7 +36,7 @@ dependencies {
 	compile 'com.android.support:appcompat-v7:19.0.0@aar'
 	compile 'com.google.android.gms:play-services:5.0.+@aar'
 	compile 'net.sf.jtidy:jtidy:r938'
-	compile 'org.slf4j:slf4j-android:1.7.7'
+	compile 'org.slf4j:slf4j-android:1.6.1-RC1'
 	compile 'org.apache.commons:commons-lang3:3.2.1'
 	compile 'com.google.code.android-rome-feed-reader:android-rome-feed-reader:1.0.0-r2'
 	compile('com.squareup.retrofit:converter-simplexml:1.6.1'){

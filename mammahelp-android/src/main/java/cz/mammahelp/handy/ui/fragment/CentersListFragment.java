@@ -83,6 +83,7 @@ public class CentersListFragment extends ANamedFragment {
 	private static final double DEFAULT_LATITUDE = 49.843707;
 
 	private static final float DEFAULT_ZOOM = 7;
+	private static final float DEFAULT_ZOOM_ON_POSITION = 10;
 
 	public class DistanceComparator implements Comparator<LocationPoint> {
 
@@ -431,18 +432,22 @@ public class CentersListFragment extends ANamedFragment {
 	}
 
 	private void moveToDefaultPosition(Location pos) {
+
+		float zoom = DEFAULT_ZOOM_ON_POSITION;
+
 		if (pos == null) {
 			pos = new Location("?");
 			pos.reset();
 			pos.setLatitude(DEFAULT_LATITUDE);
 			pos.setLongitude(DEFAULT_LONGITUDE);
+			zoom = DEFAULT_ZOOM;
 		}
 
 		log.debug("Moving camera to " + pos.getLatitude() + ", "
 				+ pos.getLongitude());
 
 		try {
-			getMap().moveCamera(CameraUpdateFactory.zoomTo(DEFAULT_ZOOM));
+			getMap().moveCamera(CameraUpdateFactory.zoomTo(zoom));
 			getMap().moveCamera(
 					CameraUpdateFactory.newLatLng(new LatLng(pos.getLatitude(),
 							pos.getLongitude())));
