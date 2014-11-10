@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   inkscape:label="Pozadí"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="marker.svg">
+  <defs
+     id="defs3">
+    <linearGradient
+       osb:paint="gradient"
+       id="linearGradient5225">
+      <stop
+         id="stop5227"
+         offset="0"
+         style="stop-color:#eb4e49;stop-opacity:1;" />
+      <stop
+         style="stop-color:#eb4e49;stop-opacity:1;"
+         offset="0"
+         id="stop5229" />
+      <stop
+         id="stop5231"
+         offset="1"
+         style="stop-color:#ffffff;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient5213"
+       osb:paint="gradient">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5215" />
+      <stop
+         id="stop5223"
+         offset="0"
+         style="stop-color:#ffffff;stop-opacity:1;" />
+      <stop
+         style="stop-color:#fff8f8;stop-opacity:0.14393939;"
+         offset="1"
+         id="stop5217" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient5201"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#49d0eb;stop-opacity:1;"
+         offset="0"
+         id="stop5203" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3755">
+      <stop
+         style="stop-color:#49d0eb;stop-opacity:1;"
+         offset="0"
+         id="stop3757" />
+      <stop
+         id="stop3765"
+         offset="0.86813188"
+         style="stop-color:#89dced;stop-opacity:0.81060606;" />
+      <stop
+         style="stop-color:#cae9f0;stop-opacity:0.719697;"
+         offset="1"
+         id="stop3759" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="137.95564"
+     inkscape:cy="779.09842"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1058"
+     inkscape:window-x="-8"
+     inkscape:window-y="389"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata6">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Vrstva 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       inkscape:transform-center-y="-373.292"
+       sodipodi:nodetypes="sscssss"
+       inkscape:connector-curvature="0"
+       id="path5245"
+       d="m -526.42856,-328.3521 c 0,170.46417 -140.83951,214.16109 -217.2233,405.776689 l -32.7767,82.223301 -32.7767,-82.223301 C -885.13562,-113.05353 -1026.4286,-157.88792 -1026.4286,-328.3521 c 0,-138.07119 111.92885,-250 250.00004,-250 138.07119,0 250,111.92881 250,250 z"
+       style="fill:#eb494e;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:27.384;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="C:\Users\jd39426\git\mammahelp\mammahelp-android\res\drawable\map_mamo.png"
+       inkscape:export-xdpi="5.46"
+       inkscape:export-ydpi="5.46" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:7.21199989;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 456.33534,-430.93351 c -1.70381,0 -3.4299,0.28026 -5.09169,0.87255 -0.94961,0.33847 -1.8853,0.78314 -2.78331,1.32534 -7.18356,4.33743 -9.47351,13.61395 -5.13586,20.79752 l 48.12252,79.68882 -23.98947,39.72841 -122.43246,0 c -8.03041,-1.3878 -15.71223,4.12051 -17.41776,12.64639 l -2.97108,14.84431 161.96207,0 40.23648,-67.21911 c -19.18641,-31.7907 -38.38314,-63.57531 -57.57694,-95.36144 -2.84654,-4.71437 -7.81062,-7.31398 -12.9225,-7.32279 z m 30.26296,169.90334 -22.74141,37.99438 8.92427,46.70878 76.55204,0 0,82.858657 40.39111,0 0,-307.986337 -40.39111,0 0,140.42452 -62.7349,0 z m -13.81714,84.70316 -121.58201,0 -15.46282,80.903717 152.50765,0 -15.46282,-80.903717 z m -121.58201,0 13.08818,-68.44509 -11.64129,0 -13.69565,68.44509 12.24876,0 z m -12.24876,0 -31.257,0 -11.97265,59.86323 c -1.75652,8.78068 3.49762,17.350047 11.78489,19.207037 8.28724,1.85698 16.37918,-3.722127 18.13568,-12.502787 l 13.30908,-66.56748 z m -31.257,0 16.94284,-84.70316 -52.94913,0 0,84.70316 36.00629,0 z M 411.49314,-378.5256 c -21.91643,0 -39.68424,17.75678 -39.68424,39.67323 0,21.91645 17.76781,39.68424 39.68424,39.68424 21.91647,0 39.6732,-17.76779 39.6732,-39.68424 0,-21.91645 -17.75673,-39.67323 -39.6732,-39.67323 z m -25.06082,136.45948 c -13.46496,0 -24.38709,10.91109 -24.38709,24.37605 0,13.46496 10.92213,24.38709 24.38709,24.38709 13.46496,0 24.37603,-10.92213 24.37603,-24.38709 0,-13.46496 -10.91107,-24.37605 -24.37603,-24.37605 z m 52.27539,0 c -13.46488,0 -24.38709,10.91109 -24.38709,24.37605 0,13.46496 10.92221,24.38709 24.38709,24.38709 13.465,0 24.37605,-10.92213 24.37605,-24.38709 0,-13.46496 -10.91105,-24.37605 -24.37605,-24.37605 z"
+       id="rect5249"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\jd39426\git\mammahelp\mammahelp-android\res\drawable-xxhdpi\map_mamo.png"
+       inkscape:export-xdpi="16.379999"
+       inkscape:export-ydpi="16.379999" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.02085757;stroke-miterlimit:4;stroke-opacity:1"
+       d="m -1016.198,-429.46529 0,201.94397 479.53879,0 0,-201.94397 -479.53879,0 z m 150.38385,14.61935 c 47.69069,0 86.34597,38.65528 86.34597,86.34598 0,47.69071 -38.65528,86.35929 -86.34597,86.35929 -47.69076,0 -86.35931,-38.66858 -86.35931,-86.35929 0,-47.6907 38.66855,-86.34598 86.35931,-86.34598 z m 178.78445,0 c 47.69072,0 86.34599,38.65528 86.34599,86.34598 0,47.69071 -38.65527,86.35929 -86.34599,86.35929 -47.6907,0 -86.35928,-38.66858 -86.35928,-86.35929 0,-47.6907 38.66857,-86.34598 86.35928,-86.34598 z"
+       id="rect5316"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\jd39426\git\mammahelp\mammahelp-android\res\drawable\map_mamo.png"
+       inkscape:export-xdpi="5.46"
+       inkscape:export-ydpi="5.46" />
+  </g>
+</svg>
