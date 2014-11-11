@@ -1,11 +1,9 @@
 package cz.mammahelp.handy.ui.activity;
 
 import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
-import static cz.mammahelp.handy.Constants.DAY_IN_MILLIS;
 import static cz.mammahelp.handy.Constants.NEWS_KEY;
 import static cz.mammahelp.handy.Constants.REGISTER_FLAG;
 import static cz.mammahelp.handy.Constants.UPDATE_INTERVAL_KEY;
-import static cz.mammahelp.handy.Constants.WEEK_IN_MILLIS;
 import static cz.mammahelp.handy.Constants.WIFI_ONLY_KEY;
 
 import java.util.Arrays;
@@ -34,6 +32,7 @@ import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.Toast;
+import cz.mammahelp.GeneralConstants;
 import cz.mammahelp.handy.MammaHelpService;
 import cz.mammahelp.handy.MammaHelpService.FeederServiceBinder;
 import cz.mammahelp.handy.R;
@@ -97,14 +96,14 @@ public class MainActivity extends AbstractMammaHelpActivity {
 	private void setupDefaultPreferences() {
 
 		String prefName = getResources().getString(R.string.news_preferences);
-		setupDefaultUpdatePrefserences(prefName, true, true, DAY_IN_MILLIS);
+		setupDefaultUpdatePrefserences(prefName, true, true, GeneralConstants.DAY_IN_MILLIS);
 
 		prefName = getResources().getString(R.string.others_preferences);
 		setupDefaultUpdatePrefserences(prefName, false, true,
-				4 * WEEK_IN_MILLIS);
+				4 * GeneralConstants.WEEK_IN_MILLIS);
 
 		prefName = getResources().getString(R.string.cleanup_preferences);
-		setupDefaultUpdatePrefserences(prefName, true, true, 1 * WEEK_IN_MILLIS);
+		setupDefaultUpdatePrefserences(prefName, true, true, 1 * GeneralConstants.WEEK_IN_MILLIS);
 
 	}
 

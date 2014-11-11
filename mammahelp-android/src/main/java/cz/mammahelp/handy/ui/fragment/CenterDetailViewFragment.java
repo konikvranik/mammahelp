@@ -1,6 +1,6 @@
 package cz.mammahelp.handy.ui.fragment;
 
-import static cz.mammahelp.handy.Utils.mapToBundle;
+import static cz.mammahelp.handy.AndroidUtils.mapToBundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,13 +17,14 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import cz.mammahelp.GeneralConstants;
+import cz.mammahelp.Utils;
+import cz.mammahelp.handy.AndroidUtils;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.R;
-import cz.mammahelp.handy.Utils;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.feeder.LocationFeeder;
-import cz.mammahelp.handy.provider.EnclosureContentProvider;
 import cz.mammahelp.handy.ui.AbstractMammaHelpActivity;
 import cz.mammahelp.handy.ui.MammahelpWebViewClient;
 import cz.mammahelp.model.Address;
@@ -79,7 +80,7 @@ public class CenterDetailViewFragment extends Fragment {
 
 		WebView wv = (WebView) view.findViewById(R.id.center_detail);
 
-		Utils.setupBrowser(wv);
+		AndroidUtils.setupBrowser(wv);
 
 		wv.setWebViewClient(new WebViewClient());
 		wv.setWebChromeClient(new WebChromeClient());
@@ -220,11 +221,11 @@ public class CenterDetailViewFragment extends Fragment {
 
 		if (lp.getMapImage() != null && lp.getMapImage().getId() != null) {
 			sb.append("<div class=\"map\"><a href=\"");
-			sb.append(EnclosureContentProvider
-					.makeUri(lp.getMapImage().getId()));
+			sb.append(Utils.makeContentUri(GeneralConstants.ENCLOSURE_CONTENT,
+					lp.getMapImage().getId()));
 			sb.append("\"><img class=\"size-full\" src=\"");
-			sb.append(EnclosureContentProvider
-					.makeUri(lp.getMapImage().getId()));
+			sb.append(Utils.makeContentUri(GeneralConstants.ENCLOSURE_CONTENT,
+					lp.getMapImage().getId()));
 			sb.append("\"/></a></div>");
 		}
 

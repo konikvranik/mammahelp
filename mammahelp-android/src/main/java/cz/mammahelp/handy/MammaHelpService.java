@@ -31,6 +31,8 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.widget.Toast;
+import cz.mammahelp.GeneralConstants;
+import cz.mammahelp.Utils;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.handy.dao.LocationPointDao;
@@ -38,8 +40,6 @@ import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.feeder.ArticleFeeder;
 import cz.mammahelp.handy.feeder.LocationFeeder;
 import cz.mammahelp.handy.feeder.NewsFeeder;
-import cz.mammahelp.handy.provider.ArticlesContentProvider;
-import cz.mammahelp.handy.provider.EnclosureContentProvider;
 import cz.mammahelp.model.Articles;
 import cz.mammahelp.model.Enclosure;
 import cz.mammahelp.model.Identificable;
@@ -423,7 +423,8 @@ public class MammaHelpService extends Service {
 
 			log.debug("processing ref " + ref);
 
-			if (ref.startsWith(EnclosureContentProvider.CONTENT_URI)) {
+			if (ref.startsWith(Utils
+					.makeContentUri(GeneralConstants.ENCLOSURE_CONTENT))) {
 				long id = Long.parseLong(uri.getLastPathSegment());
 				log.debug("trying to safe enclosure " + id);
 				enclosures.remove(id);
@@ -431,7 +432,8 @@ public class MammaHelpService extends Service {
 						+ Arrays.toString(enclosures.toArray()));
 			}
 
-			if (ref.startsWith(ArticlesContentProvider.CONTENT_URI)) {
+			if (ref.startsWith(Utils
+					.makeContentUri(GeneralConstants.ARTICLE_CONTENT))) {
 				long id = Long.parseLong(uri.getLastPathSegment());
 				ArticlesDao adao = new ArticlesDao(getDbHelper());
 				Articles a = adao.findById(id);
@@ -448,7 +450,7 @@ public class MammaHelpService extends Service {
 			XPath xpath = xPathfactory.newXPath();
 
 			XPathExpression b = xpath.compile("//@*[starts-with(.,\"content://"
-					+ Constants.CONTENT_URI_PREFIX + "\")]");
+					+ GeneralConstants.CONTENT_URI_PREFIX + "\")]");
 
 			NodeList nl = (NodeList) b.evaluate(new InputSource(
 					new StringReader("<root>" + body + "</root>")),

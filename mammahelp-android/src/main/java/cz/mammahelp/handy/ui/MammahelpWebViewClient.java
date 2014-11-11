@@ -15,11 +15,12 @@ import android.os.Bundle;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import cz.mammahelp.GeneralConstants;
+import cz.mammahelp.Utils;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.feeder.LocationFeeder;
-import cz.mammahelp.handy.provider.EnclosureContentProvider;
 import cz.mammahelp.handy.ui.fragment.CenterDetailViewFragment;
 import cz.mammahelp.model.LocationPoint;
 
@@ -82,7 +83,8 @@ public class MammahelpWebViewClient extends WebViewClient {
 		if (url == null)
 			super.shouldOverrideUrlLoading(view, url);
 
-		if (url.startsWith(EnclosureContentProvider.CONTENT_URI)) {
+		if (url.startsWith(Utils
+				.makeContentUri(GeneralConstants.ENCLOSURE_CONTENT))) {
 			log.debug("force view enclosure: " + url);
 			Intent intent = new Intent();
 			intent.setAction(Intent.ACTION_VIEW);
@@ -92,13 +94,14 @@ public class MammahelpWebViewClient extends WebViewClient {
 			intent.putExtra(Intent.EXTRA_STREAM, url);
 			view.getContext().startActivity(intent);
 			return true;
-		} else if (url.startsWith("content://" + Constants.CONTENT_URI_PREFIX
-				+ "center/")) {
+		} else if (url.startsWith("content://"
+				+ GeneralConstants.CONTENT_URI_PREFIX + "center/")) {
 			loadCentersIfEmpty(Long.parseLong(Uri.parse(url)
 					.getLastPathSegment()));
 
 			return true;
-		} else if (url.startsWith("content://" + Constants.CONTENT_URI_PREFIX)) {
+		} else if (url.startsWith("content://"
+				+ GeneralConstants.CONTENT_URI_PREFIX)) {
 			// view.loadUrl(url);
 			log.debug("let decide nativelly: " + url);
 			return super.shouldOverrideUrlLoading(view, url);

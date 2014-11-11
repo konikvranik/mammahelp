@@ -19,6 +19,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import cz.mammahelp.GeneralConstants;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
@@ -109,7 +110,7 @@ public class ArticleListFragment extends ANamedFragment {
 			}
 		});
 		if (getArguments() == null)
-			categoryId = Constants.CATEGORY_INFORMATIONS;
+			categoryId = GeneralConstants.CATEGORY_INFORMATIONS;
 		else
 			categoryId = getArguments().getString(Constants.CATEGORY_KEY);
 

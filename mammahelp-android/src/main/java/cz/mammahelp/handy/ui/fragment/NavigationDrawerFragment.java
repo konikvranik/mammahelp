@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import cz.mammahelp.GeneralConstants;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
@@ -259,11 +260,11 @@ public class NavigationDrawerFragment extends Fragment {
 	private String getTagByPosition(int position) {
 		switch (position) {
 		case 0:
-			return Constants.CATEGORY_INFORMATIONS;
+			return GeneralConstants.CATEGORY_INFORMATIONS;
 		case 1:
 			return Constants.NEWS_FRAGMENT_TAG;
 		case 2:
-			return Constants.CATEGORY_HELP;
+			return GeneralConstants.CATEGORY_HELP;
 		case 3:
 			return "mammahelp";
 		case 4:

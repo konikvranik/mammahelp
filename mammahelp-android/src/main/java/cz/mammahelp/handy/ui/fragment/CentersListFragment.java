@@ -1,9 +1,9 @@
 package cz.mammahelp.handy.ui.fragment;
 
-import static cz.mammahelp.handy.Utils.checkGooglePlayServices;
-import static cz.mammahelp.handy.Utils.distance;
-import static cz.mammahelp.handy.Utils.gAddresToMhAddress;
-import static cz.mammahelp.handy.Utils.getPosition;
+import static cz.mammahelp.handy.AndroidUtils.checkGooglePlayServices;
+import static cz.mammahelp.Utils.distance;
+import static cz.mammahelp.handy.AndroidUtils.gAddresToMhAddress;
+import static cz.mammahelp.handy.AndroidUtils.getPosition;
 
 import java.io.IOException;
 import java.io.StringReader;

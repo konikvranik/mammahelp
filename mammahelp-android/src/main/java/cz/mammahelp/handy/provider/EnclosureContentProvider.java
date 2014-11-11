@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
 
 import android.content.res.AssetFileDescriptor;
 import android.net.Uri;
-import cz.mammahelp.handy.Constants;
+import cz.mammahelp.GeneralConstants;
+import cz.mammahelp.Utils;
 import cz.mammahelp.handy.dao.BaseDao;
 import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.model.Enclosure;
@@ -19,10 +20,6 @@ import cz.mammahelp.model.Enclosure;
 public class EnclosureContentProvider extends
 		AbstractMammahelpContentProvider<Enclosure> {
 
-	public static final String AUTHORITY = Constants.CONTENT_URI_PREFIX
-			+ "enclosure";
-	public static final String CONTENT_BASE_URI = "content://" + AUTHORITY;
-	public static final String CONTENT_URI = CONTENT_BASE_URI + "/data/";
 	private static final boolean CACHE = true;
 
 	public static Logger log = LoggerFactory
@@ -46,10 +43,6 @@ public class EnclosureContentProvider extends
 		if (edao == null)
 			edao = new EnclosureDao(getDbHelper());
 		return edao;
-	}
-
-	public static String makeUri(Long id) {
-		return CONTENT_URI + id;
 	}
 
 	@Override

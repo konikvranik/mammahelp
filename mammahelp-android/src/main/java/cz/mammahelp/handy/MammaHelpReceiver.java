@@ -4,9 +4,9 @@
 package cz.mammahelp.handy;
 
 import static cz.mammahelp.handy.Constants.ARTICLE_KEY;
-import static cz.mammahelp.handy.Constants.CLEANUP_FLAG;
 import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
 import static cz.mammahelp.handy.Constants.CENTER_KEY;
+import static cz.mammahelp.handy.Constants.CLEANUP_FLAG;
 import static cz.mammahelp.handy.Constants.DEFAULT_UPDATE_INTERVAL;
 import static cz.mammahelp.handy.Constants.DEFAULT_WIFI_ONLY;
 import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;

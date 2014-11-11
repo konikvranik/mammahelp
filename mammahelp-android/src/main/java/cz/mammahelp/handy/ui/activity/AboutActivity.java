@@ -20,7 +20,7 @@ import android.os.Bundle;
 import android.webkit.WebView;
 import android.widget.TextView;
 import cz.mammahelp.handy.R;
-import cz.mammahelp.handy.Utils;
+import cz.mammahelp.handy.AndroidUtils;
 import cz.mammahelp.handy.ui.AbstractMammaHelpActivity;
 
 /**
@@ -59,7 +59,7 @@ public class AboutActivity extends AbstractMammaHelpActivity {
 				R.id.last_updated);
 
 		WebView usage = (WebView) getWindow().findViewById(R.id.usage);
-		Utils.transparencyHack(getApplicationContext(), usage);
+		AndroidUtils.transparencyHack(getApplicationContext(), usage);
 
 		usage.getSettings().setStandardFontFamily("sans-serif");
 		usage.loadUrl("file:///android_res/raw/about.html");

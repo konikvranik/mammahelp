@@ -28,7 +28,8 @@ import org.w3c.tidy.Tidy;
 
 import android.content.Context;
 import android.content.res.Resources;
-import cz.mammahelp.handy.Constants;
+import cz.mammahelp.GeneralConstants;
+import cz.mammahelp.Utils;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.MammaHelpException;
 import cz.mammahelp.handy.R;
@@ -112,8 +113,9 @@ public abstract class GenericAndroidXMLFeeder<T extends BaseDao<?>, E extends Id
 						if ("src".equals(attr.getName())) {
 
 							Identificable<?> id = saveEnclosure(conn);
-							newValue = EnclosureContentProvider.makeUri(+id
-									.getId());
+							newValue = Utils.makeContentUri(
+									GeneralConstants.ENCLOSURE_CONTENT,
+									id.getId());
 						} else if ("href".equals(attr.getName())) {
 							newValue = recurseArticles(topUrl, newValue, conn);
 						}
@@ -149,9 +151,10 @@ public abstract class GenericAndroidXMLFeeder<T extends BaseDao<?>, E extends Id
 
 	private String recurseArticles(String topUrl, String newValue,
 			HttpURLConnection conn) throws Exception {
-		if (newValue != null && newValue.startsWith(Constants.SOURCE_ROOT_URL)
+		if (newValue != null
+				&& newValue.startsWith(GeneralConstants.SOURCE_ROOT_URL)
 				&& !newValue.equals(topUrl)
-				&& !newValue.equals(Constants.SOURCE_ROOT_URL))
+				&& !newValue.equals(GeneralConstants.SOURCE_ROOT_URL))
 			if (conn.getContentType().startsWith("text/html"))
 				newValue = saveArticle(conn);
 		return newValue;
@@ -176,7 +179,8 @@ public abstract class GenericAndroidXMLFeeder<T extends BaseDao<?>, E extends Id
 		}
 		if (article == null || article.getId() == null)
 			return null;
-		return ArticlesContentProvider.makeUri(article.getId());
+		return Utils.makeContentUri(GeneralConstants.ARTICLE_CONTENT,
+				article.getId());
 	}
 
 	protected Enclosure saveEnclosure(HttpURLConnection conn)

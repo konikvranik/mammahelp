@@ -1,17 +1,10 @@
 package cz.mammahelp.handy.ui.component;
 
-import static cz.mammahelp.handy.Constants.DAY_IN_MILLIS;
-import static cz.mammahelp.handy.Constants.HOUR_IN_MILLIS;
-import static cz.mammahelp.handy.Constants.MINUTE_IN_MILLIS;
-import static cz.mammahelp.handy.Constants.WEEK_IN_MILLIS;
-
 import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.mammahelp.handy.R;
-import cz.mammahelp.handy.Utils;
 import android.content.Context;
 import android.content.SharedPreferences.Editor;
 import android.content.res.TypedArray;
@@ -20,6 +13,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import cz.mammahelp.GeneralConstants;
+import cz.mammahelp.handy.R;
+import cz.mammahelp.handy.AndroidUtils;
 
 public class IntervalPreference extends DialogPreference {
 
@@ -113,25 +109,25 @@ public class IntervalPreference extends DialogPreference {
 
 		if (value < 0)
 			valueString = getContext().getResources().getString(R.string.never);
-		else if (value >= WEEK_IN_MILLIS && (value % WEEK_IN_MILLIS) == 0) {
+		else if (value >= GeneralConstants.WEEK_IN_MILLIS && (value % GeneralConstants.WEEK_IN_MILLIS) == 0) {
 			valueString = String.format(Locale.getDefault(), "%d %s", value
-					/ WEEK_IN_MILLIS, Utils.getPlural(getContext()
-					.getResources(), R.array.weeks, value / WEEK_IN_MILLIS));
+					/ GeneralConstants.WEEK_IN_MILLIS, AndroidUtils.getPlural(getContext()
+					.getResources(), R.array.weeks, value / GeneralConstants.WEEK_IN_MILLIS));
 
-		} else if (value >= DAY_IN_MILLIS && (value % DAY_IN_MILLIS) == 0) {
+		} else if (value >= GeneralConstants.DAY_IN_MILLIS && (value % GeneralConstants.DAY_IN_MILLIS) == 0) {
 			valueString = String.format(Locale.getDefault(), "%d %s", value
-					/ DAY_IN_MILLIS, Utils.getPlural(getContext()
-					.getResources(), R.array.days, value / DAY_IN_MILLIS));
-		} else if (value >= HOUR_IN_MILLIS && (value % HOUR_IN_MILLIS) == 0) {
+					/ GeneralConstants.DAY_IN_MILLIS, AndroidUtils.getPlural(getContext()
+					.getResources(), R.array.days, value / GeneralConstants.DAY_IN_MILLIS));
+		} else if (value >= GeneralConstants.HOUR_IN_MILLIS && (value % GeneralConstants.HOUR_IN_MILLIS) == 0) {
 			valueString = String.format(Locale.getDefault(), "%d %s", value
-					/ HOUR_IN_MILLIS, Utils.getPlural(getContext()
-					.getResources(), R.array.hours, value / HOUR_IN_MILLIS));
-		} else if (value >= MINUTE_IN_MILLIS && (value % MINUTE_IN_MILLIS) == 0) {
+					/ GeneralConstants.HOUR_IN_MILLIS, AndroidUtils.getPlural(getContext()
+					.getResources(), R.array.hours, value / GeneralConstants.HOUR_IN_MILLIS));
+		} else if (value >= GeneralConstants.MINUTE_IN_MILLIS && (value % GeneralConstants.MINUTE_IN_MILLIS) == 0) {
 			valueString = String
 					.format(Locale.getDefault(), "%d %s", value
-							/ MINUTE_IN_MILLIS, Utils.getPlural(getContext()
+							/ GeneralConstants.MINUTE_IN_MILLIS, AndroidUtils.getPlural(getContext()
 							.getResources(), R.array.minutes, value
-							/ MINUTE_IN_MILLIS));
+							/ GeneralConstants.MINUTE_IN_MILLIS));
 		}
 		return valueString;
 	}

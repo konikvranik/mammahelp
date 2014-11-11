@@ -13,14 +13,14 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import cz.mammahelp.GeneralConstants;
+import cz.mammahelp.Utils;
+import cz.mammahelp.handy.AndroidUtils;
 import cz.mammahelp.handy.Constants;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.R;
-import cz.mammahelp.handy.Utils;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.dao.NewsDao;
-import cz.mammahelp.handy.provider.ArticlesContentProvider;
-import cz.mammahelp.handy.provider.NewsContentProvider;
 import cz.mammahelp.handy.ui.AbstractMammaHelpActivity;
 import cz.mammahelp.handy.ui.MammahelpWebViewClient;
 import cz.mammahelp.model.ASyncedInformation;
@@ -76,7 +76,7 @@ public class ArticleDetailViewFragment extends Fragment {
 
 		WebView wv = (WebView) view.findViewById(R.id.article_detail);
 
-		Utils.setupBrowser(wv);
+		AndroidUtils.setupBrowser(wv);
 
 		wv.setWebViewClient(new WebViewClient());
 		wv.setWebChromeClient(new WebChromeClient());
@@ -85,10 +85,11 @@ public class ArticleDetailViewFragment extends Fragment {
 
 		Uri uri = null;
 		if (getArticle() instanceof Articles) {
-			uri = Uri.parse(ArticlesContentProvider.makeUri(getArticle()
-					.getId()));
+			uri = Uri.parse(Utils.makeContentUri(
+					GeneralConstants.ARTICLE_CONTENT, getArticle().getId()));
 		} else if (getArticle() instanceof News) {
-			uri = Uri.parse(NewsContentProvider.makeUri(getArticle().getId()));
+			uri = Uri.parse(Utils.makeContentUri(GeneralConstants.NEWS_CONTENT,
+					getArticle().getId()));
 		}
 
 		Map<String, String> headers = new HashMap<String, String>();

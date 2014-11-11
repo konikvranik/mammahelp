@@ -8,16 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.net.Uri;
-import cz.mammahelp.handy.Constants;
+import cz.mammahelp.GeneralConstants;
+import cz.mammahelp.Utils;
 import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.model.News;
 
 public class NewsContentProvider extends AbstractMammahelpContentProvider<News> {
-
-	public static final String AUTHORITY = Constants.CONTENT_URI_PREFIX
-			+ "news";
-	public static final String CONTENT_BASE_URI = "content://" + AUTHORITY;
-	public static final String CONTENT_URI = CONTENT_BASE_URI + "/data/";
 
 	public static Logger log = LoggerFactory
 			.getLogger(NewsContentProvider.class);
@@ -64,10 +60,6 @@ public class NewsContentProvider extends AbstractMammahelpContentProvider<News> 
 		if (ndao == null)
 			ndao = new NewsDao(getDbHelper());
 		return ndao;
-	}
-
-	public static String makeUri(Long id) {
-		return CONTENT_URI + id;
 	}
 
 	@Override
