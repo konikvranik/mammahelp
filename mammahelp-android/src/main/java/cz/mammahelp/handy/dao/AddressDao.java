@@ -1,8 +1,9 @@
 package cz.mammahelp.handy.dao;
 
+import static cz.mammahelp.handy.AndroidUtils.bundleToMap;
+
 import java.util.Locale;
 
-import static cz.mammahelp.handy.AndroidUtils.bundleToMap;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

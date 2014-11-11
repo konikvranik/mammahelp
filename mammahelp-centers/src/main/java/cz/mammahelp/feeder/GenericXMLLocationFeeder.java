@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.TreeSet;
 
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPathConstants;

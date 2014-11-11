@@ -11,9 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import android.content.res.AssetFileDescriptor;
 import android.net.Uri;
-import cz.mammahelp.GeneralConstants;
-import cz.mammahelp.Utils;
-import cz.mammahelp.handy.dao.BaseDao;
 import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.model.Enclosure;
 
@@ -39,7 +36,7 @@ public class EnclosureContentProvider extends
 	}
 
 	@Override
-	protected BaseDao<Enclosure> getDao() {
+	protected EnclosureDao getDao() {
 		if (edao == null)
 			edao = new EnclosureDao(getDbHelper());
 		return edao;

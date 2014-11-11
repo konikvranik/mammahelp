@@ -36,8 +36,6 @@ import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.dao.BaseDao;
 import cz.mammahelp.handy.dao.EnclosureDao;
-import cz.mammahelp.handy.provider.ArticlesContentProvider;
-import cz.mammahelp.handy.provider.EnclosureContentProvider;
 import cz.mammahelp.model.ASyncedInformation;
 import cz.mammahelp.model.Articles;
 import cz.mammahelp.model.Enclosure;

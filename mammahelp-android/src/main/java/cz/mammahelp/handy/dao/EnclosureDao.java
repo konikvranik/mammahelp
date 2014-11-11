@@ -12,8 +12,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
-import cz.mammahelp.handy.dao.BaseDao.Column;
-import cz.mammahelp.model.Articles;
 import cz.mammahelp.model.Enclosure;
 
 @SuppressWarnings("unused")
