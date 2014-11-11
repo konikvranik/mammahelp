@@ -62,7 +62,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import cz.mammahelp.handy.Constants;
+import cz.mammahelp.handy.AndroidConstants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.feeder.LocationFeeder;
@@ -295,7 +295,7 @@ public class CentersListFragment extends ANamedFragment {
 	private void openCenterDetail(long id) {
 		CenterDetailViewFragment af = new CenterDetailViewFragment();
 		Bundle args = new Bundle();
-		args.putLong(Constants.CENTER_KEY, id);
+		args.putLong(AndroidConstants.CENTER_KEY, id);
 		af.setArguments(args);
 		getFragmentManager().beginTransaction().add(R.id.container, af)
 				.addToBackStack(null).commit();

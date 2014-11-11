@@ -110,10 +110,10 @@ public class MammaHelpService extends Service {
 
 		log.trace("MammaHelpFeederService.onStartCommand()");
 
-		if (intent.getBooleanExtra(Constants.REGISTER_FLAG, false))
+		if (intent.getBooleanExtra(AndroidConstants.REGISTER_FLAG, false))
 			return START_NOT_STICKY;
 
-		if (intent.getBooleanExtra(Constants.CLEANUP_FLAG, false)) {
+		if (intent.getBooleanExtra(AndroidConstants.CLEANUP_FLAG, false)) {
 
 			log.debug("Is running? " + isRunning());
 
@@ -126,8 +126,8 @@ public class MammaHelpService extends Service {
 		}
 
 		boolean added = false;
-		String[] types = new String[] { Constants.ARTICLE_KEY,
-				Constants.NEWS_KEY, Constants.CENTER_KEY };
+		String[] types = new String[] { AndroidConstants.ARTICLE_KEY,
+				AndroidConstants.NEWS_KEY, AndroidConstants.CENTER_KEY };
 		for (String type : types) {
 			Long id = intent.getLongExtra(type, -2);
 			if (id > -2) {
@@ -166,11 +166,11 @@ public class MammaHelpService extends Service {
 	}
 
 	private Identificable<? extends Identificable<?>> cerateIdByType(String type) {
-		if (Constants.ARTICLE_KEY.equals(type))
+		if (AndroidConstants.ARTICLE_KEY.equals(type))
 			return new Articles();
-		else if (Constants.NEWS_KEY.equals(type))
+		else if (AndroidConstants.NEWS_KEY.equals(type))
 			return new News();
-		else if (Constants.CENTER_KEY.equals(type))
+		else if (AndroidConstants.CENTER_KEY.equals(type))
 			return new LocationPoint();
 		return null;
 	}

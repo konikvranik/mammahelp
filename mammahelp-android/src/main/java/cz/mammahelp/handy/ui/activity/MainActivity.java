@@ -1,10 +1,10 @@
 package cz.mammahelp.handy.ui.activity;
 
-import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
-import static cz.mammahelp.handy.Constants.NEWS_KEY;
-import static cz.mammahelp.handy.Constants.REGISTER_FLAG;
-import static cz.mammahelp.handy.Constants.UPDATE_INTERVAL_KEY;
-import static cz.mammahelp.handy.Constants.WIFI_ONLY_KEY;
+import static cz.mammahelp.handy.AndroidConstants.AUTOMATIC_UPDATES_KEY;
+import static cz.mammahelp.handy.AndroidConstants.NEWS_KEY;
+import static cz.mammahelp.handy.AndroidConstants.REGISTER_FLAG;
+import static cz.mammahelp.handy.AndroidConstants.UPDATE_INTERVAL_KEY;
+import static cz.mammahelp.handy.AndroidConstants.WIFI_ONLY_KEY;
 
 import java.util.Arrays;
 

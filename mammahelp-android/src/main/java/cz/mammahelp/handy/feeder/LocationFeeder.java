@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import android.content.Context;
 import android.location.Geocoder;
-import cz.mammahelp.handy.Constants;
+import cz.mammahelp.handy.AndroidConstants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.EnclosureDao;
 import cz.mammahelp.handy.dao.LocationPointDao;
@@ -58,7 +58,7 @@ public class LocationFeeder extends
 						getContext().getResources().getString(
 								R.string.others_preferences),
 						Context.MODE_MULTI_PROCESS).getBoolean(
-						Constants.AUTOMATIC_UPDATES_KEY, false))
+						AndroidConstants.AUTOMATIC_UPDATES_KEY, false))
 					feedData(a);
 			}
 			long time = System.currentTimeMillis();

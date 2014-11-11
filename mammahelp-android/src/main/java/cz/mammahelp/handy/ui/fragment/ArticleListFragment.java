@@ -20,7 +20,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import cz.mammahelp.GeneralConstants;
-import cz.mammahelp.handy.Constants;
+import cz.mammahelp.handy.AndroidConstants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.ui.ANamedFragment;
@@ -93,7 +93,7 @@ public class ArticleListFragment extends ANamedFragment {
 
 				ArticleDetailViewFragment af = new ArticleDetailViewFragment();
 				Bundle args = new Bundle();
-				args.putLong(Constants.ARTICLE_KEY, paramAdapterView
+				args.putLong(AndroidConstants.ARTICLE_KEY, paramAdapterView
 						.getAdapter().getItemId(paramInt));
 				af.setArguments(args);
 				getFragmentManager().beginTransaction().add(R.id.container, af)
@@ -112,7 +112,7 @@ public class ArticleListFragment extends ANamedFragment {
 		if (getArguments() == null)
 			categoryId = GeneralConstants.CATEGORY_INFORMATIONS;
 		else
-			categoryId = getArguments().getString(Constants.CATEGORY_KEY);
+			categoryId = getArguments().getString(AndroidConstants.CATEGORY_KEY);
 
 		updateData();
 

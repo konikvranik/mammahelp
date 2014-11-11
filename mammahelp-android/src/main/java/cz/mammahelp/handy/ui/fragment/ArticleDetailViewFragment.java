@@ -16,7 +16,7 @@ import android.webkit.WebViewClient;
 import cz.mammahelp.GeneralConstants;
 import cz.mammahelp.Utils;
 import cz.mammahelp.handy.AndroidUtils;
-import cz.mammahelp.handy.Constants;
+import cz.mammahelp.handy.AndroidConstants;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
@@ -101,10 +101,10 @@ public class ArticleDetailViewFragment extends Fragment {
 
 	private ASyncedInformation<?> getArticle() {
 		if (article == null) {
-			Long id = getArguments().getLong(Constants.ARTICLE_KEY);
+			Long id = getArguments().getLong(AndroidConstants.ARTICLE_KEY);
 
 			if (id == null) {
-				id = getArguments().getLong(Constants.NEWS_KEY);
+				id = getArguments().getLong(AndroidConstants.NEWS_KEY);
 				NewsDao ndao = new NewsDao(getDbHelper());
 				article = ndao.findById(id);
 			} else {
@@ -128,11 +128,11 @@ public class ArticleDetailViewFragment extends Fragment {
 		super.onAttach(activity);
 
 		if (getArguments() != null)
-			if (getArguments().containsKey(Constants.ARTICLE_KEY)) {
+			if (getArguments().containsKey(AndroidConstants.ARTICLE_KEY)) {
 				article = new Articles(getArguments().getLong(
-						Constants.ARTICLE_KEY));
-			} else if (getArguments().containsKey(Constants.NEWS_KEY)) {
-				article = new News(getArguments().getLong(Constants.NEWS_KEY));
+						AndroidConstants.ARTICLE_KEY));
+			} else if (getArguments().containsKey(AndroidConstants.NEWS_KEY)) {
+				article = new News(getArguments().getLong(AndroidConstants.NEWS_KEY));
 			}
 
 		try {
@@ -167,9 +167,9 @@ public class ArticleDetailViewFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 		if (getArticle() instanceof Articles) {
-			outState.putLong(Constants.ARTICLE_KEY, getArticle().getId());
+			outState.putLong(AndroidConstants.ARTICLE_KEY, getArticle().getId());
 		} else if (getArticle() instanceof News) {
-			outState.putLong(Constants.NEWS_KEY, getArticle().getId());
+			outState.putLong(AndroidConstants.NEWS_KEY, getArticle().getId());
 		}
 	}
 

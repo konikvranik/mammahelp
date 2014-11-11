@@ -29,7 +29,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import cz.mammahelp.handy.Constants;
+import cz.mammahelp.handy.AndroidConstants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.handy.ui.ANamedFragment;
@@ -228,7 +228,7 @@ public class NewsListFragment extends ANamedFragment {
 
 				ArticleDetailViewFragment af = new ArticleDetailViewFragment();
 				Bundle args = new Bundle();
-				args.putLong(Constants.NEWS_KEY, item.getId());
+				args.putLong(AndroidConstants.NEWS_KEY, item.getId());
 				af.setArguments(args);
 				getFragmentManager().beginTransaction().add(R.id.container, af)
 						.addToBackStack(null).commit();

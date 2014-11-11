@@ -1,6 +1,6 @@
 package cz.mammahelp.handy.feeder;
 
-import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
+import static cz.mammahelp.handy.AndroidConstants.LAST_UPDATED_KEY;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -27,7 +27,7 @@ import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.Syn
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.FeedException;
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.SyndFeedInput;
 
-import cz.mammahelp.handy.Constants;
+import cz.mammahelp.handy.AndroidConstants;
 import cz.mammahelp.handy.NotificationUtils;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.NewsDao;
@@ -102,7 +102,7 @@ public class NewsFeeder extends GenericAndroidXMLFeeder<NewsDao, News> {
 						.getString(R.string.news_preferences),
 				Context.MODE_MULTI_PROCESS);
 		prefs.edit()
-				.putLong(Constants.NEWS_LAST_UPDATED,
+				.putLong(AndroidConstants.NEWS_LAST_UPDATED,
 						feed.getPublishedDate().getTime()).commit();
 
 		prefs.edit().putLong(LAST_UPDATED_KEY, System.currentTimeMillis())
@@ -111,7 +111,7 @@ public class NewsFeeder extends GenericAndroidXMLFeeder<NewsDao, News> {
 		NotificationUtils.makeNotification(
 				getContext().getApplicationContext(),
 				MainActivity.class,
-				Constants.NEWS_NOTIFICATION_ID,
+				AndroidConstants.NEWS_NOTIFICATION_ID,
 				R.drawable.ic_launcher,
 				BitmapFactory.decodeResource(getContext().getResources(),
 						R.drawable.ic_launcher),
@@ -136,7 +136,7 @@ public class NewsFeeder extends GenericAndroidXMLFeeder<NewsDao, News> {
 					getContext().getResources().getString(
 							R.string.news_preferences), Context.MODE_PRIVATE);
 
-			long lastUpdated = prefs.getLong(Constants.NEWS_LAST_UPDATED, 0);
+			long lastUpdated = prefs.getLong(AndroidConstants.NEWS_LAST_UPDATED, 0);
 			Date lastTimeUpdated = new Date(lastUpdated);
 
 			is = getInputStreamFromUrl(new URL(url), lastTimeUpdated);

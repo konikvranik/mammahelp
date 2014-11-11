@@ -17,7 +17,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import cz.mammahelp.GeneralConstants;
 import cz.mammahelp.Utils;
-import cz.mammahelp.handy.Constants;
+import cz.mammahelp.handy.AndroidConstants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.feeder.LocationFeeder;
@@ -39,7 +39,7 @@ public class MammahelpWebViewClient extends WebViewClient {
 		if (context instanceof Activity) {
 			CenterDetailViewFragment af = new CenterDetailViewFragment();
 			Bundle args = new Bundle();
-			args.putLong(Constants.CENTER_KEY, id);
+			args.putLong(AndroidConstants.CENTER_KEY, id);
 			af.setArguments(args);
 			((Activity) context).getFragmentManager().beginTransaction()
 					.add(R.id.container, af).addToBackStack(null).commit();

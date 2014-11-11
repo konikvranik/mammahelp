@@ -3,7 +3,7 @@
  */
 package cz.mammahelp.handy.ui.activity;
 
-import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
+import static cz.mammahelp.handy.AndroidConstants.LAST_UPDATED_KEY;
 
 import java.text.DateFormat;
 import java.util.Date;

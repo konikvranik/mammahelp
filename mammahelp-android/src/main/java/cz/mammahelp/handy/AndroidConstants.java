@@ -3,7 +3,7 @@ package cz.mammahelp.handy;
 import cz.mammahelp.GeneralConstants;
 
 
-public class Constants {
+public class AndroidConstants {
 
 	public static final String DEFAULT_PREFERENCES = "default";
 

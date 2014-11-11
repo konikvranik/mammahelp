@@ -3,9 +3,9 @@
  */
 package cz.mammahelp.handy.ui.activity;
 
-import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
-import static cz.mammahelp.handy.Constants.KEY;
-import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
+import static cz.mammahelp.handy.AndroidConstants.AUTOMATIC_UPDATES_KEY;
+import static cz.mammahelp.handy.AndroidConstants.KEY;
+import static cz.mammahelp.handy.AndroidConstants.LAST_UPDATED_KEY;
 
 import java.util.List;
 import java.util.Map;
@@ -27,7 +27,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.view.MenuItem;
 import android.widget.Toast;
-import cz.mammahelp.handy.Constants;
+import cz.mammahelp.handy.AndroidConstants;
 import cz.mammahelp.handy.MammaHelpService;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.ui.component.IntervalPreference;
@@ -203,8 +203,8 @@ public class PreferencesActivity extends PreferenceActivity {
 		if (header.id == R.id.refresh) {
 			Intent intent = new Intent(getApplicationContext(),
 					MammaHelpService.class);
-			intent.putExtra(Constants.ARTICLE_KEY, (long) -1);
-			intent.putExtra(Constants.CENTER_KEY, (long) -1);
+			intent.putExtra(AndroidConstants.ARTICLE_KEY, (long) -1);
+			intent.putExtra(AndroidConstants.CENTER_KEY, (long) -1);
 			startService(intent);
 
 			Toast.makeText(getApplicationContext(), R.string.update_started,
@@ -223,7 +223,7 @@ public class PreferencesActivity extends PreferenceActivity {
 
 	private static void runCleanup(Context context) {
 		Intent intent = new Intent(context, MammaHelpService.class);
-		intent.putExtra(Constants.CLEANUP_FLAG, true);
+		intent.putExtra(AndroidConstants.CLEANUP_FLAG, true);
 		context.startService(intent);
 
 		Toast.makeText(context, R.string.cleanup_started, Toast.LENGTH_SHORT)

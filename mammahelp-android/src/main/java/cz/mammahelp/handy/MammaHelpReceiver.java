@@ -3,16 +3,16 @@
  */
 package cz.mammahelp.handy;
 
-import static cz.mammahelp.handy.Constants.ARTICLE_KEY;
-import static cz.mammahelp.handy.Constants.AUTOMATIC_UPDATES_KEY;
-import static cz.mammahelp.handy.Constants.CENTER_KEY;
-import static cz.mammahelp.handy.Constants.CLEANUP_FLAG;
-import static cz.mammahelp.handy.Constants.DEFAULT_UPDATE_INTERVAL;
-import static cz.mammahelp.handy.Constants.DEFAULT_WIFI_ONLY;
-import static cz.mammahelp.handy.Constants.LAST_UPDATED_KEY;
-import static cz.mammahelp.handy.Constants.NEWS_KEY;
-import static cz.mammahelp.handy.Constants.UPDATE_INTERVAL_KEY;
-import static cz.mammahelp.handy.Constants.WIFI_ONLY_KEY;
+import static cz.mammahelp.handy.AndroidConstants.ARTICLE_KEY;
+import static cz.mammahelp.handy.AndroidConstants.AUTOMATIC_UPDATES_KEY;
+import static cz.mammahelp.handy.AndroidConstants.CENTER_KEY;
+import static cz.mammahelp.handy.AndroidConstants.CLEANUP_FLAG;
+import static cz.mammahelp.handy.AndroidConstants.DEFAULT_UPDATE_INTERVAL;
+import static cz.mammahelp.handy.AndroidConstants.DEFAULT_WIFI_ONLY;
+import static cz.mammahelp.handy.AndroidConstants.LAST_UPDATED_KEY;
+import static cz.mammahelp.handy.AndroidConstants.NEWS_KEY;
+import static cz.mammahelp.handy.AndroidConstants.UPDATE_INTERVAL_KEY;
+import static cz.mammahelp.handy.AndroidConstants.WIFI_ONLY_KEY;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -37,7 +37,7 @@ public class MammaHelpReceiver extends BroadcastReceiver {
 		if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
 			log.debug("DemoReceiver.onReceive(ACTION_BOOT_COMPLETED)");
 			context.startService(new Intent(context, MammaHelpService.class)
-					.putExtra(Constants.REGISTER_FLAG, true));
+					.putExtra(AndroidConstants.REGISTER_FLAG, true));
 		} else if (Intent.ACTION_TIME_TICK.equals(intent.getAction())) {
 			log.debug("DemoReceiver.onReceive(ACTION_TIME_TICK)");
 

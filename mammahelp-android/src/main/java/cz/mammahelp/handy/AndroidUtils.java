@@ -130,7 +130,7 @@ public class AndroidUtils {
 			 * SERVICE_INVALID.
 			 */
 			GooglePlayServicesUtil.getErrorDialog(checkGooglePlayServices,
-					context, Constants.REQUEST_CODE_RECOVER_PLAY_SERVICES)
+					context, AndroidConstants.REQUEST_CODE_RECOVER_PLAY_SERVICES)
 					.show();
 		}
 	}

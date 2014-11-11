@@ -1,6 +1,6 @@
 package cz.mammahelp.handy;
 
-import static cz.mammahelp.handy.Constants.EXCEPTION;
+import static cz.mammahelp.handy.AndroidConstants.EXCEPTION;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

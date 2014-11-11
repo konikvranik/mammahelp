@@ -20,7 +20,7 @@ import android.webkit.WebViewClient;
 import cz.mammahelp.GeneralConstants;
 import cz.mammahelp.Utils;
 import cz.mammahelp.handy.AndroidUtils;
-import cz.mammahelp.handy.Constants;
+import cz.mammahelp.handy.AndroidConstants;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.LocationPointDao;
@@ -86,7 +86,7 @@ public class CenterDetailViewFragment extends Fragment {
 		wv.setWebChromeClient(new WebChromeClient());
 
 		LocationPointDao ldao = new LocationPointDao(getDbHelper());
-		Long id = getArguments().getLong(Constants.CENTER_KEY);
+		Long id = getArguments().getLong(AndroidConstants.CENTER_KEY);
 		LocationPoint lp = ldao.findById(id);
 		wv.setWebViewClient(new MammahelpWebViewClient(getActivity()));
 		wv.loadDataWithBaseURL(null, locationIntoHtml(ldao, wv, lp),
@@ -97,7 +97,7 @@ public class CenterDetailViewFragment extends Fragment {
 
 	private LocationPoint getCenter() {
 		if (center == null) {
-			Long id = getArguments().getLong(Constants.CENTER_KEY);
+			Long id = getArguments().getLong(AndroidConstants.CENTER_KEY);
 
 			LocationPointDao adao = new LocationPointDao(getDbHelper());
 			center = adao.findById(id);
@@ -119,7 +119,7 @@ public class CenterDetailViewFragment extends Fragment {
 
 		if (getArguments() != null)
 			center = new LocationPoint(getArguments().getLong(
-					Constants.CENTER_KEY));
+					AndroidConstants.CENTER_KEY));
 
 		try {
 			// mListener = (OnFragmentInteractionListener) activity;
@@ -152,7 +152,7 @@ public class CenterDetailViewFragment extends Fragment {
 	public void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
-		outState.putLong(Constants.CENTER_KEY, getCenter().getId());
+		outState.putLong(AndroidConstants.CENTER_KEY, getCenter().getId());
 	}
 
 	private String locationIntoHtml(final LocationPointDao ldao,
@@ -193,7 +193,7 @@ public class CenterDetailViewFragment extends Fragment {
 				&& getActivity().getSharedPreferences(
 						getResources().getString(R.string.others_preferences),
 						Context.MODE_MULTI_PROCESS).getBoolean(
-						Constants.AUTOMATIC_UPDATES_KEY, false)) {
+						AndroidConstants.AUTOMATIC_UPDATES_KEY, false)) {
 
 			new AsyncTask<Void, Void, Void>() {
 				@Override

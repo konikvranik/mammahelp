@@ -27,7 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import cz.mammahelp.GeneralConstants;
-import cz.mammahelp.handy.Constants;
+import cz.mammahelp.handy.AndroidConstants;
 import cz.mammahelp.handy.R;
 import cz.mammahelp.handy.dao.ArticlesDao;
 import cz.mammahelp.handy.ui.activity.MainActivity;
@@ -248,7 +248,7 @@ public class NavigationDrawerFragment extends Fragment {
 		Fragment f = fragmentManager.findFragmentByTag(tag);
 
 		if (f == null) {
-			fragmentManager.popBackStack(Constants.NEWS_FRAGMENT_TAG, 0);
+			fragmentManager.popBackStack(AndroidConstants.NEWS_FRAGMENT_TAG, 0);
 			f = getFragmentByPosition(position, tag);
 			fragmentManager.beginTransaction().add(R.id.container, f, tag)
 					.addToBackStack(tag).commit();
@@ -262,7 +262,7 @@ public class NavigationDrawerFragment extends Fragment {
 		case 0:
 			return GeneralConstants.CATEGORY_INFORMATIONS;
 		case 1:
-			return Constants.NEWS_FRAGMENT_TAG;
+			return AndroidConstants.NEWS_FRAGMENT_TAG;
 		case 2:
 			return GeneralConstants.CATEGORY_HELP;
 		case 3:
@@ -283,7 +283,7 @@ public class NavigationDrawerFragment extends Fragment {
 		case 2:
 			f = new ArticleListFragment();
 
-			b.putString(Constants.CATEGORY_KEY, tag);
+			b.putString(AndroidConstants.CATEGORY_KEY, tag);
 			break;
 
 		case 1:
@@ -302,7 +302,7 @@ public class NavigationDrawerFragment extends Fragment {
 					((MainActivity) getActivity()).getDbHelper());
 			SortedSet<Articles> prevArticles = ad.findByCategory(tag);
 
-			b.putLong(Constants.ARTICLE_KEY, prevArticles.first().getId());
+			b.putLong(AndroidConstants.ARTICLE_KEY, prevArticles.first().getId());
 			break;
 
 		default:
