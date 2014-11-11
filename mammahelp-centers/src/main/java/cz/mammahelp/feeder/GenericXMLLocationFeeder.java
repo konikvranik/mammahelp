@@ -342,20 +342,19 @@ public abstract class GenericXMLLocationFeeder extends
 
 		int BUFFER = 2048;
 
-		PipedInputStream input = new PipedInputStream(BUFFER);
-		PipedOutputStream output = new PipedOutputStream(input);
-
-		Node d = getDom();
+		final PipedInputStream input = new PipedInputStream(BUFFER);
 
 		Thread t = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				try {
+					Node d = getDom();
+					PipedOutputStream output = new PipedOutputStream(input);
 					getTransformer().transform(new DOMSource(d),
 							new StreamResult(output));
 					output.close();
-				} catch (TransformerException | IOException e) {
+				} catch (Exception e) {
 					log.error(e.getMessage(), e);
 				}
 			}
