@@ -14,21 +14,22 @@ import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
 import cz.mammahelp.model.Enclosure;
 
-@SuppressWarnings("unused")
 public class EnclosureDao extends BaseDao<Enclosure> {
 
 	public static Logger log = LoggerFactory.getLogger(EnclosureDao.class);
 
 	public static final String TABLE_NAME = "enclosures";
 
-	public static final Column URL = new Column("url", SQLiteDataTypes.TEXT);
-	public static final Column LENGTH = new Column("length",
-			SQLiteDataTypes.INTEGER);
-	public static final Column TYPE = new Column("type", SQLiteDataTypes.TEXT);
-	public static final Column DATA = new Column("data", SQLiteDataTypes.BLOB);
-	public static final Column UPDATED = new Column("updated",
-			SQLiteDataTypes.TEXT);
-
+	public static final Column<SQLiteDataTypes> URL = new AndroidSQLiteColumn(
+			"url", SQLiteDataTypes.TEXT);
+	public static final Column<SQLiteDataTypes> LENGTH = new AndroidSQLiteColumn(
+			"length", SQLiteDataTypes.INTEGER);
+	public static final Column<SQLiteDataTypes> TYPE = new AndroidSQLiteColumn(
+			"type", SQLiteDataTypes.TEXT);
+	public static final Column<SQLiteDataTypes> DATA = new AndroidSQLiteColumn(
+			"data", SQLiteDataTypes.BLOB);
+	public static final Column<SQLiteDataTypes> UPDATED = new AndroidSQLiteColumn(
+			"updated", SQLiteDataTypes.TEXT);
 
 	static {
 
@@ -49,13 +50,14 @@ public class EnclosureDao extends BaseDao<Enclosure> {
 
 	@Override
 	protected Enclosure parseRow(Cursor cursor) {
-		Enclosure e = new Enclosure(unpackColumnValue(cursor, ID, Long.class));
+		Enclosure e = new Enclosure(unpackColumnValue(cursor,
+				(AndroidSQLiteColumn) ID, Long.class));
 		e.setUrl(unpackColumnValue(cursor, URL, String.class));
 		e.setLength(unpackColumnValue(cursor, LENGTH, Long.class));
 		e.setType(unpackColumnValue(cursor, TYPE, String.class));
 		e.setData(unpackColumnValue(cursor, DATA, byte[].class));
 		e.setSyncTime(unpackColumnValue(cursor, UPDATED, Calendar.class));
-		
+
 		return e;
 	}
 
@@ -82,7 +84,6 @@ public class EnclosureDao extends BaseDao<Enclosure> {
 				obj.getSyncTime() == null ? null : new SimpleDateFormat(
 						DATE_FORMAT, LOCALE)
 						.format(obj.getSyncTime().getTime()));
-	
 
 		return values.getValues();
 	}

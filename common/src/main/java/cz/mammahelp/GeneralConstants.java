@@ -17,7 +17,7 @@ public class GeneralConstants {
 	public static final String AUTHORITY = CONTENT_URI_PREFIX
 			+ "%1$s";
 	public static final String CONTENT_BASE_URI = "content://" + AUTHORITY;
-	public static final String CONTENT_URI = CONTENT_BASE_URI + "/data/%1$d";
+	public static final String CONTENT_URI = CONTENT_BASE_URI + "/data/%2$d";
 
 	public static final String ENCLOSURE_CONTENT = "enclosure";
 	public static final String NEWS_CONTENT = "news";

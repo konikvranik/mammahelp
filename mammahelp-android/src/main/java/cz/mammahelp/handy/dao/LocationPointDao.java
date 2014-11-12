@@ -19,15 +19,20 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 
 	public static final String TABLE_NAME = "location_points";
 
-	public static final Column ADDRESS = new Column("address",
-			AddressDao.ID.getType(), new ForeignKey(AddressDao.class));
-	public static final Column NAME = new Column("name", SQLiteDataTypes.TEXT);
-	public static final Column TYPE = new Column("type", SQLiteDataTypes.TEXT);
-	public static final Column DESCRIPTION = new Column("description",
-			SQLiteDataTypes.TEXT);
-	public static final Column URL = new Column("url", SQLiteDataTypes.TEXT);
-	public static final Column MAP = new Column("map",
-			EnclosureDao.ID.getType(), new ForeignKey(EnclosureDao.class));
+	public static final Column<SQLiteDataTypes> ADDRESS = new AndroidSQLiteColumn(
+			"address", ((AndroidSQLiteColumn) AddressDao.ID).getType(),
+			new ForeignKey(AddressDao.class));
+	public static final Column<SQLiteDataTypes> NAME = new AndroidSQLiteColumn(
+			"name", SQLiteDataTypes.TEXT);
+	public static final Column<SQLiteDataTypes> TYPE = new AndroidSQLiteColumn(
+			"type", SQLiteDataTypes.TEXT);
+	public static final Column<SQLiteDataTypes> DESCRIPTION = new AndroidSQLiteColumn(
+			"description", SQLiteDataTypes.TEXT);
+	public static final Column<SQLiteDataTypes> URL = new AndroidSQLiteColumn(
+			"url", SQLiteDataTypes.TEXT);
+	public static final Column<SQLiteDataTypes> MAP = new AndroidSQLiteColumn(
+			"map", ((AndroidSQLiteColumn) EnclosureDao.ID).getType(),
+			new ForeignKey(EnclosureDao.class));
 
 	static {
 
@@ -53,8 +58,8 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 
 	@Override
 	protected LocationPoint parseRow(Cursor cursor) {
-		LocationPoint e = new LocationPoint(unpackColumnValue(cursor, ID,
-				Long.class));
+		LocationPoint e = new LocationPoint(unpackColumnValue(cursor,
+				(AndroidSQLiteColumn) ID, Long.class));
 		e.setUrl(unpackColumnValue(cursor, URL, String.class));
 		e.setLocation(unpackColumnValue(cursor, ADDRESS, Address.class));
 		e.setName(unpackColumnValue(cursor, NAME, String.class));

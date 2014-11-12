@@ -16,38 +16,40 @@ public class AddressDao extends BaseDao<Address> {
 
 	public static final String TABLE_NAME = "addresses";
 
-	public static final Column URL = new Column("url", SQLiteDataTypes.TEXT);
-	public static final Column ADMIN_AREA = new Column("admin_area",
-			SQLiteDataTypes.TEXT);
-	public static final Column COUNTRY_CODE = new Column("country_code",
-			SQLiteDataTypes.TEXT);
-	public static final Column COUNTRY_NAME = new Column("country_name",
-			SQLiteDataTypes.TEXT);
-	public static final Column EXTRAS = new Column("extras",
-			SQLiteDataTypes.TEXT);
-	public static final Column FEATURE_NAME = new Column("feature_name",
-			SQLiteDataTypes.TEXT);
-	public static final Column LATITUDE = new Column("latitude",
-			SQLiteDataTypes.TEXT);
-	public static final Column LONGITUDE = new Column("longitude",
-			SQLiteDataTypes.TEXT);
-	public static final Column LOCALITY = new Column("locality",
-			SQLiteDataTypes.TEXT);
-	public static final Column PHONE = new Column("phone", SQLiteDataTypes.TEXT);
-	public static final Column POSTAL_CODE = new Column("postal_code",
-			SQLiteDataTypes.TEXT);
-	public static final Column PREMISES = new Column("premises",
-			SQLiteDataTypes.TEXT);
-	public static final Column SUB_ADMIN_AREA = new Column("sub_admin_area",
-			SQLiteDataTypes.TEXT);
-	public static final Column SUB_LOCALITY = new Column("sub_locality",
-			SQLiteDataTypes.TEXT);
-	public static final Column SUB_THOROUGHFARE = new Column(
+	public static final AndroidSQLiteColumn URL = new AndroidSQLiteColumn(
+			"url", SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn ADMIN_AREA = new AndroidSQLiteColumn(
+			"admin_area", SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn COUNTRY_CODE = new AndroidSQLiteColumn(
+			"country_code", SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn COUNTRY_NAME = new AndroidSQLiteColumn(
+			"country_name", SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn EXTRAS = new AndroidSQLiteColumn(
+			"extras", SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn FEATURE_NAME = new AndroidSQLiteColumn(
+			"feature_name", SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn LATITUDE = new AndroidSQLiteColumn(
+			"latitude", SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn LONGITUDE = new AndroidSQLiteColumn(
+			"longitude", SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn LOCALITY = new AndroidSQLiteColumn(
+			"locality", SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn PHONE = new AndroidSQLiteColumn(
+			"phone", SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn POSTAL_CODE = new AndroidSQLiteColumn(
+			"postal_code", SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn PREMISES = new AndroidSQLiteColumn(
+			"premises", SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn SUB_ADMIN_AREA = new AndroidSQLiteColumn(
+			"sub_admin_area", SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn SUB_LOCALITY = new AndroidSQLiteColumn(
+			"sub_locality", SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn SUB_THOROUGHFARE = new AndroidSQLiteColumn(
 			"sub_thoroughfare", SQLiteDataTypes.TEXT);
-	public static final Column THOROUGHFARE = new Column("thoroughfare",
-			SQLiteDataTypes.TEXT);
-	public static final Column ADDRESS_LINES = new Column("address_lines",
-			SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn THOROUGHFARE = new AndroidSQLiteColumn(
+			"thoroughfare", SQLiteDataTypes.TEXT);
+	public static final AndroidSQLiteColumn ADDRESS_LINES = new AndroidSQLiteColumn(
+			"address_lines", SQLiteDataTypes.TEXT);
 
 	static {
 
@@ -85,7 +87,7 @@ public class AddressDao extends BaseDao<Address> {
 
 	@Override
 	protected Address parseRow(Cursor cursor) {
-		Address e = new Address(unpackColumnValue(cursor, ID, Long.class),
+		Address e = new Address(unpackColumnValue(cursor, (AndroidSQLiteColumn)ID, Long.class),
 				Locale.getDefault());
 		e.setUrl(unpackColumnValue(cursor, URL, String.class));
 

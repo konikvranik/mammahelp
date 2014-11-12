@@ -13,10 +13,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import cz.mammahelp.handy.dao.AddressDao;
 import cz.mammahelp.handy.dao.ArticlesDao;
-import cz.mammahelp.handy.dao.BaseDao.Column;
-import cz.mammahelp.handy.dao.BaseDao.Table;
 import cz.mammahelp.handy.dao.BundleDao;
 import cz.mammahelp.handy.dao.EnclosureDao;
+import cz.mammahelp.handy.dao.GenericDao.Column;
+import cz.mammahelp.handy.dao.GenericDao.Table;
 import cz.mammahelp.handy.dao.LocationPointDao;
 import cz.mammahelp.handy.dao.NewsDao;
 import cz.mammahelp.model.Articles;
@@ -182,23 +182,23 @@ public class MammaHelpDbHelper extends SQLiteOpenHelper {
 	//
 	// }
 
-	protected void addColumn(SQLiteDatabase db, Table table, Column column) {
+	protected void addColumn(SQLiteDatabase db, Table table, Column<?> column) {
 		db.execSQL("alter table " + table.getName() + " add column "
 				+ column.createClausule());
 	}
 
 	protected void createIndex(SQLiteDatabase db, Table table,
-			Column... columns) {
+			Column<?>... columns) {
 		createIndex(db, table, join(columns, "_"), columns);
 	}
 
 	protected void createIndex(SQLiteDatabase db, Table table, String name,
-			Column... columns) {
+			Column<?>... columns) {
 		db.execSQL("create index " + table.getName() + "_" + name + " on "
 				+ table.getName() + "(" + join(columns, ",") + ")");
 	}
 
-	private String join(Column[] columns, String delimiter) {
+	private String join(Column<?>[] columns, String delimiter) {
 		if (columns.length < 1)
 			return "";
 		StringBuffer sb = new StringBuffer(columns[0].getName());

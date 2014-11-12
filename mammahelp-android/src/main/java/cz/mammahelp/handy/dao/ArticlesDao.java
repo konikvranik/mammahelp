@@ -21,13 +21,16 @@ public class ArticlesDao extends BaseDao<Articles> {
 
 	public static final String TABLE_NAME = "articles";
 
-	public static final Column TITLE = new Column("title", SQLiteDataTypes.TEXT);
-	public static final Column UPDATED = new Column("updated",
-			SQLiteDataTypes.TEXT);
-	public static final Column URL = new Column("url", SQLiteDataTypes.TEXT);
-	public static final Column BODY = new Column("body", SQLiteDataTypes.TEXT);
-	public static final Column CATEGORY = new Column("category",
-			SQLiteDataTypes.TEXT);
+	public static final Column<SQLiteDataTypes> TITLE = new AndroidSQLiteColumn(
+			"title", SQLiteDataTypes.TEXT);
+	public static final Column<SQLiteDataTypes> UPDATED = new AndroidSQLiteColumn(
+			"updated", SQLiteDataTypes.TEXT);
+	public static final Column<SQLiteDataTypes> URL = new AndroidSQLiteColumn(
+			"url", SQLiteDataTypes.TEXT);
+	public static final Column<SQLiteDataTypes> BODY = new AndroidSQLiteColumn(
+			"body", SQLiteDataTypes.TEXT);
+	public static final Column<SQLiteDataTypes> CATEGORY = new AndroidSQLiteColumn(
+			"category", SQLiteDataTypes.TEXT);
 
 	static {
 
@@ -52,7 +55,8 @@ public class ArticlesDao extends BaseDao<Articles> {
 
 	@Override
 	protected Articles parseRow(Cursor cursor) {
-		Articles a = new Articles(unpackColumnValue(cursor, ID, Long.class));
+		Articles a = new Articles(unpackColumnValue(cursor,
+				(AndroidSQLiteColumn) ID, Long.class));
 		a.setTitle(unpackColumnValue(cursor, TITLE, String.class));
 		a.setSyncTime(unpackColumnValue(cursor, UPDATED, Calendar.class));
 		a.setUrl(unpackColumnValue(cursor, URL, String.class));

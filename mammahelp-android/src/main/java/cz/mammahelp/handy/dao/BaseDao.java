@@ -1,20 +1,14 @@
 package cz.mammahelp.handy.dao;
 
-import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -30,92 +24,21 @@ import android.os.Bundle;
 import cz.mammahelp.Utils;
 import cz.mammahelp.handy.MammaHelpDbHelper;
 import cz.mammahelp.handy.SQLiteDataTypes;
-import cz.mammahelp.handy.dao.BaseDao.Table;
 import cz.mammahelp.model.Address;
 import cz.mammahelp.model.Enclosure;
 import cz.mammahelp.model.Identificable;
 
 public abstract class BaseDao<T extends Identificable<T>> extends GenericDao<T> {
 
-	public static class Table {
-
-		private String name;
-		private List<Column> columns = new ArrayList<Column>();
-		private List<ForeignKey> foreignKeys = new ArrayList<ForeignKey>();
-		private String appendix;
-
-		public Table(String name) {
-			this.name = name;
-		}
-
-		public void addColumn(Column col) {
-			columns.add(col);
-			if (col.getFk() != null) {
-				if (col.getFk().isUnset())
-					col.getFk().setColumn(col);
-				foreignKeys.add(col.getFk());
-			}
-		}
-
-		public String createClausule() {
-			StringBuffer sb = new StringBuffer("create table ");
-			sb.append(name);
-			sb.append("(");
-			Iterator<Column> ci = columns.iterator();
-
-			while (ci.hasNext()) {
-				Column c = ci.next();
-				sb.append(c.createClausule());
-				if (ci.hasNext())
-					sb.append(",");
-			}
-
-			for (ForeignKey fk : foreignKeys) {
-				sb.append(",");
-				sb.append(fk.createClausule());
-
-			}
-
-			sb.append(getAppendix());
-			sb.append(")");
-			return sb.toString();
-		}
-
-		public String getAppendix() {
-			return appendix == null ? "" : appendix;
-		}
-
-		public void setAppendix(String appendix) {
-			this.appendix = appendix;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public String[] getColumnNames() {
-			List<String> colNames = new ArrayList<String>();
-			for (Column col : columns) {
-				colNames.add(col.getName());
-			}
-			return colNames.toArray(new String[0]);
-		}
-
-		public Column[] getColumns() {
-			return columns.toArray(new Column[] {});
-		}
-	}
-
 	public static Logger log = LoggerFactory.getLogger(BaseDao.class);
-
-	public static final Column ID = new Column("id", SQLiteDataTypes.INTEGER,
-			true);
 
 	private MammaHelpDbHelper dbHelper;
 
 	private SQLiteDatabase db;
 
-	protected static Map<String, Table> tables = new HashMap<String, Table>();
+	static {
+		ID = new AndroidSQLiteColumn("id", SQLiteDataTypes.INTEGER, true);
+	}
 
 	public BaseDao(MammaHelpDbHelper dbHelper) {
 		this.dbHelper = dbHelper;
@@ -175,11 +98,6 @@ public abstract class BaseDao<T extends Identificable<T>> extends GenericDao<T> 
 		} finally {
 			// db.close();
 		}
-	}
-
-	@Override
-	public void update(T obj) {
-		update(obj, true);
 	}
 
 	protected void update(SQLiteDatabase db, T obj, boolean updateNull) {
@@ -303,7 +221,8 @@ public abstract class BaseDao<T extends Identificable<T>> extends GenericDao<T> 
 
 	protected abstract T parseRow(Cursor cursor);
 
-	protected <V> V unpackColumnValue(Cursor cursor, Column name, Class<V> c) {
+	protected <V> V unpackColumnValue(Cursor cursor,
+			Column<SQLiteDataTypes> name, Class<V> c) {
 		return unpackColumnValue(cursor, name.name, c);
 	}
 
@@ -384,147 +303,30 @@ public abstract class BaseDao<T extends Identificable<T>> extends GenericDao<T> 
 		this.db = db;
 	}
 
-	protected static Table getTable(String name) {
-		return tables.get(name);
-	}
+	public static class AndroidSQLiteColumn extends Column<SQLiteDataTypes> {
 
-	protected static void registerTable(String name) {
-		tables.put(name, new Table(name));
-	}
-
-	public static String columnNamesToClause(String alias, Column[] columns) {
-		StringBuffer sb = new StringBuffer();
-
-		for (int i = 0; i < columns.length; i++) {
-			if (i > 0)
-				sb.append(", ");
-			if (alias != null) {
-				sb.append(alias);
-				sb.append(".");
-			}
-			sb.append(columns[i]);
-		}
-		return sb.toString();
-
-	}
-
-	public static class Column {
-
-		String name;
-		private SQLiteDataTypes type;
-		private boolean pk;
-		private ForeignKey fk;
-
-		public Column(String name, SQLiteDataTypes type, boolean pk) {
-			this(name, type, pk, null);
+		public AndroidSQLiteColumn(String name, SQLiteDataTypes type,
+				boolean pk, cz.mammahelp.handy.dao.GenericDao.ForeignKey fk) {
+			super(name, type, pk, fk);
 		}
 
-		public Column(String name, SQLiteDataTypes type, ForeignKey fk) {
-			this(name, type, false, fk);
+		public AndroidSQLiteColumn(String name, SQLiteDataTypes type, boolean pk) {
+			super(name, type, pk);
 		}
 
-		public Column(String name, SQLiteDataTypes type) {
-			this(name, type, false, null);
+		public AndroidSQLiteColumn(String name, SQLiteDataTypes type,
+				cz.mammahelp.handy.dao.GenericDao.ForeignKey fk) {
+			super(name, type, fk);
 		}
 
-		public Column(String name, SQLiteDataTypes type, boolean pk,
-				ForeignKey fk) {
-			this.name = name;
-			this.type = type;
-			this.pk = pk;
-			this.fk = fk;
+		public AndroidSQLiteColumn(String name, SQLiteDataTypes type) {
+			super(name, type);
 		}
 
 		@Override
-		public String toString() {
-			return getName();
+		protected String getTypeName(SQLiteDataTypes type) {
+			return type.name();
 		}
 
-		public String createClausule() {
-			StringBuffer sb = new StringBuffer();
-			sb.append(name);
-			sb.append(" ");
-			sb.append(type.getType());
-			if (pk)
-				sb.append(" primary key");
-			return sb.toString();
-		}
-
-		public ForeignKey getFk() {
-			return fk;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public SQLiteDataTypes getType() {
-			return type;
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (o instanceof Column) {
-				return toString().equals(o.toString());
-			}
-			return false;
-		}
-
-	}
-
-	public static class ForeignKey {
-
-		private Column target;
-		private Table table;
-		private Column source;
-
-		public ForeignKey(String table, Column column) {
-			this.table = getTable(table);
-			this.target = column;
-		}
-
-		public boolean isUnset() {
-			return source == null;
-		}
-
-		public ForeignKey(Table table, Column column) {
-			this.table = table;
-			this.target = column;
-		}
-
-		public ForeignKey(Class<?> class1) {
-			try {
-				this.table = (Table) class1.getMethod("getTable").invoke(null);
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (NoSuchMethodException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			this.target = BaseDao.ID;
-		}
-
-		public void setColumn(Column column) {
-			this.source = column;
-		}
-
-		public Object createClausule() {
-			StringBuffer sb = new StringBuffer();
-			sb.append("foreign key(");
-			sb.append(source.getName());
-			sb.append(") references ");
-			sb.append(table.getName());
-			sb.append("(");
-			sb.append(target.getName());
-			sb.append(")");
-			return sb.toString();
-		}
 	}
 }

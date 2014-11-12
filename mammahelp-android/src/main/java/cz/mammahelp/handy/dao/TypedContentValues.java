@@ -1,7 +1,7 @@
 package cz.mammahelp.handy.dao;
 
 import android.content.ContentValues;
-import cz.mammahelp.handy.dao.BaseDao.Column;
+import cz.mammahelp.handy.dao.GenericDao.Column;
 import cz.mammahelp.model.Identificable;
 
 public class TypedContentValues {
@@ -21,7 +21,7 @@ public class TypedContentValues {
 		return values;
 	}
 
-	public void put(Column column, Object obj) {
+	public void put(Column<?> column, Object obj) {
 		if (obj != null || updateNull) {
 			String value;
 			if (obj == null) {
