@@ -326,6 +326,7 @@ public class CentersListFragment extends ANamedFragment {
 					try {
 						lf.setUrl(new URL(
 								"file:///android_res/raw/locations.xml"));
+						lf.feedData(false);
 						lf.feedData();
 					} catch (Exception e) {
 						log.error(

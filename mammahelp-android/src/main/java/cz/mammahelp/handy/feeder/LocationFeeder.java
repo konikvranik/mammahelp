@@ -41,6 +41,11 @@ public class LocationFeeder extends
 
 	@Override
 	public void feedData() throws Exception {
+		feedData(true);
+
+	}
+
+	public void feedData(boolean geolocate) throws Exception {
 		try {
 
 			Serializer serializer = new Persister();
@@ -51,16 +56,16 @@ public class LocationFeeder extends
 			log.debug("Read " + aw.locations.size() + " locations.");
 
 			semaphore = 0;
-			for (LocationPoint a : aw.locations) {
-				log.debug("Saving location " + a);
-
-				if (getContext().getSharedPreferences(
-						getContext().getResources().getString(
-								R.string.others_preferences),
-						Context.MODE_MULTI_PROCESS).getBoolean(
-						AndroidConstants.AUTOMATIC_UPDATES_KEY, false))
+			if (getContext().getSharedPreferences(
+					getContext().getResources().getString(
+							R.string.others_preferences),
+					Context.MODE_MULTI_PROCESS).getBoolean(
+					AndroidConstants.AUTOMATIC_UPDATES_KEY, false)
+					&& geolocate)
+				for (LocationPoint a : aw.locations) {
+					log.debug("Saving location " + a);
 					feedData(a);
-			}
+				}
 			long time = System.currentTimeMillis();
 			while (semaphore > 0
 					&& (System.currentTimeMillis() - time) < 120000) {
