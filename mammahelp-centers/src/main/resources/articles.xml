@@ -1,0 +1,16 @@
+<articleTypes>
+   <type name="demo">
+      <articles>
+         <file>file:///c:/asdf/xxx.xyz</file>
+         <file>file:///c:/asdf/zzz.xyz</file>
+         <file>file:///c:/asdf/yyy.xyz</file>
+      </articles>
+   </type>
+   <type name="info">
+      <articles>
+         <file>file:///c:/asdf/xxx.xyz</file>
+         <file>file:///c:/asdf/zzz.xyz</file>
+         <file>file:///c:/asdf/yyy.xyz</file>
+      </articles>
+   </type>
+</articleTypes>

@@ -297,8 +297,10 @@ public abstract class GenericDao<T extends Identificable<T>> {
 
 	}
 
-	protected static void registerTable(String name) {
-		tables.put(name, new Table(name));
+	protected static Table registerTable(String name) {
+		Table table = new Table(name);
+		tables.put(name, table);
+		return table;
 	}
 
 }

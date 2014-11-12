@@ -1,4 +1,5 @@
 import org.gradle.plugins.ide.eclipse.model.SourceFolder
+import org.gradle.plugins.ide.eclipse.model.Container
 
 apply plugin: 'eclipse'
 apply plugin: 'application'
@@ -15,6 +16,8 @@ dependencies {
 	compile 'com.squareup.retrofit:converter-simplexml:1.6.1'
 	compile 'net.sf.jtidy:jtidy:r938'
 	compile 'org.slf4j:slf4j-log4j12:1.7.7'
+	compile 'hsqldb:hsqldb:1.8.0.10'
+	
 }
 
 configurations { provided }
@@ -26,13 +29,26 @@ eclipse.classpath.plusConfigurations += configurations.compile
 eclipse {
 
 	classpath {
+		containers (
+				"org.eclipse.jdt.junit.JUNIT_CONTAINER/4"
+				)
+
+		noExportConfigurations += [configurations.provided]
+
 		file {
 			beforeMerged { classpath ->
 				classpath.entries.clear()
 			}
-			whenMerged {  cp ->
-				cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/main/") }*.output = "target/main"
-				cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/test/") }*.output = "target/test"
+			whenMerged { cp ->
+				cp.entries.findAll {
+					it instanceof SourceFolder && it.path.startsWith("src/main/")
+				}*.output = "target/main"
+				cp.entries.findAll {
+					it instanceof SourceFolder && it.path.startsWith("src/test/")
+				}*.output = "target/test"
+				cp.entries.findAll {
+					it instanceof Container && it.path == "org.eclipse.jdt.junit.JUNIT_CONTAINER/4"
+				}*.exported = false
 				cp.entries.removeAll { it.kind == "output" }
 			}
 		}

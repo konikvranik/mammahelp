@@ -13,10 +13,10 @@ import cz.mammahelp.feeder.MamoFeeder;
 import cz.mammahelp.model.LocationPoint;
 import cz.mammahelp.model.LocationsXmlWrapper;
 
-public class MamoCenters {
+public class Centers {
 
 	private static final Logger log = LoggerFactory
-			.getLogger(MamoCenters.class);
+			.getLogger(Centers.class);
 
 	public static void main(String[] args) throws Exception {
 

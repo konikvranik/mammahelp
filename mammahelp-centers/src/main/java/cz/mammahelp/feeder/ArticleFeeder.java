@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -34,6 +35,8 @@ import cz.mammahelp.model.ASyncedInformation;
 import cz.mammahelp.model.Articles;
 import cz.mammahelp.model.Enclosure;
 import cz.mammahelp.model.Identificable;
+import cz.mammahelp.tools.dao.ArticlesDao;
+import cz.mammahelp.tools.dao.EnclosureDao;
 
 public class ArticleFeeder extends GenericXMLFeeder<Articles> {
 
@@ -92,7 +95,8 @@ public class ArticleFeeder extends GenericXMLFeeder<Articles> {
 
 	}
 
-	private ArticlesDao getDao() {
+	private ArticlesDao getDao() throws InstantiationException,
+			IllegalAccessException, ClassNotFoundException, SQLException {
 		return new ArticlesDao();
 	}
 
@@ -184,7 +188,8 @@ public class ArticleFeeder extends GenericXMLFeeder<Articles> {
 	}
 
 	protected Enclosure saveEnclosure(HttpURLConnection conn)
-			throws IOException, URISyntaxException {
+			throws IOException, URISyntaxException, InstantiationException,
+			IllegalAccessException, ClassNotFoundException, SQLException {
 
 		EnclosureDao enclosureDao = new EnclosureDao();
 
