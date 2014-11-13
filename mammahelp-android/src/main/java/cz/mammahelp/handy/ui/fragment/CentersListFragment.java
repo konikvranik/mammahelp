@@ -98,24 +98,29 @@ public class CentersListFragment extends ANamedFragment {
 
 			if (o1 == null)
 				return 1;
-			Address l1 = o1.getLocation();
-			if (l1 == null)
+			Address a1 = o1.getLocation();
+			if (a1 == null)
 				return 1;
 
 			if (o2 == null)
 				return -1;
-			Address l2 = o2.getLocation();
-			if (l2 == null)
+			Address a2 = o2.getLocation();
+			if (a2 == null)
 				return -1;
 
-			double d1 = distance(origin.getLatitude(), origin.getLongitude(),
-					l1.getLatitude(), l1.getLongitude(), 'm');
-			double d2 = distance(origin.getLatitude(), origin.getLongitude(),
-					l2.getLatitude(), l2.getLongitude(), 'm');
+			Location l1 = new Location(origin);
+			l1.setLatitude(a1.getLatitude());
+			l1.setLongitude(a1.getLongitude());
 
-			return (int) Math.round(Math.signum(d1 - d2));
+			Location l2 = new Location(origin);
+			l2.setLatitude(a1.getLatitude());
+			l2.setLongitude(a1.getLongitude());
+
+			Float d1 = origin.distanceTo(l1);
+			Float d2 = origin.distanceTo(l2);
+
+			return d1.compareTo(d2);
 		}
-
 	}
 
 	public class CategoryAdapter extends BaseAdapter implements ListAdapter {
