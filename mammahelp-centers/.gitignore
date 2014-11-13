@@ -3,3 +3,4 @@
 /.settings/
 /.classpath
 /tmp/
+/derby.log
