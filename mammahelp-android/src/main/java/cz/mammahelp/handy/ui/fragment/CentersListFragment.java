@@ -193,7 +193,7 @@ public class CentersListFragment extends ANamedFragment {
 	private ListView listView;
 	private MapView mapView;
 	private Set<String> filter = new HashSet<String>();
-	private LocationPointDao adao;
+	private LocationPointDao ldao;
 	private MultiSpinner filterSpinner;
 
 	private Map<Marker, Long> markers = new HashMap<Marker, Long>();
@@ -206,7 +206,7 @@ public class CentersListFragment extends ANamedFragment {
 		View mainView = inflater.inflate(R.layout.fragment_centers_listing,
 				null);
 
-		adao = new LocationPointDao(getDbHelper());
+		ldao = new LocationPointDao(getDbHelper());
 
 		mapView = (MapView) mainView.findViewById(R.id.map);
 		mapView.onCreate(savedInstanceState);
@@ -232,7 +232,13 @@ public class CentersListFragment extends ANamedFragment {
 		mapButton.setOnClickListener(new ImageButton.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
+				log.debug("Initialized: " + initialized);
+				if (!initialized) {
+					initialized = true;
+					setupMap();
+					addMarkers((filter.toArray(new String[0])));
+					moveToDefaultPosition(getPosition(getActivity()));
+				}
 				listButton.setVisibility(View.VISIBLE);
 				listView.setVelocityScale(View.GONE);
 				mapButton.setVisibility(View.GONE);
@@ -243,11 +249,7 @@ public class CentersListFragment extends ANamedFragment {
 		listButton.setOnClickListener(new ImageButton.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (!initialized) {
-					initialized = true;
-					setupMap();
-					moveToDefaultPosition(getPosition(getActivity()));
-				}
+
 				mapButton.setVisibility(View.VISIBLE);
 				mapView.setVisibility(View.GONE);
 				listButton.setVisibility(View.GONE);
@@ -356,30 +358,19 @@ public class CentersListFragment extends ANamedFragment {
 	}
 
 	protected GoogleMap getMap() {
-		if (mapView == null || !initialized)
+		if (mapView == null || !initialized) {
+			log.debug("getMap returning null (initialized: " + initialized
+					+ ")");
 			return null;
+		}
 		GoogleMap map = mapView.getMap();
 		if (map == null) {
 			MapsInitializer.initialize(getActivity());
 			map = mapView.getMap();
 
 		}
+		log.debug("getMap returning: " + map);
 		return map;
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		if (mapView != null)
-			mapView.onResume();
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		if (mapView != null)
-			mapView.onDestroy();
-		;
 	}
 
 	@Override
@@ -482,7 +473,9 @@ public class CentersListFragment extends ANamedFragment {
 		});
 
 		Collection<LocationPoint> ressolveLater = new HashSet<LocationPoint>();
-		for (final LocationPoint lp : adao.findByType(type)) {
+
+		for (int i = 0; i < adapter.getCount(); i++) {
+			LocationPoint lp = adapter.getItem(i);
 			Address addr = lp.getLocation();
 			if (addr == null || !(addr.hasLatitude() && addr.hasLongitude())) {
 				ressolveLater.add(lp);
@@ -577,26 +570,32 @@ public class CentersListFragment extends ANamedFragment {
 	}
 
 	@Override
-	public void onStart() {
-		super.onStart();
-		GoogleMap map = getMap();
-		if (map != null) {
-			map.setMyLocationEnabled(true);
-		}
+	public void onResume() {
+		super.onResume();
+		if (mapView != null)
+			mapView.onResume();
+	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (mapView != null)
+			mapView.onDestroy();
+		;
 	}
 
 	@Override
 	public void updateData() {
 		final Location pos = getPosition(getActivity());
-		new AsyncTask<Void, Void, Void>() {
-			@Override
-			protected Void doInBackground(Void... params) {
-				addMarkers(filter.toArray(new String[0]));
-				return null;
-			}
-		}.execute(new Void[0]);
-		adapter = new CategoryAdapter(adao.findByType(filter), pos);
+		if (initialized)
+			new AsyncTask<Void, Void, Void>() {
+				@Override
+				protected Void doInBackground(Void... params) {
+					addMarkers(filter.toArray(new String[0]));
+					return null;
+				}
+			}.execute(new Void[0]);
+		adapter = new CategoryAdapter(ldao.findByType(filter), pos);
 		if (listView != null)
 			getActivity().runOnUiThread(new Runnable() {
 				@Override
