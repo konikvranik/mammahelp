@@ -162,11 +162,10 @@ public class AndroidUtils {
 		if (loc == null)
 			loc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		log.debug("Last known location: " + loc);
-		if (loc == null && false) {
-			loc = new Location("fake");
-			loc.setLatitude(50.083468);
-			loc.setLongitude(14.479357);
-		}
+		/*
+		 * if (loc == null ) { loc = new Location("fake");
+		 * loc.setLatitude(50.083468); loc.setLongitude(14.479357); }
+		 */
 		return loc;
 
 	}
