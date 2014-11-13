@@ -122,12 +122,14 @@ public class CentersListFragment extends ANamedFragment {
 
 			Float d1 = origin.distanceTo(l1);
 			Float d2 = origin.distanceTo(l2);
-			
-			log.debug("d1: " + d1);
-			
-			log.debug("d2: " + d2);
 
-			return d1.compareTo(d2);
+			log.debug("d1: " + d1);
+
+			log.debug("d2: " + d2);
+			int d = d1.compareTo(d2);
+			if (d != 0)
+				return d;
+			return o1.compareTo(o2);
 		}
 	}
 
