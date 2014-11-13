@@ -175,7 +175,7 @@ public abstract class BaseDao<T extends Identificable<T>> extends GenericDao<T> 
 			return parseResults(cursor);
 		} finally {
 			long now = System.currentTimeMillis();
-			log.debug("SQL query: \"" + getTableName() + ": " + selection
+			log.debug("SQL query("+this.getClass().getName()+"): \"" + getTableName() + ": " + selection
 					+ "\" " + Arrays.toString(selectionArgs) + " / count: "
 					+ count + " / times: " + (now - millis1) + ", "
 					+ (now - millis2));

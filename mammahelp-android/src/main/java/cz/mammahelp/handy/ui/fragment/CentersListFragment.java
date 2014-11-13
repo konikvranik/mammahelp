@@ -113,11 +113,19 @@ public class CentersListFragment extends ANamedFragment {
 			l1.setLongitude(a1.getLongitude());
 
 			Location l2 = new Location(origin);
-			l2.setLatitude(a1.getLatitude());
-			l2.setLongitude(a1.getLongitude());
+			l2.setLatitude(a2.getLatitude());
+			l2.setLongitude(a2.getLongitude());
+
+			log.debug("Origin: " + origin);
+			log.debug("l1: " + l1);
+			log.debug("l2: " + l2);
 
 			Float d1 = origin.distanceTo(l1);
 			Float d2 = origin.distanceTo(l2);
+			
+			log.debug("d1: " + d1);
+			
+			log.debug("d2: " + d2);
 
 			return d1.compareTo(d2);
 		}
