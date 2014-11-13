@@ -1,10 +1,9 @@
 import java.security.KeyStore.Builder;
 import java.util.logging.Logger;
+import org.gradle.plugins.ide.eclipse.model.SourceFolder
 
 import groovy.xml.DOMBuilder
 import groovy.xml.dom.DOMCategory
-
-import org.gradle.plugins.ide.eclipse.model.SourceFolder
 
 import groovy.xml.XmlUtil
 
@@ -78,7 +77,7 @@ def modifyManifest(manifest, key) {
 
 eclipse {
 
-	classpath{
+	classpath {
 
 		plusConfigurations += configurations.compile
 		noExportConfigurations += configurations.compile
