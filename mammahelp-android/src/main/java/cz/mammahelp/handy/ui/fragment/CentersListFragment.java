@@ -198,6 +198,8 @@ public class CentersListFragment extends ANamedFragment {
 
 	private Map<Marker, Long> markers = new HashMap<Marker, Long>();
 
+	private boolean initialized = false;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -241,7 +243,11 @@ public class CentersListFragment extends ANamedFragment {
 		listButton.setOnClickListener(new ImageButton.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
+				if (!initialized) {
+					initialized = true;
+					setupMap();
+					moveToDefaultPosition(getPosition(getActivity()));
+				}
 				mapButton.setVisibility(View.VISIBLE);
 				mapView.setVisibility(View.GONE);
 				listButton.setVisibility(View.GONE);
@@ -287,8 +293,6 @@ public class CentersListFragment extends ANamedFragment {
 
 		updateData();
 
-		setupMap();
-		moveToDefaultPosition(getPosition(getActivity()));
 		return mainView;
 	}
 
@@ -352,7 +356,7 @@ public class CentersListFragment extends ANamedFragment {
 	}
 
 	protected GoogleMap getMap() {
-		if (mapView == null)
+		if (mapView == null || !initialized)
 			return null;
 		GoogleMap map = mapView.getMap();
 		if (map == null) {
@@ -386,6 +390,8 @@ public class CentersListFragment extends ANamedFragment {
 	}
 
 	protected void setupMap() {
+		if (!initialized)
+			return;
 		GoogleMap map = getMap();
 		if (map != null) {
 			map.setMyLocationEnabled(true);
@@ -461,13 +467,17 @@ public class CentersListFragment extends ANamedFragment {
 
 	protected void addMarkers(String[] type) {
 
+		final GoogleMap map = getMap();
+		if (map == null)
+			return;
+
 		Geocoder myLocation = new Geocoder(getActivity(), Locale.getDefault());
 		List<android.location.Address> loc;
 
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				getMap().clear();
+				map.clear();
 			}
 		});
 
