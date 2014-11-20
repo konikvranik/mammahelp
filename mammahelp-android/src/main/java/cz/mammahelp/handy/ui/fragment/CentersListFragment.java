@@ -336,27 +336,33 @@ public class CentersListFragment extends ANamedFragment {
 
 	private void loadCentersIfEmpty() {
 		LocationPointDao ld = new LocationPointDao(getDbHelper());
-		SortedSet<LocationPoint> l = ld.findAll();
-		if (l == null || l.isEmpty()) {
-			log.debug("Loading default locations...");
-			new AsyncTask<Void, Void, Void>() {
-				@Override
-				protected Void doInBackground(Void... params) {
-					LocationFeeder lf = new LocationFeeder(
-							CentersListFragment.this.getActivity());
-					try {
-						lf.setUrl(new URL(
-								"file:///android_res/raw/locations.xml"));
-						lf.feedData(false);
-						lf.feedData();
-					} catch (Exception e) {
-						log.error(
-								"Unable to load locations: " + e.getMessage(),
-								e);
+		SortedSet<LocationPoint> l;
+		try {
+			l = ld.findAll();
+
+			if (l == null || l.isEmpty()) {
+				log.debug("Loading default locations...");
+				new AsyncTask<Void, Void, Void>() {
+					@Override
+					protected Void doInBackground(Void... params) {
+						LocationFeeder lf = new LocationFeeder(
+								CentersListFragment.this.getActivity());
+						try {
+							lf.setUrl(new URL(
+									"file:///android_res/raw/locations.xml"));
+							lf.feedData(false);
+							lf.feedData();
+						} catch (Exception e) {
+							log.error(
+									"Unable to load locations: "
+											+ e.getMessage(), e);
+						}
+						return null;
 					}
-					return null;
-				}
-			}.execute(new Void[0]);
+				}.execute(new Void[0]);
+			}
+		} catch (Exception e) {
+			log.error("Unable to get centers: " + e.getMessage(), e);
 		}
 	}
 
@@ -610,14 +616,19 @@ public class CentersListFragment extends ANamedFragment {
 					return null;
 				}
 			}.execute(new Void[0]);
-		adapter = new CategoryAdapter(ldao.findByType(filter), pos);
-		if (listView != null)
-			getActivity().runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					listView.setAdapter(adapter);
-				}
-			});
+		try {
+			adapter = new CategoryAdapter(ldao.findByType(filter), pos);
+
+			if (listView != null)
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						listView.setAdapter(adapter);
+					}
+				});
+		} catch (Exception e) {
+			log.error("Unable to load centers: " + e.getMessage(), e);
+		}
 	}
 
 }

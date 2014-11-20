@@ -53,7 +53,7 @@ public abstract class BaseDao<T extends Identificable<T>> extends GenericDao<T> 
 	}
 
 	@Override
-	public void insert(Collection<T> objs) {
+	public void insert(Collection<T> objs) throws Exception {
 		if (objs == null)
 			return;
 		SQLiteDatabase db = getDatabase(true);
@@ -66,11 +66,12 @@ public abstract class BaseDao<T extends Identificable<T>> extends GenericDao<T> 
 		}
 	}
 
-	protected void insert(SQLiteDatabase db, T obj) {
+	protected void insert(SQLiteDatabase db, T obj) throws Exception {
 		insert(db, obj, true);
 	}
 
-	protected void insert(SQLiteDatabase db, T obj, boolean updateNull) {
+	protected void insert(SQLiteDatabase db, T obj, boolean updateNull)
+			throws Exception {
 		long result = db.insert(getTableName(), null,
 				getValues(obj, updateNull));
 		if (result == -1)
@@ -79,7 +80,7 @@ public abstract class BaseDao<T extends Identificable<T>> extends GenericDao<T> 
 	}
 
 	@Override
-	public void insert(T obj) {
+	public void insert(T obj) throws Exception {
 		SQLiteDatabase db = getDatabase(true);
 		try {
 			insert(db, obj);
@@ -91,7 +92,7 @@ public abstract class BaseDao<T extends Identificable<T>> extends GenericDao<T> 
 	protected abstract ContentValues getValues(T obj, boolean updateNull);
 
 	@Override
-	public void update(T obj, boolean updateNull) {
+	public void update(T obj, boolean updateNull) throws Exception {
 		SQLiteDatabase db = getDatabase(true);
 		try {
 			update(db, obj, updateNull);
@@ -100,7 +101,8 @@ public abstract class BaseDao<T extends Identificable<T>> extends GenericDao<T> 
 		}
 	}
 
-	protected void update(SQLiteDatabase db, T obj, boolean updateNull) {
+	protected void update(SQLiteDatabase db, T obj, boolean updateNull)
+			throws Exception {
 		int result = db.update(getTableName(), getValues(obj, updateNull),
 				"id = ?", new String[] { Long.toString(obj.getId()) });
 		if (result != 1)
@@ -108,7 +110,7 @@ public abstract class BaseDao<T extends Identificable<T>> extends GenericDao<T> 
 					+ " rows. 1 expected.");
 	}
 
-	public void update(Collection<T> objs, boolean updateNull) {
+	public void update(Collection<T> objs, boolean updateNull) throws Exception {
 		SQLiteDatabase db = getDatabase(true);
 		try {
 			for (T obj : objs) {
@@ -135,7 +137,7 @@ public abstract class BaseDao<T extends Identificable<T>> extends GenericDao<T> 
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void delete(Long id) throws Exception {
 		SQLiteDatabase db = getDatabase(true);
 		try {
 			delete(db, id);
@@ -175,10 +177,10 @@ public abstract class BaseDao<T extends Identificable<T>> extends GenericDao<T> 
 			return parseResults(cursor);
 		} finally {
 			long now = System.currentTimeMillis();
-			log.debug("SQL query("+this.getClass().getName()+"): \"" + getTableName() + ": " + selection
-					+ "\" " + Arrays.toString(selectionArgs) + " / count: "
-					+ count + " / times: " + (now - millis1) + ", "
-					+ (now - millis2));
+			log.debug("SQL query(" + this.getClass().getName() + "): \""
+					+ getTableName() + ": " + selection + "\" "
+					+ Arrays.toString(selectionArgs) + " / count: " + count
+					+ " / times: " + (now - millis1) + ", " + (now - millis2));
 			// db.close();
 		}
 	}

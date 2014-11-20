@@ -10,6 +10,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.SortedSet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.mammahelp.model.Identificable;
 
 public abstract class GenericDao<T extends Identificable<T>> {
@@ -212,6 +215,8 @@ public abstract class GenericDao<T extends Identificable<T>> {
 	public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
 	public Locale locale;
 
+	private static final Logger log = LoggerFactory.getLogger(GenericDao.class);
+
 	public Locale getLocale() {
 		if (locale == null)
 			return Locale.getDefault();
@@ -220,54 +225,68 @@ public abstract class GenericDao<T extends Identificable<T>> {
 
 	protected abstract String getTableName();
 
-	public abstract void insert(T obj);
+	public abstract void insert(T obj) throws Exception;
 
-	public abstract void update(T obj, boolean updateNull);
+	public abstract void update(T obj, boolean updateNull) throws Exception;
 
-	public abstract void update(Collection<T> objs, boolean updateNull);
+	public void update(Collection<T> objs, boolean updateNull) throws Exception {
+		for (T o : objs) {
+			update(o, updateNull);
+		}
+	}
 
-	public void update(T obj) {
+	public void update(T obj) throws Exception {
 		update(obj, true);
 	}
 
-	public void update(Collection<T> objs) {
+	public void update(Collection<T> objs) throws Exception {
 		update(objs, true);
 	}
 
-	public void deleteAll(Collection<T> obj) {
+	public void deleteAll(Collection<T> obj) throws Exception {
 		for (T t : obj) {
 			delete(t);
 		}
 	}
 
-	public void deleteAllById(Collection<Long> obj) {
+	public void deleteAllById(Collection<Long> obj) throws Exception {
+		Exception ex = null;
 		for (Long t : obj) {
-			delete(t);
+			try {
+				delete(t);
+			} catch (Exception e) {
+				ex = e;
+				log.error(
+						"Error batch deleting (id:" + obj + "): "
+								+ e.getMessage(), e);
+			}
 		}
+		if (ex != null)
+			throw ex;
 	}
 
-	public void delete(T obj) {
+	public void delete(T obj) throws Exception {
 		delete(obj.getId());
 	}
 
-	public abstract void delete(Long id);
+	public abstract void delete(Long id) throws Exception;
 
-	public SortedSet<T> findAll() {
+	public SortedSet<T> findAll() throws Exception {
 		return query(null, null, null, null, null);
 	}
 
-	public T findById(T obj) {
+	public T findById(T obj) throws Exception {
 		return findById(obj.getId());
 	}
 
 	protected abstract SortedSet<T> query(String selection,
 			String[] selectionArgs, String groupBy, String having,
-			String orderBy);
+			String orderBy) throws Exception;
 
-	public abstract T findById(long obj);
+	public abstract T findById(long obj) throws Exception;
 
 	protected abstract SortedSet<T> rawQuery(String selection,
-			String[] selectionArgs);
+			String[] selectionArgs) throws Exception;
 
 	protected abstract String[] getColumnNames();
 
@@ -275,7 +294,21 @@ public abstract class GenericDao<T extends Identificable<T>> {
 		this.locale = locale;
 	}
 
-	public abstract void insert(Collection<T> objs);
+	public void insert(Collection<T> objs) throws Exception {
+		Exception ex = null;
+		for (T o : objs) {
+			try {
+				insert(o);
+			} catch (Exception e) {
+				ex = e;
+				log.error(
+						"Insert failed for id=" + o.getId() + ": "
+								+ e.getMessage(), e);
+			}
+		}
+		if (ex != null)
+			throw ex;
+	}
 
 	public static Table getTable(String name) {
 		return tables.get(name);

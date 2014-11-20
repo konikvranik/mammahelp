@@ -48,13 +48,8 @@ public class ArticlesDao extends AbstractFilesystemDao<Articles> {
 
 	@Override
 	protected String[] getColumnNames() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Articles findByExactUrl(String externalForm) {
-		// TODO Auto-generated method stub
-		return null;
+		return new String[] { ID.getName(), TITLE.getName(), UPDATED.getName(),
+				URL.getName(), BODY.getName(), CATEGORY.getName() };
 	}
 
 	public static Table getTable() {

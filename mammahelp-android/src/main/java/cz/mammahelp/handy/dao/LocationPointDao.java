@@ -96,13 +96,13 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 
 	@Override
 	protected void insert(SQLiteDatabase db, LocationPoint obj,
-			boolean updateNull) {
+			boolean updateNull) throws Exception {
 
 		handleAddress(obj);
 		super.insert(db, obj, updateNull);
 	}
 
-	private void handleAddress(LocationPoint obj) {
+	private void handleAddress(LocationPoint obj) throws Exception {
 		AddressDao addressDao = getDbHelper() == null ? new AddressDao(getDb())
 				: new AddressDao(getDbHelper());
 		if (obj.getLocation() != null) {
@@ -116,13 +116,13 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 
 	@Override
 	protected void update(SQLiteDatabase db, LocationPoint obj,
-			boolean updateNull) {
+			boolean updateNull) throws Exception {
 		handleAddress(obj);
 		super.update(db, obj, updateNull);
 	}
 
 	@Override
-	public void delete(LocationPoint obj) {
+	public void delete(LocationPoint obj) throws Exception {
 
 		AddressDao addressDao = new AddressDao(getDbHelper());
 		if (obj.getLocation() != null && obj.getLocation().getId() != null)
@@ -132,7 +132,7 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void delete(Long id) throws Exception {
 		LocationPoint obj = findById(id);
 		if (obj == null)
 			obj = new LocationPoint(id);
@@ -159,7 +159,7 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 		}
 	}
 
-	public SortedSet<LocationPoint> findByType(String[] type) {
+	public SortedSet<LocationPoint> findByType(String[] type) throws Exception {
 
 		String ph = makePlaceholders(type.length);
 
@@ -172,7 +172,7 @@ public class LocationPointDao extends BaseDao<LocationPoint> {
 		return result;
 	}
 
-	public SortedSet<LocationPoint> findByType(Collection<String> filter) {
+	public SortedSet<LocationPoint> findByType(Collection<String> filter) throws Exception {
 		return findByType(filter.toArray(new String[0]));
 	}
 }

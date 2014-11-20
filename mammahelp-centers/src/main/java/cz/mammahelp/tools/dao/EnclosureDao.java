@@ -52,11 +52,6 @@ public class EnclosureDao extends AbstractFilesystemDao<Enclosure> {
 		return null;
 	}
 
-	public Enclosure findByExactUrl(String externalForm) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static Table getTable() {
 		return getTable(TABLE_NAME);
 	}

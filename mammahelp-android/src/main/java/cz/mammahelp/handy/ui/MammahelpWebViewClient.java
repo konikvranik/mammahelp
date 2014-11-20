@@ -50,29 +50,35 @@ public class MammahelpWebViewClient extends WebViewClient {
 		if (context instanceof AbstractMammaHelpActivity) {
 			LocationPointDao ld = new LocationPointDao(
 					((AbstractMammaHelpActivity) context).getDbHelper());
-			SortedSet<LocationPoint> l = ld.findAll();
-			if (l == null || l.isEmpty()) {
-				log.debug("Loading default locations...");
-				Thread t = new Thread(new Runnable() {
+			SortedSet<LocationPoint> l;
+			try {
+				l = ld.findAll();
 
-					@Override
-					public void run() {
-						LocationFeeder lf = new LocationFeeder(context);
-						try {
-							lf.setUrl(new URL(
-									"file:///android_res/raw/locations.xml"));
-							lf.feedData();
-							openCenterDetail(id);
-						} catch (Exception e) {
-							log.error(
-									"Unable to load locations: "
-											+ e.getMessage(), e);
+				if (l == null || l.isEmpty()) {
+					log.debug("Loading default locations...");
+					Thread t = new Thread(new Runnable() {
+
+						@Override
+						public void run() {
+							LocationFeeder lf = new LocationFeeder(context);
+							try {
+								lf.setUrl(new URL(
+										"file:///android_res/raw/locations.xml"));
+								lf.feedData();
+								openCenterDetail(id);
+							} catch (Exception e) {
+								log.error(
+										"Unable to load locations: "
+												+ e.getMessage(), e);
+							}
 						}
-					}
-				});
-				t.start();
-			} else {
-				openCenterDetail(id);
+					});
+					t.start();
+				} else {
+					openCenterDetail(id);
+				}
+			} catch (Exception e) {
+				log.error("Unable get Centers: " + e.getMessage(), e);
 			}
 		}
 	}

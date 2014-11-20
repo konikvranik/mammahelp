@@ -112,7 +112,7 @@ public class BundleDao extends BaseDao<Bundle> {
 	}
 
 	@Override
-	protected void update(SQLiteDatabase db, Bundle obj, boolean updateNull) {
+	protected void update(SQLiteDatabase db, Bundle obj, boolean updateNull) throws Exception {
 
 		android.os.Bundle b = obj.getBundle();
 

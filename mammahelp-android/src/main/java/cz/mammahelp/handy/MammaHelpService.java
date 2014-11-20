@@ -348,30 +348,41 @@ public class MammaHelpService extends Service {
 			NewsDao ndao = new NewsDao(getDbHelper());
 
 			Set<Long> articles = new HashSet<Long>();
-			for (Articles a : adao.findAll())
-				articles.add(a.getId());
+			try {
+				for (Articles a : adao.findAll())
+					articles.add(a.getId());
 
-			Set<Long> enclosures = new HashSet<Long>();
-			for (Enclosure e : edao.findAll())
-				enclosures.add(e.getId());
-			for (Articles a : adao.findAll()) {
-				if (a.getCategory() != null && !a.getCategory().isEmpty())
-					extractFromArticle(a, articles, enclosures);
-			}
-			for (LocationPoint l : ldao.findAll()) {
-				extractFromCenter(l, articles, enclosures);
-			}
-			for (News n : ndao.findAll()) {
-				extractFromNews(n, articles, enclosures);
-			}
+				Set<Long> enclosures = new HashSet<Long>();
+				for (Enclosure e : edao.findAll())
+					enclosures.add(e.getId());
+				for (Articles a : adao.findAll()) {
+					if (a.getCategory() != null && !a.getCategory().isEmpty())
+						extractFromArticle(a, articles, enclosures);
+				}
+				for (LocationPoint l : ldao.findAll()) {
+					extractFromCenter(l, articles, enclosures);
+				}
+				for (News n : ndao.findAll()) {
+					extractFromNews(n, articles, enclosures);
+				}
 
-			log.debug("articles to delete : "
-					+ Arrays.toString(articles.toArray()));
-			adao.deleteAllById(articles);
-			log.debug("enclosures to delete : "
-					+ Arrays.toString(enclosures.toArray()));
-			edao.deleteAllById(enclosures);
-
+				log.debug("articles to delete : "
+						+ Arrays.toString(articles.toArray()));
+				try {
+					adao.deleteAllById(articles);
+				} catch (Exception e1) {
+					// Allready logged in deleteAllById. Nothing to do else.
+				}
+				log.debug("enclosures to delete : "
+						+ Arrays.toString(enclosures.toArray()));
+				try {
+					edao.deleteAllById(enclosures);
+				} catch (Exception e1) {
+					// Allready logged in deleteAllById. Nothing to do else.
+				}
+			} catch (Exception e) {
+				throw new MammaHelpException(R.string.unexpected_exception, e);
+			}
 		}
 
 		private void extractFromNews(News n, Set<Long> articles,

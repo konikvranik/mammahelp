@@ -185,9 +185,13 @@ public class NewsListFragment extends ANamedFragment {
 									return o1.compareTo(o2);
 								}
 							});
-					ordered.addAll(ndao.findAll());
-					listView.setAdapter(new NewsAdapter(ordered));
-					listView.invalidateViews();
+					try {
+						ordered.addAll(ndao.findAll());
+						listView.setAdapter(new NewsAdapter(ordered));
+						listView.invalidateViews();
+					} catch (Exception e) {
+						log.error("Unable to get news: " + e.getMessage(), e);
+					}
 				}
 			}
 		});

@@ -182,7 +182,7 @@ public abstract class GenericAndroidXMLFeeder<T extends BaseDao<?>, E extends Id
 	}
 
 	protected Enclosure saveEnclosure(HttpURLConnection conn)
-			throws IOException, MammaHelpException, URISyntaxException {
+			throws Exception {
 
 		EnclosureDao enclosureDao = new EnclosureDao(getDbHelper());
 
