@@ -1,0 +1,1 @@
+Mobilní aplikace pro podporu boje proti rakovině prsu.
